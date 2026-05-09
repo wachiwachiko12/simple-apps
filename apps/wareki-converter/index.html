@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="和暦・西暦を無料で即変換。令和・平成・昭和・大正・明治に対応。生まれ年から今の年齢も計算できます。スマホ対応・登録不要。">
+  <title>和暦・西暦 変換ツール | 令和・平成・昭和・大正・明治に対応</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>和暦・西暦 変換ツール</h1>
+    <p class="subtitle">令和・平成・昭和・大正・明治 ⇔ 西暦を即変換・年齢計算つき</p>
+  </header>
+
+  <main>
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="seireki-to-wareki" role="tab" aria-selected="true">西暦 → 和暦</button>
+      <button class="tab" data-tab="wareki-to-seireki" role="tab" aria-selected="false">和暦 → 西暦</button>
+      <button class="tab" data-tab="age-calc" role="tab" aria-selected="false">年齢計算</button>
+    </div>
+
+    <!-- 西暦 → 和暦 -->
+    <section class="tool-section" id="tab-seireki-to-wareki">
+      <h2>西暦から和暦に変換</h2>
+      <label for="seireki-input">西暦（年）</label>
+      <input type="number" id="seireki-input" placeholder="例: 1989" min="1868" max="2100" inputmode="numeric">
+      <button id="btn-s2w">変換する</button>
+      <div class="result" id="result-s2w" aria-live="polite"></div>
+    </section>
+
+    <!-- 和暦 → 西暦 -->
+    <section class="tool-section hidden" id="tab-wareki-to-seireki">
+      <h2>和暦から西暦に変換</h2>
+      <div class="row">
+        <div class="col">
+          <label for="era-select">元号</label>
+          <select id="era-select">
+            <option value="reiwa">令和</option>
+            <option value="heisei">平成</option>
+            <option value="showa">昭和</option>
+            <option value="taisho">大正</option>
+            <option value="meiji">明治</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="wareki-input">年</label>
+          <input type="number" id="wareki-input" placeholder="例: 1" min="1" max="99" inputmode="numeric">
+        </div>
+      </div>
+      <button id="btn-w2s">変換する</button>
+      <div class="result" id="result-w2s" aria-live="polite"></div>
+    </section>
+
+    <!-- 年齢計算 -->
+    <section class="tool-section hidden" id="tab-age-calc">
+      <h2>生まれ年から年齢を計算</h2>
+      <label for="birth-era">生まれた元号</label>
+      <select id="birth-era">
+        <option value="seireki">西暦</option>
+        <option value="reiwa">令和</option>
+        <option value="heisei">平成</option>
+        <option value="showa">昭和</option>
+        <option value="taisho">大正</option>
+        <option value="meiji">明治</option>
+      </select>
+      <label for="birth-year">生まれた年</label>
+      <input type="number" id="birth-year" placeholder="例: 昭和の場合は 60" min="1" max="2100" inputmode="numeric">
+      <button id="btn-age">年齢を計算</button>
+      <div class="result" id="result-age" aria-live="polite"></div>
+    </section>
+
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 早見表 -->
+    <section class="table-section">
+      <h2>和暦・西暦 早見表</h2>
+      <div class="table-wrapper">
+        <table id="quick-table">
+          <thead>
+            <tr><th>元号</th><th>和暦</th><th>西暦</th></tr>
+          </thead>
+          <tbody id="quick-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="ad-unit" id="ad-table" aria-hidden="true"></div>
+
+    <section class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>変換したい方向のタブ（西暦→和暦、和暦→西暦、年齢計算）を選択します。</li>
+        <li>年号または西暦を入力して「変換する」ボタンを押します。</li>
+        <li>変換結果が即座に表示されます。</li>
+      </ol>
+
+      <h2>対応している元号</h2>
+      <p>明治（1868年〜）・大正（1912年〜）・昭和（1926年〜）・平成（1989年〜）・令和（2019年〜）の5つの元号に対応しています。西暦1868年以降であればすべての年を変換できます。</p>
+
+      <h2>年齢計算について</h2>
+      <p>生まれた元号と年を入力すると、今年（<span id="current-year-text"></span>年）時点での年齢（数え年ではなく満年齢）を計算します。誕生日を考慮した正確な年齢は、誕生月・日によって±1歳変わる場合があります。</p>
+
+      <h2>よくある質問</h2>
+      <dl>
+        <dt>昭和64年は存在しますか？</dt>
+        <dd>昭和64年は1989年1月1日〜1月7日の7日間のみ存在します。1989年1月8日からは平成元年となります。</dd>
+        <dt>令和元年は何年ですか？</dt>
+        <dd>令和元年は2019年です。令和は2019年5月1日に始まりました。</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/simple-apps/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/simple-apps/">ツール一覧</a></p>
+    <p><small>&copy; 2025 Simple Apps</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
