@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Node (もし将来使う場合)
+node_modules/
+
+# 環境変数
+.env
+.env.local
+
+# Claude Code (ローカル専用)
+.claude/
+CLAUDE.md

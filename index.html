@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="無料で使えるWebツール・計算機の一覧。スマホ対応・登録不要で今すぐ使えます。">
+  <title>無料Webツール集 | Simple Apps</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif; background: #f8f9fa; color: #333; }
+    header { background: #2c3e50; color: white; padding: 2rem 1rem; text-align: center; }
+    header h1 { font-size: 1.6rem; }
+    header p { margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.85; }
+    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    h2 { font-size: 1.1rem; color: #2c3e50; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #2c3e50; }
+    .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+    .app-card { background: white; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.2s; display: block; }
+    .app-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-2px); }
+    .app-card h3 { font-size: 1rem; color: #2c3e50; margin-bottom: 0.4rem; }
+    .app-card p { font-size: 0.85rem; color: #666; }
+    .coming-soon { opacity: 0.5; cursor: default; }
+    .coming-soon:hover { box-shadow: 0 1px 4px rgba(0,0,0,0.08); transform: none; }
+    .badge { display: inline-block; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 99px; margin-bottom: 0.5rem; }
+    .badge-new { background: #e8f5e9; color: #2e7d32; }
+    .badge-soon { background: #f3e5f5; color: #6a1b9a; }
+    footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: #888; }
+    footer a { color: #666; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>無料Webツール集</h1>
+    <p>登録不要・広告なしで今すぐ使えるシンプルなツール</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>計算・変換ツール</h2>
+      <div class="app-grid" id="apps-list">
+        <!-- アプリが増えるたびにここに追加 -->
+        <div class="app-card coming-soon">
+          <span class="badge badge-soon">近日公開</span>
+          <h3>手取り計算機</h3>
+          <p>年収から手取り額を簡単計算</p>
+        </div>
+        <div class="app-card coming-soon">
+          <span class="badge badge-soon">近日公開</span>
+          <h3>和暦・西暦変換</h3>
+          <p>令和・平成・昭和の年号変換</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/simple-apps/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2025 Simple Apps</small></p>
+  </footer>
+</body>
+</html>
