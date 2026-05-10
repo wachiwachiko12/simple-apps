@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="フリーランス・個人事業主の確定申告を無料シミュレーション。所得税・住民税・消費税の納税額を自動計算。青色申告特別控除にも対応。登録不要・スマホ対応。">
+  <meta property="og:title" content="フリーランス確定申告シミュレーター | 無料・登録不要">
+  <meta property="og:description" content="売上と経費を入力するだけで所得税・住民税・消費税の納税額を自動計算。青色申告65万円控除にも対応。">
+  <meta property="og:type" content="website">
+  <title>フリーランス確定申告シミュレーター | 所得税・住民税・消費税を無料計算</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>フリーランス確定申告シミュレーター</h1>
+    <p class="subtitle">売上・経費を入力するだけで所得税・住民税・消費税を自動計算</p>
+  </header>
+
+  <main>
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <section class="card">
+      <h2>基本情報の入力</h2>
+
+      <div class="field-group">
+        <label for="revenue">年間売上（税込）</label>
+        <div class="input-wrap">
+          <input type="number" id="revenue" placeholder="例: 5000000" min="0" inputmode="numeric">
+          <span class="unit">円</span>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="expenses">経費合計</label>
+        <div class="input-wrap">
+          <input type="number" id="expenses" placeholder="例: 1200000" min="0" inputmode="numeric">
+          <span class="unit">円</span>
+        </div>
+        <p class="hint">交通費・通信費・外注費・ソフトウェア代など業務に使った費用の合計</p>
+      </div>
+
+      <div class="field-group">
+        <label for="blue-deduction">青色申告特別控除</label>
+        <select id="blue-deduction">
+          <option value="650000">青色申告 65万円控除（e-Tax電子申告）</option>
+          <option value="550000">青色申告 55万円控除（書面申告）</option>
+          <option value="100000">青色申告 10万円控除（簡易記帳）</option>
+          <option value="0">白色申告（控除なし）</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>控除の入力</h2>
+
+      <div class="field-group">
+        <label for="social-insurance">社会保険料（年間）</label>
+        <div class="input-wrap">
+          <input type="number" id="social-insurance" placeholder="例: 500000" min="0" inputmode="numeric">
+          <span class="unit">円</span>
+        </div>
+        <p class="hint">国民健康保険料＋国民年金保険料（年額 約19.8万円）の合計。不明な場合は概算で入力してください。</p>
+      </div>
+
+      <div class="field-group">
+        <label for="other-deduction">その他控除合計（任意）</label>
+        <div class="input-wrap">
+          <input type="number" id="other-deduction" placeholder="例: 120000" min="0" inputmode="numeric" value="0">
+          <span class="unit">円</span>
+        </div>
+        <p class="hint">生命保険料控除・iDeCo・小規模企業共済など</p>
+      </div>
+
+      <div class="field-group">
+        <label for="dependents">扶養家族の人数</label>
+        <select id="dependents">
+          <option value="0">0人</option>
+          <option value="1">1人（一般扶養 38万円）</option>
+          <option value="2">2人（76万円）</option>
+          <option value="3">3人（114万円）</option>
+          <option value="4">4人（152万円）</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>消費税の設定</h2>
+      <div class="field-group">
+        <label for="invoice-type">インボイス（適格請求書）登録状況</label>
+        <select id="invoice-type">
+          <option value="exempt">免税事業者（未登録）</option>
+          <option value="registered-simple">課税事業者・簡易課税（サービス業 みなし仕入率50%）</option>
+          <option value="registered-actual">課税事業者・本則課税</option>
+        </select>
+        <p class="hint">前々年の課税売上高が1,000万円を超えると自動的に課税事業者になります。</p>
+      </div>
+      <div class="field-group" id="actual-purchase-field" style="display:none">
+        <label for="actual-purchases">課税仕入高（本則課税の場合）</label>
+        <div class="input-wrap">
+          <input type="number" id="actual-purchases" placeholder="例: 800000" min="0" inputmode="numeric" value="0">
+          <span class="unit">円</span>
+        </div>
+      </div>
+    </section>
+
+    <button id="calc-btn">納税額を計算する</button>
+
+    <div class="ad-unit" id="ad-mid" aria-hidden="true"></div>
+
+    <section class="card result-card" id="result-section" style="display:none">
+      <h2>計算結果</h2>
+
+      <div class="result-block">
+        <h3>事業所得の計算</h3>
+        <table class="result-table">
+          <tbody>
+            <tr><td>年間売上（税抜）</td><td id="r-revenue-excl" class="val">—</td></tr>
+            <tr><td>経費合計</td><td id="r-expenses" class="val">—</td></tr>
+            <tr class="subtotal"><td>差引事業所得</td><td id="r-business-income" class="val">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="result-block">
+        <h3>所得税の計算</h3>
+        <table class="result-table">
+          <tbody>
+            <tr><td>差引事業所得</td><td id="r-bi2" class="val">—</td></tr>
+            <tr><td>青色申告特別控除</td><td id="r-blue" class="val minus">—</td></tr>
+            <tr><td>基礎控除</td><td id="r-basic" class="val minus">—</td></tr>
+            <tr><td>社会保険料控除</td><td id="r-social" class="val minus">—</td></tr>
+            <tr><td>扶養控除</td><td id="r-dependent" class="val minus">—</td></tr>
+            <tr><td>その他控除</td><td id="r-other" class="val minus">—</td></tr>
+            <tr class="subtotal"><td>課税所得（所得税）</td><td id="r-taxable" class="val">—</td></tr>
+            <tr><td>適用税率</td><td id="r-rate" class="val">—</td></tr>
+            <tr><td>所得税額</td><td id="r-income-tax" class="val">—</td></tr>
+            <tr class="highlight"><td>所得税＋復興特別所得税</td><td id="r-income-tax-total" class="val">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="result-block">
+        <h3>住民税の計算（概算）</h3>
+        <table class="result-table">
+          <tbody>
+            <tr><td>課税所得（住民税）</td><td id="r-resident-taxable" class="val">—</td></tr>
+            <tr><td>住民税（所得割10%）</td><td id="r-resident-tax" class="val">—</td></tr>
+            <tr><td>均等割</td><td id="r-resident-flat" class="val">—</td></tr>
+            <tr class="highlight"><td>住民税合計</td><td id="r-resident-total" class="val">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="result-block">
+        <h3>消費税の計算</h3>
+        <table class="result-table">
+          <tbody>
+            <tr><td>事業者区分</td><td id="r-tax-type" class="val">—</td></tr>
+            <tr><td>消費税額（概算）</td><td id="r-consumption-tax" class="val">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="total-box">
+        <div class="total-label">合計納税見込み額</div>
+        <div class="total-amount" id="r-total">—</div>
+        <div class="total-note">※ 所得税＋住民税＋消費税の合計</div>
+      </div>
+
+      <div class="takeaway-box">
+        <div class="takeaway-label">手取り概算（売上 − 経費 − 社保 − 税金）</div>
+        <div class="takeaway-amount" id="r-takeaway">—</div>
+      </div>
+
+      <p class="disclaimer">※ この計算は概算です。実際の納税額は個別の状況により異なります。正確な申告は税理士または国税庁の確定申告書等作成コーナーをご利用ください。</p>
+    </section>
+
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <section class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>年間売上と経費の合計を入力します。</li>
+        <li>青色申告の種類を選択します（e-Tax申告なら65万円控除が最大）。</li>
+        <li>社会保険料（国民健康保険＋国民年金）を入力します。</li>
+        <li>「納税額を計算する」ボタンを押すと、所得税・住民税・消費税の概算が表示されます。</li>
+      </ol>
+
+      <h2>青色申告特別控除について</h2>
+      <p>青色申告をe-Tax（電子申告）で行うと、最大65万円の控除が受けられます。白色申告では控除がありません。青色申告は前年の3月15日までに承認申請が必要です。</p>
+
+      <h2>消費税について</h2>
+      <p>前々年の課税売上高が1,000万円以下の事業者は原則として免税事業者（消費税の納付不要）です。インボイス制度（適格請求書）に登録した場合は課税事業者になります。売上5,000万円以下であれば簡易課税を選択できます。</p>
+
+      <h2>よくある質問</h2>
+      <dl>
+        <dt>国民健康保険料はいくら入力すればよいですか？</dt>
+        <dd>前年の所得によって異なりますが、所得300万円程度の場合は年間25〜35万円程度が目安です。市区町村の窓口またはWebサイトで試算できます。</dd>
+        <dt>iDeCoの掛金は控除になりますか？</dt>
+        <dd>はい。iDeCo（個人型確定拠出年金）の掛金は全額「小規模企業共済等掛金控除」として控除できます。「その他控除」欄に入力してください。</dd>
+        <dt>予定納税はどう扱いますか？</dt>
+        <dd>前年の所得税が15万円を超えると予定納税（7月・11月）が発生しますが、本シミュレーターは年間の納税総額を計算しています。</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/simple-apps/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/simple-apps/">ツール一覧</a></p>
+    <p><small>&copy; 2026 Simple Apps</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

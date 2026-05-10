@@ -1,0 +1,321 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background: #f5f5f5;
+}
+
+header {
+  background: #1b5e20;
+  color: white;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 0.82rem;
+  opacity: 0.85;
+  margin-top: 0.3rem;
+}
+
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.ad-unit {
+  min-height: 90px;
+  background: #e8e8e8;
+  margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 0.72rem;
+  border-radius: 4px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+.card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1b5e20;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #1b5e20;
+}
+
+.field-group {
+  margin-bottom: 1.1rem;
+}
+
+.field-group:last-child {
+  margin-bottom: 0;
+}
+
+label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 0.35rem;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-wrap input {
+  flex: 1;
+}
+
+.unit {
+  font-size: 0.9rem;
+  color: #555;
+  white-space: nowrap;
+}
+
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 7px;
+  background: white;
+  appearance: auto;
+  -webkit-appearance: auto;
+}
+
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: #1b5e20;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: #777;
+  margin-top: 0.3rem;
+}
+
+button#calc-btn {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0 0;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: #1b5e20;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button#calc-btn:hover {
+  background: #2e7d32;
+}
+
+/* Result section */
+.result-card h2 {
+  color: #1b5e20;
+  border-bottom-color: #1b5e20;
+}
+
+.result-block {
+  margin-bottom: 1.5rem;
+}
+
+.result-block h3 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 0.6rem;
+  padding: 0.3rem 0.5rem;
+  background: #f1f8e9;
+  border-radius: 4px;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.result-table td {
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.result-table td.val {
+  text-align: right;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+
+.result-table td.val.minus {
+  color: #c62828;
+}
+
+.result-table tr.subtotal td {
+  border-top: 2px solid #ccc;
+  font-weight: 700;
+  background: #f9f9f9;
+}
+
+.result-table tr.highlight td {
+  background: #e8f5e9;
+  font-weight: 700;
+  color: #1b5e20;
+  border-top: 2px solid #1b5e20;
+}
+
+.total-box {
+  background: #1b5e20;
+  color: white;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.total-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+  margin-bottom: 0.3rem;
+}
+
+.total-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.total-note {
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-top: 0.3rem;
+}
+
+.takeaway-box {
+  background: #f1f8e9;
+  border: 2px solid #1b5e20;
+  border-radius: 10px;
+  padding: 1.1rem 1.5rem;
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.takeaway-label {
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 0.25rem;
+}
+
+.takeaway-amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1b5e20;
+}
+
+.disclaimer {
+  font-size: 0.76rem;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* How-to section */
+.howto-section {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-top: 0.5rem;
+}
+
+.howto-section h2 {
+  font-size: 0.95rem;
+  color: #1b5e20;
+  margin-top: 1.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol,
+.howto-section p {
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.howto-section ol {
+  padding-left: 1.4rem;
+}
+
+.howto-section li {
+  margin-bottom: 0.35rem;
+}
+
+.howto-section dl {
+  font-size: 0.88rem;
+}
+
+.howto-section dt {
+  font-weight: 700;
+  color: #333;
+  margin-top: 0.75rem;
+}
+
+.howto-section dd {
+  margin-left: 1rem;
+  color: #555;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+footer a {
+  color: #555;
+}
+
+@media (min-width: 600px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+}
