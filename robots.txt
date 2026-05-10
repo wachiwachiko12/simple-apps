@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wachiwachiko12.github.io/simple-apps/sitemap.xml
+Sitemap: https://keisanlab.jp/sitemap.xml
