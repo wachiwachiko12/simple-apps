@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="フリーランス・個人事業主向け無料請求書作成ツール。入力するだけで即PDF印刷できる請求書が作れます。登録不要・データは端末内のみ保存。">
+  <meta property="og:title" content="フリーランス請求書ジェネレーター | 無料・印刷対応">
+  <meta property="og:description" content="品目・金額を入力するだけでプロ品質の請求書をすぐ印刷。消費税・振込先・備考に対応。登録不要。">
+  <meta property="og:type" content="website">
+  <title>フリーランス請求書ジェネレーター | 無料で請求書を作成・印刷</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="no-print">
+    <h1>フリーランス請求書ジェネレーター</h1>
+    <p class="subtitle">入力するだけでそのまま印刷できる請求書を無料作成</p>
+  </header>
+
+  <div class="app-layout">
+
+    <!-- ===== 入力フォーム ===== -->
+    <aside class="form-panel no-print">
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="sender">発行者</button>
+        <button class="tab-btn" data-tab="client">請求先</button>
+        <button class="tab-btn" data-tab="items">明細</button>
+        <button class="tab-btn" data-tab="meta">その他</button>
+      </div>
+
+      <!-- 発行者情報 -->
+      <div class="tab-content active" id="tab-sender">
+        <h2>発行者情報</h2>
+        <p class="save-note">※ 入力内容はブラウザに自動保存されます</p>
+        <label>氏名 / 会社名</label>
+        <input type="text" id="s-name" placeholder="山田 太郎">
+        <label>郵便番号・住所</label>
+        <input type="text" id="s-zip" placeholder="〒000-0000">
+        <input type="text" id="s-addr" placeholder="東京都渋谷区〇〇 1-2-3">
+        <label>電話番号</label>
+        <input type="text" id="s-tel" placeholder="090-0000-0000">
+        <label>メールアドレス</label>
+        <input type="text" id="s-email" placeholder="example@email.com">
+        <label>振込先銀行口座</label>
+        <input type="text" id="s-bank" placeholder="〇〇銀行 △△支店 普通 1234567">
+        <input type="text" id="s-bank-name" placeholder="口座名義: ヤマダタロウ">
+      </div>
+
+      <!-- 請求先 -->
+      <div class="tab-content" id="tab-client">
+        <h2>請求先情報</h2>
+        <label>会社名</label>
+        <input type="text" id="c-company" placeholder="〇〇株式会社">
+        <label>部署名（任意）</label>
+        <input type="text" id="c-dept" placeholder="経理部">
+        <label>担当者名</label>
+        <input type="text" id="c-name" placeholder="鈴木 一郎">
+      </div>
+
+      <!-- 明細 -->
+      <div class="tab-content" id="tab-items">
+        <h2>明細</h2>
+        <label>消費税</label>
+        <select id="tax-rate">
+          <option value="0.10">10%（標準税率）</option>
+          <option value="0.08">8%（軽減税率）</option>
+          <option value="0">非課税 / 免税</option>
+        </select>
+        <div id="items-list"></div>
+        <button class="add-row-btn" id="add-row">＋ 行を追加</button>
+      </div>
+
+      <!-- その他 -->
+      <div class="tab-content" id="tab-meta">
+        <h2>請求書情報</h2>
+        <label>請求書番号</label>
+        <input type="text" id="inv-number" placeholder="2026-001">
+        <label>発行日</label>
+        <input type="date" id="inv-date">
+        <label>支払期限</label>
+        <input type="date" id="inv-due">
+        <label>備考</label>
+        <textarea id="inv-note" rows="4" placeholder="お振込手数料はご負担をお願いいたします。"></textarea>
+      </div>
+
+    </aside>
+
+    <!-- ===== プレビュー ===== -->
+    <main class="preview-panel">
+      <div class="preview-toolbar no-print">
+        <button class="print-btn" onclick="window.print()">印刷 / PDF保存</button>
+      </div>
+
+      <div class="invoice" id="invoice">
+
+        <div class="inv-header">
+          <h2 class="inv-title">請　求　書</h2>
+          <div class="inv-meta-box">
+            <div><span class="inv-label">請求書番号</span><span id="p-number">2026-001</span></div>
+            <div><span class="inv-label">発行日</span><span id="p-date">—</span></div>
+            <div><span class="inv-label">支払期限</span><span id="p-due">—</span></div>
+          </div>
+        </div>
+
+        <div class="inv-parties">
+          <div class="inv-client">
+            <div id="p-company" class="client-company">〇〇株式会社</div>
+            <div id="p-dept" class="client-dept"></div>
+            <div id="p-cname" class="client-name">　　御中</div>
+          </div>
+          <div class="inv-sender">
+            <div id="p-sname" class="sender-name">—</div>
+            <div id="p-szip"></div>
+            <div id="p-saddr"></div>
+            <div id="p-stel"></div>
+            <div id="p-semail"></div>
+          </div>
+        </div>
+
+        <div class="inv-total-box">
+          <span class="inv-total-label">ご請求金額（税込）</span>
+          <span class="inv-total-amount" id="p-grand-total">¥0</span>
+        </div>
+
+        <table class="inv-table">
+          <thead>
+            <tr>
+              <th class="col-name">品目・内容</th>
+              <th class="col-qty">数量</th>
+              <th class="col-unit">単位</th>
+              <th class="col-price">単価</th>
+              <th class="col-amount">金額</th>
+            </tr>
+          </thead>
+          <tbody id="p-items"></tbody>
+        </table>
+
+        <div class="inv-subtotals">
+          <div class="subtotal-row"><span>小計</span><span id="p-subtotal">¥0</span></div>
+          <div class="subtotal-row tax-row"><span id="p-tax-label">消費税（10%）</span><span id="p-tax">¥0</span></div>
+          <div class="subtotal-row total-row"><span>合計（税込）</span><span id="p-total">¥0</span></div>
+        </div>
+
+        <div class="inv-bank" id="inv-bank-section">
+          <div class="inv-bank-title">お振込先</div>
+          <div id="p-bank">—</div>
+          <div id="p-bank-name"></div>
+        </div>
+
+        <div class="inv-note-section" id="inv-note-section">
+          <div class="inv-note-title">備考</div>
+          <div id="p-note" class="inv-note-body"></div>
+        </div>
+
+      </div><!-- /invoice -->
+    </main>
+  </div>
+
+  <section class="howto-section no-print">
+    <div class="howto-inner">
+      <h2>使い方</h2>
+      <ol>
+        <li>「発行者」タブに自分の名前・住所・振込先を入力します（自動保存されます）。</li>
+        <li>「請求先」タブに取引先の会社名・担当者を入力します。</li>
+        <li>「明細」タブに品目・数量・単価を入力します。合計は自動計算されます。</li>
+        <li>「印刷 / PDF保存」ボタンを押してブラウザの印刷機能からPDF保存できます。</li>
+      </ol>
+      <h2>データの保存について</h2>
+      <p>発行者情報と請求書番号はブラウザのlocalStorageに保存されます。データはこの端末のブラウザ内にのみ保存され、外部サーバーには一切送信されません。</p>
+    </div>
+  </section>
+
+  <footer class="no-print">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a></p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
