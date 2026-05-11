@@ -1,0 +1,450 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 15px;
+  color: #333;
+  background: #f0f2f5;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: #1b5e20;
+  color: white;
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+header h1 { font-size: 1.25rem; font-weight: 700; }
+.subtitle { font-size: 0.8rem; opacity: 0.85; margin-top: 0.25rem; }
+
+/* ===== LAYOUT ===== */
+.app-layout {
+  display: flex;
+  gap: 0;
+  min-height: calc(100vh - 120px);
+}
+
+/* ===== FORM PANEL ===== */
+.form-panel {
+  width: 300px;
+  min-width: 300px;
+  background: white;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: calc(100vh - 64px);
+  position: sticky;
+  top: 0;
+}
+
+.tab-bar {
+  display: flex;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.6rem 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: none;
+  background: white;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-btn.active {
+  color: #1b5e20;
+  border-bottom-color: #1b5e20;
+}
+
+.tab-content {
+  display: none;
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tab-content.active { display: block; }
+
+.tab-content h2 {
+  font-size: 0.9rem;
+  color: #1b5e20;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.save-note {
+  font-size: 0.72rem;
+  color: #888;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #555;
+  margin: 0.7rem 0 0.25rem;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.88rem;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #1b5e20;
+}
+
+textarea { resize: vertical; }
+
+/* ===== LINE ITEMS ===== */
+.item-row {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-row label { margin-top: 0.4rem; }
+.item-row label:first-child { margin-top: 0; }
+
+.item-row-nums {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.item-row-nums label { font-size: 0.72rem; }
+
+.item-amount-display {
+  text-align: right;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1b5e20;
+  margin-top: 0.3rem;
+}
+
+.remove-row-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0.4rem;
+  padding: 0.3rem;
+  font-size: 0.75rem;
+  color: #c62828;
+  background: white;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-row-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1b5e20;
+  background: #f1f8e9;
+  border: 1.5px dashed #81c784;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ===== PREVIEW PANEL ===== */
+.preview-panel {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-toolbar {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.print-btn {
+  padding: 0.6rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: #1b5e20;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.print-btn:hover { background: #2e7d32; }
+
+/* ===== INVOICE ===== */
+.invoice {
+  width: 100%;
+  max-width: 760px;
+  background: white;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  min-height: 297mm;
+}
+
+.inv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.inv-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a237e;
+  letter-spacing: 0.1em;
+}
+
+.inv-meta-box {
+  font-size: 0.82rem;
+  color: #444;
+  text-align: right;
+  line-height: 1.8;
+}
+
+.inv-label {
+  color: #888;
+  margin-right: 0.5rem;
+}
+
+/* 宛先・発行者 */
+.inv-parties {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.inv-client { flex: 1; }
+.client-company { font-size: 1.15rem; font-weight: 700; color: #111; }
+.client-dept { font-size: 0.85rem; color: #555; margin-top: 0.15rem; }
+.client-name { font-size: 0.95rem; color: #333; margin-top: 0.2rem; }
+
+.inv-sender {
+  font-size: 0.82rem;
+  color: #555;
+  text-align: right;
+  line-height: 1.7;
+  min-width: 200px;
+}
+
+.sender-name { font-size: 1rem; font-weight: 700; color: #222; }
+
+/* 請求金額ボックス */
+.inv-total-box {
+  border: 2px solid #1a237e;
+  border-radius: 6px;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.inv-total-label { font-size: 0.9rem; font-weight: 600; color: #333; }
+.inv-total-amount { font-size: 1.6rem; font-weight: 700; color: #1a237e; }
+
+/* 明細テーブル */
+.inv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 0;
+}
+
+.inv-table th {
+  background: #1a237e;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.inv-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.inv-table tbody tr:nth-child(even) td { background: #fafafa; }
+
+.col-name  { width: 45%; }
+.col-qty   { width: 10%; text-align: right; }
+.col-unit  { width: 10%; text-align: center; }
+.col-price { width: 17%; text-align: right; }
+.col-amount{ width: 18%; text-align: right; font-weight: 600; }
+
+/* 小計・合計 */
+.inv-subtotals {
+  border-top: 2px solid #1a237e;
+  padding-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.subtotal-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.88rem;
+  color: #555;
+}
+
+.total-row {
+  border-top: 1px solid #ccc;
+  margin-top: 0.25rem;
+  padding-top: 0.4rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1a237e;
+}
+
+/* 振込先 */
+.inv-bank {
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+.inv-bank-title {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.3rem;
+  font-size: 0.82rem;
+}
+
+/* 備考 */
+.inv-note-section {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.inv-note-title {
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 0.3rem;
+  font-size: 0.82rem;
+}
+
+.inv-note-body { color: #555; line-height: 1.6; white-space: pre-wrap; }
+
+/* ===== HOWTO ===== */
+.howto-section {
+  max-width: 760px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.howto-inner {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.howto-inner h2 {
+  font-size: 0.95rem;
+  color: #1b5e20;
+  margin: 1rem 0 0.5rem;
+  font-weight: 700;
+}
+
+.howto-inner h2:first-child { margin-top: 0; }
+
+.howto-inner ol, .howto-inner p {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.howto-inner ol { padding-left: 1.4rem; }
+.howto-inner li { margin-bottom: 0.3rem; }
+
+footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.82rem;
+  color: #888;
+}
+footer a { color: #666; }
+
+/* ===== PRINT ===== */
+@media print {
+  .no-print { display: none !important; }
+
+  body { background: white; font-size: 11pt; }
+
+  .app-layout {
+    display: block;
+  }
+
+  .preview-panel {
+    padding: 0;
+    overflow: visible;
+  }
+
+  .invoice {
+    max-width: 100%;
+    box-shadow: none;
+    padding: 0;
+    min-height: unset;
+  }
+
+  .inv-title { font-size: 22pt; }
+  .inv-total-amount { font-size: 16pt; }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 700px) {
+  .app-layout { flex-direction: column; }
+
+  .form-panel {
+    width: 100%;
+    min-width: unset;
+    position: static;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .preview-panel { padding: 1rem 0.5rem; }
+
+  .invoice {
+    padding: 1.5rem 1rem;
+    min-height: unset;
+  }
+
+  .inv-title { font-size: 1.4rem; }
+  .inv-parties { flex-direction: column; }
+  .inv-sender { text-align: left; }
+}
