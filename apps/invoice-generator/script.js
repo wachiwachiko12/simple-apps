@@ -205,4 +205,20 @@ function esc(str) {
   return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+/* ===== モバイルビュー切り替え ===== */
+function mobileShowPreview() {
+  updatePreview();
+  document.querySelector('.app-layout').classList.add('show-preview');
+  document.getElementById('mb-form-btn').classList.remove('active');
+  document.getElementById('mb-preview-btn').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function mobileShowForm() {
+  document.querySelector('.app-layout').classList.remove('show-preview');
+  document.getElementById('mb-form-btn').classList.add('active');
+  document.getElementById('mb-preview-btn').classList.remove('active');
+  window.scrollTo(0, 0);
+}
+
 document.addEventListener('DOMContentLoaded', init);

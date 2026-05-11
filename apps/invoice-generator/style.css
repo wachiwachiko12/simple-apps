@@ -99,11 +99,12 @@ select,
 textarea {
   width: 100%;
   padding: 0.5rem 0.6rem;
-  font-size: 0.88rem;
+  font-size: 1rem;
   border: 1.5px solid #ddd;
   border-radius: 6px;
   background: white;
   font-family: inherit;
+  -webkit-text-size-adjust: 100%;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -166,6 +167,8 @@ textarea { resize: vertical; }
   border: 1.5px dashed #81c784;
   border-radius: 6px;
   cursor: pointer;
+  min-height: 44px;
+  touch-action: manipulation;
 }
 
 /* ===== PREVIEW PANEL ===== */
@@ -425,26 +428,110 @@ footer a { color: #666; }
 }
 
 /* ===== MOBILE ===== */
-@media (max-width: 700px) {
-  .app-layout { flex-direction: column; }
+.mobile-view-bar {
+  display: none;
+}
 
+.back-to-form-btn {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  /* モバイルビュー切り替えバー */
+  .mobile-view-bar {
+    display: flex;
+    background: #1b5e20;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .mobile-view-btn {
+    flex: 1;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    touch-action: manipulation;
+    min-height: 48px;
+    transition: all 0.15s;
+  }
+
+  .mobile-view-btn.active {
+    color: white;
+    border-bottom: 3px solid white;
+  }
+
+  .back-to-form-btn {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1b5e20;
+    background: #f1f8e9;
+    border: 1.5px solid #81c784;
+    border-radius: 6px;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+
+  /* デフォルト: フォームを表示、プレビューを非表示 */
   .form-panel {
     width: 100%;
     min-width: unset;
     position: static;
     max-height: none;
     border-right: none;
-    border-bottom: 1px solid #ddd;
+    border-bottom: none;
   }
 
-  .preview-panel { padding: 1rem 0.5rem; }
+  .preview-panel {
+    display: none;
+    padding: 0.75rem 0.5rem;
+  }
+
+  /* プレビュー表示時 */
+  .app-layout.show-preview .form-panel {
+    display: none;
+  }
+
+  .app-layout.show-preview .preview-panel {
+    display: flex;
+  }
 
   .invoice {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 0.75rem;
     min-height: unset;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.1);
   }
 
-  .inv-title { font-size: 1.4rem; }
-  .inv-parties { flex-direction: column; }
-  .inv-sender { text-align: left; }
+  .inv-title { font-size: 1.3rem; }
+
+  .inv-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .inv-meta-box { text-align: left; }
+
+  .inv-parties { flex-direction: column; gap: 1rem; }
+  .inv-sender { text-align: left; min-width: unset; }
+
+  /* テーブルをスクロール可能に */
+  .inv-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 0;
+  }
+
+  .inv-table { min-width: 480px; }
+
+  .inv-total-amount { font-size: 1.3rem; }
 }

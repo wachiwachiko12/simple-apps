@@ -16,6 +16,12 @@
     <p class="subtitle">入力するだけでそのまま印刷できる請求書を無料作成</p>
   </header>
 
+  <!-- モバイル用ビュー切り替えバー -->
+  <div class="mobile-view-bar no-print">
+    <button class="mobile-view-btn active" id="mb-form-btn" onclick="mobileShowForm()">フォーム入力</button>
+    <button class="mobile-view-btn" id="mb-preview-btn" onclick="mobileShowPreview()">プレビュー確認</button>
+  </div>
+
   <div class="app-layout">
 
     <!-- ===== 入力フォーム ===== -->
@@ -88,6 +94,7 @@
     <!-- ===== プレビュー ===== -->
     <main class="preview-panel">
       <div class="preview-toolbar no-print">
+        <button class="back-to-form-btn" onclick="mobileShowForm()">← 入力に戻る</button>
         <button class="print-btn" onclick="window.print()">印刷 / PDF保存</button>
       </div>
 
@@ -122,18 +129,20 @@
           <span class="inv-total-amount" id="p-grand-total">¥0</span>
         </div>
 
-        <table class="inv-table">
-          <thead>
-            <tr>
-              <th class="col-name">品目・内容</th>
-              <th class="col-qty">数量</th>
-              <th class="col-unit">単位</th>
-              <th class="col-price">単価</th>
-              <th class="col-amount">金額</th>
-            </tr>
-          </thead>
-          <tbody id="p-items"></tbody>
-        </table>
+        <div class="inv-table-wrap">
+          <table class="inv-table">
+            <thead>
+              <tr>
+                <th class="col-name">品目・内容</th>
+                <th class="col-qty">数量</th>
+                <th class="col-unit">単位</th>
+                <th class="col-price">単価</th>
+                <th class="col-amount">金額</th>
+              </tr>
+            </thead>
+            <tbody id="p-items"></tbody>
+          </table>
+        </div>
 
         <div class="inv-subtotals">
           <div class="subtotal-row"><span>小計</span><span id="p-subtotal">¥0</span></div>
