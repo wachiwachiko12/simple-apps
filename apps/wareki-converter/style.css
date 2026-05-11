@@ -106,7 +106,7 @@ input[type="number"],
 select {
   width: 100%;
   padding: 0.65rem 0.75rem;
-  font-size: 1.05rem;
+  font-size: 1rem;
   border: 1.5px solid #ccc;
   border-radius: 7px;
   background: white;
@@ -142,6 +142,8 @@ button {
   border-radius: 7px;
   cursor: pointer;
   transition: background 0.2s;
+  min-height: 48px;
+  touch-action: manipulation;
 }
 
 button:hover {
@@ -286,6 +288,13 @@ footer {
 
 footer a {
   color: #555;
+}
+
+@media (max-width: 400px) {
+  .tab {
+    font-size: 0.78rem;
+    padding: 0.55rem 0.3rem;
+  }
 }
 
 @media (min-width: 600px) {
