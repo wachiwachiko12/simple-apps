@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ブラウザだけで使えるマインドマップ作成ツール。データは端末内に自動保存。Excel出力・JSON保存・インポート対応。登録不要・完全無料。">
+  <meta property="og:title" content="マインドマップ作成ツール | 無料・Excel出力対応">
+  <meta property="og:description" content="ブラウザだけで使える無料マインドマップ。自動保存・Excel出力・インポート対応。登録不要。">
+  <meta property="og:type" content="website">
+  <title>マインドマップ作成ツール | 無料・登録不要・Excel出力対応</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+    <header class="topbar">
+      <h1 id="map-title" contenteditable="true" spellcheck="false" title="クリックして編集">Mind Map</h1>
+      <div class="toolbar">
+        <button id="add-child-btn" disabled>子を追加</button>
+        <button id="edit-node-btn" disabled>編集</button>
+        <button id="delete-node-btn" disabled>削除</button>
+        <button id="save-map-btn">保存(.json)</button>
+        <button id="import-map-btn">インポート</button>
+        <button id="new-map-btn">新規作成</button>
+        <button id="export-excel-btn">Excel出力</button>
+      </div>
+    </header>
+
+    <section class="hierarchy-bar" aria-label="階層名設定">
+      <span class="hierarchy-label">階層名</span>
+      <div id="hierarchy-fields" class="hierarchy-fields"></div>
+    </section>
+
+    <input id="import-map-file" type="file" accept=".json,application/json" hidden>
+
+    <main id="board" class="board" aria-label="mind map board">
+      <svg id="link-layer" class="link-layer"></svg>
+      <div id="level-guide-layer" class="level-guide-layer"></div>
+      <div id="node-layer" class="node-layer"></div>
+
+      <div id="node-context-menu" class="context-menu" role="menu" aria-hidden="true">
+        <button type="button" data-action="add-child" role="menuitem">子を追加</button>
+        <button type="button" data-action="edit-node" role="menuitem">編集</button>
+        <button type="button" data-action="delete-node" role="menuitem">削除</button>
+      </div>
+
+      <div id="node-editor" class="node-editor" aria-hidden="true">
+        <div class="node-editor-card">
+          <h2>ノード編集</h2>
+          <label>
+            テキスト
+            <input id="editor-text" type="text" maxlength="120">
+          </label>
+          <label>
+            背景色
+            <input id="editor-color" type="color" value="#ffffff">
+          </label>
+          <div class="color-palette" aria-label="おすすめ色">
+            <button type="button" class="palette-swatch" data-color="#ffffff" aria-label="ホワイト" title="ホワイト"></button>
+            <button type="button" class="palette-swatch" data-color="#e3e7eb" aria-label="クールグレー" title="クールグレー"></button>
+            <button type="button" class="palette-swatch" data-color="#fff4d6" aria-label="ウォームアイボリー" title="ウォームアイボリー"></button>
+            <button type="button" class="palette-swatch" data-color="#dff3ea" aria-label="ミントグリーン" title="ミントグリーン"></button>
+            <button type="button" class="palette-swatch" data-color="#dcecff" aria-label="スカイブルー" title="スカイブルー"></button>
+            <button type="button" class="palette-swatch" data-color="#f1e4ff" aria-label="ペールラベンダー" title="ペールラベンダー"></button>
+            <button type="button" class="palette-swatch" data-color="#ffe0db" aria-label="ソフトコーラル" title="ソフトコーラル"></button>
+            <button type="button" class="palette-swatch" data-color="#e9f7d8" aria-label="セージライム" title="セージライム"></button>
+          </div>
+          <div class="node-editor-actions">
+            <button id="editor-cancel-btn" type="button">キャンセル</button>
+            <button id="editor-save-btn" type="button">保存</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- アプリ外：SEO・AdSense用コンテンツ -->
+  <section class="info-section">
+    <div class="info-inner">
+      <h2>マインドマップ作成ツールの使い方</h2>
+      <ol>
+        <li>中心ノード（ルート）をクリックして選択し、「子を追加」でブランチを追加します。</li>
+        <li>ノードをダブルクリック（またはノード選択後「編集」）でテキストと背景色を変更できます。</li>
+        <li>ノードをドラッグ＆ドロップして別の親に移動できます。</li>
+        <li>「保存(.json)」でマップをファイルに書き出し、「インポート」で再読み込みできます。</li>
+        <li>「Excel出力」でマップ構造をExcelファイルに出力できます。</li>
+      </ol>
+      <h2>キーボードショートカット</h2>
+      <table class="shortcut-table">
+        <tbody>
+          <tr><td>Tab</td><td>選択ノードの子に移動</td></tr>
+          <tr><td>Shift+Tab</td><td>親ノードに移動</td></tr>
+          <tr><td>↑ / ↓</td><td>兄弟ノードを移動</td></tr>
+          <tr><td>Escape</td><td>メニュー・編集を閉じる</td></tr>
+        </tbody>
+      </table>
+      <h2>データの保存について</h2>
+      <p>マップデータはブラウザのlocalStorageに自動保存されます。外部サーバーへの送信は一切行いません。ブラウザのキャッシュ削除で消えるため、大切なデータは「保存(.json)」でファイルに書き出してください。</p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a></p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
