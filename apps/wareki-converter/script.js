@@ -1,3 +1,6 @@
+const ETO = ['申','酉','戌','亥','子','丑','寅','卯','辰','巳','午','未'];
+function getEto(year) { return ETO[year % 12]; }
+
 const ERAS = [
   { key: 'reiwa',  name: '令和', start: 2019, startMonth: 5,  startDay: 1  },
   { key: 'heisei', name: '平成', start: 1989, startMonth: 1,  startDay: 8  },
@@ -71,11 +74,49 @@ function buildQuickTable() {
   }).join('');
 }
 
+function buildAgeTable(eraFilter = 'all') {
+  const tbody = document.getElementById('age-table-body');
+  const currentYear = new Date().getFullYear();
+  const rows = [];
+
+  for (const era of ERAS) {
+    const end = ERA_END[era.key];
+    const endYear = end ? end.year : currentYear;
+    for (let y = era.start; y <= endYear; y++) {
+      const waYear = y - era.start + 1;
+      const waLabel = waYear === 1 ? `${era.name}元年` : `${era.name}${waYear}年`;
+      rows.push({ seireki: y, era, waLabel, age: currentYear - y });
+    }
+  }
+
+  rows.sort((a, b) => b.seireki - a.seireki);
+  const filtered = eraFilter === 'all' ? rows : rows.filter(r => r.era.key === eraFilter);
+
+  tbody.innerHTML = filtered.map(r => {
+    const isCurrent = r.seireki === currentYear;
+    return `<tr${isCurrent ? ' class="current-year"' : ''}>
+      <td>${r.waLabel}${isCurrent ? ' ★今年' : ''}</td>
+      <td>${r.seireki}年</td>
+      <td>${getEto(r.seireki)}</td>
+      <td>${r.age >= 0 ? r.age + '歳' : '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const currentYear = new Date().getFullYear();
   document.getElementById('current-year-text').textContent = currentYear;
 
   buildQuickTable();
+  buildAgeTable();
+
+  document.querySelectorAll('.era-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.era-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      buildAgeTable(btn.dataset.era);
+    });
+  });
 
   // タブ切り替え
   document.querySelectorAll('.tab').forEach(tab => {
