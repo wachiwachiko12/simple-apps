@@ -1,0 +1,540 @@
+/* ===========================
+   CSS Variables & Reset
+=========================== */
+:root {
+  --accent:       #2d6a4f;
+  --accent-dark:  #1b4332;
+  --accent-light: #d8f3dc;
+  --income-color: #2d6a4f;
+  --expense-color:#d62828;
+  --balance-color:#023e8a;
+  --bg:           #f4f6f4;
+  --card-bg:      #ffffff;
+  --border:       #dee2e6;
+  --text:         #212529;
+  --muted:        #6c757d;
+  --radius:       8px;
+  --shadow:       0 1px 4px rgba(0,0,0,0.10);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ===========================
+   Header / Topbar
+=========================== */
+.topbar {
+  background: var(--accent-dark);
+  color: #fff;
+  padding: 1.25rem 1rem;
+}
+
+.topbar-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.topbar h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.7rem;
+  background: #52b788;
+  color: #fff;
+  padding: 0.1em 0.55em;
+  border-radius: 20px;
+  font-weight: 600;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  opacity: 0.85;
+  margin-top: 0.25rem;
+}
+
+/* ===========================
+   Main Layout
+=========================== */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===========================
+   Ad Units
+=========================== */
+.ad-unit {
+  min-height: 90px;
+  background: #e9ecef;
+  margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #adb5bd;
+  font-size: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px dashed #ced4da;
+}
+
+/* ===========================
+   Summary Section
+=========================== */
+.summary-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.month-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.month-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 110px;
+  text-align: center;
+}
+
+.btn-nav {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 1.3rem;
+  color: var(--accent-dark);
+  cursor: pointer;
+  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.btn-nav:hover {
+  background: var(--accent-light);
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.summary-card {
+  border-radius: var(--radius);
+  padding: 0.85rem 0.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-card.income  { background: #d8f3dc; }
+.summary-card.expense { background: #fde8e8; }
+.summary-card.balance { background: #dbeafe; }
+
+.card-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.card-amount {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.summary-card.income  .card-amount { color: var(--income-color); }
+.summary-card.expense .card-amount { color: var(--expense-color); }
+.summary-card.balance .card-amount { color: var(--balance-color); }
+
+/* ===========================
+   Tool Section (Form)
+=========================== */
+.tool-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.tool-section h2,
+.chart-section h2,
+.list-section h2,
+.howto-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--accent-dark);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+}
+
+input[type="date"],
+input[type="number"],
+input[type="text"],
+select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;     /* iOSオートズーム防止 */
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.15);
+}
+
+.form-error {
+  color: var(--expense-color);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  min-height: 1.2em;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  min-height: 44px;
+  touch-action: manipulation;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+}
+
+/* ===========================
+   Chart Section
+=========================== */
+.chart-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.chart-wrapper {
+  position: relative;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.chart-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 2rem 0;
+}
+
+/* ===========================
+   List Section
+=========================== */
+.list-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.list-header h2 {
+  margin-bottom: 0;
+}
+
+.btn-secondary {
+  padding: 0.45rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: #fff;
+  color: var(--accent-dark);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  cursor: pointer;
+  min-height: 44px;
+  touch-action: manipulation;
+  transition: background 0.15s;
+}
+
+.btn-secondary:hover {
+  background: var(--accent-light);
+}
+
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.list-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  padding: 1.5rem 0;
+}
+
+/* 各エントリ行 */
+.entry-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  font-size: 0.9rem;
+}
+
+.entry-item.income  { border-left: 3px solid var(--income-color); }
+.entry-item.expense { border-left: 3px solid var(--expense-color); }
+
+.entry-date {
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.entry-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.entry-category {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.entry-memo {
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.entry-amount {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.entry-item.income  .entry-amount { color: var(--income-color); }
+.entry-item.expense .entry-amount { color: var(--expense-color); }
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: #adb5bd;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem 0.35rem;
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.btn-delete:hover {
+  color: var(--expense-color);
+  background: #fde8e8;
+}
+
+/* ===========================
+   How-to Section
+=========================== */
+.howto-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.howto-section h2 {
+  margin-top: 1.25rem;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol,
+.howto-section p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.howto-section ol {
+  padding-left: 1.4rem;
+}
+
+.howto-section li {
+  margin-bottom: 0.5rem;
+}
+
+/* ===========================
+   Footer
+=========================== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+footer a {
+  color: #555;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer p + p {
+  margin-top: 0.5rem;
+}
+
+/* ===========================
+   Responsive — 640px+
+=========================== */
+@media (min-width: 640px) {
+  .topbar h1 {
+    font-size: 1.6rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  .summary-card {
+    padding: 1rem 0.75rem;
+  }
+
+  .card-amount {
+    font-size: 1.2rem;
+  }
+
+  .entry-item {
+    font-size: 0.95rem;
+  }
+}
+
+/* ===========================
+   Responsive — max 480px
+=========================== */
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .entry-item {
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+  }
+
+  .btn-delete {
+    grid-row: 1 / 3;
+    grid-column: 3;
+  }
+
+  .entry-date {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .entry-info {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+
+  .entry-amount {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 0.95rem;
+  }
+}

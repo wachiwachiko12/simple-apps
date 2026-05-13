@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="無料の家計簿アプリ。登録不要でブラウザだけで使えます。収入・支出の記録、カテゴリ別グラフ、月別集計、CSV出力対応。データはスマホ・PCに保存されます。">
+  <title>家計簿アプリ 無料・登録不要 | ブラウザで簡単管理</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="家計簿アプリ 無料・登録不要 | ブラウザで簡単管理">
+  <meta property="og:description" content="無料の家計簿アプリ。登録不要でブラウザだけで使えます。収入・支出の記録、カテゴリ別グラフ、月別集計、CSV出力対応。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/household-budget/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="家計簿アプリ 無料・登録不要 | ブラウザで簡単管理">
+  <meta name="twitter:description" content="登録不要でブラウザだけで使える無料家計簿。データはお使いの端末に保存されます。">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google AdSense (placeholder) -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+  <!-- トップバー -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>家計簿アプリ<span class="badge">無料・登録不要</span></h1>
+      <p class="subtitle">ブラウザだけで使える収支管理ツール。データはあなたの端末に保存されます。</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ファーストビュー内） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告スペース</div>
+
+    <!-- 月次フィルタ＋サマリー -->
+    <section class="summary-section" aria-label="月次サマリー">
+      <div class="month-nav">
+        <button id="btn-prev-month" class="btn-nav" aria-label="前の月">&#8249;</button>
+        <span id="current-month-label" class="month-label">2026年5月</span>
+        <button id="btn-next-month" class="btn-nav" aria-label="次の月">&#8250;</button>
+      </div>
+
+      <div class="summary-cards">
+        <div class="summary-card income">
+          <span class="card-label">収入合計</span>
+          <span class="card-amount" id="total-income">¥0</span>
+        </div>
+        <div class="summary-card expense">
+          <span class="card-label">支出合計</span>
+          <span class="card-amount" id="total-expense">¥0</span>
+        </div>
+        <div class="summary-card balance">
+          <span class="card-label">残高</span>
+          <span class="card-amount" id="total-balance">¥0</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（サマリー直下・高クリック率） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">広告スペース</div>
+
+    <!-- 記録入力フォーム -->
+    <section id="tool" class="tool-section" aria-label="収支記録の入力">
+      <h2>収支を記録する</h2>
+      <form id="entry-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="entry-date">日付</label>
+            <input type="date" id="entry-date" required>
+          </div>
+          <div class="form-group">
+            <label for="entry-type">種別</label>
+            <select id="entry-type" required>
+              <option value="expense">支出</option>
+              <option value="income">収入</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="entry-category">カテゴリ</label>
+            <select id="entry-category" required>
+              <optgroup label="支出" id="expense-categories">
+                <option value="食費">食費</option>
+                <option value="交通費">交通費</option>
+                <option value="住居費">住居費</option>
+                <option value="光熱費">光熱費</option>
+                <option value="通信費">通信費</option>
+                <option value="医療費">医療費</option>
+                <option value="娯楽費">娯楽費</option>
+                <option value="日用品">日用品</option>
+                <option value="衣服">衣服</option>
+                <option value="その他支出">その他支出</option>
+              </optgroup>
+              <optgroup label="収入" id="income-categories">
+                <option value="給与">給与</option>
+                <option value="副業">副業</option>
+                <option value="その他収入">その他収入</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="entry-amount">金額（円）</label>
+            <input type="number" id="entry-amount" min="1" step="1" placeholder="例: 3500" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="entry-memo">メモ（任意）</label>
+          <input type="text" id="entry-memo" maxlength="100" placeholder="例: スーパーで買い物">
+        </div>
+
+        <p id="form-error" class="form-error" role="alert" aria-live="polite"></p>
+
+        <button type="submit" class="btn-primary">記録する</button>
+      </form>
+    </section>
+
+    <!-- グラフセクション -->
+    <section class="chart-section" aria-label="支出カテゴリ別グラフ">
+      <h2>支出の内訳（当月）</h2>
+      <div class="chart-wrapper">
+        <canvas id="expense-chart" aria-label="支出カテゴリ別ドーナツグラフ" role="img"></canvas>
+        <p id="chart-empty" class="chart-empty">今月の支出データがありません</p>
+      </div>
+    </section>
+
+    <!-- 記録一覧 -->
+    <section class="list-section" aria-label="収支記録一覧">
+      <div class="list-header">
+        <h2>記録一覧</h2>
+        <button id="btn-export-csv" class="btn-secondary">CSVエクスポート</button>
+      </div>
+      <div id="entries-list" class="entries-list">
+        <p class="list-empty">まだ記録がありません</p>
+      </div>
+    </section>
+
+    <!-- 使い方セクション（SEOコンテンツ） -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「日付」「種別（収入・支出）」「カテゴリ」「金額」を入力し、「記録する」ボタンを押します。</li>
+        <li>月の切り替えは画面上部の矢印ボタンで行えます。選択した月のデータのみ表示されます。</li>
+        <li>支出の内訳はドーナツグラフで確認できます。カテゴリ別の割合が一目でわかります。</li>
+        <li>「CSVエクスポート」ボタンで記録をCSVファイルとして保存できます。家計の見直しや確定申告にも活用できます。</li>
+        <li>各記録の右側にある「削除」ボタンで不要なデータを削除できます。</li>
+      </ol>
+
+      <h2>家計簿アプリについて</h2>
+      <p>
+        この家計簿アプリは、インターネット環境やアカウント登録なしでお使いいただける完全ローカル型のツールです。
+        入力したデータはすべてお使いのブラウザ（localStorage）に保存され、外部のサーバーには一切送信されません。
+        スマートフォン・タブレット・パソコンのいずれでも快適にご利用いただけます。
+        収入は「給与」「副業」「その他収入」、支出は「食費」「交通費」「住居費」など10カテゴリに分けて管理でき、
+        月別の収入合計・支出合計・残高を自動集計します。カテゴリ別の円グラフで家計の課題を視覚的に把握でき、
+        CSVエクスポート機能でデータをExcelやGoogleスプレッドシートに取り込むことも可能です。
+        毎日の家計管理を手軽に始めたい方にぴったりの無料ツールです。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力した家計データはすべてお使いの端末のブラウザ内（localStorage）にのみ保存されます。
+        外部サーバーへの送信・クラウド同期は一切行いません。ブラウザのデータをクリアするとデータが削除されますので、
+        定期的にCSVエクスポートでバックアップされることをおすすめします。
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
