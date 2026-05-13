@@ -1,0 +1,562 @@
+/* ===== リセット・ベース ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --accent: #1a6b4a;
+  --accent-light: #d4edde;
+  --accent-dark: #145538;
+  --bg: #f4f7f5;
+  --card-bg: #ffffff;
+  --text: #2d2d2d;
+  --text-muted: #666666;
+  --border: #d0d8d4;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  /* BMI判定カラー */
+  --bmi-thin: #2980b9;
+  --bmi-normal: #27ae60;
+  --bmi-obese1: #e67e22;
+  --bmi-obese2: #c0392b;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ===== ヘッダー ===== */
+header {
+  background: var(--accent);
+  color: #ffffff;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  opacity: 0.88;
+  margin-top: 0.3rem;
+}
+
+/* ===== メイン ===== */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===== 広告ユニット ===== */
+.ad-unit {
+  min-height: 90px;
+  background: #e9efec;
+  margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 0.75rem;
+  border-radius: 6px;
+  border: 1px dashed #c5d3cc;
+}
+
+/* ===== タブナビゲーション ===== */
+.tab-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tab-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 90px;
+  min-height: 44px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.tab-btn:hover:not(.active) {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+/* ===== ツールセクション（カード） ===== */
+.tool-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.tool-section h2 {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-light);
+}
+
+/* ===== フォーム ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+}
+
+.form-group {
+  margin-top: 0.75rem;
+}
+
+label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: #fafafa;
+  color: var(--text);
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+
+input[readonly] {
+  background: #f0f4f2;
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* セレクトの矢印 */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231a6b4a' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+.note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #f0f4f2;
+  border-radius: 6px;
+}
+
+/* ===== ボタン ===== */
+.btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 44px;
+  touch-action: manipulation;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+}
+
+.btn-secondary {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--card-bg);
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 44px;
+  touch-action: manipulation;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  background: var(--accent-light);
+}
+
+.btn-danger {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: #fdecea;
+  color: #c0392b;
+  border: 1.5px solid #e0a09a;
+  border-radius: 8px;
+  cursor: pointer;
+  min-height: 44px;
+  touch-action: manipulation;
+  transition: background 0.2s;
+}
+
+.btn-danger:hover {
+  background: #fadbd8;
+}
+
+/* ===== 結果パネル ===== */
+.result-panel {
+  margin-top: 1.25rem;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.result-card {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.2rem;
+}
+
+.result-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.result-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+}
+
+.result-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* BMIカードの判定カラー */
+#bmi-card.bmi-thin   { border-color: var(--bmi-thin);   background: #eaf4fb; }
+#bmi-card.bmi-normal { border-color: var(--bmi-normal); background: #eafaf1; }
+#bmi-card.bmi-obese1 { border-color: var(--bmi-obese1); background: #fef5eb; }
+#bmi-card.bmi-obese2 { border-color: var(--bmi-obese2); background: #fdf0ee; }
+
+#bmi-card.bmi-thin   .result-value { color: var(--bmi-thin);   }
+#bmi-card.bmi-normal .result-value { color: var(--bmi-normal); }
+#bmi-card.bmi-obese1 .result-value { color: var(--bmi-obese1); }
+#bmi-card.bmi-obese2 .result-value { color: var(--bmi-obese2); }
+
+/* バランスカード（プラス=赤/マイナス=緑） */
+.balance-card.surplus .result-value { color: #c0392b; }
+.balance-card.deficit .result-value { color: #27ae60; }
+
+/* ===== 目標体重セクション ===== */
+.goal-section {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--accent-light);
+  border-radius: var(--radius);
+}
+
+.goal-section label {
+  font-size: 0.875rem;
+  color: var(--accent-dark);
+}
+
+.goal-input-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.goal-input-row input {
+  flex: 1;
+}
+
+.goal-result {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ===== カロリーアドバイス ===== */
+.advice-text {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  background: var(--accent-light);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--accent-dark);
+  line-height: 1.5;
+}
+
+/* ===== グラフ ===== */
+.chart-section {
+  margin-top: 1.5rem;
+}
+
+.chart-section h3 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.chart-wrapper {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  height: 220px;
+}
+
+/* ===== 記録一覧 ===== */
+.log-list-section {
+  margin-top: 1.25rem;
+}
+
+.log-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.log-list-header h3 {
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.log-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.log-date {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.log-weight-val {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.log-memo {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 80px;
+}
+
+.log-delete {
+  background: none;
+  border: none;
+  color: #c0392b;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  min-height: 44px;
+  min-width: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.log-delete:hover {
+  background: #fdecea;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1.5rem;
+}
+
+/* ===== 使い方セクション ===== */
+.howto-section {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.howto-section h2 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-top: 1.25rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--accent-light);
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol, .howto-section p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.howto-section ol {
+  padding-left: 1.4rem;
+}
+
+.howto-section li {
+  margin-bottom: 0.4rem;
+}
+
+/* ===== フッター ===== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
+  line-height: 2;
+}
+
+footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
+/* ===== レスポンシブ（640px以上） ===== */
+@media (min-width: 640px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  .tool-section {
+    padding: 1.75rem;
+  }
+
+  .result-value {
+    font-size: 1.9rem;
+  }
+
+  .log-memo {
+    max-width: 160px;
+  }
+
+  .chart-wrapper {
+    height: 260px;
+  }
+}
+
+/* ===== モバイル（max 480px） ===== */
+@media (max-width: 480px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .result-value {
+    font-size: 1.35rem;
+  }
+
+  .tab-btn {
+    font-size: 0.82rem;
+    padding: 0.5rem 0.5rem;
+    min-width: 80px;
+  }
+
+  .log-item {
+    grid-template-columns: auto 1fr auto auto;
+  }
+}

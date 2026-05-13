@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="BMI計算・基礎代謝・消費カロリー・体重記録を無料で管理。登録不要でブラウザだけで使えます。体重グラフ・カロリー収支対応。">
+  <title>BMI計算・カロリー収支ダッシュボード | 無料・登録不要</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/bmi-calorie/">
+  <!-- OGP -->
+  <meta property="og:title" content="BMI計算・カロリー収支ダッシュボード | 無料・登録不要">
+  <meta property="og:description" content="BMI計算・基礎代謝・消費カロリー・体重記録を無料で管理。登録不要でブラウザだけで使えます。体重グラフ・カロリー収支対応。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/bmi-calorie/">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense: async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous" -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>BMI計算・カロリー収支ダッシュボード</h1>
+    <p class="subtitle">無料・登録不要。体重管理・基礎代謝・カロリー収支をまとめて管理</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <!-- AdSense ad-top -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告スペース</div>
+
+    <!-- タブナビゲーション -->
+    <nav class="tab-nav" aria-label="機能タブ">
+      <button class="tab-btn active" data-tab="bmi" aria-selected="true" aria-controls="tab-bmi">BMI・代謝</button>
+      <button class="tab-btn" data-tab="calorie" aria-selected="false" aria-controls="tab-calorie">カロリー収支</button>
+      <button class="tab-btn" data-tab="log" aria-selected="false" aria-controls="tab-log">体重記録</button>
+    </nav>
+
+    <!-- タブ1: BMI・代謝 -->
+    <section id="tab-bmi" class="tool-section tab-panel" role="tabpanel">
+      <h2>BMI・基礎代謝計算</h2>
+      <form id="bmi-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="height">身長 (cm)</label>
+            <input type="number" id="height" name="height" min="100" max="250" step="0.1" placeholder="例: 170" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="weight">体重 (kg)</label>
+            <input type="number" id="weight" name="weight" min="20" max="300" step="0.1" placeholder="例: 65" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="age">年齢</label>
+            <input type="number" id="age" name="age" min="1" max="120" step="1" placeholder="例: 30" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="sex">性別</label>
+            <select id="sex" name="sex" aria-required="true">
+              <option value="male">男性</option>
+              <option value="female">女性</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="activity">活動レベル</label>
+          <select id="activity" name="activity">
+            <option value="1.2">座りがち（ほぼ運動しない）</option>
+            <option value="1.375">軽い運動（週1〜3日）</option>
+            <option value="1.55" selected>適度な運動（週3〜5日）</option>
+            <option value="1.725">激しい運動（週6〜7日）</option>
+            <option value="1.9">非常に激しい運動（毎日2回以上）</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary">計算する</button>
+      </form>
+
+      <div id="bmi-result" class="result-panel" aria-live="polite" hidden>
+        <div class="result-grid">
+          <div class="result-card" id="bmi-card">
+            <span class="result-label">BMI</span>
+            <span class="result-value" id="bmi-value">--</span>
+            <span class="result-sub" id="bmi-category">--</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">理想体重（BMI=22）</span>
+            <span class="result-value" id="ideal-weight">--</span>
+            <span class="result-sub">kg</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">基礎代謝量（BMR）</span>
+            <span class="result-value" id="bmr-value">--</span>
+            <span class="result-sub">kcal/日</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">1日の消費カロリー（TDEE）</span>
+            <span class="result-value" id="tdee-value">--</span>
+            <span class="result-sub">kcal/日</span>
+          </div>
+        </div>
+        <div id="goal-section" class="goal-section">
+          <label for="goal-weight">目標体重 (kg)</label>
+          <div class="goal-input-row">
+            <input type="number" id="goal-weight" min="20" max="300" step="0.1" placeholder="例: 60" aria-label="目標体重（kg）">
+            <button type="button" id="set-goal-btn" class="btn-secondary">設定</button>
+          </div>
+          <div id="goal-result" class="goal-result" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- タブ2: カロリー収支 -->
+    <section id="tab-calorie" class="tool-section tab-panel" role="tabpanel" hidden>
+      <h2>カロリー収支管理</h2>
+      <p class="note">先に「BMI・代謝」タブで計算してください（TDEE が必要です）。</p>
+      <form id="calorie-form" novalidate>
+        <div class="form-group">
+          <label for="tdee-display">1日の消費カロリー（TDEE）</label>
+          <input type="number" id="tdee-display" placeholder="BMI・代謝タブで計算" readonly aria-readonly="true">
+        </div>
+        <div class="form-group">
+          <label for="intake">摂取カロリー (kcal)</label>
+          <input type="number" id="intake" min="0" max="10000" step="1" placeholder="例: 1800" required aria-required="true">
+        </div>
+        <button type="submit" class="btn-primary">収支を計算</button>
+      </form>
+      <div id="calorie-result" class="result-panel" aria-live="polite" hidden>
+        <div class="result-grid">
+          <div class="result-card">
+            <span class="result-label">摂取カロリー</span>
+            <span class="result-value" id="intake-display">--</span>
+            <span class="result-sub">kcal</span>
+          </div>
+          <div class="result-card">
+            <span class="result-label">消費カロリー（TDEE）</span>
+            <span class="result-value" id="tdee-display2">--</span>
+            <span class="result-sub">kcal</span>
+          </div>
+          <div class="result-card balance-card" id="balance-card">
+            <span class="result-label">収支（摂取 − 消費）</span>
+            <span class="result-value" id="balance-value">--</span>
+            <span class="result-sub" id="balance-label">kcal</span>
+          </div>
+        </div>
+        <p id="calorie-advice" class="advice-text"></p>
+      </div>
+    </section>
+
+    <!-- タブ3: 体重記録 -->
+    <section id="tab-log" class="tool-section tab-panel" role="tabpanel" hidden>
+      <h2>体重記録ログ</h2>
+      <form id="log-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="log-date">日付</label>
+            <input type="date" id="log-date" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="log-weight">体重 (kg)</label>
+            <input type="number" id="log-weight" min="20" max="300" step="0.1" placeholder="例: 65.2" required aria-required="true">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="log-memo">メモ（任意）</label>
+          <input type="text" id="log-memo" maxlength="50" placeholder="例: 昼食外食">
+        </div>
+        <button type="submit" class="btn-primary">記録する</button>
+      </form>
+
+      <!-- 広告ユニット2（結果下） -->
+      <!-- AdSense ad-result -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">広告スペース</div>
+
+      <div id="chart-section" class="chart-section">
+        <h3>体重推移グラフ</h3>
+        <div class="chart-wrapper">
+          <canvas id="weight-chart" aria-label="体重推移グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <div id="log-list-section" class="log-list-section">
+        <div class="log-list-header">
+          <h3>記録一覧</h3>
+          <button type="button" id="clear-log-btn" class="btn-danger" aria-label="全記録を削除">全削除</button>
+        </div>
+        <div id="log-list" aria-live="polite">
+          <p class="empty-msg">記録がありません。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「BMI・代謝」タブで身長・体重・年齢・性別・活動レベルを入力し、「計算する」をタップします。</li>
+        <li>BMI値・判定・理想体重・基礎代謝（BMR）・1日の消費カロリー（TDEE）が表示されます。</li>
+        <li>「カロリー収支」タブで本日の摂取カロリーを入力すると、消費との差分が確認できます。</li>
+        <li>「体重記録」タブで日々の体重をメモと一緒に記録すると、折れ線グラフで推移を確認できます。</li>
+        <li>記録はブラウザのlocalStorageに保存されるため、ページを閉じても消えません。</li>
+      </ol>
+
+      <h2>BMI・基礎代謝とは</h2>
+      <p>
+        BMI（Body Mass Index）は体重(kg)を身長(m)の二乗で割った体格指数です。日本肥満学会の基準では、BMI 18.5未満が「低体重（やせ）」、18.5〜25未満が「普通体重」、25〜30未満が「肥満（1度）」、30以上が「肥満（2度以上）」と判定されます。
+        理想体重はBMI=22を基準に算出します。BMI 22は統計的に最も疾患リスクが低いとされる値です。
+      </p>
+      <p>
+        基礎代謝量（BMR）は安静時に消費されるエネルギー量で、ハリス・ベネディクト式（改訂版）を用いて計算します。
+        BMRに活動係数をかけた値がTDEE（Total Daily Energy Expenditure: 1日の総消費カロリー）です。
+        摂取カロリーがTDEEより少なければ体重減少、多ければ体重増加につながります。
+        このダッシュボードはあくまで目安です。体調に合わせて専門家にご相談ください。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>入力した身長・体重・記録データはすべてお使いのブラウザ内にのみ保存されます。外部サーバーへの送信は一切行いません。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
