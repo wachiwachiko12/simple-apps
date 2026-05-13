@@ -3,19 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="和暦・西暦を無料で即変換。令和・平成・昭和・大正・明治に対応。生まれ年から今の年齢も計算できます。スマホ対応・登録不要。">
-  <title>和暦・西暦 変換ツール | 令和・平成・昭和・大正・明治に対応</title>
+  <meta name="description" content="和暦から西暦・西暦から和暦をリアルタイム変換。令和・平成・昭和・大正・明治に対応。生まれ年から現在の年齢を自動計算。年齢早見表・干支表示も対応。無料・登録不要。">
+  <title>和暦・西暦 変換ツール 2026年版 | 令和・平成・昭和 + 年齢早見表</title>
   <!-- OGP -->
-  <meta property="og:title" content="和暦・西暦 変換ツール | 令和・平成・昭和・大正・明治に対応">
-  <meta property="og:description" content="和暦・西暦を無料で即変換。令和・平成・昭和・大正・明治に対応。生まれ年から今の年齢も計算できます。スマホ対応・登録不要。">
+  <meta property="og:title" content="和暦・西暦 変換ツール 2026年版 | 令和・平成・昭和 + 年齢早見表">
+  <meta property="og:description" content="和暦から西暦・西暦から和暦をリアルタイム変換。令和・平成・昭和・大正・明治に対応。年齢早見表・干支表示も対応。無料・登録不要。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://keisanlab.jp/apps/wareki-converter/">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="和暦・西暦 変換ツール | 令和・平成・昭和・大正・明治に対応">
-  <meta name="twitter:description" content="和暦・西暦を無料で即変換。令和・平成・昭和・大正・明治に対応。生まれ年から今の年齢も計算できます。スマホ対応・登録不要。">
+  <meta name="twitter:title" content="和暦・西暦 変換ツール 2026年版 | 令和・平成・昭和 + 年齢早見表">
+  <meta name="twitter:description" content="和暦から西暦・西暦から和暦をリアルタイム変換。令和・平成・昭和・大正・明治に対応。年齢早見表・干支表示も対応。無料・登録不要。">
   <!-- Canonical -->
   <link rel="canonical" href="https://keisanlab.jp/apps/wareki-converter/">
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "昭和64年は存在しますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "昭和64年は1989年1月1日〜1月7日の7日間のみ存在します。1989年1月8日からは平成元年となります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "令和元年は何年ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "令和元年は2019年です。令和は2019年5月1日に始まりました。" }
+      },
+      {
+        "@type": "Question",
+        "name": "昭和生まれは今何歳ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "昭和は1926年（昭和元年）から1989年（昭和64年）までです。2026年時点では、昭和元年生まれが100歳、昭和64年生まれが37歳になります（誕生日によって±1歳）。" }
+      },
+      {
+        "@type": "Question",
+        "name": "平成は西暦何年から何年ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "平成は1989年（平成元年）から2019年（平成31年）までです。2026年時点では、平成元年生まれが37歳、平成31年生まれが7歳になります（誕生日によって±1歳）。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,6 +60,7 @@
       <button class="tab active" data-tab="seireki-to-wareki" role="tab" aria-selected="true">西暦 → 和暦</button>
       <button class="tab" data-tab="wareki-to-seireki" role="tab" aria-selected="false">和暦 → 西暦</button>
       <button class="tab" data-tab="age-calc" role="tab" aria-selected="false">年齢計算</button>
+      <button class="tab" data-tab="age-table" role="tab" aria-selected="false">年齢早見表</button>
     </div>
 
     <!-- 西暦 → 和暦 -->
@@ -83,6 +113,27 @@
       <div class="result" id="result-age" aria-live="polite"></div>
     </section>
 
+    <!-- 年齢早見表タブ -->
+    <section class="tool-section hidden" id="tab-age-table">
+      <h2>年齢早見表（2026年時点）</h2>
+      <div class="era-filter" role="group" aria-label="元号フィルター">
+        <button type="button" class="era-btn active" data-era="all">全て</button>
+        <button type="button" class="era-btn" data-era="reiwa">令和</button>
+        <button type="button" class="era-btn" data-era="heisei">平成</button>
+        <button type="button" class="era-btn" data-era="showa">昭和</button>
+        <button type="button" class="era-btn" data-era="taisho">大正</button>
+      </div>
+      <div class="table-wrapper">
+        <table id="age-table">
+          <thead>
+            <tr><th>和暦年</th><th>西暦</th><th>干支</th><th>年齢（2026年）</th></tr>
+          </thead>
+          <tbody id="age-table-body"></tbody>
+        </table>
+      </div>
+      <p class="table-note">※ 誕生日を迎えているかどうかによって±1歳異なります</p>
+    </section>
+
     <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
 
     <!-- 早見表 -->
@@ -120,7 +171,17 @@
         <dd>昭和64年は1989年1月1日〜1月7日の7日間のみ存在します。1989年1月8日からは平成元年となります。</dd>
         <dt>令和元年は何年ですか？</dt>
         <dd>令和元年は2019年です。令和は2019年5月1日に始まりました。</dd>
+        <dt>昭和生まれは今何歳ですか？</dt>
+        <dd>2026年時点で、昭和元年（1926年）生まれが100歳、昭和64年（1989年）生まれが37歳です。詳しくは「年齢早見表」タブをご確認ください。</dd>
+        <dt>平成生まれは今何歳ですか？</dt>
+        <dd>2026年時点で、平成元年（1989年）生まれが37歳、平成31年（2019年）生まれが7歳です。</dd>
       </dl>
+
+      <h2>関連ツール</h2>
+      <ul class="related-links">
+        <li><a href="/apps/freelance-tax-simulator/">確定申告シミュレーター</a> — 開業年・創業年の和暦確認に</li>
+        <li><a href="/apps/household-budget/">家計簿アプリ</a> — 家計の収支記録をはじめる</li>
+      </ul>
     </section>
   </main>
 
