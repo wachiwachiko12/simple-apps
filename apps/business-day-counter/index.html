@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="営業日を自動計算。N営業日後の日付・期間内の営業日数・月末締め翌月払いの支払日を無料で計算。土日祝を自動除外。2026年・2027年の日本の祝日対応。登録不要。">
+  <title>営業日計算ツール｜N営業日後・月末締め翌月払い対応【無料】</title>
+  <meta property="og:title" content="営業日計算ツール | N営業日後・営業日数カウント【2026年祝日対応】">
+  <meta property="og:description" content="日本の祝日・土日を除いた営業日を自動計算。N営業日後の日付、期間内の営業日数、月末締め翌月払いの日付を無料で計算。2026年・2027年の祝日対応。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/business-day-counter/">
+  <link rel="canonical" href="https://keisanlab.jp/apps/business-day-counter/">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>営業日計算ツール</h1>
+    <p class="subtitle">日本の祝日・土日を除いた営業日を自動計算（2026〜2027年対応）</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告</div>
+
+    <!-- タブナビゲーション -->
+    <div class="tab-nav" role="tablist" aria-label="計算モード">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-ndays" id="btn-ndays" onclick="switchTab('ndays')">N営業日後</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-count" id="btn-count" onclick="switchTab('count')">営業日数カウント</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-closing" id="btn-closing" onclick="switchTab('closing')">締め日計算</button>
+    </div>
+
+    <!-- タブ1: N営業日後 -->
+    <section id="tab-ndays" class="tool-section tab-panel" role="tabpanel" aria-labelledby="btn-ndays">
+      <h2>N営業日後の日付を計算</h2>
+      <p class="section-desc">起算日から指定した営業日数後の日付を計算します。土日・祝日を自動で除外します。</p>
+      <div class="form-group">
+        <label for="ndays-start">起算日</label>
+        <input type="date" id="ndays-start" aria-label="起算日">
+      </div>
+      <div class="form-group">
+        <label for="ndays-n">営業日数</label>
+        <input type="number" id="ndays-n" min="1" max="365" value="5" aria-label="営業日数">
+      </div>
+      <button class="calc-btn" onclick="calcNDays()" aria-label="N営業日後を計算">計算する</button>
+      <div id="result-ndays" class="result-box" aria-live="polite"></div>
+    </section>
+
+    <!-- タブ2: 営業日数カウント -->
+    <section id="tab-count" class="tool-section tab-panel" role="tabpanel" aria-labelledby="btn-count" hidden>
+      <h2>期間内の営業日数をカウント</h2>
+      <p class="section-desc">開始日から終了日までの間に何営業日あるかを計算します。</p>
+      <div class="form-group">
+        <label for="count-start">開始日</label>
+        <input type="date" id="count-start" aria-label="開始日">
+      </div>
+      <div class="form-group">
+        <label for="count-end">終了日</label>
+        <input type="date" id="count-end" aria-label="終了日">
+      </div>
+      <button class="calc-btn" onclick="calcCount()" aria-label="営業日数を計算">計算する</button>
+      <div id="result-count" class="result-box" aria-live="polite"></div>
+    </section>
+
+    <!-- タブ3: 締め日計算 -->
+    <section id="tab-closing" class="tool-section tab-panel" role="tabpanel" aria-labelledby="btn-closing" hidden>
+      <h2>月末締め翌月払い日付計算</h2>
+      <p class="section-desc">締め日と支払日を指定して、次の支払日（営業日ベース）を算出します。</p>
+      <div class="form-group">
+        <label for="closing-base">基準日（請求発生日）</label>
+        <input type="date" id="closing-base" aria-label="基準日">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="closing-day">締め日</label>
+          <select id="closing-day" aria-label="締め日">
+            <option value="end">末日</option>
+            <option value="15">15日</option>
+            <option value="20">20日</option>
+            <option value="25">25日</option>
+            <option value="10">10日</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="payment-day">支払日</label>
+          <select id="payment-day" aria-label="支払日">
+            <option value="end">末日</option>
+            <option value="25">25日</option>
+            <option value="20">20日</option>
+            <option value="15">15日</option>
+            <option value="10">10日</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="payment-month-offset">支払月</label>
+        <select id="payment-month-offset" aria-label="支払月">
+          <option value="1">翌月払い</option>
+          <option value="2">翌々月払い</option>
+        </select>
+      </div>
+      <button class="calc-btn" onclick="calcClosing()" aria-label="支払日を計算">計算する</button>
+      <div id="result-closing" class="result-box" aria-live="polite"></div>
+    </section>
+
+    <!-- カレンダー表示 -->
+    <section id="calendar-section" class="calendar-section" hidden>
+      <h2 id="calendar-title">カレンダー</h2>
+      <div class="calendar-legend">
+        <span class="legend-item"><span class="legend-dot holiday"></span>祝日</span>
+        <span class="legend-item"><span class="legend-dot sunday"></span>日曜</span>
+        <span class="legend-item"><span class="legend-dot saturday"></span>土曜</span>
+        <span class="legend-item"><span class="legend-dot target"></span>対象日</span>
+      </div>
+      <div id="calendar-container"></div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">広告</div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>N営業日後タブ</strong>：起算日と営業日数を入力して「計算する」をタップすると、土日・祝日を除いたN営業日後の日付が表示されます。</li>
+        <li><strong>営業日数カウントタブ</strong>：開始日と終了日を指定すると、その期間内の営業日数を自動でカウントします。</li>
+        <li><strong>締め日計算タブ</strong>：基準日・締め日・支払日を選択すると、月末締め翌月払いなどの実際の支払日（営業日ベース）を算出します。</li>
+        <li>計算後は対象月のカレンダーが表示され、土日・祝日・対象日が色分けで確認できます。</li>
+      </ol>
+
+      <h2>営業日計算ツールとは</h2>
+      <p>
+        この営業日計算ツールは、日本の土曜日・日曜日・祝日を除いた「営業日」を基準に日付計算を行う無料のWebツールです。
+        「5営業日後の納品日はいつ？」「月末締め翌月25日払いで次の支払日は？」といったビジネスシーンで頻繁に必要となる計算を、
+        わずか数タップで正確に求めることができます。2026年・2027年の日本の祝日データをあらかじめ組み込んでおり、
+        祝日を含む複雑な日程も自動で考慮します。
+        請求書の締め処理、納期管理、給与計算など、あらゆるビジネス業務でご活用ください。
+      </p>
+
+      <h2>対応している祝日について</h2>
+      <p>
+        2026年・2027年の国民の祝日（元日・成人の日・建国記念の日・天皇誕生日・春分の日・昭和の日・憲法記念日・みどりの日・こどもの日・海の日・山の日・敬老の日・秋分の日・スポーツの日・文化の日・勤労感謝の日）に対応しています。
+        なお、振替休日は本ツールでは考慮していません。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <nav aria-label="フッターナビゲーション">
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      <span class="sep">|</span>
+      <a href="/">ツール一覧</a>
+    </nav>
+    <p><small>&copy; 2026 KeisanLab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
