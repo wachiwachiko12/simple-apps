@@ -1,0 +1,471 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --accent: #1565c0;
+  --accent-hover: #0d47a1;
+  --bg: #f4f6fb;
+  --white: #ffffff;
+  --text: #212121;
+  --text-sub: #555;
+  --border: #d0d7e3;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --saturday: #1565c0;
+  --sunday: #c62828;
+  --holiday: #e65100;
+  --target: #2e7d32;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", "Hiragino Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ===== ヘッダー ===== */
+header {
+  background: var(--accent);
+  color: var(--white);
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  opacity: 0.88;
+  margin-top: 0.3rem;
+}
+
+/* ===== メインレイアウト ===== */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===== 広告ユニット ===== */
+.ad-unit {
+  min-height: 90px;
+  background: #e8ecf3;
+  margin: 1.25rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px dashed #c0c8d8;
+}
+
+/* ===== タブナビゲーション ===== */
+.tab-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 0.65rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: var(--white);
+  color: var(--text-sub);
+  border: 2px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.tab-btn.active {
+  background: var(--white);
+  color: var(--accent);
+  border-color: var(--accent);
+  border-bottom: 2px solid var(--white);
+  position: relative;
+  z-index: 1;
+}
+
+.tab-btn:hover:not(.active) {
+  background: #e8f0fe;
+  color: var(--accent);
+}
+
+/* ===== ツールセクション（タブパネル） ===== */
+.tool-section {
+  background: var(--white);
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--accent);
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+.tool-section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.section-desc {
+  font-size: 0.875rem;
+  color: var(--text-sub);
+  margin-bottom: 1rem;
+}
+
+/* ===== フォーム ===== */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+}
+
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text);
+  appearance: auto;
+  transition: border-color 0.15s;
+}
+
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.12);
+}
+
+/* ===== ボタン ===== */
+.calc-btn {
+  display: block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: var(--accent);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+.calc-btn:hover {
+  background: var(--accent-hover);
+}
+
+.calc-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== 結果ボックス ===== */
+.result-box {
+  margin-top: 1.25rem;
+  padding: 1.25rem;
+  background: #e3f2fd;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  display: none;
+}
+
+.result-box.visible {
+  display: block;
+}
+
+.result-box.error {
+  background: #ffebee;
+  border-left-color: #c62828;
+}
+
+.result-main {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.result-sub {
+  font-size: 0.875rem;
+  color: var(--text-sub);
+  text-align: center;
+}
+
+/* ===== カレンダーセクション ===== */
+.calendar-section {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin-top: 1.25rem;
+}
+
+.calendar-section h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  color: var(--text-sub);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-dot.holiday { background: var(--holiday); }
+.legend-dot.sunday  { background: var(--sunday); }
+.legend-dot.saturday { background: var(--saturday); }
+.legend-dot.target  { background: var(--target); }
+
+/* カレンダーテーブル */
+.cal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.cal-table th {
+  text-align: center;
+  padding: 0.4rem 0;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+  border-bottom: 1px solid var(--border);
+}
+
+.cal-table th.sun { color: var(--sunday); }
+.cal-table th.sat { color: var(--saturday); }
+
+.cal-table td {
+  text-align: center;
+  padding: 0.4rem 0.2rem;
+  border: 1px solid #f0f0f0;
+  min-width: 36px;
+  height: 36px;
+  line-height: 1;
+  vertical-align: middle;
+  position: relative;
+}
+
+.cal-table td.empty {
+  background: #fafafa;
+}
+
+.cal-table td.workday {
+  color: var(--text);
+}
+
+.cal-table td.saturday {
+  color: var(--saturday);
+  background: #e8f0fe;
+}
+
+.cal-table td.sunday {
+  color: var(--sunday);
+  background: #ffebee;
+}
+
+.cal-table td.holiday {
+  color: var(--holiday);
+  background: #fff3e0;
+}
+
+.cal-table td.target {
+  background: #c8e6c9;
+  color: var(--target);
+  font-weight: 800;
+  border-radius: 4px;
+}
+
+.cal-table td.target.sunday,
+.cal-table td.target.holiday {
+  background: #c8e6c9;
+  color: var(--target);
+}
+
+.holiday-name {
+  display: block;
+  font-size: 0.55rem;
+  color: var(--holiday);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 36px;
+  margin: 0 auto;
+}
+
+.cal-table td.target .holiday-name {
+  color: var(--target);
+}
+
+/* ===== 使い方セクション ===== */
+.howto-section {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.howto-section h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol,
+.howto-section p {
+  font-size: 0.9rem;
+  color: var(--text-sub);
+}
+
+.howto-section ol {
+  padding-left: 1.25rem;
+}
+
+.howto-section li {
+  margin-bottom: 0.6rem;
+}
+
+/* ===== フッター ===== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+footer nav {
+  margin-bottom: 0.5rem;
+}
+
+footer a {
+  color: #777;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+
+footer .sep {
+  margin: 0 0.5rem;
+  color: #ccc;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 640px) {
+  header h1 {
+    font-size: 1.1rem;
+  }
+
+  .tab-btn {
+    font-size: 0.8rem;
+    padding: 0.55rem 0.3rem;
+    min-width: 80px;
+  }
+
+  .tool-section {
+    padding: 1.25rem 1rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .cal-table td {
+    min-width: 28px;
+    height: 32px;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.1rem;
+  }
+
+  .holiday-name {
+    font-size: 0.5rem;
+    max-width: 28px;
+  }
+
+  .result-main {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 640px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+}
