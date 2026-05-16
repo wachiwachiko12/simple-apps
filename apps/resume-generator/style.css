@@ -572,6 +572,14 @@ textarea { resize: vertical; }
   margin: 0 0 0 0.75rem;
 }
 
+/* ===== AD UNIT ===== */
+.ad-unit {
+  min-height: 90px;
+  margin: 1.5rem auto;
+  max-width: 728px;
+  text-align: center;
+}
+
 /* ===== AFFILIATE ===== */
 .affiliate-block {
   margin: 1rem 0 1.5rem;
