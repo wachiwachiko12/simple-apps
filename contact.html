@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="description" content="Keisan Lab へのお問い合わせはこちら。ツールの不具合・機能リクエスト・ご意見をお送りください。">
+  <meta name="robots" content="noindex">
+  <title>お問い合わせ | Keisan Lab</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      background: #f8f9fa;
+    }
+
+    header {
+      background: #2c3e50;
+      color: #fff;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    header h1 { font-size: 1.4rem; font-weight: 700; }
+    header p { font-size: 0.875rem; opacity: 0.85; margin-top: 0.3rem; }
+
+    main {
+      max-width: 640px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 0.4rem;
+    }
+
+    .required {
+      color: #c0392b;
+      margin-left: 0.2rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.7rem 0.85rem;
+      font-size: 1rem;
+      border: 1.5px solid #ccc;
+      border-radius: 7px;
+      background: #fff;
+      color: #333;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #2c3e50;
+      box-shadow: 0 0 0 3px rgba(44,62,80,0.12);
+    }
+
+    textarea { resize: vertical; min-height: 140px; }
+
+    .privacy-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: #555;
+      margin-bottom: 1.5rem;
+    }
+
+    .privacy-check input { margin-top: 0.2rem; flex-shrink: 0; width: 18px; height: 18px; cursor: pointer; }
+    .privacy-check a { color: #2c3e50; }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 700;
+      background: #2c3e50;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      min-height: 48px;
+      touch-action: manipulation;
+      transition: background 0.2s;
+    }
+
+    .btn-submit:hover:not(:disabled) { background: #1a252f; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .error-msg {
+      background: #fdecea;
+      border: 1px solid #f5c6cb;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: #c0392b;
+      margin-top: 0.75rem;
+    }
+
+    /* 送信成功 */
+    .success-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 3rem 2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .success-card h2 { font-size: 1.2rem; color: #2c3e50; margin-bottom: 0.75rem; }
+    .success-card p { font-size: 0.9rem; color: #666; }
+    .back-link {
+      display: inline-block;
+      margin-top: 1.5rem;
+      color: #2c3e50;
+      font-size: 0.9rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    footer a { color: #666; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer p + p { margin-top: 0.4rem; }
+
+    @media (min-width: 640px) {
+      header h1 { font-size: 1.8rem; }
+      .card { padding: 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>お問い合わせ</h1>
+    <p>ご質問・バグ報告・機能リクエストをお気軽にどうぞ</p>
+  </header>
+
+  <main>
+
+    <!-- フォーム本体 -->
+    <div class="card" id="form-card">
+      <form id="contact-form"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+            novalidate>
+
+        <!-- Formspree: メール件名の設定 -->
+        <input type="hidden" name="_subject" value="[Keisan Lab] お問い合わせが届きました">
+
+        <div class="field">
+          <label for="name">お名前<span class="required">*</span></label>
+          <input type="text" id="name" name="name"
+                 placeholder="山田 太郎" required maxlength="100">
+        </div>
+
+        <div class="field">
+          <label for="email">メールアドレス<span class="required">*</span></label>
+          <input type="email" id="email" name="email"
+                 placeholder="example@email.com" required maxlength="200">
+        </div>
+
+        <div class="field">
+          <label for="subject">件名</label>
+          <select id="subject" name="subject">
+            <option value="ツールの使い方について">ツールの使い方について</option>
+            <option value="不具合・バグ報告">不具合・バグ報告</option>
+            <option value="機能リクエスト">機能リクエスト</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="message">お問い合わせ内容<span class="required">*</span></label>
+          <textarea id="message" name="message"
+                    placeholder="具体的な内容をご記入ください。"
+                    required maxlength="2000"></textarea>
+        </div>
+
+        <div class="privacy-check">
+          <input type="checkbox" id="privacy-agree" required>
+          <label for="privacy-agree" style="font-weight:400">
+            <a href="/privacy-policy.html" target="_blank">プライバシーポリシー</a>に同意して送信します
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">送信する</button>
+        <div class="error-msg" id="error-msg" hidden></div>
+
+      </form>
+    </div>
+
+    <!-- 送信成功 -->
+    <div class="success-card" id="success-card" hidden>
+      <div class="success-icon">✅</div>
+      <h2>送信が完了しました</h2>
+      <p>お問い合わせありがとうございます。<br>内容を確認の上、必要に応じてご連絡いたします。</p>
+      <a href="/" class="back-link">← ツール一覧に戻る</a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const btn  = document.getElementById('submit-btn');
+    const errEl = document.getElementById('error-msg');
+    const formCard    = document.getElementById('form-card');
+    const successCard = document.getElementById('success-card');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = '送信中…';
+      errEl.hidden    = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method:  'POST',
+          body:    new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          formCard.hidden    = true;
+          successCard.hidden = false;
+          gtag('event', 'contact_submit', { event_category: 'engagement' });
+        } else {
+          const json = await res.json().catch(() => ({}));
+          throw new Error(json.error || 'サーバーエラーが発生しました');
+        }
+      } catch (err) {
+        errEl.textContent = err.message.includes('Failed to fetch')
+          ? 'ネットワークエラーです。インターネット接続を確認してください。'
+          : (err.message || '送信に失敗しました。時間をおいて再度お試しください。');
+        errEl.hidden    = false;
+        btn.disabled    = false;
+        btn.textContent = '送信する';
+      }
+    });
+  </script>
+
+</body>
+</html>
