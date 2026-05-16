@@ -401,6 +401,14 @@ footer {
 }
 footer a { color: #666; }
 
+/* ===== 広告ユニット ===== */
+.ad-unit {
+  min-height: 90px;
+  margin: 1.5rem auto;
+  max-width: 728px;
+  text-align: center;
+}
+
 /* ===== アフィリエイト ===== */
 .affiliate-block {
   margin: 1rem 0 1.5rem;

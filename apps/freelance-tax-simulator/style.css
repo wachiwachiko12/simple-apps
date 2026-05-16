@@ -304,6 +304,19 @@ button#calc-btn:hover {
   color: #555;
 }
 
+.result-affiliate {
+  margin-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1rem;
+}
+.result-affiliate-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #888;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
 .affiliate-block {
   margin: 1rem 0 1.5rem;
   padding: 1rem;
