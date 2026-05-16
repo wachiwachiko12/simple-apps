@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ブラウザだけで職務経歴書をリアルタイム作成・PDF印刷。登録不要・完全無料。エンジニア向けスキルシート・フリーランス向けフォーマットにも対応。転職活動をすぐに始めよう。">
+  <!-- OGP -->
+  <meta property="og:title" content="職務経歴書ジェネレーター【無料・登録不要】エンジニア対応 | Keisanlab">
+  <meta property="og:description" content="ブラウザだけで職務経歴書をリアルタイム作成・PDF印刷。登録不要・完全無料。エンジニア向けスキルシート・フリーランス向けフォーマットにも対応。転職活動をすぐに始めよう。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/resume-generator/">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="職務経歴書ジェネレーター【無料・登録不要】エンジニア対応 | Keisanlab">
+  <meta name="twitter:description" content="ブラウザだけで職務経歴書をリアルタイム作成・PDF印刷。登録不要・完全無料。エンジニア向けスキルシート・フリーランス向けフォーマットにも対応。">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/resume-generator/">
+  <title>職務経歴書ジェネレーター【無料・登録不要】エンジニア対応 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="no-print">
+    <h1>職務経歴書ジェネレーター — 無料・登録不要でリアルタイム作成・PDF印刷</h1>
+    <p class="subtitle">登録不要・無料でブラウザだけで作成・PDF印刷できます<br><span style="font-size:0.72rem;opacity:0.75;">エンジニア・ITフリーランス向けスキルシートに対応</span></p>
+  </header>
+
+  <!-- モバイル用ビュー切り替えバー -->
+  <div class="mobile-view-bar no-print">
+    <button class="mobile-view-btn active" id="mb-form-btn" onclick="mobileShowForm()">入力</button>
+    <button class="mobile-view-btn" id="mb-preview-btn" onclick="mobileShowPreview()">プレビュー</button>
+  </div>
+
+  <div class="app-layout">
+
+    <!-- ===== 入力フォーム ===== -->
+    <aside class="form-panel no-print">
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="basic">基本情報</button>
+        <button class="tab-btn" data-tab="summary">職務要約</button>
+        <button class="tab-btn" data-tab="career">職務経歴</button>
+        <button class="tab-btn" data-tab="skills">スキル</button>
+        <button class="tab-btn" data-tab="hope">希望条件</button>
+      </div>
+
+      <!-- タブ1: 基本情報 -->
+      <div class="tab-content active" id="tab-basic">
+        <h2>基本情報</h2>
+        <p class="save-note">※ 入力内容はブラウザに自動保存されます</p>
+
+        <label for="name">氏名</label>
+        <input type="text" id="name" placeholder="山田 太郎">
+        <label for="name-kana">ふりがな</label>
+        <input type="text" id="name-kana" placeholder="やまだ たろう">
+        <label for="birthday">生年月日</label>
+        <input type="date" id="birthday">
+        <label for="address">住所</label>
+        <input type="text" id="address" placeholder="東京都渋谷区〇〇 1-2-3">
+        <label for="tel">電話番号</label>
+        <input type="tel" id="tel" placeholder="090-0000-0000">
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" placeholder="example@email.com">
+        <label for="nearest-station">最寄り駅</label>
+        <input type="text" id="nearest-station" placeholder="渋谷駅（JR山手線）徒歩5分">
+        <label for="linkedin">LinkedIn URL（任意）</label>
+        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/yourname">
+        <label for="github">GitHub URL（任意）</label>
+        <input type="url" id="github" placeholder="https://github.com/yourname">
+      </div>
+
+      <!-- タブ2: 職務要約 -->
+      <div class="tab-content" id="tab-summary">
+        <h2>職務要約 / 自己PR</h2>
+        <p class="save-note">200〜400文字を目安にご記入ください</p>
+        <label for="summary">職務要約・自己PR</label>
+        <textarea id="summary" rows="12" placeholder="これまでの職務経験・強み・今後のキャリアビジョンを記入してください。"></textarea>
+        <div class="char-count" id="summary-count">0 文字</div>
+      </div>
+
+      <!-- タブ3: 職務経歴 -->
+      <div class="tab-content" id="tab-career">
+        <h2>職務経歴</h2>
+        <div id="career-list"></div>
+        <button class="add-btn" id="add-career">＋ 職歴を追加</button>
+      </div>
+
+      <!-- タブ4: スキル・資格 -->
+      <div class="tab-content" id="tab-skills">
+        <h2>スキル・資格</h2>
+
+        <label>使用言語・フレームワーク</label>
+        <div class="tag-input-wrap">
+          <div class="tag-list" id="prog-tags"></div>
+          <input type="text" id="prog-input" placeholder="例: Python, React（Enter で追加）" class="tag-input">
+        </div>
+
+        <label>担当フェーズ</label>
+        <div class="checkbox-group" id="phase-group">
+          <label class="cb-label"><input type="checkbox" value="要件定義"> 要件定義</label>
+          <label class="cb-label"><input type="checkbox" value="基本設計"> 基本設計</label>
+          <label class="cb-label"><input type="checkbox" value="詳細設計"> 詳細設計</label>
+          <label class="cb-label"><input type="checkbox" value="実装"> 実装</label>
+          <label class="cb-label"><input type="checkbox" value="テスト"> テスト</label>
+          <label class="cb-label"><input type="checkbox" value="運用保守"> 運用保守</label>
+        </div>
+
+        <label>開発環境・OS</label>
+        <div class="checkbox-group" id="env-group">
+          <label class="cb-label"><input type="checkbox" value="AWS"> AWS</label>
+          <label class="cb-label"><input type="checkbox" value="GCP"> GCP</label>
+          <label class="cb-label"><input type="checkbox" value="Azure"> Azure</label>
+          <label class="cb-label"><input type="checkbox" value="Docker"> Docker</label>
+          <label class="cb-label"><input type="checkbox" value="Linux"> Linux</label>
+          <label class="cb-label"><input type="checkbox" value="Windows"> Windows</label>
+          <label class="cb-label"><input type="checkbox" value="Mac"> Mac</label>
+        </div>
+
+        <label>プロジェクト規模の目安</label>
+        <input type="text" id="proj-scale" placeholder="例: チーム5名・期間6ヶ月">
+
+        <label>ツール・その他環境</label>
+        <div class="tag-input-wrap">
+          <div class="tag-list" id="tool-tags"></div>
+          <input type="text" id="tool-input" placeholder="例: Git, Jira（Enter で追加）" class="tag-input">
+        </div>
+
+        <label>語学</label>
+        <div class="tag-input-wrap">
+          <div class="tag-list" id="lang-tags"></div>
+          <input type="text" id="lang-input" placeholder="例: 英語（ビジネスレベル）（Enter で追加）" class="tag-input">
+        </div>
+
+        <label for="certifications">保有資格</label>
+        <textarea id="certifications" rows="5" placeholder="例:&#10;基本情報技術者試験（2022年）&#10;TOEIC 800点（2023年）"></textarea>
+      </div>
+
+      <!-- タブ5: 希望条件 -->
+      <div class="tab-content" id="tab-hope">
+        <h2>希望条件（任意）</h2>
+        <p class="save-note">※ 希望条件はプレビューに含まれます</p>
+        <label for="hope-job">希望職種</label>
+        <input type="text" id="hope-job" placeholder="例: Webエンジニア / プロジェクトマネージャー">
+        <label for="hope-location">希望勤務地</label>
+        <input type="text" id="hope-location" placeholder="例: 東京都内（リモート可）">
+        <label for="hope-salary">希望年収</label>
+        <input type="text" id="hope-salary" placeholder="例: 600〜800万円">
+      </div>
+
+    </aside>
+
+    <!-- ===== プレビュー ===== -->
+    <main class="preview-panel">
+      <div class="preview-toolbar no-print">
+        <button class="back-to-form-btn" onclick="mobileShowForm()">← 入力に戻る</button>
+        <button class="print-btn" onclick="window.print()">印刷 / PDF保存</button>
+      </div>
+
+      <!-- 職務経歴書本体（A4プレビュー） -->
+      <div class="resume" id="resume">
+
+        <div class="resume-header">
+          <h2 class="resume-title">職　務　経　歴　書</h2>
+          <div class="resume-date" id="p-created-date"></div>
+        </div>
+
+        <!-- 基本情報 -->
+        <section class="resume-section">
+          <div class="section-heading">基本情報</div>
+          <table class="info-table">
+            <tbody>
+              <tr>
+                <th>氏名</th>
+                <td id="p-name">—</td>
+                <th>ふりがな</th>
+                <td id="p-name-kana">—</td>
+              </tr>
+              <tr>
+                <th>生年月日</th>
+                <td id="p-birthday">—</td>
+                <th>最寄り駅</th>
+                <td id="p-nearest-station">—</td>
+              </tr>
+              <tr>
+                <th>住所</th>
+                <td colspan="3" id="p-address">—</td>
+              </tr>
+              <tr>
+                <th>電話番号</th>
+                <td id="p-tel">—</td>
+                <th>メール</th>
+                <td id="p-email">—</td>
+              </tr>
+              <tr id="p-links-row" style="display:none">
+                <th>Web</th>
+                <td colspan="3" id="p-links"></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 職務要約 -->
+        <section class="resume-section" id="p-summary-section">
+          <div class="section-heading">職務要約</div>
+          <div class="summary-body" id="p-summary">—</div>
+        </section>
+
+        <!-- 職務経歴 -->
+        <section class="resume-section">
+          <div class="section-heading">職務経歴</div>
+          <div id="p-career-list">
+            <p class="empty-notice">職歴を追加してください</p>
+          </div>
+        </section>
+
+        <!-- スキル・資格 -->
+        <section class="resume-section" id="p-skills-section">
+          <div class="section-heading">スキル・資格</div>
+          <div id="p-skills-body"></div>
+        </section>
+
+        <!-- 希望条件 -->
+        <section class="resume-section" id="p-hope-section" style="display:none">
+          <div class="section-heading">希望条件</div>
+          <table class="info-table">
+            <tbody>
+              <tr>
+                <th>希望職種</th>
+                <td id="p-hope-job">—</td>
+                <th>希望勤務地</th>
+                <td id="p-hope-location">—</td>
+              </tr>
+              <tr>
+                <th>希望年収</th>
+                <td colspan="3" id="p-hope-salary">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+      </div><!-- /resume -->
+    </main>
+  </div>
+
+  <!-- ===== 使い方・howto ===== -->
+  <section class="howto-section no-print" id="howto">
+    <div class="howto-inner">
+      <h2>使い方</h2>
+      <ol>
+        <li>「基本情報」タブに氏名・住所・連絡先を入力します。入力内容はブラウザに自動保存されます。</li>
+        <li>「職務要約」タブに自己PR・これまでの経歴の概要を200〜400文字程度で記入します。</li>
+        <li>「職務経歴」タブで「＋ 職歴を追加」ボタンを押し、各職場の情報を入力します。複数追加できます。</li>
+        <li>「スキル」タブでプログラミング言語・ツール・語学・資格を入力します。Enter キーでタグを追加できます。</li>
+        <li>右側のプレビューを確認し、「印刷 / PDF保存」ボタンからブラウザの印刷機能でPDF保存してください。</li>
+      </ol>
+
+      <h2>データの保存・プライバシーについて</h2>
+      <p>入力したデータはすべてお使いのブラウザのlocalStorageに保存されます。外部サーバーへの送信は一切行いません。ブラウザのデータを消去するとデータも削除されます。個人情報の取り扱いについては<a href="/privacy-policy.html">プライバシーポリシー</a>をご確認ください。</p>
+
+      <h2>職務経歴書ジェネレーターについて</h2>
+      <p>このツールは日本式の職務経歴書（Resume）をブラウザだけで作成・印刷できる無料のWebアプリです。アカウント登録不要でご利用いただけます。エンジニア・デザイナー・営業・事務など幅広い職種に対応しており、スキルタグの入力・職歴の複数追加・自己PRの記入など転職活動に必要な要素を網羅しています。作成した職務経歴書はブラウザの印刷機能からPDF形式で保存・送付できます。</p>
+
+      <h2>エンジニア・ITフリーランスの職務経歴書の書き方</h2>
+      <p>エンジニアの職務経歴書では「使用言語・フレームワーク」「担当フェーズ」「チーム規模・期間」を明記することが重要です。本ツールはこれらの項目を専用フィールドとして用意しており、採用担当者が重視する情報を漏れなく記載できます。</p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>データはどこに保存されますか？</dt>
+        <dd>入力データはすべてお使いのブラウザ（localStorage）にのみ保存されます。外部サーバーへの送信は一切行いません。</dd>
+        <dt>フリーランスの職務経歴書にも使えますか？</dt>
+        <dd>はい。雇用形態で「業務委託（フリーランス）」を選択すると、案件単位での記載に対応したフォーマットになります。</dd>
+        <dt>PDFで保存するにはどうすればよいですか？</dt>
+        <dd>「印刷 / PDF保存」ボタンを押し、印刷ダイアログで「PDFとして保存」を選択してください。Chrome・Safari・Edgeで動作確認済みです。</dd>
+      </dl>
+
+      <h2>転職活動をサポートするサービス</h2>
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">サイト・SNSで転職・キャリア情報を発信しながら収益化。A8.netなら転職・人材系の高単価案件が豊富です。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3PJ2+2QTZ76+0K+103AOY" rel="nofollow">サイト・SNSの収益化なら【A8.net】</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="no-print">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
