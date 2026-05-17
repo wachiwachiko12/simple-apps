@@ -420,6 +420,8 @@ function bindFormEvents() {
       if (key === 'invoice') {
         const valid = validateInvoice(state[key]);
         el.classList.toggle('invalid', !valid);
+        const errEl = document.getElementById('invoice-error');
+        if (errEl) errEl.hidden = valid || !state[key];
       }
       updatePreview();
       saveToStorage();
