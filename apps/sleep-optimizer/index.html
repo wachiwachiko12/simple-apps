@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="REM睡眠の90分サイクルから最適な起床・就寝時刻を無料で計算。入眠所要時間を考慮した正確な睡眠スケジュールを提案。登録不要・ブラウザだけで完結。">
+  <title>睡眠時間計算ツール【無料】レム睡眠サイクルで最適な起床・就寝時刻を算出 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/sleep-optimizer/">
+  <!-- OGP -->
+  <meta property="og:title" content="睡眠時間計算ツール【無料】レム睡眠サイクルで最適な起床・就寝時刻を算出 | Keisanlab">
+  <meta property="og:description" content="REM睡眠の90分サイクルから最適な起床・就寝時刻を無料で計算。入眠所要時間を考慮した正確な睡眠スケジュールを提案。登録不要・ブラウザだけで完結。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/sleep-optimizer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-sleep-optimizer.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="睡眠時間計算ツール【無料】レム睡眠サイクルで最適な起床・就寝時刻を算出">
+  <meta name="twitter:description" content="REM睡眠の90分サイクルから最適な起床・就寝時刻を無料で計算。登録不要・ブラウザだけで完結。">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>睡眠時間計算ツール — REM周期で起床・就寝時刻を逆算</h1>
+    <p class="subtitle">何時に寝ればいい？90分のREM周期と入眠所要時間から、最適な就寝・起床時刻を無料で計算</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- モード切り替えタブ -->
+    <div class="tool-section">
+      <div class="mode-tabs" role="tablist" aria-label="計算モード">
+        <button class="mode-tab active" id="tab-wakeup" role="tab" aria-selected="true" aria-controls="panel-wakeup" data-mode="wakeup">
+          起床時刻から計算
+        </button>
+        <button class="mode-tab" id="tab-bedtime" role="tab" aria-selected="false" aria-controls="panel-bedtime" data-mode="bedtime">
+          就寝時刻から計算
+        </button>
+      </div>
+
+      <!-- パネル1: 起床時刻から逆算 -->
+      <div id="panel-wakeup" class="mode-panel" role="tabpanel" aria-labelledby="tab-wakeup">
+        <p class="panel-desc">起きたい時刻を入力すると、おすすめの就寝時刻を計算します。</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="wakeup-time">起床希望時刻</label>
+            <input type="time" id="wakeup-time" aria-label="起床希望時刻" value="07:00">
+          </div>
+          <div class="form-group">
+            <label for="wakeup-latency">入眠所要時間（分）</label>
+            <input type="number" id="wakeup-latency" min="1" max="60" value="14" aria-label="入眠所要時間（分）" aria-describedby="wakeup-latency-error">
+          <p class="field-error" id="wakeup-latency-error" aria-live="polite" hidden>1〜60の数値を入力してください</p>
+          </div>
+        </div>
+        <div id="wakeup-results" class="results-container" aria-live="polite"></div>
+      </div>
+
+      <!-- パネル2: 就寝時刻から順算 -->
+      <div id="panel-bedtime" class="mode-panel hidden" role="tabpanel" aria-labelledby="tab-bedtime">
+        <p class="panel-desc">今から寝る時刻を入力すると、おすすめの起床時刻を計算します。</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bedtime-time">就寝（入眠開始）時刻</label>
+            <input type="time" id="bedtime-time" aria-label="就寝時刻" value="23:00">
+          </div>
+          <div class="form-group">
+            <label for="bedtime-latency">入眠所要時間（分）</label>
+            <input type="number" id="bedtime-latency" min="1" max="60" value="14" aria-label="入眠所要時間（分）" aria-describedby="bedtime-latency-error">
+          <p class="field-error" id="bedtime-latency-error" aria-live="polite" hidden>1〜60の数値を入力してください</p>
+          </div>
+        </div>
+        <div id="bedtime-results" class="results-container" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「起床時刻から計算」または「就寝時刻から計算」のタブを選んでください。</li>
+        <li>希望する起床時刻または就寝時刻を入力します（デフォルト値が設定済みです）。</li>
+        <li>「入眠所要時間」は、布団に入ってから実際に眠りにつくまでの時間です。個人差がありますが平均は約14分です。</li>
+        <li>入力と同時にリアルタイムで計算結果が更新されます。</li>
+        <li>「おすすめ」バッジのついた候補（7.5時間・5サイクル）が最も理想的な睡眠時間です。</li>
+        <li>よく使う設定は自動で保存され、次回アクセス時に復元されます。</li>
+      </ol>
+
+      <h2>REM睡眠と90分サイクルとは</h2>
+      <p>
+        人の睡眠は「ノンREM睡眠」と「REM睡眠」が交互に繰り返されるサイクルで構成されています。1サイクルはおよそ90分で、健康的な成人の場合、一晩に4〜6サイクル繰り返されます。ノンREM睡眠は深い眠りで身体の修復・成長ホルモン分泌が行われ、REM睡眠は記憶の整理・定着に重要な役割を果たします。
+      </p>
+      <p>
+        サイクルの区切りで目覚めると、眠りが浅いREM睡眠から自然に起床できるため、スッキリと目が覚めます。逆に深いノンREM睡眠中に無理やり起きると、睡眠慣性（寝ぼけ・頭の重さ）が強く出ます。このツールはREM周期の区切りを逆算・順算することで、最もスッキリ起きられる就寝・起床時刻の候補を提示します。
+      </p>
+      <p>
+        なお、入眠所要時間（寝つきにかかる時間）は個人差が大きく、平均は約14分とされています。自分の実際の寝つき時間に合わせて調整することで、より正確な計算ができます。
+      </p>
+
+      <h2>睡眠時間の目安</h2>
+      <p>
+        米国睡眠財団の推奨によると、成人（18〜64歳）の必要睡眠時間は7〜9時間です。このツールでは90分×5サイクル＝7.5時間を「おすすめ」として表示しています。ただし、睡眠の必要量には個人差があります。日中に強い眠気を感じない・集中力が維持できる・朝スッキリ目覚められる、という状態が「自分に合った睡眠時間」の目安です。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力した時刻や設定はすべてお使いのブラウザ内（localStorage）にのみ保存されます。外部サーバーへの送信は一切行いません。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">freee会計ならインボイス対応の請求書・領収書を自動作成。個人事業主・フリーランスの確定申告もかんたん。睡眠管理と同じく、お金の管理もツールで効率化しましょう。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3QB1+G8NOTU+3SPO+9FG2UA" rel="nofollow" class="affiliate-link">インボイス制度に対応【freee会計】</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
