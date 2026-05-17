@@ -1,0 +1,739 @@
+/* ===== Reset & Base ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --accent: #1a237e;
+  --header-bg: #1a237e;
+  --text: #1a1a2e;
+  --text-muted: #555;
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --border: #dde1ec;
+  --radius: 8px;
+  --shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* ===== Header ===== */
+header {
+  background: var(--header-bg);
+  color: #fff;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  opacity: 0.85;
+  margin-top: 0.3rem;
+}
+
+/* ===== Ad Unit ===== */
+.ad-unit {
+  min-height: 90px;
+  background: #eaedf5;
+  margin: 1.25rem auto;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 0.75rem;
+  border-radius: var(--radius);
+}
+
+/* ===== Tab Nav (mobile) ===== */
+.tab-nav {
+  display: flex;
+  max-width: 1100px;
+  margin: 0.75rem auto 0;
+  padding: 0 1rem;
+  gap: 0.5rem;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  touch-action: manipulation;
+  min-height: 44px;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ===== Tool Section ===== */
+.tool-section {
+  max-width: 1100px;
+  margin: 0.75rem auto 0;
+  padding: 0 1rem;
+}
+
+/* ===== Panel ===== */
+.panel {
+  display: none;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.panel.active {
+  display: block;
+}
+
+.form-header h2,
+.preview-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+/* ===== Form ===== */
+.form-group {
+  margin-top: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--text);
+}
+
+.required {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #e53935;
+  color: #fff;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+
+.optional {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: #e0e0e0;
+  color: #666;
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-left: 0.25rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"] {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: #fafbff;
+  color: var(--text);
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+
+input.invalid {
+  border-color: #e53935;
+}
+
+.field-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.form-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.25rem 0;
+}
+
+/* ===== Design Section ===== */
+.design-section h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+/* Template Selector */
+.template-selector {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.template-option {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+}
+
+.template-option input[type="radio"] {
+  display: none;
+}
+
+.template-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 66px;
+  border-radius: 6px;
+  border: 2.5px solid var(--border);
+  transition: border-color 0.2s;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.template-option input[type="radio"]:checked + .template-thumb {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.template-simple {
+  background: #fff;
+}
+
+.template-dark {
+  background: #1a1a2e;
+}
+
+.thumb-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.template-simple .thumb-name {
+  color: #333;
+}
+
+.template-dark .thumb-name {
+  color: #ccc;
+}
+
+/* Color Selector */
+.color-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+.color-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  min-height: 36px;
+  transition: transform 0.15s, border-color 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.color-btn:hover {
+  transform: scale(1.12);
+}
+
+.color-btn.active {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px var(--accent);
+  transform: scale(1.12);
+}
+
+/* ===== Action Buttons ===== */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  touch-action: manipulation;
+  min-height: 44px;
+  transition: background 0.2s, opacity 0.2s;
+  text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+}
+
+.btn-secondary {
+  background: #e8eaf6;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+}
+
+.btn-secondary:hover {
+  background: #c5cae9;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+}
+
+.btn-ghost:hover {
+  background: #f0f0f5;
+}
+
+/* ===== Preview Panel ===== */
+.preview-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.card-preview-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+/* 名刺実寸: 91mm × 55mm → ブラウザ表示用に縮小 */
+/* 91mm / 55mm = 1.6545... */
+.card-preview {
+  width: 364px; /* 91mm * 4 */
+  height: 220px; /* 55mm * 4 */
+  transform-origin: top left;
+  transform: scale(0.75);
+  /* スケール後の見た目サイズ: 273px × 165px */
+  margin-bottom: -55px; /* 縮小で生じる余白を補正 */
+  margin-right: -91px;
+}
+
+/* ===== Card Inner – Simple Template ===== */
+.card-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  position: relative;
+  background: #fff;
+  color: #1a1a2e;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* Dark template override */
+.card-inner.tpl-dark {
+  background: #1a1a2e;
+  color: #f0f0f0;
+}
+
+.card-left-accent {
+  width: 8px;
+  min-width: 8px;
+  background: var(--accent);
+  border-radius: 0;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 20px 14px 18px;
+  overflow: hidden;
+}
+
+.card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-company {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-center {
+  text-align: center;
+}
+
+.card-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-kana {
+  font-size: 10px;
+  opacity: 0.6;
+  margin-top: 2px;
+  letter-spacing: 0.06em;
+}
+
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-contact {
+  font-size: 11px;
+  opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-invoice {
+  font-size: 9px;
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+/* accent color bar – simple template uses a thin bar */
+.card-inner.tpl-simple .card-name {
+  color: var(--accent);
+}
+
+.card-inner.tpl-dark .card-name {
+  color: #fff;
+}
+
+.card-inner.tpl-dark .card-left-accent {
+  opacity: 0.9;
+}
+
+/* ===== Preview Actions (mobile) ===== */
+.preview-actions {
+  display: flex;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.preview-actions .btn {
+  flex: 1;
+}
+
+/* ===== How-To Section ===== */
+.howto-section {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 1.5rem 1rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.howto-section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  color: var(--text);
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-steps {
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.howto-steps li {
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.howto-section p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ===== Affiliate Block ===== */
+.affiliate-block {
+  background: #fafbff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #e0e0e0;
+  color: #666;
+  padding: 0.1em 0.5em;
+  border-radius: 3px;
+  margin-bottom: 0.4rem;
+}
+
+.affiliate-desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.affiliate-link {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  min-height: 44px;
+  line-height: 1.6;
+  transition: opacity 0.2s;
+}
+
+.affiliate-link:hover {
+  opacity: 0.85;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+footer p {
+  margin-bottom: 0.3rem;
+}
+
+footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Print Area (hidden except @print) ===== */
+#print-area {
+  display: none;
+}
+
+/* ===== Desktop Layout ===== */
+@media (min-width: 768px) {
+  header h1 {
+    font-size: 1.65rem;
+  }
+
+  /* タブナビを非表示 */
+  .tab-nav {
+    display: none;
+  }
+
+  /* ツールセクションを2カラムに */
+  .tool-section {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 0 1.5rem;
+  }
+
+  /* 両パネルを常時表示 */
+  .panel {
+    display: block;
+  }
+
+  #panel-form {
+    flex: 1;
+    min-width: 0;
+  }
+
+  #panel-preview {
+    flex: 0 0 360px;
+    position: sticky;
+    top: 1rem;
+  }
+
+  /* プレビュー内のモバイルボタン非表示 */
+  .preview-actions {
+    display: none;
+  }
+
+  /* カードプレビューのスケール調整 */
+  .card-preview {
+    transform: scale(0.88);
+    margin-bottom: -27px;
+    margin-right: -44px;
+  }
+
+  .howto-section {
+    padding: 1.5rem 2rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+
+  .ad-unit {
+    margin: 1.25rem 1.5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .tool-section {
+    padding: 0 2rem;
+  }
+
+  .howto-section {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .ad-unit {
+    margin: 1.25rem 2rem;
+  }
+
+  #panel-preview {
+    flex: 0 0 420px;
+  }
+
+  .card-preview {
+    transform: scale(1.0);
+    margin-bottom: 0;
+    margin-right: 0;
+  }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+  @page {
+    size: 91mm 55mm;
+    margin: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #print-area,
+  #print-area * {
+    visibility: visible;
+  }
+
+  #print-area {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 91mm;
+    height: 55mm;
+    overflow: hidden;
+  }
+
+  .print-card {
+    width: 91mm;
+    height: 55mm;
+    display: flex;
+    overflow: hidden;
+    font-family: "Noto Sans JP", sans-serif;
+    position: relative;
+  }
+}

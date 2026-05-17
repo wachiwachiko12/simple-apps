@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ブラウザだけで名刺を無料作成・PNG保存。インボイス登録番号対応。フリーランス・個人事業主向け。登録不要・データはブラウザ内に保存。">
+  <title>名刺作成ツール【無料・登録不要】インボイス対応 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/business-card-generator/">
+  <!-- OGP -->
+  <meta property="og:title" content="名刺作成ツール【無料・登録不要】インボイス対応 | Keisanlab">
+  <meta property="og:description" content="ブラウザだけで名刺を無料作成・PNG保存。インボイス登録番号対応。フリーランス・個人事業主向け。登録不要・データはブラウザ内に保存。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/business-card-generator/">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="名刺作成ツール【無料・登録不要】インボイス対応 | Keisanlab">
+  <meta name="twitter:description" content="ブラウザだけで名刺を無料作成・PNG保存。インボイス登録番号対応。フリーランス・個人事業主向け。">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>名刺作成ツール（インボイス対応）</h1>
+      <p class="subtitle">無料・登録不要｜フリーランス・個人事業主向け名刺ジェネレーター</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- モバイルタブ切り替え -->
+    <div class="tab-nav" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-form" id="tab-form" data-tab="form" touch-action="manipulation">入力</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-preview" id="tab-preview" data-tab="preview" touch-action="manipulation">プレビュー</button>
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+      <!-- 入力フォームパネル -->
+      <div class="panel" id="panel-form" role="tabpanel" aria-labelledby="tab-form">
+        <div class="form-header">
+          <h2>名刺情報を入力</h2>
+        </div>
+
+        <form id="card-form" novalidate>
+          <div class="form-group">
+            <label for="name">氏名 <span class="required">必須</span></label>
+            <input type="text" id="name" name="name" placeholder="山田 太郎" autocomplete="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="name-kana">ふりがな <span class="optional">任意</span></label>
+            <input type="text" id="name-kana" name="name-kana" placeholder="やまだ たろう">
+          </div>
+
+          <div class="form-group">
+            <label for="title">肩書き・役職 <span class="required">必須</span></label>
+            <input type="text" id="title" name="title" placeholder="Webデザイナー / フリーランス">
+          </div>
+
+          <div class="form-group">
+            <label for="company">会社名・屋号 <span class="optional">任意</span></label>
+            <input type="text" id="company" name="company" placeholder="〇〇デザイン事務所">
+          </div>
+
+          <div class="form-group">
+            <label for="email">メールアドレス <span class="required">必須</span></label>
+            <input type="email" id="email" name="email" placeholder="taro@example.com" autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label for="phone">電話番号 <span class="required">必須</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="090-1234-5678" autocomplete="tel">
+          </div>
+
+          <div class="form-group">
+            <label for="website">WebサイトURL <span class="optional">任意</span></label>
+            <input type="url" id="website" name="website" placeholder="https://example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="invoice">インボイス登録番号 <span class="optional">任意</span></label>
+            <input type="text" id="invoice" name="invoice" placeholder="T1234567890123" maxlength="14">
+            <p class="field-note">「T」+ 13桁の数字（例: T1234567890123）</p>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <!-- デザイン設定 -->
+          <div class="design-section">
+            <h3>デザイン設定</h3>
+
+            <div class="form-group">
+              <label>テンプレート</label>
+              <div class="template-selector">
+                <label class="template-option">
+                  <input type="radio" name="template" value="simple" checked>
+                  <span class="template-thumb template-simple">
+                    <span class="thumb-name">シンプル白</span>
+                  </span>
+                </label>
+                <label class="template-option">
+                  <input type="radio" name="template" value="dark">
+                  <span class="template-thumb template-dark">
+                    <span class="thumb-name">ダーク</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>アクセントカラー</label>
+              <div class="color-selector" role="group" aria-label="アクセントカラー選択">
+                <button type="button" class="color-btn active" data-color="#1a237e" style="background:#1a237e" aria-label="ネイビー" title="ネイビー"></button>
+                <button type="button" class="color-btn" data-color="#1565c0" style="background:#1565c0" aria-label="ブルー" title="ブルー"></button>
+                <button type="button" class="color-btn" data-color="#2e7d32" style="background:#2e7d32" aria-label="グリーン" title="グリーン"></button>
+                <button type="button" class="color-btn" data-color="#b71c1c" style="background:#b71c1c" aria-label="レッド" title="レッド"></button>
+                <button type="button" class="color-btn" data-color="#4a148c" style="background:#4a148c" aria-label="パープル" title="パープル"></button>
+                <button type="button" class="color-btn" data-color="#e65100" style="background:#e65100" aria-label="オレンジ" title="オレンジ"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <!-- アクションボタン -->
+          <div class="action-buttons">
+            <button type="button" id="btn-download" class="btn btn-primary" touch-action="manipulation">
+              PNGで保存（300dpi相当）
+            </button>
+            <button type="button" id="btn-print" class="btn btn-secondary" touch-action="manipulation">
+              印刷する（91×55mm）
+            </button>
+            <button type="button" id="btn-reset" class="btn btn-ghost" touch-action="manipulation">
+              リセット
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- プレビューパネル -->
+      <div class="panel" id="panel-preview" role="tabpanel" aria-labelledby="tab-preview">
+        <div class="preview-header">
+          <h2>プレビュー</h2>
+          <p class="preview-note">実際の名刺サイズ: 91 × 55 mm</p>
+        </div>
+        <div class="card-preview-wrapper">
+          <div class="card-preview" id="card-preview">
+            <!-- 名刺プレビュー（CSSレンダリング） -->
+            <div class="card-inner" id="card-inner">
+              <div class="card-left-accent" id="card-accent"></div>
+              <div class="card-content">
+                <div class="card-top">
+                  <p class="card-company" id="prev-company"></p>
+                  <p class="card-title" id="prev-title">Webデザイナー / フリーランス</p>
+                </div>
+                <div class="card-center">
+                  <p class="card-name" id="prev-name">山田 太郎</p>
+                  <p class="card-kana" id="prev-kana"></p>
+                </div>
+                <div class="card-bottom">
+                  <p class="card-contact" id="prev-email">taro@example.com</p>
+                  <p class="card-contact" id="prev-phone">090-1234-5678</p>
+                  <p class="card-contact" id="prev-website"></p>
+                  <p class="card-invoice" id="prev-invoice"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- モバイルでプレビュー表示中のダウンロードボタン -->
+        <div class="preview-actions">
+          <button type="button" id="btn-download-mobile" class="btn btn-primary" touch-action="manipulation">
+            PNGで保存
+          </button>
+          <button type="button" id="btn-print-mobile" class="btn btn-secondary" touch-action="manipulation">
+            印刷する
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（howto前） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>左側のフォームに氏名・肩書き・連絡先などを入力すると、右側のプレビューにリアルタイムで反映されます。</li>
+        <li>「テンプレート」でシンプル白またはダーク系を選び、「アクセントカラー」でお好みの色に変更してください。</li>
+        <li>インボイス登録番号（T + 13桁）をお持ちの場合は任意で入力できます。名刺に小さく印字されます。</li>
+        <li>「PNGで保存」ボタンを押すと、300dpi相当（1075 × 650px）の高解像度PNG画像としてダウンロードできます。</li>
+        <li>「印刷する」ボタンを押すと、91 × 55mmの名刺サイズで印刷ダイアログが開きます。</li>
+      </ol>
+
+      <h2>フリーランスの名刺とインボイス登録番号について</h2>
+      <p>フリーランス・個人事業主として活動するうえで、名刺は自分のブランドを表す重要なツールです。2023年10月にスタートしたインボイス制度（適格請求書等保存方式）では、適格請求書発行事業者登録番号（T + 13桁）が取引先との書類のやり取りで必要になることがあります。名刺にインボイス登録番号を記載しておくと、初対面の取引先への信頼性向上や、番号確認の手間を省く効果があります。本ツールはブラウザだけで動作し、入力データは一切サーバーに送信されません。データはブラウザのlocalStorageに自動保存されるため、ページを閉じても再度開けば続きから編集できます。</p>
+
+      <h2>ビジネスを本格的にスタートするなら</h2>
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">独自ドメインを取得してビジネス用メールアドレスやWebサイトを開設。お名前.comは国内シェアNo.1のドメイン登録サービスです。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3PJ2+2RFESY+50+2HHG82" rel="nofollow" class="affiliate-link">ドメイン取るならお名前.com</a>
+      </div>
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">freee会計ならインボイス対応の請求書・領収書を自動作成。個人事業主・フリーランスの確定申告もかんたん。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3QB1+G8NOTU+3SPO+9FG2UA" rel="nofollow" class="affiliate-link">インボイス制度に対応【freee会計】</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <!-- 印刷用名刺エリア（非表示・印刷時のみ表示） -->
+  <div id="print-area" aria-hidden="true">
+    <div class="print-card" id="print-card"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
