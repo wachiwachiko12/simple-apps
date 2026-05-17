@@ -32,8 +32,8 @@
 <body>
   <header>
     <div class="header-inner">
-      <h1>名刺作成ツール（インボイス対応）</h1>
-      <p class="subtitle">無料・登録不要｜フリーランス・個人事業主向け名刺ジェネレーター</p>
+      <h1>フリーランス・個人事業主向け 無料名刺作成ツール</h1>
+      <p class="subtitle">インボイス番号対応・登録不要・PNG即DL｜ブラウザだけで完結</p>
     </div>
   </header>
 
@@ -53,6 +53,7 @@
       <div class="panel" id="panel-form" role="tabpanel" aria-labelledby="tab-form">
         <div class="form-header">
           <h2>名刺情報を入力</h2>
+          <p class="privacy-badge">🔒 入力データはブラウザ内のみ保存。サーバーへの送信はありません。</p>
         </div>
 
         <form id="card-form" novalidate>
@@ -93,8 +94,9 @@
 
           <div class="form-group">
             <label for="invoice">インボイス登録番号 <span class="optional">任意</span></label>
-            <input type="text" id="invoice" name="invoice" placeholder="T1234567890123" maxlength="14">
-            <p class="field-note">「T」+ 13桁の数字（例: T1234567890123）</p>
+            <input type="text" id="invoice" name="invoice" placeholder="T1234567890123" maxlength="14" aria-describedby="invoice-note invoice-error">
+            <p class="field-note" id="invoice-note">「T」+ 13桁の数字（例: T1234567890123）</p>
+            <p class="field-error" id="invoice-error" aria-live="polite" hidden>「T」＋13桁の数字を入力してください（例: T1234567890123）</p>
           </div>
 
           <div class="form-divider"></div>
@@ -139,8 +141,9 @@
           <!-- アクションボタン -->
           <div class="action-buttons">
             <button type="button" id="btn-download" class="btn btn-primary" touch-action="manipulation">
-              PNGで保存（300dpi相当）
+              PNGをダウンロード（印刷用・高解像度）
             </button>
+            <p class="btn-hint">ダウンロードフォルダに保存されます。A4用紙に2枚印刷で名刺サイズになります。</p>
             <button type="button" id="btn-print" class="btn btn-secondary" touch-action="manipulation">
               印刷する（91×55mm）
             </button>
@@ -181,6 +184,8 @@
             </div>
           </div>
         </div>
+        <p class="preview-hint">👆 入力フォームで入力すると名刺がリアルタイムで更新されます</p>
+
         <!-- モバイルでプレビュー表示中のダウンロードボタン -->
         <div class="preview-actions">
           <button type="button" id="btn-download-mobile" class="btn btn-primary" touch-action="manipulation">
@@ -206,6 +211,14 @@
         <li>「PNGで保存」ボタンを押すと、300dpi相当（1075 × 650px）の高解像度PNG画像としてダウンロードできます。</li>
         <li>「印刷する」ボタンを押すと、91 × 55mmの名刺サイズで印刷ダイアログが開きます。</li>
       </ol>
+
+      <h2>ダウンロードした名刺の使い方</h2>
+      <ul class="use-guide">
+        <li><strong>コンビニ印刷</strong>: ダウンロードしたPNGをスマホの写真アプリからローソン・ファミマのマルチコピー機で印刷できます（L版/2L版を選択）。</li>
+        <li><strong>自宅プリンター</strong>: A4用紙に「2枚/ページ」で印刷するとほぼ名刺サイズ（91×55mm）になります。光沢紙や名刺用紙を使うとより仕上がりがきれいです。</li>
+        <li><strong>ネット印刷</strong>: 「印刷する」ボタンから印刷ダイアログを開き、「PDFとして保存」でデータを保存すると、ネット印刷サービスへの入稿にも使用できます。</li>
+        <li><strong>デジタル名刺として共有</strong>: ダウンロードしたPNG画像をSNSのプロフィールやメールの署名に添付して使うこともできます。</li>
+      </ul>
 
       <h2>フリーランスの名刺とインボイス登録番号について</h2>
       <p>フリーランス・個人事業主として活動するうえで、名刺は自分のブランドを表す重要なツールです。2023年10月にスタートしたインボイス制度（適格請求書等保存方式）では、適格請求書発行事業者登録番号（T + 13桁）が取引先との書類のやり取りで必要になることがあります。名刺にインボイス登録番号を記載しておくと、初対面の取引先への信頼性向上や、番号確認の手間を省く効果があります。本ツールはブラウザだけで動作し、入力データは一切サーバーに送信されません。データはブラウザのlocalStorageに自動保存されるため、ページを閉じても再度開けば続きから編集できます。</p>
