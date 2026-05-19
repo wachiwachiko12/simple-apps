@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="複数の選択肢を評価基準ごとのウェイト（重み）付きスコアで比較。転職・案件選択・ツール選定などあらゆる意思決定を数値化。登録不要・ブラウザだけで完結。">
+  <title>意思決定マトリクスツール【無料】加重スコアリングで最適な選択肢を数値比較 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/decision-matrix/">
+  <!-- OGP -->
+  <meta property="og:title" content="意思決定マトリクスツール【無料】加重スコアリングで最適な選択肢を数値比較 | Keisanlab">
+  <meta property="og:description" content="複数の選択肢を評価基準ごとのウェイト（重み）付きスコアで比較。転職・案件選択・ツール選定などあらゆる意思決定を数値化。登録不要・ブラウザだけで完結。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/decision-matrix/">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>意思決定マトリクスツール — 重み付きスコアで最適な選択肢を見つける</h1>
+    <p class="subtitle">転職・案件選択・ツール選定など、重要な意思決定を加重スコアで数値化。登録不要・ブラウザだけで完結。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- プリセット選択 -->
+    <section class="tool-section" id="preset-section">
+      <div class="section-header">
+        <h2 class="section-title">プリセットを読み込む</h2>
+        <p class="section-desc">サンプルデータで使い方を確認できます</p>
+      </div>
+      <div class="preset-buttons" role="group" aria-label="プリセット選択">
+        <button class="btn btn-preset" data-preset="job" aria-label="転職先比較のサンプルデータを読み込む">転職先比較</button>
+        <button class="btn btn-preset" data-preset="project" aria-label="案件比較のサンプルデータを読み込む">案件比較</button>
+        <button class="btn btn-preset" data-preset="tool" aria-label="ツール選定のサンプルデータを読み込む">ツール選定</button>
+        <button class="btn btn-secondary" id="btn-reset" aria-label="入力内容をリセットする">リセット</button>
+      </div>
+    </section>
+
+    <!-- 評価基準設定 -->
+    <section class="tool-section" id="criteria-section">
+      <div class="section-header">
+        <h2 class="section-title">評価基準の設定</h2>
+        <p class="section-desc">基準名と重み（1〜10）を入力してください（最大10項目）</p>
+      </div>
+      <div id="criteria-list" role="list" aria-label="評価基準リスト"></div>
+      <button class="btn btn-add" id="btn-add-criterion" aria-label="評価基準を追加する">+ 基準を追加</button>
+    </section>
+
+    <!-- 選択肢設定 -->
+    <section class="tool-section" id="options-section">
+      <div class="section-header">
+        <h2 class="section-title">選択肢の追加</h2>
+        <p class="section-desc">比較したい選択肢を入力してください（最大8項目）</p>
+      </div>
+      <div id="options-list" role="list" aria-label="選択肢リスト"></div>
+      <button class="btn btn-add" id="btn-add-option" aria-label="選択肢を追加する">+ 選択肢を追加</button>
+    </section>
+
+    <!-- スコア入力マトリクス -->
+    <section class="tool-section" id="matrix-section">
+      <div class="section-header">
+        <h2 class="section-title">スコア入力マトリクス</h2>
+        <p class="section-desc">各選択肢の評価基準ごとにスコア（1〜10）を入力してください</p>
+      </div>
+      <div class="table-scroll" role="region" aria-label="スコア入力テーブル">
+        <table id="score-table" class="score-table">
+          <thead id="score-thead"></thead>
+          <tbody id="score-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果上） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 集計結果 -->
+    <section class="tool-section" id="result-section">
+      <div class="section-header">
+        <h2 class="section-title">集計結果 — ランキング</h2>
+        <p class="section-desc">加重合計スコアの高い順に表示します</p>
+      </div>
+      <div id="result-list" aria-live="polite" aria-label="スコアランキング"></div>
+    </section>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「プリセットを読み込む」からサンプルデータを確認するか、ゼロから評価基準と選択肢を入力してください。</li>
+        <li>「評価基準の設定」で比較したい観点（例：給与・働き方の自由度など）と、その重み（1〜10）を設定します。重みが高いほど最終スコアへの影響が大きくなります。</li>
+        <li>「選択肢の追加」で比較する対象（例：企業A・企業B）を入力します。</li>
+        <li>「スコア入力マトリクス」の各セルに、その選択肢のその評価基準に対するスコア（1〜10）を入力します。</li>
+        <li>「集計結果」に加重合計スコアが自動更新されます。最高スコアの選択肢に「推奨」バッジが表示されます。</li>
+        <li>入力内容はブラウザに自動保存され、次回アクセス時に復元されます。</li>
+      </ol>
+
+      <h2>加重スコアリングとは</h2>
+      <p>
+        加重スコアリング（Weighted Scoring）は、複数の選択肢を複数の基準で評価する意思決定の手法です。各評価基準に「重み（ウェイト）」を設定することで、自分にとって重要な要素を最終スコアに強く反映できます。
+      </p>
+      <p>
+        計算式は「加重合計 ＝ 各基準のスコア × 重み の合計」です。たとえば「給与」の重みが8、スコアが7の場合、その基準の貢献度は8×7＝56点になります。感覚的な意思決定を数値化することで、比較の曖昧さを排除し、後悔のない選択ができます。
+      </p>
+
+      <h2>活用シーン</h2>
+      <p>
+        転職先の比較・フリーランス案件の選定・SaaSツールの導入判断・引越し先の選択・投資先の評価など、「どれにすべきか迷う」あらゆる場面で活用できます。特にフリーランスや個人事業主が案件や取引先を選ぶ際に、条件を客観的に整理するツールとして有用です。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力したデータはすべてお使いのブラウザ内（localStorage）にのみ保存されます。外部サーバーへの送信は一切行いません。ブラウザの設定からいつでも削除できます。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">無料で登録するだけで最高5,000万円の損害賠償補償が付帯。フリーランスの請求書即日払いサービスも利用できます。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3U78+5I9D82+47L8+61C2Q" rel="nofollow" class="affiliate-link">FREENANCEの無料口座開設はこちら</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

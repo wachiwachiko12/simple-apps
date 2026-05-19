@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="日本語テキストを貼り付けるだけで読みやすさを自動スコアリング。文字数・文章数・平均文長・漢字密度・句読点密度などを分析。ブログ・ビジネス文書の品質向上に。登録不要・無料。">
+  <title>日本語文章可読性チェックツール【無料】読みやすさスコアを自動計算 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/readability-scorer/">
+  <!-- OGP -->
+  <meta property="og:title" content="日本語文章可読性チェックツール【無料】読みやすさスコアを自動計算 | Keisanlab">
+  <meta property="og:description" content="日本語テキストを貼り付けるだけで読みやすさを自動スコアリング。文字数・文章数・平均文長・漢字密度・句読点密度などを分析。ブログ・ビジネス文書の品質向上に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/readability-scorer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-readability-scorer.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="日本語文章可読性チェックツール【無料】読みやすさスコアを自動計算">
+  <meta name="twitter:description" content="日本語テキストを貼り付けるだけで読みやすさを自動スコアリング。文字数・文章数・平均文長・漢字密度・句読点密度などを分析。登録不要・無料。">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>日本語文章 可読性スコアラー — 読みやすさを数値で確認</h1>
+    <p class="subtitle">テキストを貼り付けるだけで文章品質を自動分析。ブログ・ビジネス文書・SEOライティングの改善に。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- 入力セクション -->
+    <div class="tool-section">
+      <div class="input-area">
+        <div class="input-header">
+          <label for="text-input" class="input-label">分析するテキストを入力・貼り付け</label>
+          <div class="input-actions">
+            <button id="btn-sample" class="btn-secondary" type="button" aria-label="サンプルテキストを読み込む">サンプルを読み込む</button>
+            <button id="btn-clear" class="btn-ghost" type="button" aria-label="テキストをクリア">クリア</button>
+          </div>
+        </div>
+        <textarea
+          id="text-input"
+          rows="10"
+          placeholder="ここに日本語テキストを貼り付けてください。入力と同時にリアルタイムで分析結果が更新されます。"
+          aria-label="分析するテキスト"
+          aria-describedby="char-count-display"
+        ></textarea>
+        <div class="textarea-footer">
+          <span id="char-count-display" class="char-count" aria-live="polite">0文字</span>
+        </div>
+      </div>
+
+      <!-- 総合スコア -->
+      <div id="score-section" class="score-section hidden" aria-live="polite">
+        <div class="score-header">
+          <span class="score-label">総合スコア</span>
+          <div class="score-display">
+            <span id="total-score" class="score-number">--</span>
+            <span class="score-unit">/ 100</span>
+          </div>
+        </div>
+        <div id="score-bar-track" class="score-bar-track" aria-hidden="true">
+          <div id="score-bar" class="score-bar"></div>
+        </div>
+        <p id="score-comment" class="score-comment"></p>
+      </div>
+    </div>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 指標カード一覧 -->
+    <div id="metrics-section" class="metrics-section hidden" aria-live="polite">
+      <h2 class="metrics-heading">分析結果</h2>
+      <div class="metrics-grid" id="metrics-grid">
+        <!-- JS で生成 -->
+      </div>
+    </div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>上のテキストエリアに分析したい日本語文章を貼り付けます。</li>
+        <li>入力と同時にリアルタイムで総合スコアと各指標が自動更新されます。</li>
+        <li>各指標カードの判定（◎良好 / ○普通 / △要改善）を参考に文章を修正してください。</li>
+        <li>「サンプルを読み込む」ボタンでビジネス文書のサンプルを確認できます。</li>
+        <li>修正後に貼り直すことで改善前後のスコアを比較できます。</li>
+      </ol>
+
+      <h2>各指標の目安と解説</h2>
+      <p>
+        <strong>平均文長（文字/文）</strong>は、文章の読みやすさに最も影響する指標です。1文が長すぎると読者が疲れてしまいます。40文字以下が目安で、Webコンテンツでは30〜35文字が理想的です。長い文は「、」や「が」で区切ることを検討してください。
+      </p>
+      <p>
+        <strong>漢字密度</strong>は、文章の難易度を示します。漢字が多すぎると硬い印象になり、少なすぎると幼稚な文章に見えます。ビジネス文書では20〜35%、ブログ記事では15〜25%を目安にすると読みやすくなります。
+      </p>
+      <p>
+        <strong>句読点密度</strong>は、文章のリズムを表します。句読点が少なすぎると一気読みで疲れやすく、多すぎると細切れな印象になります。4〜8%が読みやすい範囲の目安です。
+      </p>
+      <p>
+        <strong>総合スコア</strong>は平均文長・漢字密度・句読点密度・ひらがな密度の4指標を加重平均して算出しています。80点以上を目指して文章を改善しましょう。
+      </p>
+
+      <h2>読みやすい日本語文章を書くコツ</h2>
+      <p>
+        読みやすい文章の基本は「1文1意」です。1つの文章に1つの意味だけを込めることで、読者が迷わずに理解できます。また、能動態を積極的に使い、受動態は最小限にとどめると文章がシャキッとします。接続詞（「しかし」「そのため」「また」）を適切に使うと文章の流れが生まれます。
+      </p>
+      <p>
+        ブログやWebコンテンツでは、スマートフォン画面での読みやすさも重要です。1段落3〜4文を目安にし、適度に改行を入れることで縦スクロールしやすくなります。箇条書きや見出しを活用すると、さらに読み飛ばしやすいコンテンツになります。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力したテキストはすべてブラウザ内でのみ処理され、外部サーバーへの送信は一切行いません。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">ブログやWebサイトを始めるなら国内最速クラスのWordPressホスティング。初心者でも簡単にブログ開設できます。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3RV1+5XQMYA+50+5SDXG2" rel="nofollow" class="affiliate-link">ConoHa WINGでWordPressブログを始める</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
