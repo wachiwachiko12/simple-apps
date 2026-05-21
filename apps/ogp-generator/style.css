@@ -1,0 +1,466 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background: #f0f4f8;
+}
+
+/* ===== Header ===== */
+header {
+  background: linear-gradient(135deg, #1a2a4a 0%, #2c4a7c 100%);
+  color: white;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.1rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  opacity: 0.85;
+  margin-top: 0.4rem;
+}
+
+/* ===== Main ===== */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===== Ad unit ===== */
+.ad-unit {
+  margin: 1.25rem 0;
+}
+
+/* ===== Editor layout ===== */
+.editor-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ===== Settings panel ===== */
+.settings-panel {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.setting-group.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.setting-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+/* ===== Preset buttons ===== */
+.preset-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1.5px solid #d1d5db;
+  border-radius: 20px;
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-height: 44px;
+  font-family: inherit;
+}
+
+.preset-btn:hover {
+  border-color: #2c4a7c;
+  color: #2c4a7c;
+  background: #eff6ff;
+}
+
+.preset-btn.active {
+  background: #1a2a4a;
+  border-color: #1a2a4a;
+  color: white;
+}
+
+/* ===== Form group ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.form-group label,
+.form-group .setting-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.char-limit {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: #f9fafb;
+  color: #111827;
+  transition: border-color 0.2s;
+  min-height: 44px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-group textarea {
+  min-height: 60px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #2c4a7c;
+  background: white;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: right;
+}
+
+.char-counter.warn {
+  color: #d97706;
+}
+
+.char-counter.over {
+  color: #dc2626;
+}
+
+/* ===== Color palette ===== */
+.color-palette {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.color-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+  min-width: 44px;
+}
+
+.color-swatch:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.color-swatch.active {
+  border-color: #2c4a7c;
+  box-shadow: 0 0 0 3px rgba(44, 74, 124, 0.3);
+}
+
+.color-custom-label {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px dashed #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  transition: border-color 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+
+.color-custom-label:hover {
+  border-color: #2c4a7c;
+}
+
+.color-custom-icon {
+  font-size: 1rem;
+  color: #6b7280;
+  pointer-events: none;
+}
+
+.color-custom-label input[type="color"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+/* ===== Radio group ===== */
+.radio-group {
+  display: flex;
+  gap: 1rem;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  color: #374151;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.radio-label input[type="radio"] {
+  accent-color: #2c4a7c;
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== Download button ===== */
+.download-btn {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1a2a4a 0%, #2c4a7c 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  min-height: 52px;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(44, 74, 124, 0.3);
+}
+
+.download-btn:hover {
+  opacity: 0.92;
+}
+
+.download-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== Preview panel ===== */
+.preview-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.preview-label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.preview-note {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.preview-wrapper {
+  width: 100%;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  /* maintain 1200:630 aspect ratio */
+  aspect-ratio: 1200 / 630;
+  position: relative;
+}
+
+.preview-wrapper canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ===== How-to section ===== */
+.howto-section {
+  margin-top: 1.5rem;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.howto-section h2 {
+  font-size: 1.05rem;
+  color: #1a2a4a;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.howto-section ol {
+  padding-left: 1.25rem;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.howto-section ol li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.howto-section p {
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+}
+
+.howto-section p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ===== Affiliate block ===== */
+.affiliate-block {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #9ca3af;
+  border: 1px solid #d1d5db;
+  padding: 0 0.35rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.affiliate-desc {
+  font-size: 0.85rem;
+  color: #4b5563;
+  margin-bottom: 0.6rem;
+}
+
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2c4a7c;
+  text-decoration: underline;
+  min-height: 44px;
+  line-height: 44px;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+footer p {
+  margin-bottom: 0.4rem;
+}
+
+footer a {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Responsive: tablet+ ===== */
+@media (min-width: 640px) {
+  header {
+    padding: 2rem 1.5rem;
+  }
+
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  .settings-panel {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .editor-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .settings-panel {
+    width: 360px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 1rem;
+  }
+
+  .preview-panel {
+    flex: 1;
+  }
+}

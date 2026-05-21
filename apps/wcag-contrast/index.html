@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="WCAG 2.1のコントラスト比（AA基準4.5:1・AAA基準7:1）をリアルタイムでチェック。前景色・背景色を入力するだけで合否判定。Webアクセシビリティ対応の配色設計に。無料・登録不要。">
+  <title>WCAGコントラスト比チェックツール【無料】アクセシビリティ対応配色を確認 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/wcag-contrast/">
+  <!-- OGP -->
+  <meta property="og:title" content="WCAGコントラスト比チェックツール【無料】アクセシビリティ対応配色を確認 | Keisanlab">
+  <meta property="og:description" content="WCAG 2.1のコントラスト比（AA基準4.5:1・AAA基準7:1）をリアルタイムでチェック。前景色・背景色を入力するだけで合否判定。Webアクセシビリティ対応の配色設計に。無料・登録不要。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/wcag-contrast/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-wcag-contrast.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WCAGコントラスト比チェックツール【無料】アクセシビリティ対応配色を確認">
+  <meta name="twitter:description" content="WCAG 2.1のコントラスト比をリアルタイムでチェック。前景色・背景色を入力するだけで合否判定。無料・登録不要。">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>WCAGコントラスト比チェッカー — アクセシビリティ対応の文字色・背景色を設計</h1>
+    <p class="subtitle">WCAG 2.1 の相対輝度計算でコントラスト比をリアルタイム判定。AA・AAA基準の合否を即確認</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- カラー入力セクション -->
+    <div class="tool-section">
+      <div class="color-inputs-row">
+        <!-- 前景色 -->
+        <div class="color-block">
+          <div class="color-block-header">
+            <span class="color-block-label">前景色（文字色）</span>
+          </div>
+          <div class="color-input-group">
+            <input
+              type="color"
+              id="fg-picker"
+              value="#1a2a4a"
+              aria-label="前景色カラーピッカー"
+              class="color-picker"
+            >
+            <input
+              type="text"
+              id="fg-hex"
+              value="#1a2a4a"
+              maxlength="7"
+              aria-label="前景色HEX値"
+              class="hex-input"
+              placeholder="#000000"
+              spellcheck="false"
+            >
+          </div>
+        </div>
+
+        <!-- 入れ替えボタン -->
+        <div class="swap-col">
+          <button id="swap-btn" class="swap-btn" aria-label="前景色と背景色を入れ替え" title="入れ替え">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 16V4m0 0L3 8m4-4l4 4"/>
+              <path d="M17 8v12m0 0l4-4m-4 4l-4-4"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 背景色 -->
+        <div class="color-block">
+          <div class="color-block-header">
+            <span class="color-block-label">背景色</span>
+          </div>
+          <div class="color-input-group">
+            <input
+              type="color"
+              id="bg-picker"
+              value="#ffffff"
+              aria-label="背景色カラーピッカー"
+              class="color-picker"
+            >
+            <input
+              type="text"
+              id="bg-hex"
+              value="#ffffff"
+              maxlength="7"
+              aria-label="背景色HEX値"
+              class="hex-input"
+              placeholder="#ffffff"
+              spellcheck="false"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- プレビュー -->
+      <div class="preview-area" id="preview-area" aria-label="テキストプレビュー">
+        <div id="preview-normal" class="preview-text preview-normal">通常テキストのサンプル（16px）</div>
+        <div id="preview-large" class="preview-text preview-large">大きいテキストのサンプル（24px）</div>
+        <div id="preview-bold" class="preview-text preview-bold">太字テキストのサンプル（14px Bold）</div>
+      </div>
+
+      <!-- コントラスト比 表示 -->
+      <div class="ratio-display" id="ratio-display" aria-live="polite" aria-atomic="true">
+        <div class="ratio-number" id="ratio-number">—</div>
+        <div class="ratio-label">コントラスト比</div>
+      </div>
+
+      <!-- 判定結果 -->
+      <div class="results-grid" id="results-grid" aria-live="polite" aria-atomic="true">
+        <!-- 通常テキスト -->
+        <div class="result-category">
+          <div class="category-title">通常テキスト<span class="category-sub">（18pt未満 / 14pt未満Bold）</span></div>
+          <div class="criteria-row">
+            <span class="criteria-label">AA基準 <strong>4.5:1</strong></span>
+            <span class="criteria-badge" id="badge-normal-aa" data-threshold="4.5">—</span>
+          </div>
+          <div class="criteria-row">
+            <span class="criteria-label">AAA基準 <strong>7:1</strong></span>
+            <span class="criteria-badge" id="badge-normal-aaa" data-threshold="7">—</span>
+          </div>
+        </div>
+
+        <!-- 大きいテキスト -->
+        <div class="result-category">
+          <div class="category-title">大きいテキスト<span class="category-sub">（18pt以上 / 14pt以上Bold）</span></div>
+          <div class="criteria-row">
+            <span class="criteria-label">AA基準 <strong>3:1</strong></span>
+            <span class="criteria-badge" id="badge-large-aa" data-threshold="3">—</span>
+          </div>
+          <div class="criteria-row">
+            <span class="criteria-label">AAA基準 <strong>4.5:1</strong></span>
+            <span class="criteria-badge" id="badge-large-aaa" data-threshold="4.5">—</span>
+          </div>
+        </div>
+
+        <!-- UIコンポーネント -->
+        <div class="result-category result-category--full">
+          <div class="category-title">UIコンポーネント・グラフィック</div>
+          <div class="criteria-row">
+            <span class="criteria-label">AA基準 <strong>3:1</strong></span>
+            <span class="criteria-badge" id="badge-ui-aa" data-threshold="3">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- カラースワッチ プリセット -->
+    <div class="swatches-section tool-section">
+      <h2 class="swatches-title">カラープリセット</h2>
+      <p class="swatches-desc">よく使う配色をクリックして適用できます。</p>
+      <div class="swatches-grid" id="swatches-grid" role="list" aria-label="カラープリセット一覧"></div>
+    </div>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「前景色（文字色）」のカラーピッカーまたはHEX入力欄で文字の色を選んでください。</li>
+        <li>「背景色」のカラーピッカーまたはHEX入力欄で背景の色を選んでください。</li>
+        <li>コントラスト比と各WCAG基準の合否がリアルタイムで更新されます。</li>
+        <li>中央の矢印ボタンで前景色と背景色を入れ替えられます。</li>
+        <li>よく使う配色はカラープリセットから1クリックで適用できます。</li>
+        <li>プレビューエリアで実際の見た目を確認しながら配色を調整してください。</li>
+      </ol>
+
+      <h2>WCAGコントラスト比とは</h2>
+      <p>
+        WCAG（Web Content Accessibility Guidelines）はW3Cが定めるWebアクセシビリティのガイドラインです。コントラスト比とは、前景色（文字色）と背景色の明るさの差を数値化したもので、1:1（差なし）から21:1（白と黒）の範囲で表されます。コントラスト比が高いほど、弱視や色覚特性のある方でも読みやすくなります。
+      </p>
+      <p>
+        WCAG 2.1 では通常テキストにAA基準4.5:1・AAA基準7:1、大きいテキスト（18pt以上または14pt以上Bold）にはAA基準3:1・AAA基準4.5:1が求められています。UIコンポーネントやグラフィックの境界線はAA基準3:1が必要です。日本のJIS X 8341-3もWCAGに準拠しており、公共機関・企業サイトでのAA準拠が推奨されています。
+      </p>
+
+      <h2>相対輝度（Relative Luminance）の計算方法</h2>
+      <p>
+        このツールはWCAG 2.1仕様の相対輝度計算式を正確に実装しています。各RGB成分を0〜1に正規化し、ガンマ補正（sRGB → 線形RGB変換）を施してから輝度に変換します。コントラスト比は（明るい色の輝度 + 0.05）÷（暗い色の輝度 + 0.05）で算出されます。HEX値をそのまま入力するだけで正確な計算が行われます。
+      </p>
+
+      <h2>AA基準とAAA基準の違い</h2>
+      <p>
+        AA基準はWCAGの「適合レベルAA」で、多くの公共・企業サイトが目標とする標準的な基準です。AAA基準はより厳格な「適合レベルAAA」で、すべてのコンテンツでの達成は困難ですが、重要な情報や見出しで達成することが推奨されます。まずAA基準のクリアを目指し、余裕があればAAA基準を目標にしましょう。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力した色の情報はすべてお使いのブラウザ内のみで処理されます。外部サーバーへのデータ送信は一切行いません。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">ブログやWebサイトを始めるなら国内最速クラスのWordPressホスティング。初心者でも簡単にブログ開設できます。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3RV1+5XQMYA+50+5SDXG2" rel="nofollow" class="affiliate-link">ConoHa WINGでWordPressブログを始める</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

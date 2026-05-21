@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="参加人数・役職・会議時間を入力するだけで会議コストをリアルタイム計算。時給ベースの費用カウンターで会議の価値を可視化。無駄な会議削減・会議改善の根拠データに。無料・登録不要。">
+  <title>会議コスト計算ツール【無料】リアルタイムで会議費用をカウント | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/meeting-cost/">
+  <!-- OGP -->
+  <meta property="og:title" content="会議コスト計算ツール【無料】リアルタイムで会議費用をカウント | Keisanlab">
+  <meta property="og:description" content="参加人数・役職・会議時間を入力するだけで会議コストをリアルタイム計算。時給ベースの費用カウンターで会議の価値を可視化。無駄な会議削減・会議改善の根拠データに。無料・登録不要。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/meeting-cost/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-meeting-cost.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="会議コスト計算ツール【無料】リアルタイムで会議費用をカウント">
+  <meta name="twitter:description" content="参加人数・役職・会議時間を入力するだけで会議コストをリアルタイム計算。無料・登録不要。">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>会議コスト・ROIリアルタイムカウンター — 今この瞬間も積み上がる会議費用を可視化</h1>
+    <p class="subtitle">参加メンバーの役職を設定してタイマーをスタート。今この会議にかかっているコストが秒単位で積み上がります。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- リアルタイムカウンター -->
+    <div class="counter-section" aria-label="会議コストカウンター">
+      <div class="counter-display">
+        <div class="counter-label">累計会議コスト</div>
+        <div class="counter-value" id="counter-value" aria-live="polite" aria-atomic="true">¥0</div>
+        <div class="counter-time" id="counter-time">00:00:00</div>
+        <div class="counter-rate" id="counter-rate">¥0 / 分</div>
+      </div>
+      <div class="counter-controls">
+        <button id="btn-start" class="btn-start" aria-label="会議タイマーを開始する">会議スタート</button>
+        <button id="btn-stop" class="btn-stop" disabled aria-label="会議タイマーを停止する">停止</button>
+        <button id="btn-reset" class="btn-reset" aria-label="タイマーをリセットする">リセット</button>
+      </div>
+    </div>
+
+    <!-- 参加者設定 -->
+    <div class="tool-section">
+      <h2 class="section-title">参加者を設定</h2>
+      <div id="participants-list" class="participants-list" aria-label="参加者リスト"></div>
+      <button id="btn-add-participant" class="btn-add" aria-label="参加者を追加する">+ 参加者を追加</button>
+    </div>
+
+    <!-- 想定コスト早見表 -->
+    <div class="tool-section">
+      <h2 class="section-title">想定コスト早見表</h2>
+      <p class="section-desc">現在の参加者設定で各会議時間のコストを事前確認できます。</p>
+      <div class="cost-table-wrapper">
+        <table class="cost-table" aria-label="会議時間別コスト早見表">
+          <thead>
+            <tr>
+              <th scope="col">会議時間</th>
+              <th scope="col">推定コスト</th>
+              <th scope="col">参考：時給換算</th>
+            </tr>
+          </thead>
+          <tbody id="cost-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ROI計算 -->
+    <div class="tool-section">
+      <h2 class="section-title">会議ROIを計算</h2>
+      <p class="section-desc">この会議で得られた価値（売上・コスト削減・意思決定の価値など）を入力してROIを計算します。</p>
+      <div class="roi-form">
+        <div class="form-group">
+          <label for="meeting-value">この会議で得られた価値（円）</label>
+          <input type="number" id="meeting-value" min="0" step="1000" value="0" aria-label="会議の価値（円）" placeholder="例: 100000">
+        </div>
+        <div class="roi-result" id="roi-result" aria-live="polite" aria-atomic="true"></div>
+      </div>
+    </div>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「参加者を設定」セクションで職種と人数を入力します。デフォルトでエンジニア3名・マネージャー1名・デザイナー1名が設定されています。</li>
+        <li>「会議スタート」ボタンを押すと、リアルタイムで会議コストのカウントが始まります。</li>
+        <li>会議が終わったら「停止」ボタンを押してカウンターを止めます。</li>
+        <li>「想定コスト早見表」で30分・60分・90分・2時間の会議コストを事前に確認できます。</li>
+        <li>「会議ROIを計算」セクションに会議の成果（円換算）を入力すると、ROI（投資対効果）を計算します。</li>
+        <li>ROIが100%未満の場合、その会議は費用対効果がマイナスです。会議の目的・成果を見直しましょう。</li>
+      </ol>
+
+      <h2>会議コストの計算方法</h2>
+      <p>
+        このツールは各職種の平均年収を2080時間（年間労働時間）で割った時給をベースに会議コストを算出します。たとえばマネージャーの平均年収800万円を2080で割ると時給は約4,808円。マネージャーが1時間の会議に出席すると、それだけで4,808円のコストが発生します。参加者全員の時給を合算することで、会議全体のコストを可視化できます。
+      </p>
+      <p>
+        なお、ここで算出されるのは「人件費ベースの機会コスト」です。実際には会議室のコストや準備時間なども加算されるため、実態はここで表示される金額よりさらに高くなる場合があります。
+      </p>
+
+      <h2>会議のROI（投資対効果）とは</h2>
+      <p>
+        ROI（Return on Investment）は「投資した費用に対してどれだけの利益を得られたか」を示す指標です。会議においては「会議コスト（投資）に対して、意思決定・アイデア・合意形成などの価値（リターン）がどれだけあったか」で測ります。
+      </p>
+      <p>
+        ROIの計算式：ROI = （会議価値 ÷ 会議コスト） × 100（%）
+      </p>
+      <p>
+        ROIが100%を超えると「コスト以上の価値を生んだ会議」、100%を下回ると「価値がコストに見合っていない会議」と判断できます。定期的にROIを記録することで、会議の質改善や無駄な会議の削減に役立てることができます。
+      </p>
+
+      <h2>会議コスト削減のヒント</h2>
+      <p>
+        会議コストを削減するには、まず「その会議は本当に必要か」を問うことが重要です。意思決定や情報共有の多くはSlackやドキュメントで非同期に行うことができます。会議が必要な場合は、参加者を意思決定に必要な最小限に絞り、アジェンダを事前共有し、時間を厳守することが効果的です。このツールで会議コストを「見える化」することで、参加者全員のコスト意識が高まります。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力した参加者情報や計算結果はすべてお使いのブラウザ内（localStorage）にのみ保存されます。外部サーバーへの送信は一切行いません。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">無料で登録するだけで最高5,000万円の損害賠償補償が付帯。フリーランスとして独立・副業を検討している方はFREENANCEで口座開設。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3U78+5I9D82+47L8+61C2Q" rel="nofollow" class="affiliate-link">FREENANCEの無料口座開設はこちら</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

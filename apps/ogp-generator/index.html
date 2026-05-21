@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="OGPカード（1200×630px）をブラウザだけで無料作成・PNG保存。タイトル・説明文・背景色・ロゴ文字をカスタマイズ。Twitter/X・Facebook・LINEのシェア画像に対応。登録不要。">
+  <title>OGPカード作成ツール【無料】SNSシェア用サムネイル画像を即ダウンロード | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/ogp-generator/">
+  <!-- OGP -->
+  <meta property="og:title" content="OGPカード作成ツール【無料】SNSシェア用サムネイル画像を即ダウンロード | Keisanlab">
+  <meta property="og:description" content="OGPカード（1200×630px）をブラウザだけで無料作成・PNG保存。タイトル・説明文・背景色・ロゴ文字をカスタマイズ。Twitter/X・Facebook・LINEのシェア画像に対応。登録不要。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/ogp-generator/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>OGP・SNSカード画像ジェネレーター — シェア用サムネイルをブラウザで無料作成</h1>
+    <p class="subtitle">1200×630px のOGPカードをブラウザだけで作成・即ダウンロード。Twitter/X・Facebook・LINE対応。登録不要。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <div class="editor-layout">
+
+      <!-- 左カラム: 設定パネル -->
+      <section class="settings-panel" aria-label="デザイン設定">
+
+        <!-- プリセットテンプレート -->
+        <div class="setting-group">
+          <p class="setting-label">プリセットテンプレート</p>
+          <div class="preset-buttons" role="group" aria-label="プリセット選択">
+            <button class="preset-btn active" data-preset="blog" aria-pressed="true">ブログ記事</button>
+            <button class="preset-btn" data-preset="product" aria-pressed="false">製品告知</button>
+            <button class="preset-btn" data-preset="event" aria-pressed="false">イベント告知</button>
+          </div>
+        </div>
+
+        <!-- テキスト入力 -->
+        <div class="setting-group">
+          <div class="form-group">
+            <label for="input-title">タイトル <span class="char-limit">（最大40文字）</span></label>
+            <input type="text" id="input-title" maxlength="40" placeholder="記事・ページのタイトル" aria-describedby="counter-title">
+            <span class="char-counter" id="counter-title" aria-live="polite">0 / 40</span>
+          </div>
+          <div class="form-group">
+            <label for="input-desc">説明文 <span class="char-limit">（最大80文字）</span></label>
+            <textarea id="input-desc" maxlength="80" rows="2" placeholder="ページの内容を簡潔に説明" aria-describedby="counter-desc"></textarea>
+            <span class="char-counter" id="counter-desc" aria-live="polite">0 / 80</span>
+          </div>
+          <div class="form-group">
+            <label for="input-site">サイト名 <span class="char-limit">（最大20文字）</span></label>
+            <input type="text" id="input-site" maxlength="20" placeholder="例: Keisanlab" aria-describedby="counter-site">
+            <span class="char-counter" id="counter-site" aria-live="polite">0 / 20</span>
+          </div>
+          <div class="form-group">
+            <label for="input-emoji">アイコン / 絵文字 <span class="char-limit">（任意）</span></label>
+            <input type="text" id="input-emoji" maxlength="4" placeholder="例: 📝">
+          </div>
+        </div>
+
+        <!-- デザイン設定 -->
+        <div class="setting-group">
+          <p class="setting-label">背景カラー</p>
+          <div class="color-palette" role="group" aria-label="背景色選択">
+            <button class="color-swatch active" data-color="#1a2a4a" style="background:#1a2a4a" aria-label="ネイビー" aria-pressed="true"></button>
+            <button class="color-swatch" data-color="#2c4a7c" style="background:#2c4a7c" aria-label="ブルー" aria-pressed="false"></button>
+            <button class="color-swatch" data-color="#0f766e" style="background:#0f766e" aria-label="ティール" aria-pressed="false"></button>
+            <button class="color-swatch" data-color="#7c3aed" style="background:#7c3aed" aria-label="パープル" aria-pressed="false"></button>
+            <button class="color-swatch" data-color="#b91c1c" style="background:#b91c1c" aria-label="レッド" aria-pressed="false"></button>
+            <button class="color-swatch" data-color="#d97706" style="background:#d97706" aria-label="オレンジ" aria-pressed="false"></button>
+            <button class="color-swatch" data-color="#1e293b" style="background:#1e293b" aria-label="ダークグレー" aria-pressed="false"></button>
+            <button class="color-swatch" data-color="#f8fafc" style="background:#f8fafc; border:1.5px solid #cbd5e1" aria-label="ホワイト" aria-pressed="false"></button>
+            <label class="color-custom-label" aria-label="カスタムカラー">
+              <input type="color" id="custom-color" value="#1a2a4a" aria-label="カスタム背景色">
+              <span class="color-custom-icon" aria-hidden="true">+</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-group two-col">
+          <div class="form-group">
+            <p class="setting-label">テキストカラー</p>
+            <div class="radio-group" role="group" aria-label="テキストカラー選択">
+              <label class="radio-label">
+                <input type="radio" name="text-color" value="white" checked> 白
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="text-color" value="black"> 黒
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <p class="setting-label">レイアウト</p>
+            <div class="radio-group" role="group" aria-label="レイアウト選択">
+              <label class="radio-label">
+                <input type="radio" name="layout" value="left" checked> 左寄せ
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="layout" value="center"> 中央
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ダウンロードボタン -->
+        <button class="download-btn" id="btn-download" aria-label="OGP画像をPNGでダウンロード">
+          PNG でダウンロード（1200×630px）
+        </button>
+      </section>
+
+      <!-- 右カラム: プレビュー -->
+      <section class="preview-panel" aria-label="プレビュー">
+        <p class="preview-label">プレビュー <span class="preview-note">（実際の出力: 1200×630px）</span></p>
+        <div class="preview-wrapper" aria-label="OGPカードプレビュー">
+          <canvas id="preview-canvas" width="1200" height="630" aria-label="OGPカードプレビュー画像" role="img"></canvas>
+        </div>
+        <!-- hidden canvas for download at full resolution -->
+        <canvas id="export-canvas" width="1200" height="630" aria-hidden="true" style="display:none"></canvas>
+      </section>
+
+    </div>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>プリセットテンプレート（ブログ記事・製品告知・イベント告知）からベースデザインを選んでください。</li>
+        <li>タイトル・説明文・サイト名・絵文字を入力します。入力と同時にプレビューがリアルタイム更新されます。</li>
+        <li>背景カラーはプリセット8色から選ぶか、「+」ボタンでカスタムカラーを指定できます。</li>
+        <li>テキストカラー（白/黒）とレイアウト（左寄せ/中央寄せ）を選択します。</li>
+        <li>「PNG でダウンロード」ボタンをクリックすると、1200×630px のPNGが保存されます。</li>
+        <li>ダウンロードしたPNGをWordPress等のOGP画像設定欄（og:imageフィールド）にアップロードするだけで完成です。</li>
+      </ol>
+
+      <h2>OGP画像とは？SNSシェア時に表示されるサムネイル</h2>
+      <p>
+        OGP（Open Graph Protocol）とは、WebページがSNSでシェアされたときに表示されるタイトル・説明文・サムネイル画像を制御するためのメタタグ仕様です。Twitter/X・Facebook・LINE・Slackなど主要なSNS・メッセージングアプリに対応しています。
+      </p>
+      <p>
+        推奨サイズは 1200×630px（比率 1.91:1）です。このサイズ以外でも表示されますが、SNSによってはトリミングされてしまうことがあります。このツールは1200×630pxで正確に出力するため、どのSNSでもきれいに表示されます。
+      </p>
+
+      <h2>OGP画像をWordPressに設定する方法</h2>
+      <p>
+        WordPressでは「All in One SEO」「Yoast SEO」「SWELL」「AFFINGER」などのテーマ・プラグインのSNSシェア設定でOGP画像を指定できます。ダウンロードした画像をメディアライブラリにアップロードし、各投稿またはサイト全体のOGP設定で指定してください。
+      </p>
+      <p>
+        個別投稿に設定する場合は「アイキャッチ画像」がそのままOGP画像になるテーマも多いため、アイキャッチに設定する方法も検討してください。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力したテキスト・選択したデザインはすべてお使いのブラウザ内でのみ処理されます。外部サーバーへのデータ送信は一切行いません。画像の生成・ダウンロードもブラウザのCanvas APIのみで完結します。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">ブログやWebサイトを始めるなら国内最速クラスのWordPressホスティング。初心者でも簡単にブログ開設できます。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3RV1+5XQMYA+50+5SDXG2" rel="nofollow" class="affiliate-link">ConoHa WINGでWordPressブログを始める</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
