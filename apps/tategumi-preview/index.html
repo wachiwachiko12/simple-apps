@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="小説・エッセイのテキストを縦書きでリアルタイムプレビュー。原稿用紙換算（400字詰め）・総文字数・行数を自動カウント。カクヨム・なろう投稿前の確認に。登録不要・無料。">
+  <title>縦書きプレビュー【無料】小説原稿を縦書き表示・原稿用紙換算 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/tategumi-preview/">
+  <!-- OGP -->
+  <meta property="og:title" content="縦書きプレビュー【無料】小説原稿を縦書き表示・原稿用紙換算 | Keisanlab">
+  <meta property="og:description" content="小説・エッセイのテキストを縦書きでリアルタイムプレビュー。原稿用紙換算（400字詰め）・総文字数・行数を自動カウント。カクヨム・なろう投稿前の確認に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/tategumi-preview/">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>縦書きテキスト・小説原稿プレビュアー — 原稿用紙換算・字数カウント無料</h1>
+    <p class="subtitle">小説・エッセイを縦書きでリアルタイム確認。カクヨム・なろう投稿前の仕上がりチェックに。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- モバイルタブ切り替え -->
+    <div class="mobile-tabs" role="tablist" aria-label="表示切り替え">
+      <button class="mobile-tab active" id="tab-input" role="tab" aria-selected="true" aria-controls="panel-input" data-tab="input">入力</button>
+      <button class="mobile-tab" id="tab-preview" role="tab" aria-selected="false" aria-controls="panel-preview" data-tab="preview">プレビュー</button>
+    </div>
+
+    <!-- メインツール：2カラムレイアウト -->
+    <div class="tool-wrapper">
+
+      <!-- 左カラム：入力 + 設定 + 字数 -->
+      <div class="col-input" id="panel-input" role="tabpanel" aria-labelledby="tab-input">
+
+        <!-- 設定パネル -->
+        <div class="settings-panel">
+          <div class="settings-row">
+            <div class="setting-group">
+              <label for="font-size-select">文字サイズ</label>
+              <select id="font-size-select" aria-label="文字サイズ">
+                <option value="14">小（14px）</option>
+                <option value="16" selected>中（16px）</option>
+                <option value="18">大（18px）</option>
+              </select>
+            </div>
+            <div class="setting-group">
+              <label for="chars-per-line-select">1行の文字数</label>
+              <select id="chars-per-line-select" aria-label="1行の文字数">
+                <option value="20">20文字</option>
+                <option value="25" selected>25文字</option>
+                <option value="30">30文字</option>
+                <option value="40">40文字</option>
+              </select>
+            </div>
+            <div class="setting-group">
+              <label for="font-family-select">フォント</label>
+              <select id="font-family-select" aria-label="フォント">
+                <option value="mincho" selected>明朝体</option>
+                <option value="gothic">ゴシック</option>
+                <option value="maru-gothic">丸ゴシック</option>
+              </select>
+            </div>
+            <div class="setting-group">
+              <label for="line-height-select">行間</label>
+              <select id="line-height-select" aria-label="行間">
+                <option value="narrow">狭め</option>
+                <option value="normal" selected>標準</option>
+                <option value="wide">広め</option>
+              </select>
+            </div>
+          </div>
+          <button id="btn-sample" class="btn-sample" type="button">サンプルテキストを挿入</button>
+        </div>
+
+        <!-- テキスト入力 -->
+        <div class="textarea-wrapper">
+          <textarea
+            id="input-text"
+            placeholder="ここに小説・エッセイのテキストを入力してください。&#10;&#10;ルビは《》記法で指定できます。例: 漢字《かんじ》"
+            aria-label="原稿テキスト入力"
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <!-- 字数カウント -->
+        <div class="count-panel" aria-live="polite" aria-label="字数カウント">
+          <div class="count-item">
+            <span class="count-label">総文字数</span>
+            <span class="count-value" id="count-total">0</span>
+            <span class="count-unit">字</span>
+          </div>
+          <div class="count-divider"></div>
+          <div class="count-item">
+            <span class="count-label">実質文字数</span>
+            <span class="count-value" id="count-effective">0</span>
+            <span class="count-unit">字</span>
+          </div>
+          <div class="count-divider"></div>
+          <div class="count-item">
+            <span class="count-label">原稿用紙</span>
+            <span class="count-value" id="count-genkou">0</span>
+            <span class="count-unit">枚</span>
+            <span class="count-note">（400字詰め）</span>
+          </div>
+          <div class="count-divider"></div>
+          <div class="count-item">
+            <span class="count-label">行数</span>
+            <span class="count-value" id="count-lines">0</span>
+            <span class="count-unit">行</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右カラム：縦書きプレビュー -->
+      <div class="col-preview" id="panel-preview" role="tabpanel" aria-labelledby="tab-preview">
+        <div class="preview-header">
+          <span class="preview-label">縦書きプレビュー</span>
+        </div>
+        <div class="tategumi-scroll-outer">
+          <div class="tategumi-area" id="tategumi-area" aria-label="縦書きプレビューエリア">
+            <div class="tategumi-placeholder">テキストを入力するとここに縦書き表示されます</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 広告ユニット2（プレビュー下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>左側のテキストエリアに小説・エッセイの文章を貼り付けるか入力します。</li>
+        <li>入力と同時に右側（PCの場合）または「プレビュー」タブ（スマホの場合）に縦書きで表示されます。</li>
+        <li>上部の設定パネルで文字サイズ・1行の文字数・フォント・行間を変更できます。</li>
+        <li>ルビ（ふりがな）は <code>漢字《かんじ》</code> のように《》記法で入力すると自動的に変換されます。</li>
+        <li>入力エリア下の字数カウントで、総文字数・実質文字数・原稿用紙換算枚数・行数をリアルタイムに確認できます。</li>
+        <li>「サンプルテキストを挿入」ボタンで夏目漱石「吾輩は猫である」の冒頭を挿入して表示を確認できます。</li>
+      </ol>
+
+      <h2>縦書きプレビューとは</h2>
+      <p>
+        縦書きプレビューとは、横書きで入力したテキストを縦書き（上から下・右から左）の紙面イメージで確認するためのツールです。小説・エッセイ・同人誌を書く方が、カクヨムや小説家になろうに投稿する前に縦組みのレイアウトを確認したり、原稿用紙何枚分になるか把握するために活用できます。
+      </p>
+      <p>
+        縦書き特有の約物（句読点・括弧など）の位置や、ルビ（ふりがな）の見え方を投稿前に確認することで、読者が読みやすい原稿に仕上げることができます。本ツールはすべてブラウザ内で動作し、テキストが外部サーバーに送信されることは一切ありません。
+      </p>
+
+      <h2>原稿用紙換算（400字詰め）について</h2>
+      <p>
+        本ツールでは一般的な400字詰め原稿用紙を基準に換算しています。スペース・改行を除いた「実質文字数」を400で割り、小数点以上で切り上げた枚数を表示します。たとえば実質800字なら2枚、801字なら3枚と表示されます。商業誌・同人誌の原稿量の目安として活用してください。
+      </p>
+
+      <h2>ルビ（ふりがな）の入力方法</h2>
+      <p>
+        本ツールでは <strong>《》（二重山括弧）記法</strong> に対応しています。ふりがなを振りたい漢字の直後に《》でよみがなを囲んで入力すると、縦書きプレビューにルビとして表示されます。例：<code>吾輩《わがはい》は猫《ねこ》である</code>。なお、ルビはプレビュー表示のみへの反映で、字数カウントには含まれません。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>
+        入力したテキストはすべてお使いのブラウザ内でのみ処理されます。外部サーバーへの送信・保存は一切行いません。安心してご利用ください。
+      </p>
+
+      <div class="affiliate-block">
+        <p class="affiliate-label">PR</p>
+        <p class="affiliate-desc">小説やブログをWebサイトとして公開したいなら国内最速クラスのWordPressホスティング。初心者でも簡単に開設できます。</p>
+        <a href="https://px.a8.net/svt/ejp?a8mat=4B3RV1+5XQMYA+50+5SDXG2" rel="nofollow" class="affiliate-link">ConoHa WINGでWordPressブログを始める</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
