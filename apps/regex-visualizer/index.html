@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="正規表現を鉄道図（Railroad Diagram）でリアルタイム可視化。エンジニア・QAエンジニア向け無料ツール。テスト文字列のマッチ確認・各要素の日本語解説付き。">
+  <title>正規表現ビジュアルフローチャート化ツール | 無料・日本語対応</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="正規表現ビジュアルフローチャート化ツール | 無料・日本語対応">
+  <meta property="og:description" content="正規表現を鉄道図（Railroad Diagram）でリアルタイム可視化。エンジニア・QA向け無料ツール。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/regex-visualizer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-regex-visualizer.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-regex-visualizer.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/regex-visualizer/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <a href="/" class="back-link">← ツール一覧</a>
+    <h1>正規表現ビジュアルフローチャート化ツール</h1>
+    <p class="subtitle">正規表現を鉄道図で視覚化・テスト・解説</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- 正規表現入力セクション -->
+    <section id="tool" class="tool-section">
+      <div class="input-row">
+        <label for="regex-input" class="sr-only">正規表現を入力</label>
+        <div class="regex-field-wrap">
+          <span class="regex-slash">/</span>
+          <input type="text" id="regex-input" placeholder="正規表現を入力してください（例: [a-z]+\d{2,4}）" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <span class="regex-slash">/</span>
+          <div class="flags-wrap" role="group" aria-label="正規表現フラグ">
+            <label class="flag-label"><input type="checkbox" id="flag-g" value="g"><span>g</span></label>
+            <label class="flag-label"><input type="checkbox" id="flag-i" value="i"><span>i</span></label>
+            <label class="flag-label"><input type="checkbox" id="flag-m" value="m"><span>m</span></label>
+            <label class="flag-label"><input type="checkbox" id="flag-s" value="s"><span>s</span></label>
+          </div>
+        </div>
+        <button type="button" id="clear-btn" class="clear-btn" aria-label="入力をクリア">クリア</button>
+      </div>
+
+      <div id="error-msg" class="error-msg" role="alert" aria-live="polite" hidden></div>
+
+      <!-- SVGダイアグラム -->
+      <div class="diagram-container" id="diagram-container" aria-label="正規表現ダイアグラム">
+        <div class="diagram-placeholder" id="diagram-placeholder">
+          正規表現を入力するとフローチャートが表示されます
+        </div>
+        <div class="diagram-scroll" id="diagram-scroll" hidden>
+          <svg id="regex-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- テスト入力セクション -->
+    <section class="tool-section test-section">
+      <h2>テスト入力</h2>
+      <label for="test-input">テスト文字列</label>
+      <input type="text" id="test-input" placeholder="マッチを確認したい文字列を入力" autocomplete="off">
+      <div id="match-result" class="match-result" hidden>
+        <div class="match-header">
+          <span id="match-count-label"></span>
+        </div>
+        <div id="match-highlight" class="match-highlight" aria-live="polite"></div>
+        <ul id="match-list" class="match-list"></ul>
+      </div>
+      <div id="no-match" class="no-match" hidden>マッチなし</div>
+    </section>
+
+    <!-- コンポーネント説明 -->
+    <section class="tool-section component-section" id="component-section" hidden>
+      <h2>コンポーネント説明</h2>
+      <table class="component-table">
+        <thead>
+          <tr><th>要素</th><th>種別</th><th>説明</th></tr>
+        </thead>
+        <tbody id="component-tbody"></tbody>
+      </table>
+    </section>
+
+    <!-- 広告ユニット2（結果エリア下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- サンプルパターン -->
+    <section class="tool-section samples-section">
+      <h2>よくある正規表現パターン集</h2>
+      <p class="samples-desc">クリックすると正規表現入力欄に反映されます。</p>
+      <div class="sample-list">
+        <button type="button" class="sample-btn" data-regex="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+          <span class="sample-label">メールアドレス</span>
+          <code>[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}</code>
+        </button>
+        <button type="button" class="sample-btn" data-regex="0\d{1,4}-?\d{1,4}-?\d{4}">
+          <span class="sample-label">電話番号（日本）</span>
+          <code>0\d{1,4}-?\d{1,4}-?\d{4}</code>
+        </button>
+        <button type="button" class="sample-btn" data-regex="\d{3}-?\d{4}">
+          <span class="sample-label">郵便番号</span>
+          <code>\d{3}-?\d{4}</code>
+        </button>
+        <button type="button" class="sample-btn" data-regex="\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])">
+          <span class="sample-label">日付（YYYY-MM-DD）</span>
+          <code>\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])</code>
+        </button>
+        <button type="button" class="sample-btn" data-regex="https?://[\w\-\.]+/[\w\-\./?%&=]*">
+          <span class="sample-label">URLパターン</span>
+          <code>https?://[\w\-\.]+/[\w\-\./?%&amp;=]*</code>
+        </button>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>上部の入力欄に正規表現を入力します（スラッシュは不要です）。</li>
+        <li>フラグ（g・i・m・s）が必要な場合はチェックを入れます。</li>
+        <li>入力と同時にフローチャートがリアルタイムで更新されます。</li>
+        <li>「テスト入力」欄に文字列を入力すると、マッチ箇所がハイライト表示されます。</li>
+        <li>ダイアグラム下の「コンポーネント説明」で各要素の意味を確認できます。</li>
+      </ol>
+
+      <h2>正規表現の可視化（鉄道図）とは</h2>
+      <p>
+        正規表現ビジュアルフローチャート（鉄道図・Railroad Diagram）は、複雑な正規表現の構造を
+        左から右へのフロー図として表現する方法です。各トークン（文字クラス・量詞・グループなど）を
+        色分けされたボックスで表示し、処理の流れを視覚的に把握できます。
+        RegexBuddy などの有料ツールが提供する機能を、このツールでは無料・日本語で利用できます。
+      </p>
+      <p>
+        エンジニアやQAエンジニアが正規表現をデバッグする際、どこがリテラル文字でどこが量詞なのかが
+        一目でわかるため、パターンのミスを素早く発見できます。
+        特に <code>(?:...)</code> 非キャプチャグループや <code>(?=...)</code> 先読みアサーション、
+        <code>[a-z]{2,5}</code> のような量詞付き文字クラスが絡む複雑なパターンで威力を発揮します。
+      </p>
+
+      <h2>ダイアグラムの色の意味</h2>
+      <div class="legend-grid">
+        <div class="legend-item"><span class="legend-dot" style="background:#3b82f6"></span>青: リテラル文字（例: abc）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#10b981"></span>緑: 文字クラス（例: [a-z]）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f97316"></span>橙: 量詞（例: *, +, ?, {n,m}）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#8b5cf6"></span>紫: グループ（例: (...)）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ef4444"></span>赤: アンカー（例: ^, $, \b）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#6b7280"></span>灰: 特殊文字（例: \d, \w, \s）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#eab308"></span>黄: 交替（例: |）</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/">← ツール一覧に戻る</a> ｜ <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
