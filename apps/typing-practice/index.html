@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ローマ字・かな・英語の3モード対応タイピング練習ツール。WPM・正確率をリアルタイム計測。登録不要・無料で使えるe-typing代替サービス。スマホにも対応。">
+  <title>タイピング練習ツール | ローマ字・英語・WPM計測 無料</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="タイピング練習ツール | ローマ字・英語・WPM計測 無料">
+  <meta property="og:description" content="ローマ字・かな・英語の3モード対応。WPM・正確率をリアルタイム計測。登録不要・無料のタイピング練習サイト。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/typing-practice/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-typing-practice.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-typing-practice.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/typing-practice/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">← ツール一覧</a>
+      <h1>タイピング練習ツール</h1>
+      <p class="subtitle">ローマ字・かな・英語に対応 | WPM・正確率をリアルタイム計測</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section" aria-label="タイピング練習エリア">
+
+      <!-- モード・テキスト選択 -->
+      <div class="controls-row">
+        <div class="mode-tabs" role="tablist" aria-label="入力モード選択">
+          <button class="mode-tab active" data-mode="english" role="tab" aria-selected="true" aria-controls="typing-area">英語</button>
+          <button class="mode-tab" data-mode="romaji" role="tab" aria-selected="false" aria-controls="typing-area">ローマ字</button>
+          <button class="mode-tab" data-mode="kana" role="tab" aria-selected="false" aria-controls="typing-area">かな</button>
+        </div>
+        <div class="text-select-wrap">
+          <label for="text-category" class="sr-only">テキストカテゴリ</label>
+          <select id="text-category" aria-label="練習テキストのカテゴリを選択">
+            <option value="english-basic">英語: 基本単語100選</option>
+            <option value="english-programming">英語: プログラミング用語</option>
+            <option value="english-quotes">英語: 英文名言</option>
+            <option value="japanese-proverbs">日本語: ことわざ</option>
+            <option value="japanese-tech">日本語: 技術用語</option>
+            <option value="japanese-sentences">日本語: 短文練習</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- リアルタイム計測バー -->
+      <div class="stats-bar" aria-live="polite" aria-label="現在のスコア">
+        <div class="stat">
+          <span class="stat-label">WPM</span>
+          <span class="stat-value" id="wpm">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">正確率</span>
+          <span class="stat-value" id="accuracy">100%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">経過時間</span>
+          <span class="stat-value" id="elapsed">00:00</span>
+        </div>
+      </div>
+
+      <!-- 進捗バー -->
+      <div class="progress-bar-wrap" aria-label="進捗">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+
+      <!-- 表示テキスト（ハイライト付き） -->
+      <div id="typing-area" class="typing-display" aria-label="練習テキスト" role="region">
+        <div id="display-text" class="display-text"></div>
+        <div id="romaji-hint" class="romaji-hint" aria-label="ローマ字ヒント"></div>
+      </div>
+
+      <!-- 入力フィールド -->
+      <div class="input-wrap">
+        <label for="typing-input" class="sr-only">ここにタイプしてください</label>
+        <input
+          type="text"
+          id="typing-input"
+          class="typing-input"
+          placeholder="ここに入力してください（スタートボタンで開始）"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          disabled
+          aria-label="タイピング入力フィールド"
+        >
+      </div>
+
+      <!-- ベストスコア表示 -->
+      <div class="best-score" aria-label="ベストスコア">
+        <span id="best-score-display">ベスト: -- WPM</span>
+      </div>
+
+      <!-- 操作ボタン -->
+      <div class="action-buttons">
+        <button id="start-btn" class="btn btn-primary" aria-label="タイピング練習を開始">スタート</button>
+        <button id="reset-btn" class="btn btn-secondary" aria-label="リセットして最初から">リセット</button>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- セッション完了モーダル -->
+    <div id="result-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+      <div class="modal-content">
+        <h2 id="modal-title">結果発表</h2>
+        <div class="rank-display" id="rank-display" aria-label="ランク"></div>
+        <div class="result-stats">
+          <div class="result-stat">
+            <span class="result-label">WPM</span>
+            <span class="result-value" id="result-wpm">0</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-label">正確率</span>
+            <span class="result-value" id="result-accuracy">0%</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-label">ミス数</span>
+            <span class="result-value" id="result-mistakes">0</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-label">タイム</span>
+            <span class="result-value" id="result-time">0:00</span>
+          </div>
+        </div>
+        <div id="new-best" class="new-best" hidden>新記録！</div>
+        <div class="modal-buttons">
+          <button id="retry-btn" class="btn btn-primary">もう一度</button>
+          <button id="close-modal-btn" class="btn btn-secondary">閉じる</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>モードを選択してください（英語 / ローマ字 / かな）。</li>
+        <li>テキストカテゴリをドロップダウンから選んでください。</li>
+        <li>「スタート」ボタンを押すか、入力フィールドをクリックして練習を開始してください。</li>
+        <li>表示されたテキストを正確にタイプしてください。正しい文字は緑、間違いは赤でハイライトされます。</li>
+        <li>すべてのテキストを入力し終えると、WPM・正確率・ランクが表示されます。</li>
+      </ol>
+
+      <h2>タイピング練習ツールとは</h2>
+      <p>
+        このタイピング練習ツールは、キーボード入力のスピードと正確率を向上させるための無料ウェブサービスです。
+        英語・ローマ字・かなの3種類のモードに対応しており、初心者から上級者まで幅広く活用できます。
+        WPM（Words Per Minute / 1分間の単語数）はタイピング速度の国際標準指標で、一般的なビジネスパーソンの平均は40〜60WPM、
+        タイピングが得意な方は80〜100WPM以上を記録します。
+        練習を重ねることでブラインドタッチが身につき、仕事や学習の効率が大幅にアップします。
+        e-typingの代替として、登録不要・完全無料でご利用いただけます。
+      </p>
+
+      <h2>ランクの基準（英語モード / WPM基準）</h2>
+      <table class="rank-table" aria-label="WPMとランクの対応表">
+        <thead>
+          <tr><th>ランク</th><th>WPM</th><th>レベル</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>S</td><td>80以上</td><td>プロフェッショナル</td></tr>
+          <tr><td>A</td><td>60〜79</td><td>上級者</td></tr>
+          <tr><td>B</td><td>40〜59</td><td>中級者</td></tr>
+          <tr><td>C</td><td>20〜39</td><td>初級者</td></tr>
+          <tr><td>D</td><td>19以下</td><td>入門</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.75rem;font-size:0.85rem;color:#888;">※ ローマ字・かなモードはキーストローク数が多いため、WPMは英語モードより低くなります。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
