@@ -1,0 +1,812 @@
+/* ===========================
+   Reset & Base
+   =========================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background: #f5f7fa;
+  min-height: 100vh;
+}
+
+/* ===========================
+   Header
+   =========================== */
+header {
+  background: #1a1a2e;
+  color: white;
+  padding: 0.875rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.back-link {
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 0.25rem;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: white;
+}
+
+.header-title h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+/* ===========================
+   Main Layout
+   =========================== */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===========================
+   AdSense units
+   =========================== */
+.ad-unit {
+  margin: 1.25rem 0;
+}
+
+/* ===========================
+   Today Summary
+   =========================== */
+.today-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.today-date {
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.today-progress {
+  flex: 1;
+  text-align: right;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.today-progress span {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.progress-bar-wrap {
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  margin-top: 0.375rem;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #81C784);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* ===========================
+   Section Shared
+   =========================== */
+.tool-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+/* ===========================
+   Habit List
+   =========================== */
+.habit-list {
+  list-style: none;
+}
+
+.habit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  position: relative;
+}
+
+.habit-item:last-child {
+  border-bottom: none;
+}
+
+/* チェックボタン: タッチターゲット56px以上 */
+.habit-check-btn {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  border: 2.5px solid #ccc;
+  background: white;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.habit-check-btn.done {
+  border-color: transparent;
+  background: var(--habit-color, #4CAF50);
+  color: white;
+}
+
+.habit-check-btn:not(.done):hover {
+  border-color: var(--habit-color, #4CAF50);
+  background: rgba(76,175,80,0.05);
+}
+
+/* 習慣情報 */
+.habit-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.habit-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.habit-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.habit-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.habit-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #FF6F00;
+}
+
+.streak-badge .flame {
+  font-size: 0.9rem;
+}
+
+.streak-best {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.freq-label {
+  font-size: 0.75rem;
+  color: #aaa;
+  background: #f5f5f5;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* 週間カレンダー（7日） */
+.week-calendar {
+  display: flex;
+  gap: 3px;
+  margin-top: 0.5rem;
+}
+
+.week-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.week-day-label {
+  font-size: 0.6rem;
+  color: #aaa;
+}
+
+.week-day-cell {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.week-day-cell.achieved {
+  background: var(--habit-color, #4CAF50);
+  color: white;
+}
+
+.week-day-cell.missed {
+  background: #f0f0f0;
+  color: #ccc;
+}
+
+.week-day-cell.today {
+  outline: 2px solid var(--habit-color, #4CAF50);
+  outline-offset: 1px;
+}
+
+/* 習慣アクションボタン群 */
+.habit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.habit-action-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e0e0e0;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.habit-action-btn:hover {
+  background: #f5f5f5;
+}
+
+.habit-action-btn.edit-btn {
+  font-size: 0.75rem;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  color: #888;
+  padding: 2.5rem 1rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  background: #f9fafb;
+  border-radius: 10px;
+  border: 2px dashed #e0e0e0;
+}
+
+/* ===========================
+   Add Habit Button
+   =========================== */
+.btn-add-habit {
+  display: block;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  min-height: 56px;
+  margin-bottom: 1rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-add-habit:hover {
+  background: #2d2d52;
+}
+
+.btn-add-habit:active {
+  transform: scale(0.98);
+}
+
+/* ===========================
+   Heatmap
+   =========================== */
+.heatmap-section .section-header {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.heatmap-section select {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  cursor: pointer;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.heatmap-container {
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.heatmap-grid {
+  display: grid;
+  grid-template-rows: repeat(7, 14px);
+  grid-auto-flow: column;
+  gap: 3px;
+  width: max-content;
+}
+
+.heatmap-cell {
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+}
+
+.heatmap-cell.level-0 { background: #ebedf0; }
+.heatmap-cell.level-1 { background: #c6e48b; }
+.heatmap-cell.level-2 { background: #7bc96f; }
+.heatmap-cell.level-3 { background: #239a3b; }
+.heatmap-cell.level-4 { background: #196127; }
+
+.heatmap-day-labels {
+  display: grid;
+  grid-template-rows: repeat(7, 14px);
+  gap: 3px;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.heatmap-day-label {
+  font-size: 0.6rem;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  height: 14px;
+}
+
+.heatmap-wrap {
+  display: flex;
+}
+
+.heatmap-month-labels {
+  display: flex;
+  gap: 3px;
+  padding-left: 32px;
+  margin-bottom: 4px;
+}
+
+.heatmap-month-label {
+  font-size: 0.65rem;
+  color: #aaa;
+}
+
+/* ===========================
+   Stats
+   =========================== */
+.stats-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.stat-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+.stat-emoji {
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+}
+
+/* ===========================
+   How-to Section
+   =========================== */
+.howto-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+.howto-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol {
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.howto-section li {
+  margin-bottom: 0.5rem;
+}
+
+.howto-section p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+/* ===========================
+   Footer
+   =========================== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   Modal
+   =========================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px 20px 0 0;
+  padding: 1.5rem 1.25rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.modal-header h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: #f0f0f0;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#habit-form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+#habit-form .required {
+  color: #e53935;
+}
+
+#habit-form input[type="text"] {
+  width: 100%;
+  padding: 0.7rem 0.875rem;
+  font-size: 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#habit-form input[type="text"]:focus {
+  border-color: #4CAF50;
+}
+
+/* Emoji Picker */
+.emoji-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.emoji-btn {
+  width: 44px;
+  height: 44px;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.emoji-btn.selected {
+  border-color: #4CAF50;
+  background: #f0faf0;
+}
+
+/* Color Picker */
+.color-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.color-btn.selected {
+  border-color: #333;
+  transform: scale(1.15);
+}
+
+/* Frequency Row */
+.freq-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.freq-row select {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  min-height: 44px;
+}
+
+#freq-count-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
+
+#habit-freq-count {
+  width: 56px;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  text-align: center;
+  min-height: 44px;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 0.875rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 56px;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary:hover {
+  background: #2d2d52;
+}
+
+.btn-secondary {
+  padding: 0.875rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: white;
+  color: #e53935;
+  border: 1.5px solid #e53935;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 56px;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-secondary:hover {
+  background: #fff5f5;
+}
+
+/* ===========================
+   Responsive — Desktop
+   =========================== */
+@media (min-width: 640px) {
+  .header-title h1 {
+    font-size: 1.4rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  .modal {
+    border-radius: 16px;
+    margin: auto;
+  }
+
+  .modal-overlay {
+    align-items: center;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .habit-item {
+    gap: 1rem;
+  }
+}
+
+/* ===========================
+   Drag & Drop
+   =========================== */
+.habit-item.dragging {
+  opacity: 0.4;
+}
+
+.habit-item.drag-over {
+  border-top: 2px solid #4CAF50;
+}

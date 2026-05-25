@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="習慣トラッカー無料ツール。ストリーク（連続達成日数）と月間ヒートマップで習慣の継続を見える化。登録不要・データはブラウザに保存。Habitifyの無料代替として毎日の習慣管理に最適。">
+  <title>習慣トラッカー | ストリーク・ヒートマップ 無料</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="習慣トラッカー | ストリーク・ヒートマップ 無料">
+  <meta property="og:description" content="習慣の継続を見える化。ストリーク・月間ヒートマップで達成状況を管理。登録不要・データはブラウザに保存。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/habit-tracker/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-habit-tracker.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-habit-tracker.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/habit-tracker/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link">&#8592; ツール一覧</a>
+      <div class="header-title">
+        <h1>習慣トラッカー</h1>
+        <p class="subtitle">ストリーク・ヒートマップで習慣の継続を見える化</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- 今日のサマリー -->
+    <section class="today-summary" id="today-summary">
+      <div class="today-date" id="today-date"></div>
+      <div class="today-progress">
+        <span id="today-count">0/0</span> 習慣達成
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 習慣一覧 -->
+    <section id="habit-list-section" class="tool-section">
+      <div class="section-header">
+        <h2>今日の習慣</h2>
+      </div>
+      <ul class="habit-list" id="habit-list" aria-label="習慣リスト">
+        <!-- JS で描画 -->
+      </ul>
+      <p class="empty-state" id="empty-state">まだ習慣が登録されていません。<br>下の「＋ 習慣を追加」ボタンをタップして、<br>最初の習慣を登録しましょう！</p>
+    </section>
+
+    <!-- 習慣を追加ボタン -->
+    <button class="btn-add-habit" id="btn-open-modal" aria-label="習慣を追加">
+      + 習慣を追加
+    </button>
+
+    <!-- 広告ユニット（一覧下） -->
+    <div class="ad-unit" id="ad-middle" aria-hidden="true"></div>
+
+    <!-- 月間ヒートマップ -->
+    <section class="tool-section heatmap-section" id="heatmap-section" style="display:none">
+      <div class="section-header">
+        <h2>月間ヒートマップ</h2>
+        <select id="heatmap-habit-select" aria-label="ヒートマップ表示習慣を選択"></select>
+      </div>
+      <div class="heatmap-legend">
+        <div class="heatmap-cell level-0"></div>
+        <span>未達成</span>
+        <div class="heatmap-cell level-4" style="background:var(--legend-color,#4CAF50)" id="legend-achieved"></div>
+        <span>達成</span>
+      </div>
+      <div class="heatmap-container" id="heatmap-container" aria-label="月間達成カレンダー"></div>
+    </section>
+
+    <!-- 統計セクション -->
+    <section class="tool-section stats-section" id="stats-section" style="display:none">
+      <h2>統計</h2>
+      <div class="stats-grid" id="stats-grid"></div>
+    </section>
+
+    <!-- 広告ユニット（統計下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+      <h2>使い方</h2>
+      <ol>
+        <li>「+ 習慣を追加」をタップして、習慣の名前・アイコン・カラー・頻度を設定します。</li>
+        <li>毎日アプリを開き、達成した習慣のチェックボタンをタップします。</li>
+        <li>連続達成日数（ストリーク）が表示され、モチベーションを維持できます。</li>
+        <li>月間ヒートマップで今月の達成状況をひと目で確認できます。</li>
+        <li>習慣の順序は上下矢印ボタンで並び替え可能です。</li>
+      </ol>
+
+      <h2>習慣トラッカーとは</h2>
+      <p>
+        習慣トラッカーは、毎日の習慣を記録・可視化するツールです。「ストリーク」とは習慣を連続して達成した日数のことで、記録が途切れないようにするゲーム感覚のモチベーション維持に効果的です。本ツールはHabitifyなど有料アプリの代替として、ブラウザだけで動作し、登録不要・完全無料でご利用いただけます。データはすべてお使いのブラウザのlocalStorageに保存されるため、プライバシーも安心です。毎日・週N回など柔軟な目標頻度を設定でき、月間ヒートマップでGitHubのコントリビューショングラフのように達成状況を一覧できます。習慣化には「66日間」かかるとも言われており、まずは小さな目標から記録を始めてみましょう。
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <!-- 習慣追加・編集モーダル -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display:none">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">習慣を追加</h3>
+        <button class="modal-close" id="modal-close" aria-label="閉じる">&times;</button>
+      </div>
+      <form id="habit-form">
+        <input type="hidden" id="edit-habit-id">
+
+        <label for="habit-name">習慣の名前 <span class="required">*</span></label>
+        <input type="text" id="habit-name" placeholder="例: 朝のランニング" maxlength="30" required>
+
+        <label>アイコン（絵文字）</label>
+        <div class="emoji-picker" id="emoji-picker">
+          <button type="button" class="emoji-btn selected" data-emoji="⭐">⭐</button>
+          <button type="button" class="emoji-btn" data-emoji="🏃">🏃</button>
+          <button type="button" class="emoji-btn" data-emoji="📚">📚</button>
+          <button type="button" class="emoji-btn" data-emoji="💪">💪</button>
+          <button type="button" class="emoji-btn" data-emoji="🧘">🧘</button>
+          <button type="button" class="emoji-btn" data-emoji="🍎">🍎</button>
+          <button type="button" class="emoji-btn" data-emoji="💤">💤</button>
+          <button type="button" class="emoji-btn" data-emoji="✍️">✍️</button>
+          <button type="button" class="emoji-btn" data-emoji="🎵">🎵</button>
+          <button type="button" class="emoji-btn" data-emoji="💊">💊</button>
+          <button type="button" class="emoji-btn" data-emoji="🚰">🚰</button>
+          <button type="button" class="emoji-btn" data-emoji="🧹">🧹</button>
+          <button type="button" class="emoji-btn" data-emoji="💰">💰</button>
+          <button type="button" class="emoji-btn" data-emoji="🎯">🎯</button>
+          <button type="button" class="emoji-btn" data-emoji="🌞">🌞</button>
+          <button type="button" class="emoji-btn" data-emoji="📝">📝</button>
+        </div>
+
+        <label>カラー</label>
+        <div class="color-picker" id="color-picker">
+          <button type="button" class="color-btn selected" data-color="#4CAF50" style="background:#4CAF50" aria-label="緑"></button>
+          <button type="button" class="color-btn" data-color="#2196F3" style="background:#2196F3" aria-label="青"></button>
+          <button type="button" class="color-btn" data-color="#FF9800" style="background:#FF9800" aria-label="オレンジ"></button>
+          <button type="button" class="color-btn" data-color="#E91E63" style="background:#E91E63" aria-label="ピンク"></button>
+          <button type="button" class="color-btn" data-color="#9C27B0" style="background:#9C27B0" aria-label="紫"></button>
+          <button type="button" class="color-btn" data-color="#00BCD4" style="background:#00BCD4" aria-label="シアン"></button>
+          <button type="button" class="color-btn" data-color="#FF5722" style="background:#FF5722" aria-label="赤橙"></button>
+          <button type="button" class="color-btn" data-color="#607D8B" style="background:#607D8B" aria-label="グレー"></button>
+        </div>
+
+        <label for="habit-freq">目標頻度</label>
+        <div class="freq-row">
+          <select id="habit-freq" aria-label="頻度タイプ">
+            <option value="daily">毎日</option>
+            <option value="weekly">週に</option>
+          </select>
+          <span id="freq-count-wrap" style="display:none">
+            <input type="number" id="habit-freq-count" min="1" max="7" value="3" aria-label="週の回数">
+            <span>回</span>
+          </span>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="btn-delete-habit" style="display:none">削除</button>
+          <button type="submit" class="btn-primary" id="btn-save-habit">追加する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
