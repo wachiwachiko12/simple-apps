@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="SM-2アルゴリズムで効率的に暗記できる無料フラッシュカードツール。登録不要・ブラウザ完結。語学・資格・医学の学習に。デッキ作成・CSV読み込み・完全ローカル保存対応。">
+  <title>間隔反復フラッシュカード | 無料・登録不要のAnki代替Web版</title>
+
+  <meta property="og:title" content="間隔反復フラッシュカード | 無料・登録不要">
+  <meta property="og:description" content="SM-2アルゴリズムで効率的に暗記。語学・資格・医学の学習に。デッキ作成・CSV読み込み・完全ローカル保存。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/flashcard/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-flashcard.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-flashcard.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/flashcard/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link">← ツール一覧</a>
+      <h1>間隔反復フラッシュカード</h1>
+      <p class="subtitle">SM-2アルゴリズムで効率的に暗記。無料・登録不要・ブラウザ完結。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- デッキ一覧画面 -->
+    <section id="deck-view" class="section-card">
+      <div class="deck-header">
+        <h2>デッキ一覧</h2>
+        <button id="btn-new-deck" class="btn-primary btn-sm" aria-label="新規デッキを作成">+ 新規デッキ</button>
+      </div>
+
+      <!-- 新規デッキ作成フォーム -->
+      <div id="new-deck-form" class="new-deck-form hidden">
+        <input type="text" id="new-deck-name" placeholder="デッキ名を入力（例: 英単語 TOEIC）" maxlength="50" aria-label="新規デッキ名">
+        <div class="form-actions">
+          <button id="btn-create-deck" class="btn-primary">作成</button>
+          <button id="btn-cancel-deck" class="btn-secondary">キャンセル</button>
+        </div>
+      </div>
+
+      <div id="deck-list" class="deck-list">
+        <!-- デッキカードはJSで生成 -->
+      </div>
+
+      <p id="no-decks-msg" class="empty-msg hidden">
+        デッキがありません。「+ 新規デッキ」から作成してください。
+      </p>
+    </section>
+
+    <!-- 広告ユニット2（デッキ一覧下） -->
+    <div class="ad-unit" id="ad-mid" aria-hidden="true"></div>
+
+    <!-- カード管理画面 -->
+    <section id="card-manage-view" class="section-card hidden">
+      <div class="deck-header">
+        <button id="btn-back-to-decks" class="btn-ghost">← 戻る</button>
+        <h2 id="manage-deck-title">デッキ名</h2>
+        <button id="btn-start-study" class="btn-primary btn-sm" aria-label="学習を開始">学習開始</button>
+      </div>
+
+      <div class="stats-bar-wrapper">
+        <div id="stats-bar" class="stats-bar" role="img" aria-label="デッキ統計">
+          <div class="stats-seg seg-new" id="seg-new" title="新規"></div>
+          <div class="stats-seg seg-learning" id="seg-learning" title="学習中"></div>
+          <div class="stats-seg seg-mastered" id="seg-mastered" title="習得済み"></div>
+        </div>
+        <div class="stats-legend">
+          <span class="legend-item"><span class="dot dot-new"></span>新規 <strong id="count-new">0</strong></span>
+          <span class="legend-item"><span class="dot dot-learning"></span>学習中 <strong id="count-learning">0</strong></span>
+          <span class="legend-item"><span class="dot dot-mastered"></span>習得済み <strong id="count-mastered">0</strong></span>
+        </div>
+      </div>
+
+      <!-- カード追加フォーム -->
+      <div class="add-card-form">
+        <h3>カードを追加</h3>
+        <label for="card-front">表面（問い）</label>
+        <textarea id="card-front" rows="2" placeholder="例: abandon" maxlength="500" aria-label="カード表面"></textarea>
+        <label for="card-back">裏面（答え）</label>
+        <textarea id="card-back" rows="2" placeholder="例: 放棄する・断念する" maxlength="500" aria-label="カード裏面"></textarea>
+        <div class="form-actions">
+          <button id="btn-add-card" class="btn-primary">追加</button>
+        </div>
+      </div>
+
+      <!-- CSV インポート/エクスポート -->
+      <div class="csv-section">
+        <h3>CSV インポート / エクスポート</h3>
+        <p class="csv-hint">形式: <code>表面,裏面</code>（1行1カード、ヘッダー行は不要）</p>
+        <div class="csv-actions">
+          <label for="csv-file" class="btn-secondary btn-file-label">CSVインポート</label>
+          <input type="file" id="csv-file" accept=".csv,text/csv" class="hidden" aria-label="CSVファイルを選択">
+          <button id="btn-export-csv" class="btn-secondary">CSVエクスポート</button>
+        </div>
+        <p id="csv-msg" class="csv-msg hidden" aria-live="polite"></p>
+      </div>
+
+      <!-- カード一覧 -->
+      <div class="card-list-wrapper">
+        <h3>カード一覧 <span id="card-count-badge" class="badge">0枚</span></h3>
+        <div id="card-list" class="card-list">
+          <!-- カードはJSで生成 -->
+        </div>
+        <p id="no-cards-msg" class="empty-msg hidden">カードがありません。上のフォームから追加してください。</p>
+      </div>
+    </section>
+
+    <!-- 学習セッション画面 -->
+    <section id="study-view" class="section-card hidden">
+      <div class="deck-header">
+        <button id="btn-back-to-manage" class="btn-ghost">← 戻る</button>
+        <h2 id="study-deck-title">学習中</h2>
+        <span id="study-progress" class="progress-badge">0/0</span>
+      </div>
+
+      <div class="study-area">
+        <!-- フラッシュカード（フリップ） -->
+        <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="カードをクリックして答えを確認">
+          <div class="flashcard-inner">
+            <div class="flashcard-front">
+              <p id="card-front-text" class="card-text"></p>
+              <span class="flip-hint">タップして答えを見る</span>
+            </div>
+            <div class="flashcard-back">
+              <p id="card-back-text" class="card-text"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 答えを見るボタン -->
+        <div id="reveal-area" class="reveal-area">
+          <button id="btn-reveal" class="btn-reveal" aria-label="答えを表示">答えを見る</button>
+        </div>
+
+        <!-- 評価ボタン -->
+        <div id="rating-area" class="rating-area hidden" aria-label="理解度を評価してください">
+          <p class="rating-label">どのくらい覚えていましたか？</p>
+          <div class="rating-buttons">
+            <button class="btn-rating btn-again" data-quality="0" aria-label="もう一度（忘れた）">
+              <span class="rating-icon">↩</span>
+              <span class="rating-text">もう一度</span>
+              <span class="rating-sub">忘れた</span>
+            </button>
+            <button class="btn-rating btn-hard" data-quality="3" aria-label="難しい（思い出すのに時間がかかった）">
+              <span class="rating-icon">😓</span>
+              <span class="rating-text">難しい</span>
+              <span class="rating-sub">時間かかった</span>
+            </button>
+            <button class="btn-rating btn-good" data-quality="4" aria-label="普通（少し迷ったが思い出せた）">
+              <span class="rating-icon">🙂</span>
+              <span class="rating-text">普通</span>
+              <span class="rating-sub">少し迷った</span>
+            </button>
+            <button class="btn-rating btn-easy" data-quality="5" aria-label="簡単（すぐ思い出せた）">
+              <span class="rating-icon">⭐</span>
+              <span class="rating-text">簡単</span>
+              <span class="rating-sub">すぐ思い出せた</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- セッション完了画面 -->
+    <section id="complete-view" class="section-card hidden">
+      <div class="complete-content">
+        <div class="complete-icon" aria-hidden="true">🎉</div>
+        <h2>セッション完了！</h2>
+        <p id="complete-msg" class="complete-msg"></p>
+        <div class="complete-stats">
+          <div class="c-stat"><strong id="c-again">0</strong><span>もう一度</span></div>
+          <div class="c-stat"><strong id="c-hard">0</strong><span>難しい</span></div>
+          <div class="c-stat"><strong id="c-good">0</strong><span>普通</span></div>
+          <div class="c-stat"><strong id="c-easy">0</strong><span>簡単</span></div>
+        </div>
+        <div class="complete-actions">
+          <button id="btn-study-again" class="btn-primary">もう一度学習</button>
+          <button id="btn-back-from-complete" class="btn-secondary">デッキ一覧へ</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット3（メインコンテンツ下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・説明セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「+ 新規デッキ」ボタンでデッキを作成します（例: 英単語、漢字、資格用語）。</li>
+        <li>デッキを選び、カードの表面（問い）と裏面（答え）を入力して追加します。CSVファイルから一括インポートも可能です。</li>
+        <li>「学習開始」ボタンを押して学習セッションを始めます。カードをクリックまたは「答えを見る」を押して裏面を確認します。</li>
+        <li>「もう一度」「難しい」「普通」「簡単」の4段階で理解度を評価します。評価に応じて次回の出題日が自動計算されます。</li>
+        <li>翌日以降、「今日X枚」と表示されたカードが復習対象です。毎日続けることで効率的に定着します。</li>
+      </ol>
+
+      <h2>間隔反復（スペーシング効果）とは</h2>
+      <p>
+        間隔反復（Spaced Repetition）は、記憶の忘却曲線に基づいた科学的な学習法です。覚えたばかりの内容は頻繁に復習し、しっかり定着したものは間隔を空けて出題することで、最小限の時間で最大限の記憶定着を実現します。このツールはAnkiでも採用されているSM-2アルゴリズムを使用しており、「難しい」と評価したカードは翌日、「簡単」と評価したカードは数週間後に出題するよう自動スケジューリングされます。語学・資格・医学・司法試験など、大量の知識を効率よく暗記したい方に最適なツールです。すべてのデータはブラウザのlocalStorageに保存されるため、サーバーへのデータ送信は一切ありません。
+      </p>
+
+      <h2>CSVインポートの形式</h2>
+      <p>
+        テキストエディタやExcelで <code>表面,裏面</code> の形式（1行1カード）でファイルを作成し、CSVインポートボタンから読み込めます。既存のAnkiデッキをエクスポートしたファイルも、表面・裏面の2列形式であれば読み込み可能です。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
