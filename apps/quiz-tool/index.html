@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="CSVファイルを読み込んでランダム出題できる無料の資格試験対策ツール。ITパスポート・FP・宅建・英検など自作問題集で本格学習。登録不要・完全ローカル。">
+  <meta property="og:title" content="資格試験 問題ランダム出題ツール | 無料・CSV対応">
+  <meta property="og:description" content="CSVで問題を持ち込んでランダム出題。ITパスポート・FP・宅建・英検など資格試験の自主学習に。登録不要・完全ローカル。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/quiz-tool/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-quiz-tool.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-quiz-tool.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/quiz-tool/">
+  <title>資格試験 問題ランダム出題ツール | 無料・CSV対応・ITパスポート・FP・宅建対応</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">&#8592; ツール一覧</a>
+      <h1>資格試験 問題ランダム出題ツール</h1>
+      <p class="subtitle">CSVで自分の問題集を持ち込んで本格学習。ITパスポート・FP・宅建・英検 対応。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット（ファーストビュー上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- インポートセクション -->
+    <section id="import-section" class="card">
+      <h2>問題ファイルをインポート</h2>
+      <div
+        id="drop-zone"
+        class="drop-zone"
+        role="button"
+        tabindex="0"
+        aria-label="CSVまたはJSONファイルをドロップ"
+      >
+        <div class="drop-zone-icon" aria-hidden="true">&#128196;</div>
+        <p class="drop-zone-text">CSVまたはJSONファイルをここにドロップ</p>
+        <p class="drop-zone-sub">または</p>
+        <label class="file-btn" for="file-input">ファイルを選択</label>
+        <input type="file" id="file-input" accept=".csv,.json" aria-label="問題ファイルを選択">
+      </div>
+
+      <div class="import-actions">
+        <button id="sample-download-btn" class="btn btn-secondary" type="button">
+          サンプルCSVをダウンロード
+        </button>
+      </div>
+
+      <div id="file-info" class="file-info" hidden>
+        <span id="file-name-display"></span>
+        <span id="question-count-display"></span>
+      </div>
+
+      <div id="mode-settings" class="mode-settings" hidden>
+        <h3>出題設定</h3>
+        <div class="mode-row">
+          <label for="mode-select">出題モード</label>
+          <select id="mode-select">
+            <option value="random">ランダム</option>
+            <option value="weak">苦手優先</option>
+            <option value="sequential">全問順番</option>
+          </select>
+        </div>
+        <button id="start-btn" class="btn btn-primary" type="button">学習開始</button>
+      </div>
+    </section>
+
+    <!-- クイズセクション -->
+    <section id="quiz-section" class="card" hidden aria-live="polite">
+      <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <div class="quiz-meta">
+        <span id="question-counter" class="counter">問題 1 / 20</span>
+        <span id="score-display" class="score">正解率 --%</span>
+      </div>
+
+      <div class="question-box">
+        <p id="question-text" class="question-text"></p>
+      </div>
+
+      <div id="choices-grid" class="choices-grid" role="group" aria-label="選択肢">
+        <button type="button" class="choice-btn" data-key="A"></button>
+        <button type="button" class="choice-btn" data-key="B"></button>
+        <button type="button" class="choice-btn" data-key="C"></button>
+        <button type="button" class="choice-btn" data-key="D"></button>
+      </div>
+
+      <div id="feedback-area" class="feedback-area" hidden>
+        <p id="feedback-text" class="feedback-text"></p>
+        <p id="explanation-text" class="explanation-text"></p>
+        <button id="next-btn" class="btn btn-primary" type="button">次の問題 &#8594;</button>
+      </div>
+    </section>
+
+    <!-- 広告ユニット（結果直下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- セッション完了画面 -->
+    <section id="result-section" class="card" hidden>
+      <h2 class="result-title">セッション完了！</h2>
+      <div class="result-score-box">
+        <div class="result-score-num" id="final-score-num">--</div>
+        <div class="result-score-label">正解率</div>
+        <div class="result-detail" id="final-detail"></div>
+      </div>
+
+      <div id="weak-list-area" hidden>
+        <h3>苦手問題一覧</h3>
+        <ul id="weak-list" class="weak-list"></ul>
+      </div>
+
+      <div class="result-actions">
+        <button id="retry-btn" class="btn btn-primary" type="button">もう一度</button>
+        <button id="retry-weak-btn" class="btn btn-secondary" type="button" hidden>苦手のみ再挑戦</button>
+        <button id="back-import-btn" class="btn btn-secondary" type="button">問題を変える</button>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="card howto-section">
+      <h2>使い方</h2>
+      <ol class="howto-list">
+        <li>「ファイルを選択」またはドラッグ&amp;ドロップでCSV/JSONファイルを読み込む。</li>
+        <li>出題モード（ランダム・苦手優先・全問順番）を選んで「学習開始」をクリック。</li>
+        <li>4択から答えを選ぶ。正誤判定と解説がその場で表示される。</li>
+        <li>全問終了後、スコアと苦手問題が確認できる。苦手問題だけ再挑戦も可能。</li>
+      </ol>
+
+      <h2>CSVフォーマット</h2>
+      <p>1行目はヘッダー行です。2行目以降に問題を1行ずつ記載してください。</p>
+      <pre class="code-block">問題文,選択肢A,選択肢B,選択肢C,選択肢D,正解,解説
+"【ITパスポート】CPUの性能を表す単位は？",MHz,GB,dpi,lm,A,"MHzはクロック周波数の単位"
+"【FP3級】付加保険料とは何か。",純保険料,保険会社の経費部分,特約分,割増分,B,"保険会社の運営経費に充てられる部分"
+"【宅建】宅建業を営むには何が必要か。",免許,登記,届出,資格のみ,A,"国交大臣または都道府県知事の免許が必要"</pre>
+      <p class="howto-note">正解列には <strong>A・B・C・D</strong> のいずれかを記入してください（大文字）。解説列は省略可能です。サンプルCSVにはITパスポート・FP・宅建の例題が含まれています。</p>
+
+      <h2>このツールについて</h2>
+      <p>
+        資格試験の自主学習では「繰り返し出題」「苦手問題の集中練習」が合格への近道です。本ツールはCSVまたはJSONファイルに問題を記入するだけで、ブラウザ上でランダム出題できます。ITパスポート・FP（ファイナンシャルプランナー）・宅地建物取引士・英検・TOEIC・漢字検定など、あらゆる資格・試験に対応。問題データは端末内にのみ保持され、外部サーバーへの送信は一切行いません。Quizlet有料プランの代替として、完全無料・登録不要でご利用いただけます。苦手問題はlocalStorageに自動保存されるため、ブラウザを閉じても記録が引き継がれます。
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &#124;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
