@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="コードを美しいPNG画像に変換できる無料ツール。Carbon代替として日本語フォント対応。Zenn・Qiita・SNS投稿用のコードスニペット画像を簡単作成。テーマ・言語選択・ダークモード対応。登録不要。">
+  <title>コードスニペット画像化ツール | 無料・日本語対応 | Keisanlab</title>
+
+  <meta property="og:title" content="コードスニペット画像化ツール | 無料・日本語フォント対応">
+  <meta property="og:description" content="コードを美しいPNG画像に変換。Carbon代替。Zenn・Qiita・SNS投稿に最適。テーマ・言語選択対応。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/code-snapshot/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-code-snapshot.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-code-snapshot.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/code-snapshot/">
+
+  <!-- Highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link">← ツール一覧</a>
+      <h1>コードスニペット画像化ツール</h1>
+      <p class="subtitle">コードをPNG画像に変換 — Zenn・Qiita・SNS投稿に最適</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <div class="app-layout">
+      <!-- 設定パネル -->
+      <aside class="settings-panel" aria-label="設定パネル">
+        <div class="settings-group">
+          <label for="lang-select">言語</label>
+          <select id="lang-select">
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="python">Python</option>
+            <option value="go">Go</option>
+            <option value="rust">Rust</option>
+            <option value="java">Java</option>
+            <option value="html">HTML</option>
+            <option value="css">CSS</option>
+            <option value="bash">Shell / Bash</option>
+            <option value="sql">SQL</option>
+            <option value="json">JSON</option>
+            <option value="plaintext">その他（テキスト）</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label for="theme-select">テーマ</label>
+          <select id="theme-select">
+            <option value="atom-one-dark">Dark（デフォルト）</option>
+            <option value="github">Light</option>
+            <option value="dracula">Dracula</option>
+            <option value="atom-one-dark-reasonable">One Dark</option>
+            <option value="solarized-dark">Solarized Dark</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label>背景色</label>
+          <div class="bg-presets" role="group" aria-label="背景色プリセット">
+            <button class="preset-btn active" data-color="#6366f1" style="background:#6366f1" aria-label="インディゴ" title="インディゴ"></button>
+            <button class="preset-btn" data-color="#0f172a" style="background:#0f172a" aria-label="ダークネイビー" title="ダークネイビー"></button>
+            <button class="preset-btn" data-color="#1e293b" style="background:#1e293b" aria-label="スレート" title="スレート"></button>
+            <button class="preset-btn" data-color="#065f46" style="background:#065f46" aria-label="グリーン" title="グリーン"></button>
+            <button class="preset-btn" data-color="#7c3aed" style="background:#7c3aed" aria-label="パープル" title="パープル"></button>
+            <button class="preset-btn" data-color="#b45309" style="background:#b45309" aria-label="アンバー" title="アンバー"></button>
+          </div>
+          <div class="custom-color-row">
+            <label for="bg-color-picker" class="inline-label">カスタム</label>
+            <input type="color" id="bg-color-picker" value="#6366f1" aria-label="背景カスタムカラー">
+          </div>
+        </div>
+
+        <div class="settings-group">
+          <label for="font-size-select">フォントサイズ</label>
+          <select id="font-size-select">
+            <option value="12">12px</option>
+            <option value="14" selected>14px</option>
+            <option value="16">16px</option>
+            <option value="18">18px</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label for="padding-select">パディング</label>
+          <select id="padding-select">
+            <option value="16">16px（小）</option>
+            <option value="32" selected>32px（中）</option>
+            <option value="64">64px（大）</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label for="filename-input">ファイル名（任意）</label>
+          <input type="text" id="filename-input" placeholder="例: index.js" maxlength="50">
+        </div>
+
+        <button class="download-btn" id="download-btn" type="button" aria-label="PNG画像でダウンロード">
+          PNG画像でダウンロード
+        </button>
+      </aside>
+
+      <!-- プレビューエリア -->
+      <div class="preview-area" aria-label="プレビュー">
+        <p class="preview-label">プレビュー</p>
+        <div class="preview-outer" id="preview-outer">
+          <div class="code-card" id="code-card">
+            <div class="window-bar">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+              <span class="window-filename" id="window-filename"></span>
+            </div>
+            <pre class="code-pre" id="code-pre"><code class="hljs" id="code-highlighted"></code></pre>
+          </div>
+        </div>
+        <!-- モバイル用ダウンロードボタン（プレビュー直下） -->
+        <button class="download-btn download-btn-preview" id="download-btn-preview" type="button" aria-label="PNG画像でダウンロード">
+          PNG画像でダウンロード
+        </button>
+      </div>
+    </div>
+
+    <!-- コード入力エリア -->
+    <section class="input-section" aria-label="コード入力">
+      <label for="code-input">コードを入力</label>
+      <textarea id="code-input" placeholder="ここにコードを貼り付けてください..." spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+    </section>
+
+    <!-- 広告ユニット2（ツール下部） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+      <h2>使い方</h2>
+      <ol>
+        <li>下のテキストエリアにコードを貼り付けます。</li>
+        <li>言語・テーマ・背景色・フォントサイズを設定します。</li>
+        <li>右側のプレビューでリアルタイムに確認します。</li>
+        <li>「PNG画像でダウンロード」ボタンを押して画像を保存します。</li>
+        <li>保存した画像をZenn・Qiita・X（Twitter）に投稿します。</li>
+      </ol>
+
+      <h2>コードスニペット画像化ツールとは</h2>
+      <p>
+        コードスニペット画像化ツールは、プログラムのソースコードを美しいPNG画像に変換できるWebサービスです。
+        エンジニアや技術ブロガーがZenn・Qiita・X（旧Twitter）・note などのSNSにコードを投稿する際、
+        コードブロックが使えないプラットフォームでも画像として共有できるようになります。
+        Carbon（carbon.now.sh）の日本語フォント対応版として、日本語コメントや日本語変数名も正しく表示されます。
+        シンタックスハイライトにはHighlight.jsを使用し、JavaScriptやPython・Go・Rustなど12言語に対応。
+        macOS風のウィンドウボタン（赤・黄・緑のドット）でリアルなエディタ風の見た目を演出できます。
+        登録不要・完全無料でブラウザだけで動作します。
+      </p>
+
+      <h2>対応テーマ一覧</h2>
+      <ul>
+        <li><strong>Dark（デフォルト）</strong> — 定番のダークテーマ。目に優しく視認性が高い。</li>
+        <li><strong>Light</strong> — 明るい背景のライトテーマ。印刷にも適している。</li>
+        <li><strong>Dracula</strong> — 人気のDraculaカラーパレット。紫・ピンク系の配色。</li>
+        <li><strong>One Dark</strong> — Atom/VS Code ユーザーにおなじみの落ち着いた暗色テーマ。</li>
+        <li><strong>Solarized Dark</strong> — 目に優しい低コントラストの定番テーマ。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
