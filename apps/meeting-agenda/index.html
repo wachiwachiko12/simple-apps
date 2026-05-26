@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="会議アジェンダと議事録を登録不要で即作成。日本式ビジネスフォーマット4種から選んでブラウザ上でフォームに入力、そのままPDF印刷。無料で使える会議テンプレートビルダー。">
+  <title>会議アジェンダ・議事録テンプレート 無料PDF印刷 | Keisanlab</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="会議アジェンダ・議事録テンプレート 無料PDF印刷 | Keisanlab">
+  <meta property="og:description" content="会議のアジェンダを入力してPDF印刷。日本式ビジネスフォーマット対応。定例/キックオフ/振り返りテンプレート付き。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/meeting-agenda/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-meeting-agenda.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-meeting-agenda.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/meeting-agenda/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="back-link" aria-label="ツール一覧に戻る">← ツール一覧</a>
+    <div class="header-content">
+      <h1>会議アジェンダ・議事録テンプレート 無料PDF印刷ツール</h1>
+      <p class="subtitle">定例/キックオフ/振り返りテンプレート付き。入力してそのままPDF印刷。登録不要・無料。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- モバイルタブ -->
+    <div class="mobile-tabs" role="tablist" aria-label="表示切り替え">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-input" id="tab-input" data-tab="input">入力</button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-preview" id="tab-preview" data-tab="preview">プレビュー</button>
+    </div>
+
+    <div class="app-layout">
+      <!-- 入力パネル -->
+      <section class="input-panel" id="panel-input" role="tabpanel" aria-labelledby="tab-input">
+
+        <!-- テンプレート選択 -->
+        <div class="form-block template-block">
+          <label class="block-label" for="template-select">テンプレート</label>
+          <div class="template-buttons" role="group" aria-label="テンプレート選択">
+            <button class="template-btn active" data-template="free" type="button">フリー</button>
+            <button class="template-btn" data-template="regular" type="button">定例会議</button>
+            <button class="template-btn" data-template="kickoff" type="button">キックオフ</button>
+            <button class="template-btn" data-template="retro" type="button">振り返り</button>
+          </div>
+        </div>
+
+        <!-- 会議基本情報 -->
+        <div class="form-block">
+          <h2 class="block-label">会議基本情報</h2>
+
+          <div class="form-group">
+            <label for="meeting-title">会議タイトル <span class="required">必須</span></label>
+            <input type="text" id="meeting-title" placeholder="例：週次定例ミーティング" autocomplete="off">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="meeting-date">日時</label>
+              <input type="datetime-local" id="meeting-date">
+            </div>
+            <div class="form-group">
+              <label for="meeting-duration">予定時間（分）</label>
+              <input type="number" id="meeting-duration" placeholder="60" min="1" max="480">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="meeting-location">場所</label>
+            <input type="text" id="meeting-location" placeholder="例：会議室A / オンライン">
+          </div>
+
+          <div class="form-group">
+            <label for="meeting-url">会議URL</label>
+            <input type="url" id="meeting-url" placeholder="https://meet.google.com/...">
+          </div>
+
+          <div class="form-group">
+            <label for="meeting-organizer">主催者</label>
+            <input type="text" id="meeting-organizer" placeholder="例：山田 太郎">
+          </div>
+
+          <div class="form-group">
+            <label for="meeting-attendees">参加者</label>
+            <input type="text" id="meeting-attendees" placeholder="例：山田, 鈴木, 田中（カンマ区切り）">
+          </div>
+        </div>
+
+        <!-- アジェンダ -->
+        <div class="form-block">
+          <h2 class="block-label">アジェンダ項目</h2>
+          <div id="agenda-list" class="agenda-list" aria-label="アジェンダリスト"></div>
+          <button type="button" class="btn-add-agenda" id="add-agenda-btn" aria-label="アジェンダ項目を追加">
+            + 項目を追加
+          </button>
+          <div class="time-summary" id="time-summary" aria-live="polite">
+            合計時間: <strong id="total-time">0</strong> 分
+          </div>
+        </div>
+
+        <!-- アクションエリア -->
+        <div class="form-block action-block">
+          <button type="button" class="btn-print" id="print-btn" aria-label="PDFとして印刷する">
+            印刷 / PDF出力
+          </button>
+          <button type="button" class="btn-clear" id="clear-btn" aria-label="入力内容をリセット">
+            リセット
+          </button>
+        </div>
+
+        <!-- 広告ユニット（入力パネル下） -->
+        <div class="ad-unit" id="ad-input" aria-hidden="true"></div>
+
+        <!-- 使い方セクション -->
+        <section id="howto" class="howto-section">
+          <h2>使い方</h2>
+          <ol>
+            <li>テンプレートを選ぶ（定例・キックオフ・振り返り・フリー）</li>
+            <li>会議タイトル・日時・場所・参加者などの基本情報を入力する</li>
+            <li>「＋ 項目を追加」ボタンでアジェンダ項目を追加し、担当者・所要時間・メモを入力する</li>
+            <li>右パネル（PC）またはプレビュータブ（スマホ）でリアルタイムに仕上がりを確認する</li>
+            <li>「印刷 / PDF出力」ボタンを押してブラウザの印刷ダイアログからPDF保存または紙に印刷する</li>
+          </ol>
+
+          <h2>会議アジェンダテンプレートとは</h2>
+          <p>
+            会議アジェンダとは、会議の目的・議題・担当者・所要時間をあらかじめ整理した進行表のことです。
+            アジェンダを事前に共有することで、参加者全員が会議の目的を理解した状態で臨め、
+            議論が脱線しにくくなり、時間内に議題を消化できる確率が大幅に上がります。
+            特に定例会議・プロジェクトキックオフ・スプリント振り返り（レトロスペクティブ）では
+            フォーマットを統一することで会議文化の改善につながります。
+            このツールはFellow.aiなどの有料サービスの代替として、登録不要・完全無料で
+            日本式ビジネスフォーマットのアジェンダを作成・PDF出力できます。
+            入力データはブラウザのlocalStorageに自動保存されるため、
+            次回アクセス時に前回の内容から再開できます。
+          </p>
+        </section>
+      </section>
+
+      <!-- プレビューパネル -->
+      <section class="preview-panel" id="panel-preview" role="tabpanel" aria-labelledby="tab-preview">
+        <div class="preview-header">
+          <span class="preview-label">プレビュー</span>
+        </div>
+        <div class="preview-content" id="preview-content">
+          <!-- JSでレンダリング -->
+        </div>
+      </section>
+    </div>
+
+    <!-- 広告ユニット（ツール下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

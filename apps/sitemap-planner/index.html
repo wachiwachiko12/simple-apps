@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="登録不要・完全無料のWebサイト構成図（サイトマップ）作成ツール。ドラッグ＆ドロップでツリー図を設計し、PNGで書き出せます。Webディレクター・デザイナー向け日本語対応。">
+  <title>サイトマップ作成ツール 無料 | IA設計・構成図をツリー図で可視化</title>
+
+  <meta property="og:title" content="サイトマップ作成ツール 無料 | IA設計・構成図をツリー図で可視化">
+  <meta property="og:description" content="WebサイトのページツリーをブラウザでビジュアルIA設計。PNG書き出し・JSON保存対応。Webディレクター・マーケター向け。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/sitemap-planner/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-sitemap-planner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-sitemap-planner.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/sitemap-planner/">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">&#8592; ツール一覧</a>
+      <h1>無料サイトマップ作成ツール</h1>
+      <p class="subtitle">Webサイト構成図をツリー図でビジュアル設計 — 登録不要・完全無料</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- アプリ本体 -->
+    <section id="tool" class="tool-section" aria-label="サイトマッププランナー">
+      <div class="app-layout">
+
+        <!-- ツールパネル（左） -->
+        <aside class="tool-panel" aria-label="操作パネル">
+          <h2 class="panel-title">操作</h2>
+
+          <!-- ページタイプ凡例 -->
+          <div class="legend-section">
+            <h3>ページタイプ</h3>
+            <ul class="legend-list" role="list">
+              <li><span class="type-badge type-top">TOP</span> トップ</li>
+              <li><span class="type-badge type-list">一覧</span> 一覧</li>
+              <li><span class="type-badge type-detail">詳細</span> 詳細</li>
+              <li><span class="type-badge type-form">F</span> フォーム</li>
+              <li><span class="type-badge type-feature">特集</span> 特集</li>
+              <li><span class="type-badge type-lp">LP</span> LP</li>
+            </ul>
+          </div>
+
+          <!-- ノード追加 -->
+          <div class="add-node-section">
+            <h3>ノードを追加</h3>
+            <label for="new-node-name">ページ名</label>
+            <input type="text" id="new-node-name" placeholder="例: サービス概要" maxlength="30" aria-label="追加するページ名">
+            <label for="new-node-type">ページタイプ</label>
+            <select id="new-node-type" aria-label="追加するページタイプ">
+              <option value="top">TOP</option>
+              <option value="list" selected>一覧</option>
+              <option value="detail">詳細</option>
+              <option value="form">フォーム</option>
+              <option value="feature">特集</option>
+              <option value="lp">LP</option>
+            </select>
+            <p class="add-hint">追加先のノードを選択してから追加ボタンを押してください</p>
+            <button id="btn-add-node" class="btn-primary" aria-label="選択中のノードに子ノードを追加">
+              + 子ノードを追加
+            </button>
+          </div>
+
+          <!-- エクスポート -->
+          <div class="export-section">
+            <h3>保存・書き出し</h3>
+            <button id="btn-png" class="btn-secondary" aria-label="ツリー全体をPNG画像として保存">
+              PNG保存
+            </button>
+            <button id="btn-json-export" class="btn-secondary" aria-label="設計データをJSONファイルとして書き出し">
+              JSONエクスポート
+            </button>
+            <label for="btn-json-import" class="btn-secondary btn-file-label" aria-label="JSONファイルから設計データを読み込む">
+              JSONインポート
+              <input type="file" id="btn-json-import" accept=".json" aria-label="JSONファイルを選択">
+            </label>
+            <button id="btn-reset" class="btn-danger" aria-label="ツリーをサンプルデータにリセット">
+              リセット
+            </button>
+          </div>
+
+          <!-- 広告ユニット（パネル下） -->
+          <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+        </aside>
+
+        <!-- ツリービジュアライザー（右） -->
+        <div class="tree-area" aria-label="ツリービジュアライザー">
+          <div class="tree-controls">
+            <span class="tree-hint">ノードをクリック: 選択 / ダブルクリック: 名前編集 / ×: 削除</span>
+            <div class="zoom-controls">
+              <button class="btn-zoom" id="btn-zoom-out" aria-label="縮小">−</button>
+              <span id="zoom-label">100%</span>
+              <button class="btn-zoom" id="btn-zoom-in" aria-label="拡大">+</button>
+            </div>
+          </div>
+          <div id="tree-container" role="img" aria-label="サイトマップツリー図">
+            <svg id="tree-svg" aria-hidden="true"></svg>
+            <div id="tree-nodes"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>ノードを選択</strong>: ツリー上のノードをクリックして選択状態（青枠）にします。</li>
+        <li><strong>子ノードを追加</strong>: 左パネルでページ名とタイプを入力し「子ノードを追加」ボタンを押します。</li>
+        <li><strong>ページ名を編集</strong>: ノードをダブルクリックすると編集モードになります。Enterまたはフォーカスを外すと確定します。</li>
+        <li><strong>ノードを削除</strong>: ノード右上の「×」ボタンで削除できます（子ノードも一緒に削除されます）。</li>
+        <li><strong>折りたたみ</strong>: 子を持つノードの「▼」ボタンで子ノードを折りたためます。</li>
+        <li><strong>PNG書き出し</strong>: 「PNG保存」でツリー全体を画像ファイルとして保存できます。</li>
+        <li><strong>JSON保存/読み込み</strong>: 設計データをJSONで保存・再読み込みできます。作業の引き継ぎや共有に便利です。</li>
+      </ol>
+
+      <h2>サイトマップ・IA設計ツールとは</h2>
+      <p>
+        サイトマップ（情報アーキテクチャ / IA）とは、Webサイトを構成するすべてのページの階層構造を図式化したものです。
+        制作前にページ構造を可視化することで、ユーザーが迷わないナビゲーション設計が可能になります。
+        本ツールはWebディレクター・インハウスマーケター・デザイナーを対象に、
+        ブラウザだけで完結するIA設計環境を提供します。Octopus.doなどの有料ツール（月額$10〜）の代替として、
+        登録不要・完全無料でご利用いただけます。
+        設計データはローカルストレージに自動保存されるため、ブラウザを閉じても続きから作業できます。
+        チームへの共有はJSONエクスポートまたはPNG書き出しをご活用ください。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
