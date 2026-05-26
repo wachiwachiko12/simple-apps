@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="複数都市のタイムゾーンを横並びグリッドで比較し、業務時間が重なる会議スロットを自動ハイライト。ニューヨーク・ロンドン・東京など世界の時差を一目で確認。リモートワーク・海外会議の時間調整に。">
+  <title>タイムゾーン会議スケジューラー — 複数都市の時差を横並び比較・会議時間を自動提案 | 計算ラボ</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="タイムゾーン会議スケジューラー — 複数都市の時差を横並び比較・会議時間を自動提案 | 計算ラボ">
+  <meta property="og:description" content="東京・NY・ロンドン等の時差を横並び表示。全員の業務時間が重なる会議時間を自動提案。夏時間自動対応。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/timezone-scheduler/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-timezone-scheduler.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-timezone-scheduler.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/timezone-scheduler/">
+
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧へ戻る">&#8592; ツール一覧</a>
+      <h1>タイムゾーン横断ミーティングスケジューラー — 複数都市の時差を一覧比較</h1>
+      <p class="subtitle">複数都市の時差を一覧表示 &mdash; 全員の業務時間が重なる会議時間を自動提案</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- コントロールセクション -->
+    <section id="controls" class="controls-section" aria-label="日付と都市の設定">
+      <div class="controls-row">
+        <div class="control-item">
+          <label for="date-picker">日付</label>
+          <input type="date" id="date-picker" aria-label="日付を選択">
+        </div>
+        <div class="control-item">
+          <label for="city-select">都市を追加</label>
+          <div class="select-row">
+            <select id="city-select" aria-label="追加する都市を選択">
+              <option value="">都市を選択...</option>
+              <option value="Asia/Tokyo">東京</option>
+              <option value="America/New_York">ニューヨーク</option>
+              <option value="Europe/London">ロンドン</option>
+              <option value="Asia/Shanghai">上海</option>
+              <option value="Asia/Singapore">シンガポール</option>
+              <option value="America/Los_Angeles">ロサンゼルス</option>
+              <option value="Australia/Sydney">シドニー</option>
+              <option value="Europe/Paris">パリ</option>
+              <option value="Europe/Berlin">ベルリン</option>
+              <option value="Asia/Dubai">ドバイ</option>
+            </select>
+            <button type="button" id="add-city-btn" class="btn-add" aria-label="都市を追加">追加</button>
+          </div>
+        </div>
+      </div>
+      <div id="city-tags" class="city-tags" role="list" aria-label="選択中の都市"></div>
+    </section>
+
+    <!-- グリッドセクション -->
+    <section id="grid-section" class="grid-section" aria-label="タイムゾーングリッド">
+      <div class="grid-wrapper" role="region" aria-label="時刻グリッド（横スクロール可能）">
+        <div class="grid-scroll">
+          <table id="time-grid" class="time-grid" aria-label="都市別時刻表">
+            <thead id="grid-head"></thead>
+            <tbody id="grid-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 凡例 -->
+      <div class="legend" aria-label="色の凡例">
+        <span class="legend-item"><span class="legend-dot dot-work"></span>業務時間（9:00〜18:00）</span>
+        <span class="legend-item"><span class="legend-dot dot-recommended"></span>推奨時間帯（全員重複）</span>
+        <span class="legend-item"><span class="legend-dot dot-off"></span>業務時間外</span>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- サマリーセクション -->
+    <section id="summary-section" class="summary-section" aria-label="推奨時間帯のサマリー">
+      <h2>推奨ミーティング時間帯</h2>
+      <div id="summary-content" class="summary-content">
+        <p class="summary-placeholder">都市を2つ以上追加すると、推奨時間帯が表示されます。</p>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>日付ピッカーで会議を設定したい日付を選択します（デフォルトは本日）。</li>
+        <li>「都市を選択」ドロップダウンから都市を選び「追加」ボタンを押します（最大6都市）。</li>
+        <li>各都市の時刻が横並びのグリッドで表示されます。緑色が業務時間（9〜18時）、青色が全都市の業務時間が重なる推奨時間帯です。</li>
+        <li>ページ下部の「推奨ミーティング時間帯」に重複時間と各都市の対応時刻がまとめて表示されます。</li>
+        <li>都市タグの「&times;」ボタンで都市を削除できます。</li>
+      </ol>
+
+      <h2>タイムゾーン 時差ツールとは</h2>
+      <p>
+        グローバル企業で働く日本人社員にとって、海外チームとのミーティング調整は日常的な課題です。東京・ニューヨーク・ロンドンの3都市だけでも最大14〜16時間の時差があり、全員の業務時間（9:00〜18:00）が重なる時間帯を手動で計算するのは手間がかかります。
+      </p>
+      <p>
+        このタイムゾーン 時差ツールは、World Time Buddyなどの有料サービスの代替として、無料・登録不要でご利用いただけます。夏時間（DST: Daylight Saving Time）にも自動対応しており、ニューヨークやロンドンが夏時間を採用している時期も正確な時刻を表示します。東京・上海・シンガポールなどアジア都市と欧米都市の海外会議時間計算に最適です。
+      </p>
+
+      <h2>夏時間（DST）について</h2>
+      <p>
+        アメリカ・ヨーロッパの多くの都市では、毎年春から秋にかけて時計を1時間進める「夏時間（サマータイム）」を採用しています。このツールはブラウザ標準の <code>Intl.DateTimeFormat</code> APIを使用しているため、選択した日付に応じて夏時間が自動的に反映されます。手動での調整は不要です。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

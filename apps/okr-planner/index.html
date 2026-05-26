@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="登録不要・完全無料のOKR目標管理ビジュアルシート。四半期の目標（Objective）とKRを入力するだけで進捗を自動可視化。個人・フリーランスに最適なブラウザ完結ツール。">
+  <title>OKR目標管理シート【無料】個人・フリーランス向け四半期プランナー | KeiSanLab</title>
+
+  <meta property="og:title" content="OKR目標管理シート【無料】個人・フリーランス向け四半期プランナー | KeiSanLab">
+  <meta property="og:description" content="四半期OKRを1画面で可視化。目標・成果指標・進捗をブラウザだけで管理。登録不要・データはブラウザに保存。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KeiSanLab">
+  <meta property="og:url" content="https://keisanlab.jp/apps/okr-planner/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-okr-planner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-okr-planner.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/okr-planner/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧へ戻る">&#8592; ツール一覧</a>
+      <div class="header-title">
+        <h1>OKR目標管理シート【無料】</h1>
+        <p class="subtitle">個人・フリーランス向け 四半期OKR テンプレート</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- 四半期タブ -->
+    <section class="quarter-tabs" aria-label="四半期選択">
+      <div class="quarter-header">
+        <div class="tabs" role="tablist">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-q="Q1">Q1</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-q="Q2">Q2</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-q="Q3">Q3</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-q="Q4">Q4</button>
+        </div>
+        <span class="year-label">2026</span>
+      </div>
+    </section>
+
+    <!-- サマリーダッシュボード -->
+    <section class="summary-dashboard" id="summary-dashboard" aria-label="達成率サマリー">
+      <h2 class="section-title">サマリー</h2>
+      <div class="summary-grid" id="summary-grid">
+        <!-- JSで生成 -->
+      </div>
+    </section>
+
+    <!-- OKRボード -->
+    <section class="okr-board" id="okr-board" aria-label="OKR一覧">
+      <!-- JSで生成 -->
+    </section>
+
+    <!-- Objective追加ボタン -->
+    <div class="add-objective-wrap">
+      <button class="add-objective-btn" id="add-objective-btn" aria-label="Objectiveを追加">
+        + Objectiveを追加
+      </button>
+    </div>
+
+    <!-- 広告ユニット2（ボード下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+      <h2>使い方</h2>
+      <ol>
+        <li>画面上部のタブ（Q1〜Q4）から管理したい四半期を選択します。</li>
+        <li>「+ Objectiveを追加」ボタンで目標（Objective）を最大4つ作成します。</li>
+        <li>各ObjectiveカードのKey Result（成果指標）欄に、目標値・現在値・単位を入力します。</li>
+        <li>達成率が自動計算され、カラーバーとサマリーに反映されます。</li>
+        <li>データはブラウザのlocalStorageに自動保存されます。ページを閉じても保持されます。</li>
+      </ol>
+
+      <h2>OKRとは</h2>
+      <p>OKR（Objectives and Key Results）は、Google・Intelなどが採用する目標管理フレームワークです。「Objective（何を達成するか）」と「Key Result（達成をどう測定するか）」をセットで設定することで、曖昧な目標を定量化し、進捗を可視化できます。個人・フリーランスが四半期単位で使うことで、売上目標・スキルアップ・案件獲得などの優先事項を整理し、集中して行動できる効果があります。従来はResily・Wistantなどの有料ツールが主流でしたが、このツールは登録不要・完全無料でお使いいただけます。</p>
+
+      <h2>進捗バーの見方</h2>
+      <ul>
+        <li><span class="legend red">赤（0〜40%）</span>: 未達・要注意。アクションの見直しが必要です。</li>
+        <li><span class="legend yellow">黄（41〜70%）</span>: 進行中。このまま継続するか戦略を調整しましょう。</li>
+        <li><span class="legend green">緑（71〜100%）</span>: 順調。目標達成に向けて良いペースです。</li>
+      </ul>
+
+      <h2>フリーランス向けOKR設定例</h2>
+      <ul>
+        <li><strong>Objective: 収入目標を達成する</strong> — KR: 月次売上100万円 / 新規クライアント3件獲得</li>
+        <li><strong>Objective: スキルアップを実現する</strong> — KR: 資格1つ取得 / 技術記事10本執筆</li>
+        <li><strong>Objective: 案件獲得率を上げる</strong> — KR: 提案数20件 / 成約率30%達成</li>
+      </ul>
+
+      <h2>関連ツール</h2>
+      <ul>
+        <li><a href="/apps/invoice-generator/">フリーランス向け請求書ジェネレーター（無料）</a></li>
+        <li><a href="/apps/tax-simulator/">フリーランス税金シミュレーター（無料）</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ポモドーロタイマーとタスクリストを1画面で管理。25分集中＋5分休憩サイクルを自動化し、仕事・勉強・テレワークの集中力を上げる無料Webツール。登録・インストール不要。">
+  <title>ポモドーロタイマー × タスクリスト | 無料・登録不要 — keisanlab</title>
+
+  <meta property="og:title" content="ポモドーロタイマー × タスクリスト | 無料・登録不要 — keisanlab">
+  <meta property="og:description" content="25分集中+休憩のポモドーロテクニックとタスク管理を1画面で。テレワーク・勉強の集中力アップに。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/pomodoro/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-pomodoro.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-pomodoro.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/pomodoro/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">&#8592; ツール一覧</a>
+      <h1>ポモドーロタイマー × タスクリスト</h1>
+      <p class="subtitle">25分集中 + 休憩サイクルで生産性アップ。無料・登録不要。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- タイマーセクション -->
+    <section id="timer-section" class="timer-section focus-mode" aria-label="ポモドーロタイマー">
+      <!-- アクティブタスク表示 -->
+      <div class="active-task-bar" id="active-task-bar" aria-live="polite">
+        <span class="active-task-label">実行中:</span>
+        <span class="active-task-name" id="active-task-name">タスクを選択してください</span>
+      </div>
+
+      <!-- モード表示 -->
+      <div class="mode-badge" id="mode-badge" role="status" aria-live="polite">集中タイム</div>
+
+      <!-- 円形プログレスバー + タイマー -->
+      <div class="timer-ring-wrapper" role="timer" aria-label="残り時間">
+        <svg class="timer-ring" viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="ring-bg" cx="100" cy="100" r="88"/>
+          <circle class="ring-progress" id="ring-progress" cx="100" cy="100" r="88"/>
+        </svg>
+        <div class="timer-display" id="timer-display" aria-atomic="true">25:00</div>
+      </div>
+
+      <!-- タイマー操作ボタン -->
+      <div class="timer-controls">
+        <button class="btn-timer btn-start" id="btn-start" aria-label="タイマー開始">開始</button>
+        <button class="btn-timer btn-pause" id="btn-pause" aria-label="タイマー一時停止" disabled>一時停止</button>
+        <button class="btn-timer btn-reset" id="btn-reset" aria-label="タイマーリセット">リセット</button>
+      </div>
+
+      <!-- 時間設定 -->
+      <div class="duration-settings">
+        <span class="duration-label">集中時間:</span>
+        <div class="duration-options" role="group" aria-label="集中時間設定">
+          <button class="duration-btn" data-minutes="15" aria-label="15分に設定">15分</button>
+          <button class="duration-btn" data-minutes="20" aria-label="20分に設定">20分</button>
+          <button class="duration-btn active" data-minutes="25" aria-label="25分に設定">25分</button>
+          <button class="duration-btn" data-minutes="30" aria-label="30分に設定">30分</button>
+          <button class="duration-btn" data-minutes="45" aria-label="45分に設定">45分</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 今日の進捗 -->
+    <section class="progress-section" aria-label="今日の進捗">
+      <div class="progress-stats">
+        <div class="stat-item">
+          <span class="stat-icon" aria-hidden="true">&#127813;</span>
+          <span class="stat-value" id="today-pomodoros">0</span>
+          <span class="stat-label">ポモドーロ</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-icon" aria-hidden="true">&#10003;</span>
+          <span class="stat-value" id="today-tasks">0</span>
+          <span class="stat-label">完了タスク</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（進捗下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- タスクリストセクション -->
+    <section id="task-section" class="task-section" aria-label="タスクリスト">
+      <h2 class="section-title">タスクリスト</h2>
+
+      <!-- タスク追加フォーム -->
+      <form id="task-form" class="task-add-form" aria-label="タスク追加">
+        <input
+          type="text"
+          id="task-input"
+          class="task-input"
+          placeholder="タスク名を入力..."
+          maxlength="80"
+          aria-label="タスク名"
+        >
+        <div class="task-add-options">
+          <label for="task-pomodoros" class="pomodoro-count-label">
+            <span aria-hidden="true">&#127813;</span> 予定:
+          </label>
+          <select id="task-pomodoros" class="pomodoro-count-select" aria-label="予定ポモドーロ数">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3" selected>3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+          </select>
+          <button type="submit" class="btn-add-task" aria-label="タスクを追加">+ 追加</button>
+        </div>
+      </form>
+
+      <!-- タスク一覧 -->
+      <ul class="task-list" id="task-list" aria-label="タスク一覧">
+        <!-- タスクはJSで動的に追加 -->
+      </ul>
+
+      <p class="task-empty-msg" id="task-empty-msg" aria-live="polite">
+        タスクを追加して作業を始めましょう
+      </p>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>タスクリストに今日やるべきタスクと予定ポモドーロ数を追加する</li>
+        <li>取り組むタスクの「▶」ボタンを押してアクティブに設定する</li>
+        <li>「開始」を押して25分間（または設定した時間）集中して作業する</li>
+        <li>タイマーが鳴ったら5分休憩する（4セット後は15分の長い休憩）</li>
+        <li>タスクが終わったらチェックマークをクリックして完了にする</li>
+      </ol>
+
+      <h2>ポモドーロテクニックとは</h2>
+      <p>
+        ポモドーロテクニックとは、1980年代にFrancesco Cirilloが考案した時間管理術です。
+        25分の集中作業と5分の休憩を1サイクル（ポモドーロ）として繰り返し、4サイクル後に15〜30分の長い休憩を取ります。
+        短い集中と定期的な休憩を組み合わせることで、集中力を持続させながら疲労を防ぎ、
+        テレワーカーや学生の作業効率を大幅に向上させることが科学的にも示されています。
+        タスクリストと組み合わせることで、1日の作業量を「ポモドーロ数」で可視化でき、
+        達成感が得られやすくなります。Focus Boosterなどの有料ツール($4.99/月)の代替として、
+        このアプリは完全無料で同等の機能をご利用いただけます。
+      </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>タイマーを止めたらタスクはどうなりますか？</dt>
+        <dd>タスクデータはブラウザに保存されます。タイマー状態はページを閉じるとリセットされますが、タスクは次回も引き継がれます。</dd>
+        <dt>スマートフォンでも使えますか？</dt>
+        <dd>はい、スマホ・タブレット・PCすべてに対応しています。ブラウザを最小化してもタイマーは動作します（バックグラウンドタブに注意）。</dd>
+        <dt>音が鳴らない場合は？</dt>
+        <dd>ブラウザの音量設定やサイト設定で音が許可されているか確認してください。iOSでは音量ボタンで調整できます。</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
