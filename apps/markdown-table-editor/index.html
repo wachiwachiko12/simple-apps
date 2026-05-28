@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="MarkdownのテーブルをExcelライクなGUI操作で作成・編集できる無料ツール。スマホ・PC対応。Tab/Enterキーでセル移動、左中右アライメント設定、生成Markdownを1クリックでコピー。TableFlip代替として登録不要ですぐ使えます。">
+  <!-- OGP -->
+  <meta property="og:title" content="Markdownテーブル作成ツール【無料・スマホ対応】GUIで簡単編集 | Keisanlab">
+  <meta property="og:description" content="MarkdownのテーブルをExcelライクなGUI操作で作成・編集できる無料ツール。スマホ・PC対応。Tab/Enterキーでセル移動、左中右アライメント設定、生成Markdownを1クリックでコピー。TableFlip代替として登録不要ですぐ使えます。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/markdown-table-editor/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-markdown-table-editor.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Markdownテーブル作成ツール【無料・スマホ対応】GUIで簡単編集 | Keisanlab">
+  <meta name="twitter:description" content="MarkdownのテーブルをExcelライクなGUI操作で作成・編集できる無料ツール。スマホ・PC対応。Tab/Enterキーでセル移動、左中右アライメント設定、生成Markdownを1クリックでコピー。TableFlip代替として登録不要ですぐ使えます。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-markdown-table-editor.png">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/markdown-table-editor/">
+  <title>Markdownテーブル作成ツール【無料・スマホ対応】GUIで簡単編集 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <a href="/" class="back-link">← ツール一覧</a>
+    <h1>Markdownテーブル作成ツール — スマホ対応・無料・GUIで直感操作</h1>
+    <p class="subtitle">ExcelライクなGUI操作でMarkdownテーブルを無料作成。スマホ・PC対応。TableFlip代替として登録不要ですぐ使えます。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- ツールバー -->
+      <div class="toolbar" role="toolbar" aria-label="テーブル操作">
+        <div class="toolbar-group">
+          <button id="btn-add-row" class="btn-action" aria-label="行を追加">行を追加</button>
+          <button id="btn-del-row" class="btn-action btn-danger" aria-label="最終行を削除">行を削除</button>
+        </div>
+        <div class="toolbar-group">
+          <button id="btn-add-col" class="btn-action" aria-label="列を追加">列を追加</button>
+          <button id="btn-del-col" class="btn-action btn-danger" aria-label="最終列を削除">列を削除</button>
+        </div>
+        <div class="toolbar-group">
+          <button id="btn-copy" class="btn-copy" aria-label="Markdownをコピー">Markdownをコピー</button>
+        </div>
+      </div>
+
+      <!-- テーブルエディタ -->
+      <div class="table-wrapper" role="region" aria-label="テーブル編集エリア">
+        <table id="editor-table" aria-label="Markdownテーブルエディタ">
+          <thead id="table-head"></thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+
+      <!-- アライメント設定 -->
+      <div class="alignment-row" id="alignment-row" aria-label="列のアライメント設定">
+        <span class="alignment-label">列の揃え：</span>
+        <div id="alignment-controls"></div>
+      </div>
+
+      <!-- 広告ユニット2（テーブル下） -->
+      <div class="ad-unit" id="ad-mid" aria-hidden="true"></div>
+
+      <!-- Markdownプレビュー -->
+      <div class="preview-section">
+        <div class="preview-header">
+          <h2>生成されたMarkdown</h2>
+          <button id="btn-copy2" class="btn-copy btn-copy-small" aria-label="Markdownをコピー">コピー</button>
+        </div>
+        <pre id="markdown-output" aria-live="polite" aria-label="生成されたMarkdownコード"></pre>
+      </div>
+
+      <!-- Markdown読み込み -->
+      <div class="import-section">
+        <h2>既存のMarkdownテーブルを読み込む</h2>
+        <textarea
+          id="markdown-input"
+          placeholder="ここに既存のMarkdownテーブルを貼り付けてください..."
+          aria-label="Markdownテーブル入力欄"
+          rows="5"
+        ></textarea>
+        <button id="btn-import" class="btn-import" aria-label="テーブルに読み込む">テーブルに読み込む</button>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット3（コンテンツ下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>セルをクリック</strong>して直接テキストを入力します。</li>
+        <li><strong>Tab キー</strong>で右のセルへ、<strong>Shift+Tab</strong> で左のセルへ移動します。</li>
+        <li><strong>Enter キー</strong>で下のセルへ、<strong>矢印キー</strong>（↑↓←→）でも移動できます。</li>
+        <li>「<strong>行を追加 / 削除</strong>」「<strong>列を追加 / 削除</strong>」ボタンでテーブルの大きさを調整します。</li>
+        <li>各列の下にある <strong>揃え</strong> ドロップダウンで、左揃え・中央・右揃えを設定します。</li>
+        <li>「<strong>Markdownをコピー</strong>」ボタンをクリックすると、生成されたMarkdownがクリップボードに保存されます。</li>
+        <li>既存のMarkdownテーブルを「<strong>読み込む</strong>」フォームに貼り付けて「テーブルに読み込む」をクリックすると、GUIで編集できます。</li>
+        <li>入力内容はブラウザの <strong>localStorage に自動保存</strong>されるため、ページを閉じても次回開いたときに続きから編集できます。</li>
+      </ol>
+
+      <h2>このツールについて</h2>
+      <p>
+        Markdownテーブル作成ツールは、GitHubのREADMEやQiita・Zennの記事、Notionドキュメントなどで使われるMarkdown形式のテーブルを、Excelライクな直感的GUIで作成・編集できる完全無料のブラウザツールです。従来はテキストエディタで <code>|</code> と <code>-</code> を手打ちする必要がありましたが、このツールならセルをクリックして文字を入力するだけでMarkdownコードが自動生成されます。Mac専用有料アプリ「TableFlip」の完全無料代替として、OS・ブラウザを問わず利用できます。生成したMarkdownはワンクリックでコピーでき、開発ドキュメントや技術ブログの執筆効率を大幅に向上させます。アカウント登録不要、サーバーへのデータ送信なし、データはすべてお使いのブラウザ内に保存されます。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
