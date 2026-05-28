@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="日本語テキストの漢字にふりがな（ルビ）を自動付与。HTMLルビタグ・かっこ形式・縦書き形式で出力。学年別漢字対応。教材作成・子ども向けコンテンツに。登録不要・無料。">
+  <meta property="og:title" content="ふりがな自動付与ツール【無料】漢字にルビを一括変換 | Keisanlab">
+  <meta property="og:description" content="日本語テキストの漢字にふりがな（ルビ）を自動付与。HTMLルビタグ・かっこ形式・縦書き形式で出力。学年別漢字対応。教材作成・子ども向けコンテンツに。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/ruby-furigana/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-ruby-furigana.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ふりがな自動付与ツール【無料】漢字にルビを一括変換 | Keisanlab">
+  <meta name="twitter:description" content="日本語テキストの漢字にふりがな（ルビ）を自動付与。HTMLルビタグ・かっこ形式・縦書き形式で出力。学年別漢字対応。教材作成・子ども向けコンテンツに。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-ruby-furigana.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/ruby-furigana/">
+  <title>ふりがな自動付与ツール【無料】漢字にルビを一括変換 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="back-link">← ツール一覧</a>
+      <h1>ふりがな自動付与ツール — 漢字にルビを一括変換</h1>
+      <p class="subtitle">日本語テキストに自動でふりがなを付けて、HTMLルビタグ・かっこ形式などで出力</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- 入力エリア -->
+      <div class="input-block">
+        <label for="input-text">変換するテキストを入力（最大2000文字）</label>
+        <textarea
+          id="input-text"
+          placeholder="例：東京都は日本の首都です。学校で勉強します。"
+          maxlength="2000"
+          rows="6"
+          aria-describedby="char-count"
+        ></textarea>
+        <div id="char-count" class="char-count"><span id="count-num">0</span> / 2000 文字</div>
+      </div>
+
+      <!-- 設定オプション -->
+      <div class="options-block">
+        <div class="option-item">
+          <label for="kanji-level">ふりがなを付ける漢字レベル</label>
+          <select id="kanji-level">
+            <option value="all">全漢字（デフォルト）</option>
+            <option value="1">小学1年生以上の漢字</option>
+            <option value="2">小学2年生以上の漢字</option>
+            <option value="3">小学3年生以上の漢字</option>
+            <option value="4">小学4年生以上の漢字</option>
+            <option value="5">小学5年生以上の漢字</option>
+            <option value="6">小学6年生以上の漢字</option>
+            <option value="jr">中学校以上の漢字のみ</option>
+          </select>
+        </div>
+
+        <div class="option-item">
+          <label for="output-format">出力形式</label>
+          <select id="output-format">
+            <option value="ruby">HTMLルビタグ形式</option>
+            <option value="paren">かっこ形式</option>
+            <option value="text">ふりがなのみ（テキスト確認用）</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 変換ボタン -->
+      <button id="convert-btn" class="btn-primary" aria-label="ふりがなを変換する">
+        ふりがなを付ける
+      </button>
+
+      <!-- ローディング -->
+      <div id="loading" class="loading" aria-live="polite" hidden>
+        <span class="loading-spinner" aria-hidden="true"></span>
+        辞書を読み込み中...
+      </div>
+
+      <!-- エラー表示 -->
+      <div id="error-msg" class="error-msg" role="alert" hidden></div>
+
+      <!-- 出力エリア -->
+      <div id="output-block" class="output-block" hidden>
+        <div class="output-header">
+          <h2 class="output-label">変換結果</h2>
+          <button id="copy-btn" class="btn-copy" aria-label="変換結果をコピーする">
+            コピー
+          </button>
+        </div>
+
+        <!-- プレビュー（実際のルビ表示） -->
+        <div id="preview-area" class="preview-area" aria-label="プレビュー"></div>
+
+        <!-- コピー用テキスト -->
+        <div class="code-block-wrap">
+          <label for="output-text" class="code-label">コピー用テキスト</label>
+          <textarea id="output-text" class="output-text" readonly rows="6" aria-label="コピー用テキスト出力"></textarea>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>ふりがな自動付与ツールの使い方</h2>
+      <ol>
+        <li>上のテキストエリアにふりがなを付けたい日本語テキストを貼り付けるか入力します（最大2000文字）。</li>
+        <li>「ふりがなを付ける漢字レベル」で対象とする漢字の難易度を選択します。例えば「小学3年生以上」を選ぶと、3年生で習う漢字以上にのみルビが付きます。</li>
+        <li>「出力形式」で希望する形式を選んでください。HTMLルビタグ形式はWebページ埋め込みに、かっこ形式はメール・文書作成に最適です。</li>
+        <li>「ふりがなを付ける」ボタンを押すと変換が実行されます。</li>
+        <li>プレビューエリアで実際のルビ表示を確認し、「コピー」ボタンで結果をクリップボードにコピーします。</li>
+      </ol>
+
+      <h2>ふりがな（ルビ）とは</h2>
+      <p>ふりがなとは、漢字の読み方を示すために小さな文字（ひらがな・カタカナ）で添えた注記のことです。日本では、子ども向けの書籍・教材・絵本や、外国人向けの日本語テキスト、公的文書など幅広く使われています。Webページでは HTML の <code>&lt;ruby&gt;</code> タグを使って実装でき、漢字の上（縦書き時は右）にルビが表示されます。本ツールは形態素解析ライブラリ kuromoji.js を使用して漢字の読みを自動取得するため、手作業なしで大量のテキストにまとめてふりがなを付けることができます。教材作成・子ども向けコンテンツ制作・SNS投稿など、さまざまな場面でご活用ください。</p>
+
+      <h2>出力形式の説明</h2>
+      <table class="format-table">
+        <thead>
+          <tr>
+            <th>形式</th>
+            <th>例</th>
+            <th>用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HTMLルビタグ</td>
+            <td><code>&lt;ruby&gt;漢字&lt;rt&gt;かんじ&lt;/rt&gt;&lt;/ruby&gt;</code></td>
+            <td>Webページ・HTML文書への埋め込み</td>
+          </tr>
+          <tr>
+            <td>かっこ形式</td>
+            <td>漢字（かんじ）</td>
+            <td>メール・Word文書・SNS投稿</td>
+          </tr>
+          <tr>
+            <td>テキスト確認用</td>
+            <td>かんじ</td>
+            <td>読み仮名だけを確認したいとき</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>学年別漢字レベルについて</h2>
+      <p>文部科学省の学習指導要領に基づく配当漢字を参考に、指定した学年以上で習う漢字のみにルビを付ける機能です。例えば「小学3年生以上」を選ぶと、1・2年生の漢字（山・川・学など）にはルビが付かず、3年生以降で習う漢字にのみルビが付きます。子ども向け読み物の制作や日本語学習教材の作成に便利です。</p>
+    </section>
+
+    <!-- 広告ユニット3（コンテンツ末尾） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="/">← ツール一覧</a> ｜
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/build/kuromoji.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="SVGアイコンの色（fill/stroke）をブラウザで簡単に変更・ダウンロード。複数の色を一括カスタマイズ。ブランドカラーへの変換に。登録不要・完全ローカル処理・無料。">
+  <meta property="og:title" content="SVGアイコン色変更ツール【無料】カラーカスタマイザー | Keisanlab">
+  <meta property="og:description" content="SVGアイコンの色（fill/stroke）をブラウザで簡単に変更・ダウンロード。複数の色を一括カスタマイズ。ブランドカラーへの変換に。登録不要・完全ローカル処理・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/svg-icon-colorizer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-svg-icon-colorizer.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SVGアイコン色変更ツール【無料】カラーカスタマイザー | Keisanlab">
+  <meta name="twitter:description" content="SVGアイコンの色（fill/stroke）をブラウザで簡単に変更・ダウンロード。複数の色を一括カスタマイズ。登録不要・完全ローカル処理・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-svg-icon-colorizer.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/svg-icon-colorizer/">
+  <title>SVGアイコン色変更ツール【無料】カラーカスタマイザー | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <nav class="back-nav">
+      <a href="/" class="back-link">&#8592; ツール一覧</a>
+    </nav>
+    <h1>SVGアイコンカラーカスタマイザー — 色を変えてすぐダウンロード</h1>
+    <p class="subtitle">SVGの色（fill/stroke）を自動検出して自由に変更。ブラウザ完結・登録不要・無料</p>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- サンプルアイコン -->
+    <section id="samples" class="card">
+      <h2>サンプルアイコンから試す</h2>
+      <div class="sample-grid" id="sample-grid">
+        <!-- JSで生成 -->
+      </div>
+    </section>
+
+    <!-- SVG入力 -->
+    <section id="tool" class="card">
+      <h2>SVGを入力する</h2>
+
+      <div class="input-tabs">
+        <button class="tab-btn active" id="tab-paste" type="button">コードを貼り付け</button>
+        <button class="tab-btn" id="tab-upload" type="button">ファイルをアップロード</button>
+      </div>
+
+      <div id="pane-paste" class="tab-pane active">
+        <label for="svg-input">SVGコード</label>
+        <textarea
+          id="svg-input"
+          placeholder="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; ...&gt;&lt;/svg&gt;"
+          rows="6"
+          aria-label="SVGコード入力欄"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <div id="pane-upload" class="tab-pane">
+        <label for="svg-file-input" class="file-label">
+          <span class="file-icon">&#128194;</span>
+          <span id="file-label-text">SVGファイルを選択（または ドラッグ&amp;ドロップ）</span>
+          <input type="file" id="svg-file-input" accept=".svg,image/svg+xml" aria-label="SVGファイルアップロード">
+        </label>
+      </div>
+
+      <button type="button" id="parse-btn" class="btn-primary">色を検出する</button>
+      <p id="parse-error" class="error-msg" role="alert" aria-live="polite"></p>
+    </section>
+
+    <!-- カラー編集 -->
+    <section id="color-editor" class="card hidden">
+      <h2>色を変更する</h2>
+
+      <div id="color-list" class="color-list">
+        <!-- JSで生成 -->
+      </div>
+
+      <div class="size-row">
+        <div class="size-field">
+          <label for="out-width">幅（px）</label>
+          <input type="number" id="out-width" min="8" max="4096" placeholder="元のサイズ" aria-label="出力幅（ピクセル）">
+        </div>
+        <div class="size-field">
+          <label for="out-height">高さ（px）</label>
+          <input type="number" id="out-height" min="8" max="4096" placeholder="元のサイズ" aria-label="出力高さ（ピクセル）">
+        </div>
+      </div>
+    </section>
+
+    <!-- プレビュー & ダウンロード -->
+    <section id="preview-section" class="card hidden">
+      <h2>プレビュー</h2>
+      <div id="preview-area" class="preview-area" aria-label="SVGプレビュー">
+        <!-- インラインSVGをJSで挿入 -->
+      </div>
+      <button type="button" id="download-btn" class="btn-primary btn-download">SVGをダウンロード</button>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方 -->
+    <section id="howto" class="card howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「サンプルアイコンから試す」で好きなアイコンをクリックするか、SVGコードを貼り付け・ファイルをアップロードしてください。</li>
+        <li>「色を検出する」ボタンを押すと、SVG内に含まれる fill・stroke の色が自動的に一覧表示されます。</li>
+        <li>各色の横にあるカラーピッカーで新しい色を選択すると、右のプレビューがリアルタイムで更新されます。</li>
+        <li>「幅」「高さ」フィールドで出力サイズを変更できます。空欄にすると元のサイズが保持されます。</li>
+        <li>「SVGをダウンロード」ボタンを押すと、カスタマイズ済みのSVGファイルが保存されます。</li>
+      </ol>
+
+      <h2>SVGカラーカスタマイザーとは</h2>
+      <p>
+        このツールはブラウザだけで動作するSVGアイコンの色変更ツールです。アップロードしたSVGファイルはサーバーには送信されず、すべてお使いのデバイス内で処理されるため、機密性の高いアイコン素材も安心してご利用いただけます。
+        SVGのfill属性やstroke属性で指定された色を自動検出し、カラーピッカーで直感的に変更することができます。ブランドカラーへのアイコン変換、UIデザインの配色確認、アイコンセットの一括カラー変更などにご活用ください。
+        PhotoshopやIllustratorなどの高価なソフトウェアは不要で、Webブラウザさえあれば無料でお使いいただけます。デザイナーはもちろん、プログラマーやWebサイト制作者にも便利なツールです。
+      </p>
+    </section>
+
+    <!-- 広告ユニット3（フッター上） -->
+    <div class="ad-unit" id="ad-footer" aria-hidden="true"></div>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

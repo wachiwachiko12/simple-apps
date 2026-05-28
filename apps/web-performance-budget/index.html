@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="JSバンドルサイズ・画像・フォントのパフォーマンス予算をリソース別に設定・可視化。LCP・CLS・INPのCore Web Vitals目標値も管理できる無料ツール。フロントエンドエンジニア向け。">
+  <title>Webパフォーマンス予算ツール【無料】Core Web Vitals目標設定 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/web-performance-budget/">
+  <!-- OGP -->
+  <meta property="og:title" content="Webパフォーマンス予算ツール【無料】Core Web Vitals目標設定 | Keisanlab">
+  <meta property="og:description" content="JSバンドルサイズ・画像・フォントのパフォーマンス予算をリソース別に設定・可視化。LCP・CLS・INPのCore Web Vitals目標値も管理できる無料ツール。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/web-performance-budget/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-web-performance-budget.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Webパフォーマンス予算ツール【無料】Core Web Vitals目標設定">
+  <meta name="twitter:description" content="JSバンドルサイズ・画像・フォントのパフォーマンス予算をリソース別に設定・可視化。LCP・CLS・INPのCore Web Vitals目標値も管理できる無料ツール。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-web-performance-budget.png">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <div class="header-nav">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">← ツール一覧</a>
+    </div>
+    <h1>Webパフォーマンス予算ツール — バンドルサイズとCore Web Vitalsを管理</h1>
+    <p class="subtitle">JS・CSS・画像・フォントのサイズ上限を設定し、予算超過をリアルタイムで可視化。LCP・INP・CLSの目標値も管理できます</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- プリセット選択 -->
+    <section class="tool-section" id="preset-section">
+      <h2>プリセットから始める</h2>
+      <p class="section-desc">サイト種別に合わせた推奨予算値を一括で適用できます</p>
+      <div class="preset-grid" role="group" aria-label="プリセット選択">
+        <button class="preset-btn" data-preset="ec" aria-pressed="false">ECサイト</button>
+        <button class="preset-btn" data-preset="blog" aria-pressed="false">ブログ</button>
+        <button class="preset-btn" data-preset="spa" aria-pressed="false">SPA</button>
+        <button class="preset-btn" data-preset="lp" aria-pressed="false">ランディングページ</button>
+      </div>
+    </section>
+
+    <!-- 予算設定パネル -->
+    <section class="tool-section" id="budget-section">
+      <h2>リソース予算設定（KB）</h2>
+      <p class="section-desc">各リソース種別の上限サイズをKB単位で入力してください</p>
+
+      <div class="resource-table">
+        <div class="resource-row resource-header" aria-hidden="true">
+          <span class="col-label">リソース</span>
+          <span class="col-budget">予算上限 (KB)</span>
+          <span class="col-actual">実際のサイズ (KB)</span>
+          <span class="col-bar">使用率</span>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="resource-row" data-resource="js">
+          <label class="col-label" for="budget-js">
+            <span class="resource-icon">JS</span>
+            JavaScript
+          </label>
+          <div class="col-budget">
+            <input type="number" id="budget-js" class="budget-input" min="0" max="99999" step="10"
+              placeholder="300" aria-label="JavaScriptの予算上限（KB）">
+          </div>
+          <div class="col-actual">
+            <input type="number" id="actual-js" class="actual-input" min="0" max="99999" step="1"
+              placeholder="0" aria-label="JavaScriptの実際のサイズ（KB）">
+          </div>
+          <div class="col-bar">
+            <div class="gauge-wrap">
+              <div class="gauge-bar" id="gauge-js" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="JavaScript使用率"></div>
+              <span class="gauge-label" id="gauge-label-js">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CSS -->
+        <div class="resource-row" data-resource="css">
+          <label class="col-label" for="budget-css">
+            <span class="resource-icon resource-icon--css">CSS</span>
+            CSS
+          </label>
+          <div class="col-budget">
+            <input type="number" id="budget-css" class="budget-input" min="0" max="99999" step="10"
+              placeholder="50" aria-label="CSSの予算上限（KB）">
+          </div>
+          <div class="col-actual">
+            <input type="number" id="actual-css" class="actual-input" min="0" max="99999" step="1"
+              placeholder="0" aria-label="CSSの実際のサイズ（KB）">
+          </div>
+          <div class="col-bar">
+            <div class="gauge-wrap">
+              <div class="gauge-bar" id="gauge-css" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="CSS使用率"></div>
+              <span class="gauge-label" id="gauge-label-css">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 画像 -->
+        <div class="resource-row" data-resource="img">
+          <label class="col-label" for="budget-img">
+            <span class="resource-icon resource-icon--img">IMG</span>
+            画像
+          </label>
+          <div class="col-budget">
+            <input type="number" id="budget-img" class="budget-input" min="0" max="99999" step="10"
+              placeholder="500" aria-label="画像の予算上限（KB）">
+          </div>
+          <div class="col-actual">
+            <input type="number" id="actual-img" class="actual-input" min="0" max="99999" step="1"
+              placeholder="0" aria-label="画像の実際のサイズ（KB）">
+          </div>
+          <div class="col-bar">
+            <div class="gauge-wrap">
+              <div class="gauge-bar" id="gauge-img" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="画像使用率"></div>
+              <span class="gauge-label" id="gauge-label-img">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- フォント -->
+        <div class="resource-row" data-resource="font">
+          <label class="col-label" for="budget-font">
+            <span class="resource-icon resource-icon--font">FNT</span>
+            フォント
+          </label>
+          <div class="col-budget">
+            <input type="number" id="budget-font" class="budget-input" min="0" max="99999" step="10"
+              placeholder="100" aria-label="フォントの予算上限（KB）">
+          </div>
+          <div class="col-actual">
+            <input type="number" id="actual-font" class="actual-input" min="0" max="99999" step="1"
+              placeholder="0" aria-label="フォントの実際のサイズ（KB）">
+          </div>
+          <div class="col-bar">
+            <div class="gauge-wrap">
+              <div class="gauge-bar" id="gauge-font" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="フォント使用率"></div>
+              <span class="gauge-label" id="gauge-label-font">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 合計 -->
+        <div class="resource-row resource-row--total" data-resource="total">
+          <label class="col-label" for="budget-total">
+            <span class="resource-icon resource-icon--total">TOT</span>
+            合計
+          </label>
+          <div class="col-budget">
+            <input type="number" id="budget-total" class="budget-input" min="0" max="99999" step="10"
+              placeholder="1000" aria-label="合計の予算上限（KB）">
+          </div>
+          <div class="col-actual">
+            <span class="total-actual" id="total-actual-display">—</span>
+            <span class="total-actual-unit">KB</span>
+          </div>
+          <div class="col-bar">
+            <div class="gauge-wrap">
+              <div class="gauge-bar" id="gauge-total" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="合計使用率"></div>
+              <span class="gauge-label" id="gauge-label-total">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gauge-legend" aria-hidden="true">
+        <span class="legend-item legend-good">良好 (〜80%)</span>
+        <span class="legend-item legend-warn">注意 (80〜100%)</span>
+        <span class="legend-item legend-over">超過 (100%超)</span>
+      </div>
+    </section>
+
+    <!-- Core Web Vitals 目標設定 -->
+    <section class="tool-section" id="cwv-section">
+      <h2>Core Web Vitals 目標設定</h2>
+      <p class="section-desc">スライダーを動かして目標値を設定してください。Googleの基準で3段階評価します</p>
+
+      <div class="cwv-grid">
+        <!-- LCP -->
+        <div class="cwv-card" id="cwv-lcp-card">
+          <div class="cwv-header">
+            <span class="cwv-abbr">LCP</span>
+            <span class="cwv-name">Largest Contentful Paint</span>
+          </div>
+          <p class="cwv-desc">最大コンテンツの描画時間。ページの主要コンテンツが表示されるまでの時間</p>
+          <div class="cwv-slider-wrap">
+            <input type="range" id="slider-lcp" class="cwv-slider"
+              min="0.5" max="6" step="0.1" value="2.5"
+              aria-label="LCP目標値（秒）"
+              aria-valuetext="2.5秒">
+            <div class="cwv-value-row">
+              <output class="cwv-value" id="val-lcp" for="slider-lcp">2.5s</output>
+              <span class="cwv-badge" id="badge-lcp">Good</span>
+            </div>
+          </div>
+          <div class="cwv-thresholds" aria-hidden="true">
+            <span class="threshold-good">Good: ≤2.5s</span>
+            <span class="threshold-ni">Needs Improvement: ≤4.0s</span>
+            <span class="threshold-poor">Poor: &gt;4.0s</span>
+          </div>
+        </div>
+
+        <!-- INP -->
+        <div class="cwv-card" id="cwv-inp-card">
+          <div class="cwv-header">
+            <span class="cwv-abbr">INP</span>
+            <span class="cwv-name">Interaction to Next Paint</span>
+          </div>
+          <p class="cwv-desc">インタラクションへの応答速度。ユーザー操作からページが更新されるまでの遅延時間</p>
+          <div class="cwv-slider-wrap">
+            <input type="range" id="slider-inp" class="cwv-slider"
+              min="50" max="700" step="10" value="200"
+              aria-label="INP目標値（ミリ秒）"
+              aria-valuetext="200ミリ秒">
+            <div class="cwv-value-row">
+              <output class="cwv-value" id="val-inp" for="slider-inp">200ms</output>
+              <span class="cwv-badge" id="badge-inp">Good</span>
+            </div>
+          </div>
+          <div class="cwv-thresholds" aria-hidden="true">
+            <span class="threshold-good">Good: ≤200ms</span>
+            <span class="threshold-ni">Needs Improvement: ≤500ms</span>
+            <span class="threshold-poor">Poor: &gt;500ms</span>
+          </div>
+        </div>
+
+        <!-- CLS -->
+        <div class="cwv-card" id="cwv-cls-card">
+          <div class="cwv-header">
+            <span class="cwv-abbr">CLS</span>
+            <span class="cwv-name">Cumulative Layout Shift</span>
+          </div>
+          <p class="cwv-desc">累積レイアウトシフト。ページ読み込み中に要素が予期せず移動する量の累積スコア</p>
+          <div class="cwv-slider-wrap">
+            <input type="range" id="slider-cls" class="cwv-slider"
+              min="0" max="0.5" step="0.01" value="0.1"
+              aria-label="CLS目標値"
+              aria-valuetext="0.10">
+            <div class="cwv-value-row">
+              <output class="cwv-value" id="val-cls" for="slider-cls">0.10</output>
+              <span class="cwv-badge" id="badge-cls">Good</span>
+            </div>
+          </div>
+          <div class="cwv-thresholds" aria-hidden="true">
+            <span class="threshold-good">Good: ≤0.1</span>
+            <span class="threshold-ni">Needs Improvement: ≤0.25</span>
+            <span class="threshold-poor">Poor: &gt;0.25</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- エクスポート・インポート -->
+    <section class="tool-section" id="io-section">
+      <h2>設定の保存・読み込み</h2>
+      <p class="section-desc">設定をJSONファイルとしてダウンロードし、チームで共有できます</p>
+      <div class="io-buttons">
+        <button class="btn btn-export" id="btn-export" aria-label="設定をJSONとしてダウンロード">
+          JSONでダウンロード
+        </button>
+        <label class="btn btn-import" for="input-import" aria-label="JSONファイルを読み込む">
+          JSONを読み込む
+          <input type="file" id="input-import" accept=".json" aria-hidden="true">
+        </label>
+        <button class="btn btn-reset" id="btn-reset" aria-label="すべての設定をリセット">
+          リセット
+        </button>
+      </div>
+      <div class="import-status" id="import-status" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- 広告ユニット3（コンテンツ末尾） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「プリセットから始める」でサイト種別（ECサイト・ブログ・SPA・LP）を選択すると、推奨予算値が自動入力されます。</li>
+        <li>「リソース予算設定」でJS・CSS・画像・フォント・合計のサイズ上限をKB単位で入力してください。</li>
+        <li>「実際のサイズ」欄に、Chrome DevTools や Lighthouse で計測した実際のバンドルサイズを入力します。プログレスバーで予算消費率を即時確認できます。</li>
+        <li>「Core Web Vitals 目標設定」でLCP・INP・CLSの目標値をスライダーで設定してください。Googleの基準（Good / Needs Improvement / Poor）でカラー表示します。</li>
+        <li>設定は「JSONでダウンロード」でファイルに保存し、チームメンバーと共有できます。「JSONを読み込む」で以前の設定を復元できます。</li>
+        <li>入力内容はブラウザのlocalStorageに自動保存されるため、再訪問時も設定が引き継がれます。</li>
+      </ol>
+
+      <h2>パフォーマンス予算とは</h2>
+      <p>
+        パフォーマンス予算（Performance Budget）とは、Webページのリソースサイズや読み込み速度の上限値をあらかじめ定めたルールセットです。フロントエンドエンジニアやチームがパフォーマンスを維持するための「予算」として活用します。例えば「JavaScriptは300KB以下に抑える」「LCPは2.5秒以内」などの目標を設定することで、機能追加や依存関係の増加がパフォーマンスに与える影響を定量的に把握できます。Calibre・SpeedCurve・Webpack Bundle Analyzerなどのツールと組み合わせて継続的に監視するのが一般的です。
+      </p>
+
+      <h2>Core Web Vitals（CWV）について</h2>
+      <p>
+        Core Web Vitalsは、Googleが定めるWebパフォーマンスの主要指標群です。LCP（Largest Contentful Paint）はページの主要コンテンツが表示されるまでの時間を計測し、2.5秒以内がGoodとされます。INP（Interaction to Next Paint）はユーザー操作への応答速度を示し、200ms以下がGoodです。CLS（Cumulative Layout Shift）はページ読み込み中のレイアウトの安定性を測り、0.1以下がGoodとされています。Core Web VitalsはGoogleの検索ランキングシグナルの一部にもなっており、SEOの観点からも重要な指標です。定期的にLighthouseやPageSpeed Insightsで計測し、本ツールで設定した目標値と比較することで、パフォーマンスの改善サイクルを回すことができます。
+      </p>
+
+      <h2>プリセット値の根拠</h2>
+      <p>
+        本ツールのプリセット値は、HTTP Archive・Web Almanac・GoogleのCWVガイドラインを参考に設定しています。ECサイトはカート機能・決済JSなどの重みを考慮し、ブログは軽量な構成を前提にしています。SPAはJavaScriptバンドルが大きくなりやすい特性を踏まえた値です。LPはコンバージョン重視のため、読み込み速度を最優先にしたやや厳しめの値を設定しています。プリセットはあくまで出発点として活用し、実際の計測値に合わせて調整してください。
+      </p>
+
+      <h2>プライバシーについて</h2>
+      <p>入力したデータはすべてブラウザ内で処理されます。外部サーバーへのデータ送信は一切行いません。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/">ツール一覧</a>
+      ｜ <a href="/contact.html">お問い合わせ</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

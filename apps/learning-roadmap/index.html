@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="フロントエンド・バックエンド・データサイエンスなど目標に合わせたプログラミング学習ロードマップを日本語で表示。各技術の説明付き・進捗チェック機能あり。登録不要・無料。">
+  <title>プログラミング学習ロードマップ【無料・日本語】目標別ステップ表示 | Keisanlab</title>
+
+  <meta property="og:title" content="プログラミング学習ロードマップ【無料・日本語】目標別ステップ表示 | Keisanlab">
+  <meta property="og:description" content="フロントエンド・バックエンド・データサイエンスなど目標に合わせたプログラミング学習ロードマップを日本語で表示。各技術の説明付き・進捗チェック機能あり。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/learning-roadmap/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-learning-roadmap.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-learning-roadmap.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/learning-roadmap/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link">← ツール一覧</a>
+      <h1>プログラミング学習ロードマップ — 目標別に学ぶべき技術を可視化</h1>
+      <p class="subtitle">目標を選ぶだけで、学習ステップを日本語でビジュアル表示。進捗チェック付き・無料・登録不要。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- コース選択 -->
+    <section id="course-select" class="section-card">
+      <h2>学習ゴールを選択</h2>
+      <p class="section-desc">目指すキャリア・分野を選んでください。ロードマップが表示されます。</p>
+      <div class="course-grid" role="group" aria-label="コース一覧">
+        <button class="course-btn" data-course="frontend" aria-pressed="false">
+          <span class="course-icon">🌐</span>
+          <span class="course-name">フロントエンド</span>
+          <span class="course-desc">Web UI/UX開発</span>
+        </button>
+        <button class="course-btn" data-course="backend" aria-pressed="false">
+          <span class="course-icon">⚙️</span>
+          <span class="course-name">バックエンド</span>
+          <span class="course-desc">サーバー・API開発</span>
+        </button>
+        <button class="course-btn" data-course="fullstack" aria-pressed="false">
+          <span class="course-icon">🔗</span>
+          <span class="course-name">フルスタック</span>
+          <span class="course-desc">フロント＋バック両対応</span>
+        </button>
+        <button class="course-btn" data-course="datascience" aria-pressed="false">
+          <span class="course-icon">📊</span>
+          <span class="course-name">データサイエンス</span>
+          <span class="course-desc">分析・機械学習・AI</span>
+        </button>
+        <button class="course-btn" data-course="devops" aria-pressed="false">
+          <span class="course-icon">🔄</span>
+          <span class="course-name">DevOps</span>
+          <span class="course-desc">インフラ・CI/CD・クラウド</span>
+        </button>
+        <button class="course-btn" data-course="mobile" aria-pressed="false">
+          <span class="course-icon">📱</span>
+          <span class="course-name">モバイル開発</span>
+          <span class="course-desc">iOS・Android・クロスプラットフォーム</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（コース選択下） -->
+    <div class="ad-unit" id="ad-mid" aria-hidden="true"></div>
+
+    <!-- ロードマップ表示エリア -->
+    <section id="roadmap-area" class="section-card hidden" aria-live="polite">
+      <div class="roadmap-header">
+        <div class="roadmap-title-row">
+          <h2 id="roadmap-title">ロードマップ</h2>
+          <button id="btn-reset" class="btn-ghost btn-sm" aria-label="進捗をリセット">進捗リセット</button>
+        </div>
+        <div class="progress-wrapper" aria-label="学習進捗">
+          <div class="progress-bar-wrap">
+            <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <span id="progress-text" class="progress-text">0% 完了</span>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><span class="dot dot-required"></span>必須</span>
+          <span class="legend-item"><span class="dot dot-recommended"></span>推奨</span>
+          <span class="legend-item"><span class="dot dot-optional"></span>オプション</span>
+          <span class="legend-item"><span class="dot dot-done"></span>完了</span>
+        </div>
+      </div>
+
+      <div id="roadmap-tree" class="roadmap-tree" role="list" aria-label="学習ステップ一覧">
+        <!-- JavaScriptで生成 -->
+      </div>
+    </section>
+
+    <!-- 広告ユニット3（ロードマップ下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>画面上部の6つのコースボタンから、目指す分野（例: フロントエンド、データサイエンス）を選択します。</li>
+        <li>選択したコースのロードマップがビジュアルツリーで表示されます。<strong>必須（青）→ 推奨（緑）→ オプション（グレー）</strong>の順に学習するのがおすすめです。</li>
+        <li>各項目をクリックすると、その技術の簡単な説明が表示されます。何を学ぶかの参考にしてください。</li>
+        <li>学習が完了した項目は左端のチェックボックスをクリックして「完了」マークを付けます。上部のプログレスバーに進捗率が反映されます。</li>
+        <li>チェック状態はブラウザに自動保存されるため、ページを閉じても進捗が失われません。コースを変えても、それぞれの進捗が個別に保持されます。</li>
+      </ol>
+
+      <h2>このツールについて</h2>
+      <p>
+        プログラミング学習ロードマップジェネレーターは、エンジニアを目指す方・スキルアップしたい方のために、学習すべき技術を体系的に可視化する無料ツールです。英語のみで提供されている roadmap.sh をはじめとした海外リソースは情報量が豊富ですが、日本語でわかりやすく整理されたものは少ないのが現状です。本ツールでは、フロントエンド・バックエンド・フルスタック・データサイエンス・DevOps・モバイル開発の6コースについて、現場で実際に求められるスキルを「必須・推奨・オプション」の3段階に分類して掲載しています。初学者は必須項目を中心に、経験者は推奨・オプション項目でスキルの穴を埋めることを目的として活用できます。すべてのデータはブラウザのlocalStorageに保存され、ログイン・会員登録は一切不要です。
+      </p>
+
+      <h2>各コースの特徴</h2>
+      <p>
+        <strong>フロントエンド</strong>はHTML/CSS/JavaScriptを基盤にReact等のフレームワークを習得するコースです。<strong>バックエンド</strong>はサーバーサイド言語・データベース・APIの設計・認証を学びます。<strong>フルスタック</strong>は両方を網羅し、Webアプリ全体を一人で開発できるスキルを目指します。<strong>データサイエンス</strong>はPython・統計・機械学習・可視化ツールの習得が中心です。<strong>DevOps</strong>はLinux・Docker・CI/CD・クラウドインフラの運用スキルを体系化します。<strong>モバイル開発</strong>はiOS/AndroidアプリのネイティブおよびFlutter等クロスプラットフォーム開発を学ぶコースです。
+      </p>
+    </section>
+  </main>
+
+  <!-- 技術説明ポップアップ -->
+  <div id="popup-overlay" class="popup-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+    <div class="popup-box">
+      <div class="popup-header">
+        <h3 id="popup-title" class="popup-title"></h3>
+        <button id="popup-close" class="popup-close" aria-label="閉じる">&times;</button>
+      </div>
+      <div class="popup-tag-row">
+        <span id="popup-level" class="popup-level-badge"></span>
+      </div>
+      <p id="popup-desc" class="popup-desc"></p>
+      <div class="popup-resources" id="popup-resources"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

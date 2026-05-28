@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Conventional Commits規約に沿ったGitコミットメッセージをGUIで簡単作成。feat/fix/docs/breaking changeに対応。生成したメッセージを即コピー。登録不要・無料。">
+  <meta property="og:title" content="Gitコミットメッセージ生成ツール【無料】Conventional Commits対応 | Keisanlab">
+  <meta property="og:description" content="Conventional Commits規約に沿ったGitコミットメッセージをGUIで簡単作成。feat/fix/docs/breaking changeに対応。生成したメッセージを即コピー。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/git-commit-formatter/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-git-commit-formatter.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gitコミットメッセージ生成ツール【無料】Conventional Commits対応 | Keisanlab">
+  <meta name="twitter:description" content="Conventional Commits規約に沿ったGitコミットメッセージをGUIで簡単作成。feat/fix/docs/breaking changeに対応。生成したメッセージを即コピー。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-git-commit-formatter.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/git-commit-formatter/">
+  <title>Gitコミットメッセージ生成ツール【無料】Conventional Commits対応 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link">← ツール一覧</a>
+      <h1>Gitコミットメッセージフォーマッター — Conventional Commits準拠</h1>
+      <p class="subtitle">タイプ・スコープ・説明を選ぶだけで規約に沿ったメッセージを即生成</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- タイプ選択 -->
+      <div class="form-group">
+        <label class="form-label">1. タイプを選択</label>
+        <div class="type-grid" id="type-grid" role="group" aria-label="コミットタイプ選択">
+          <!-- JS で動的生成 -->
+        </div>
+      </div>
+
+      <!-- スコープ入力 -->
+      <div class="form-group">
+        <label class="form-label" for="scope-input">2. スコープ <span class="optional">（任意）</span></label>
+        <div class="scope-wrapper">
+          <input
+            type="text"
+            id="scope-input"
+            placeholder="例: auth, ui, api, database"
+            maxlength="50"
+            autocomplete="off"
+            aria-describedby="scope-hint"
+            aria-expanded="false"
+            aria-autocomplete="list"
+            aria-controls="scope-suggestions"
+          >
+          <div class="scope-suggestions" id="scope-suggestions" role="listbox" aria-label="スコープ候補"></div>
+        </div>
+        <p class="field-hint" id="scope-hint">変更対象のモジュール・ディレクトリ名を入力してください</p>
+      </div>
+
+      <!-- 件名（説明）入力 -->
+      <div class="form-group">
+        <label class="form-label" for="subject-input">3. 件名（説明）<span class="required">*</span></label>
+        <div class="subject-wrapper">
+          <input
+            type="text"
+            id="subject-input"
+            placeholder="例: ログイン機能を追加"
+            maxlength="72"
+            autocomplete="off"
+            aria-describedby="subject-counter subject-hint"
+          >
+          <span class="char-counter" id="subject-counter">0 / 72</span>
+        </div>
+        <p class="field-hint" id="subject-hint">50文字以内を推奨（72文字が上限）。動詞から始めて現在形で記述します</p>
+      </div>
+
+      <!-- 本文 -->
+      <div class="form-group">
+        <label class="form-label" for="body-input">4. 本文 <span class="optional">（任意）</span></label>
+        <textarea
+          id="body-input"
+          rows="3"
+          placeholder="変更の背景・理由・詳細を記述&#10;例: ユーザーからの要望に基づき、OAuthによるソーシャルログインを実装した。"
+          aria-describedby="body-hint"
+        ></textarea>
+        <p class="field-hint" id="body-hint">なぜこの変更が必要か、どのように実装したかを記述します</p>
+      </div>
+
+      <!-- Closes # -->
+      <div class="form-group">
+        <label class="form-label" for="closes-input">5. 関連Issue <span class="optional">（任意）</span></label>
+        <input
+          type="text"
+          id="closes-input"
+          placeholder="例: 123（または123,456）"
+          maxlength="50"
+          autocomplete="off"
+          aria-describedby="closes-hint"
+        >
+        <p class="field-hint" id="closes-hint">Issue番号を入力すると「Closes #123」が自動追記されます</p>
+      </div>
+
+      <!-- Breaking Change -->
+      <div class="form-group">
+        <label class="breaking-label">
+          <input type="checkbox" id="breaking-checkbox" role="switch">
+          <span class="breaking-text">
+            <strong>BREAKING CHANGE</strong>
+            <small>後方互換性を破壊する変更が含まれる</small>
+          </span>
+        </label>
+        <div class="breaking-detail-wrap" id="breaking-detail-wrap">
+          <label class="form-label" for="breaking-detail">変更内容の説明 <span class="required">*</span></label>
+          <input
+            type="text"
+            id="breaking-detail"
+            placeholder="例: APIのエンドポイントが /v1 から /v2 に変更されました"
+            maxlength="200"
+          >
+        </div>
+      </div>
+
+      <!-- プレビュー -->
+      <div class="preview-section" id="preview-section">
+        <div class="preview-header">
+          <span class="preview-label">生成されたメッセージ</span>
+          <button class="copy-btn" id="copy-btn" aria-label="コミットメッセージをコピー">コピー</button>
+        </div>
+        <pre class="preview-code" id="preview-output" aria-live="polite" aria-label="コミットメッセージプレビュー"></pre>
+        <p class="copy-feedback" id="copy-feedback" aria-live="assertive"></p>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 履歴セクション -->
+    <section id="history-section" class="history-section">
+      <div class="history-header">
+        <h2>最近の履歴</h2>
+        <button class="clear-history-btn" id="clear-history-btn" aria-label="履歴をすべて削除">履歴を消去</button>
+      </div>
+      <ul class="history-list" id="history-list" aria-label="コミットメッセージ履歴"></ul>
+      <p class="history-empty" id="history-empty">まだ履歴がありません。メッセージを生成するとここに保存されます。</p>
+    </section>
+
+    <!-- 広告ユニット3（使い方前） -->
+    <div class="ad-unit" id="ad-howto" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>タイプを選択</strong> — feat（新機能）・fix（バグ修正）・docs（ドキュメント）など、変更の種類に合ったタイプをボタンで選んでください。</li>
+        <li><strong>スコープを入力</strong>（任意）— 変更の影響範囲を示すモジュール名やディレクトリ名を入力します。例: <code>auth</code>、<code>ui</code>、<code>api</code></li>
+        <li><strong>件名を入力</strong> — 変更内容を50文字以内で簡潔に記述します。「何をしたか」を現在形・命令形で書くのが慣例です。</li>
+        <li><strong>本文・Issue番号を入力</strong>（任意）— 変更の背景や関連Issueがある場合は追記します。</li>
+        <li><strong>コピーして使う</strong> — 「コピー」ボタンを押すと生成されたコミットメッセージがクリップボードに入ります。ターミナルに貼り付けるだけで完成です。</li>
+      </ol>
+
+      <h2>Conventional Commitsとは</h2>
+      <p>
+        Conventional Commits（コンベンショナルコミット）は、GitコミットメッセージにAngularのコミット規約をベースとした統一フォーマットを定めたオープンな仕様です。
+        <code>type(scope): subject</code> という形式でメッセージを記述することで、変更履歴の可読性が上がり、CHANGELOGの自動生成やセマンティックバージョニングの自動化が可能になります。
+        チーム開発では commitlint などのCIツールと組み合わせてルールを強制するケースが一般的ですが、このツールはブラウザ上でGUIとして利用できるため、CLIのセットアップが不要です。
+        feat / fix / docs / style / refactor / test / chore / perf / ci / build の10種類のタイプをサポートしており、BREAKING CHANGEフッターにも対応しています。
+      </p>
+
+      <h2>各タイプの使い分け</h2>
+      <dl class="type-guide">
+        <div class="type-guide-row"><dt><code>feat</code></dt><dd>新しい機能の追加</dd></div>
+        <div class="type-guide-row"><dt><code>fix</code></dt><dd>バグの修正</dd></div>
+        <div class="type-guide-row"><dt><code>docs</code></dt><dd>ドキュメントのみの変更</dd></div>
+        <div class="type-guide-row"><dt><code>style</code></dt><dd>コードの動作に影響しない書式変更（スペース・セミコロン等）</dd></div>
+        <div class="type-guide-row"><dt><code>refactor</code></dt><dd>バグ修正・機能追加を含まないコード変更</dd></div>
+        <div class="type-guide-row"><dt><code>test</code></dt><dd>テストの追加・修正</dd></div>
+        <div class="type-guide-row"><dt><code>chore</code></dt><dd>ビルドプロセス・補助ツールの変更</dd></div>
+        <div class="type-guide-row"><dt><code>perf</code></dt><dd>パフォーマンス改善</dd></div>
+        <div class="type-guide-row"><dt><code>ci</code></dt><dd>CI設定・スクリプトの変更</dd></div>
+        <div class="type-guide-row"><dt><code>build</code></dt><dd>ビルドシステム・外部依存に影響する変更</dd></div>
+      </dl>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
