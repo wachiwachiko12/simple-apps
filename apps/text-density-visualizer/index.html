@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ブログ記事・原稿を貼り付けると段落の文字密度をヒートマップで可視化。文長分布・漢字密度・読了時間を分析。文章改善・コンテンツSEOに。登録不要・無料。">
+  <title>文章密度ビジュアライザー【無料】文字数・段落分布をヒートマップで分析 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/text-density-visualizer/">
+  <!-- OGP -->
+  <meta property="og:title" content="文章密度ビジュアライザー【無料】文字数・段落分布をヒートマップで分析 | Keisanlab">
+  <meta property="og:description" content="ブログ記事・原稿を貼り付けると段落の文字密度をヒートマップで可視化。文長分布・漢字密度・読了時間を分析。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/text-density-visualizer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-text-density-visualizer.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="文章密度ビジュアライザー【無料】文字数・段落分布をヒートマップで分析">
+  <meta name="twitter:description" content="ブログ記事・原稿を貼り付けると段落の文字密度をヒートマップで可視化。文長分布・漢字密度・読了時間を分析。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-text-density-visualizer.png">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+  <header>
+    <nav class="header-nav">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">← ツール一覧</a>
+    </nav>
+    <h1>文章密度ビジュアライザー — 段落・文長・漢字密度をヒートマップで分析</h1>
+    <p class="subtitle">原稿・ブログ記事を貼り付けるだけで読みやすさを視覚化。段落の密度分布をヒートマップで確認できます。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ヘッダー直下） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- 入力セクション -->
+    <section id="tool" class="tool-section">
+      <div class="input-area">
+        <div class="input-header">
+          <label for="text-input" class="input-label">分析するテキストを貼り付け（最大5000文字）</label>
+          <div class="input-actions">
+            <button id="btn-sample" class="btn-secondary" type="button" aria-label="サンプルテキストを読み込む">サンプル</button>
+            <button id="btn-clear" class="btn-ghost" type="button" aria-label="テキストをクリア">クリア</button>
+          </div>
+        </div>
+        <textarea
+          id="text-input"
+          rows="10"
+          placeholder="ここに日本語テキストを貼り付けてください。入力と同時にリアルタイムで分析結果が更新されます。"
+          aria-label="分析するテキスト"
+          aria-describedby="char-count-display"
+          maxlength="5000"
+        ></textarea>
+        <div class="textarea-footer">
+          <span id="char-count-display" class="char-count" aria-live="polite">0 / 5000文字</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果上） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 結果セクション -->
+    <div id="results-area" class="results-area hidden" aria-live="polite">
+
+      <!-- 基本統計カード -->
+      <div class="stats-grid" id="stats-grid">
+        <!-- JS で生成 -->
+      </div>
+
+      <!-- 改善提案 -->
+      <div id="suggestions-section" class="suggestions-section hidden">
+        <h2 class="section-heading">改善提案</h2>
+        <ul id="suggestions-list" class="suggestions-list"></ul>
+      </div>
+
+      <!-- 段落ヒートマップ -->
+      <div class="heatmap-section">
+        <h2 class="section-heading">段落密度ヒートマップ</h2>
+        <p class="section-desc">各段落の文字数を色で表示。<span class="legend-blue">青 = 短い</span>、<span class="legend-red">赤 = 長い</span>（目安: 150文字を基準）</p>
+        <div id="heatmap" class="heatmap" aria-label="段落ヒートマップ"></div>
+      </div>
+
+      <!-- 文長分布グラフ -->
+      <div class="chart-section">
+        <h2 class="section-heading">文長分布（文ごとの文字数）</h2>
+        <div class="chart-wrapper">
+          <canvas id="sentence-chart" aria-label="文長分布グラフ"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>上のテキストエリアに分析したいブログ記事や原稿を貼り付けます（最大5000文字）。</li>
+        <li>入力と同時にリアルタイムで基本統計・ヒートマップ・文長グラフが自動更新されます。</li>
+        <li>段落密度ヒートマップで赤くなっている段落は文字数が多すぎるサインです。分割を検討してください。</li>
+        <li>改善提案セクションに具体的なアドバイスが表示されます。修正後に貼り直して改善を確認できます。</li>
+        <li>「サンプル」ボタンでサンプルテキストを読み込み、ツールの動作を確認できます。</li>
+      </ol>
+
+      <h2>文章密度ビジュアライザーとは</h2>
+      <p>
+        文章密度ビジュアライザーは、ブログ記事・ビジネス文書・原稿などのテキストを貼り付けるだけで、段落ごとの文字密度・文の長さ・漢字密度・ひらがな密度をリアルタイムに分析するWebツールです。
+        段落の文字数をヒートマップ（青→赤のグラデーション）で色分けするため、どの段落が長すぎるかを一目で把握できます。
+      </p>
+      <p>
+        Webコンテンツのコンテンツ品質改善やSEOライティングの見直しに役立ちます。1段落あたり100〜200文字程度が読みやすい目安とされており、300文字を超える段落は読者が離脱しやすくなります。
+        また、漢字密度が30%を超えると硬い文章になり、スマートフォンでの読みやすさが低下します。このツールを使うことで、数値に基づいた客観的な文章改善が可能になります。
+      </p>
+      <p>
+        読了時間は400文字/分（日本語の平均読書速度）をもとに算出しています。入力したテキストはすべてブラウザ内のみで処理され、外部サーバーへの送信は一切行いません。
+      </p>
+
+      <h2>各指標の解説</h2>
+      <p>
+        <strong>漢字密度</strong>は全文字に占める漢字の割合です。20〜30%が読みやすい範囲で、30%を超えると硬い文章に見え、15%以下だとやさしすぎる印象になります。ビジネス文書では25%前後が理想的です。
+      </p>
+      <p>
+        <strong>ひらがな密度</strong>は全文字に占めるひらがなの割合です。50〜65%が読みやすい範囲とされています。ひらがなが少なすぎると専門的に見え、多すぎると子どもっぽい印象になります。
+      </p>
+      <p>
+        <strong>平均文長</strong>は1文あたりの平均文字数です。Webコンテンツでは40文字以下が推奨されます。長い文は「、」や接続詞で区切ることで読みやすくなります。
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

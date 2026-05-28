@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="CSVファイルの重複削除・空白除去・列フィルタリング・文字コード変換をブラウザで完結。データはサーバーに送信されないので安全。マーケター・データ分析担当に。登録不要・無料。">
+  <meta property="og:title" content="CSVクリーニングツール【無料・ローカル処理】重複削除・フィルター・変換 | Keisanlab">
+  <meta property="og:description" content="CSVファイルの重複削除・空白除去・列フィルタリング・文字コード変換をブラウザで完結。データはサーバーに送信されません。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/csv-cleaner/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-csv-cleaner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSVクリーニングツール【無料・ローカル処理】重複削除・フィルター・変換 | Keisanlab">
+  <meta name="twitter:description" content="CSVファイルの重複削除・空白除去・列フィルタリング・文字コード変換をブラウザで完結。データはサーバーに送信されません。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-csv-cleaner.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/csv-cleaner/">
+  <title>CSVクリーニングツール【無料・ローカル処理】重複削除・フィルター・変換 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="back-link">&#8592; ツール一覧</a>
+      <h1>CSVクリーニング・変換ツール — 重複削除・フィルター・文字コード変換</h1>
+      <p class="subtitle">ブラウザ完結・完全ローカル処理 — データはサーバーに送信されません</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- Step 1: ファイル読み込み -->
+    <section id="upload-section" class="tool-section">
+      <h2>Step 1 — CSVを読み込む</h2>
+
+      <!-- ドラッグ&ドロップ -->
+      <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="CSVファイルをドラッグ&ドロップ">
+        <div class="drop-zone-icon">&#128196;</div>
+        <p class="drop-zone-text">CSVファイルをここにドラッグ&ドロップ</p>
+        <p class="drop-zone-sub">または</p>
+        <label class="btn btn-secondary" for="file-input">
+          ファイルを選択
+        </label>
+        <input type="file" id="file-input" accept=".csv,text/csv" aria-label="CSVファイルを選択">
+      </div>
+
+      <!-- テキスト直接貼り付け -->
+      <div class="paste-area">
+        <label for="csv-paste">テキストを直接貼り付け</label>
+        <textarea id="csv-paste" rows="5" placeholder="CSVデータをここに貼り付け（例: 名前,年齢,メール&#10;田中太郎,30,taro@example.com）" aria-label="CSVテキストを貼り付け"></textarea>
+        <button id="parse-paste-btn" class="btn btn-primary" type="button">貼り付けたテキストを読み込む</button>
+      </div>
+
+      <div id="upload-status" class="status-message" aria-live="polite"></div>
+    </section>
+
+    <!-- Step 2: プレビューと操作 -->
+    <section id="operations-section" class="tool-section hidden">
+      <h2>Step 2 — データを確認・操作する</h2>
+
+      <div class="data-info" id="data-info" aria-live="polite"></div>
+
+      <!-- クリーニング操作 -->
+      <div class="ops-panel">
+        <h3 class="ops-title">クリーニング操作</h3>
+        <div class="ops-grid">
+          <button class="btn btn-op" id="btn-dedup" type="button" aria-label="重複行を削除">
+            <span class="op-icon">&#128465;</span>
+            重複行を削除
+          </button>
+          <button class="btn btn-op" id="btn-empty" type="button" aria-label="空白行を削除">
+            <span class="op-icon">&#10060;</span>
+            空白行を削除
+          </button>
+          <button class="btn btn-op" id="btn-trim" type="button" aria-label="前後の空白を除去">
+            <span class="op-icon">&#9986;</span>
+            前後の空白を除去
+          </button>
+        </div>
+      </div>
+
+      <!-- 列の選択/除外 -->
+      <div class="ops-panel" id="col-panel">
+        <h3 class="ops-title">列の選択 / 除外</h3>
+        <div id="col-checkboxes" class="col-checkboxes" role="group" aria-label="表示する列を選択"></div>
+        <button class="btn btn-secondary" id="btn-apply-cols" type="button">列の選択を適用</button>
+      </div>
+
+      <!-- フィルタリング -->
+      <div class="ops-panel">
+        <h3 class="ops-title">フィルタリング</h3>
+        <div class="filter-row">
+          <label for="filter-col">列を選択</label>
+          <select id="filter-col" aria-label="フィルター対象の列"></select>
+        </div>
+        <div class="filter-row">
+          <label for="filter-type">条件</label>
+          <select id="filter-type" aria-label="フィルター条件">
+            <option value="contains">含む</option>
+            <option value="not-contains">含まない</option>
+            <option value="equals">等しい</option>
+            <option value="starts-with">で始まる</option>
+            <option value="ends-with">で終わる</option>
+          </select>
+        </div>
+        <div class="filter-row">
+          <label for="filter-value">キーワード</label>
+          <input type="text" id="filter-value" placeholder="フィルターキーワードを入力" aria-label="フィルターキーワード">
+        </div>
+        <button class="btn btn-primary" id="btn-apply-filter" type="button">フィルターを適用</button>
+      </div>
+
+      <!-- 列名の変更 -->
+      <div class="ops-panel" id="rename-panel">
+        <h3 class="ops-title">列名の変更</h3>
+        <div id="rename-inputs" class="rename-inputs"></div>
+        <button class="btn btn-secondary" id="btn-apply-rename" type="button">列名を変更</button>
+      </div>
+
+      <!-- 操作履歴 -->
+      <div class="ops-panel">
+        <h3 class="ops-title">操作履歴</h3>
+        <ul id="history-list" class="history-list" aria-label="操作履歴" aria-live="polite">
+          <li class="history-empty">操作はまだありません</li>
+        </ul>
+        <button class="btn btn-danger" id="btn-undo" type="button" disabled>最後の操作を取り消す</button>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（操作後） -->
+    <div class="ad-unit" id="ad-middle" aria-hidden="true"></div>
+
+    <!-- Step 3: プレビュー -->
+    <section id="preview-section" class="tool-section hidden">
+      <h2>Step 3 — プレビュー</h2>
+      <p class="preview-note" id="preview-note"></p>
+      <div class="table-wrap">
+        <table id="preview-table" class="preview-table">
+          <thead id="preview-thead"></thead>
+          <tbody id="preview-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Step 4: ダウンロード -->
+    <section id="download-section" class="tool-section hidden">
+      <h2>Step 4 — ダウンロード</h2>
+      <div class="download-row">
+        <label for="encoding-select">文字コード</label>
+        <select id="encoding-select" aria-label="ダウンロード時の文字コード">
+          <option value="utf-8">UTF-8（推奨）</option>
+          <option value="shift-jis">Shift-JIS（Excel向け）</option>
+        </select>
+      </div>
+      <button class="btn btn-download" id="btn-download" type="button">&#11123; クリーニング済みCSVをダウンロード</button>
+    </section>
+
+    <!-- 広告ユニット3（ダウンロード後） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <!-- 使い方・説明セクション -->
+    <section id="howto" class="howto-section">
+      <h2>CSVクリーニングツールの使い方</h2>
+      <ol>
+        <li><strong>CSVを読み込む：</strong>ファイルをドラッグ&ドロップするか「ファイルを選択」でアップロード。テキストエリアに直接貼り付けることもできます。</li>
+        <li><strong>操作を選ぶ：</strong>重複削除・空白行削除・トリム・列選択・フィルタリング・列名変更を自由に組み合わせます。各操作は「操作履歴」に記録され、取り消しボタンで1手順ずつ戻せます。</li>
+        <li><strong>プレビューで確認：</strong>最大1,000行をテーブル形式で確認できます。加工結果をリアルタイムで把握できます。</li>
+        <li><strong>ダウンロード：</strong>UTF-8またはShift-JIS（Excel向け）で書き出せます。Shift-JISを選ぶとExcelで文字化けしません。</li>
+      </ol>
+
+      <h2>このツールが解決する課題</h2>
+      <p>マーケティングや営業・データ分析の現場では、複数システムからエクスポートしたCSVを結合した際に重複行や余分な空白が混入しがちです。従来はExcelマクロやPythonスクリプトが必要でしたが、このツールを使えばブラウザを開くだけで即座にクリーニングが完了します。読み込んだデータは一切外部に送信されないため、個人情報や機密データを含むCSVも安心して処理できます。フィルタリング機能で特定のキーワードを含む行だけを抽出したり、不要な列を除外してスリムなCSVを作成したりと、日常のデータ整備作業を大幅に効率化できます。</p>
+
+      <h2>対応しているCSVの形式</h2>
+      <p>1行目をヘッダー行として認識します。カンマ区切りのテキスト（.csv）に対応しています。ダブルクォートで囲まれたフィールド内のカンマや改行も正しく解析します。Shift-JISのファイルも自動判別して読み込みます。最大読み込み行数は10万行、プレビュー表示は最大1,000行です。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &#124;
+      <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

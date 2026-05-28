@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ブランドカラー・フォント・ロゴルールを入力するだけでスタイルガイドを自動生成。PDF印刷対応。スタートアップ・個人事業主のブランディングに。登録不要・無料。">
+  <!-- OGP -->
+  <meta property="og:title" content="ブランドスタイルガイド作成ツール【無料】カラー・フォント・ロゴを一元管理 | Keisanlab">
+  <meta property="og:description" content="ブランドカラー・フォント・ロゴルールを入力するだけでスタイルガイドを自動生成。PDF印刷対応。スタートアップ・個人事業主のブランディングに。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/brand-style-guide/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-brand-style-guide.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ブランドスタイルガイド作成ツール【無料】| Keisanlab">
+  <meta name="twitter:description" content="ブランドカラー・フォント・ロゴルールを入力するだけでスタイルガイドを自動生成。PDF印刷対応。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-brand-style-guide.png">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/brand-style-guide/">
+  <title>ブランドスタイルガイド作成ツール【無料】カラー・フォント・ロゴを一元管理 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">&#8592; ツール一覧</a>
+      <div class="header-title">
+        <h1>ブランドスタイルガイド作成ツール — カラー・フォント・ロゴを即まとめる</h1>
+        <p class="subtitle">カラー・フォント・ロゴルールを入力するだけで、スタイルガイドをリアルタイム生成。PDF印刷対応。登録不要・無料。</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="app-layout">
+
+    <!-- 左パネル: 入力フォーム -->
+    <aside class="input-panel" aria-label="スタイルガイド設定">
+
+      <!-- 広告ユニット1（入力パネル上部） -->
+      <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+      <div class="panel-scroll">
+
+        <!-- ブランド基本情報 -->
+        <section class="form-section" id="section-brand">
+          <h2 class="section-title">
+            <span class="section-icon">1</span>ブランド基本情報
+          </h2>
+
+          <div class="form-group">
+            <label for="brand-name">ブランド名</label>
+            <input type="text" id="brand-name" placeholder="例: Keisanlab" maxlength="60" aria-describedby="brand-name-hint">
+            <p class="input-hint" id="brand-name-hint">ロゴに表示されます</p>
+          </div>
+
+          <div class="form-group">
+            <label for="brand-tagline">キャッチコピー</label>
+            <input type="text" id="brand-tagline" placeholder="例: 計算を、もっとシンプルに。" maxlength="80">
+          </div>
+
+          <div class="form-group">
+            <label for="brand-description">ブランド説明</label>
+            <textarea id="brand-description" rows="3" placeholder="例: Keisanlabは、日常の計算・ビジネスの数字を素早く解決する無料Webツール群です。" maxlength="200"></textarea>
+          </div>
+        </section>
+
+        <!-- カラーパレット -->
+        <section class="form-section" id="section-colors">
+          <h2 class="section-title">
+            <span class="section-icon">2</span>カラーパレット
+          </h2>
+
+          <div class="color-grid">
+            <div class="color-item">
+              <label for="color-primary">プライマリ</label>
+              <div class="color-input-row">
+                <input type="color" id="color-primary" value="#2563eb" class="color-picker" aria-label="プライマリカラーを選択">
+                <input type="text" id="color-primary-hex" class="hex-input" value="#2563eb" maxlength="7" aria-label="プライマリカラーのHEX値">
+              </div>
+              <div class="color-values" id="color-primary-values"></div>
+            </div>
+
+            <div class="color-item">
+              <label for="color-secondary">セカンダリ</label>
+              <div class="color-input-row">
+                <input type="color" id="color-secondary" value="#7c3aed" class="color-picker" aria-label="セカンダリカラーを選択">
+                <input type="text" id="color-secondary-hex" class="hex-input" value="#7c3aed" maxlength="7" aria-label="セカンダリカラーのHEX値">
+              </div>
+              <div class="color-values" id="color-secondary-values"></div>
+            </div>
+
+            <div class="color-item">
+              <label for="color-accent">アクセント</label>
+              <div class="color-input-row">
+                <input type="color" id="color-accent" value="#f59e0b" class="color-picker" aria-label="アクセントカラーを選択">
+                <input type="text" id="color-accent-hex" class="hex-input" value="#f59e0b" maxlength="7" aria-label="アクセントカラーのHEX値">
+              </div>
+              <div class="color-values" id="color-accent-values"></div>
+            </div>
+
+            <div class="color-item">
+              <label for="color-background">背景</label>
+              <div class="color-input-row">
+                <input type="color" id="color-background" value="#f8fafc" class="color-picker" aria-label="背景カラーを選択">
+                <input type="text" id="color-background-hex" class="hex-input" value="#f8fafc" maxlength="7" aria-label="背景カラーのHEX値">
+              </div>
+              <div class="color-values" id="color-background-values"></div>
+            </div>
+
+            <div class="color-item">
+              <label for="color-text">テキスト</label>
+              <div class="color-input-row">
+                <input type="color" id="color-text" value="#1e293b" class="color-picker" aria-label="テキストカラーを選択">
+                <input type="text" id="color-text-hex" class="hex-input" value="#1e293b" maxlength="7" aria-label="テキストカラーのHEX値">
+              </div>
+              <div class="color-values" id="color-text-values"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- フォント設定 -->
+        <section class="form-section" id="section-fonts">
+          <h2 class="section-title">
+            <span class="section-icon">3</span>フォント設定
+          </h2>
+
+          <div class="form-group">
+            <label for="font-heading">見出しフォント</label>
+            <input type="text" id="font-heading" placeholder="例: Noto Sans JP" value="Noto Sans JP" aria-describedby="font-heading-hint">
+            <p class="input-hint" id="font-heading-hint">Googleフォント名を入力するとプレビューに反映されます</p>
+          </div>
+
+          <div class="form-group">
+            <label for="font-body">本文フォント</label>
+            <input type="text" id="font-body" placeholder="例: Noto Serif JP" value="Noto Sans JP" aria-describedby="font-body-hint">
+            <p class="input-hint" id="font-body-hint">Googleフォント名を入力するとプレビューに反映されます</p>
+          </div>
+
+          <div class="form-group">
+            <label for="font-scale-base">ベースフォントサイズ (px)</label>
+            <input type="number" id="font-scale-base" value="16" min="12" max="24" step="1">
+          </div>
+        </section>
+
+        <!-- ロゴ設定 -->
+        <section class="form-section" id="section-logo">
+          <h2 class="section-title">
+            <span class="section-icon">4</span>ロゴ・ブランドアセット
+          </h2>
+
+          <div class="form-group">
+            <label for="logo-style">ロゴスタイル</label>
+            <select id="logo-style" aria-label="ロゴスタイルを選択">
+              <option value="text">テキストロゴ</option>
+              <option value="initial">イニシャルロゴ</option>
+              <option value="badge">バッジロゴ</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="logo-tagline-show">キャッチコピーをロゴに表示</label>
+            <select id="logo-tagline-show" aria-label="キャッチコピー表示設定">
+              <option value="yes">表示する</option>
+              <option value="no">表示しない</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="usage-note">ロゴ使用ルール（メモ）</label>
+            <textarea id="usage-note" rows="2" placeholder="例: 最小サイズは幅120px以上。余白はロゴ高さの25%以上を確保すること。" maxlength="200"></textarea>
+          </div>
+        </section>
+
+        <!-- 操作ボタン -->
+        <div class="action-buttons">
+          <button type="button" id="btn-print" class="btn-primary" aria-label="スタイルガイドをPDF出力する">
+            PDF印刷 / 保存
+          </button>
+          <button type="button" id="btn-reset" class="btn-secondary" aria-label="入力内容をリセットする">
+            リセット
+          </button>
+        </div>
+
+        <!-- 広告ユニット2（ボタン下） -->
+        <div class="ad-unit" id="ad-middle" aria-hidden="true"></div>
+
+      </div><!-- /panel-scroll -->
+    </aside>
+
+    <!-- 右パネル: プレビュー -->
+    <main class="preview-panel" id="style-guide-preview" aria-label="スタイルガイドプレビュー">
+      <!-- JS が動的に生成 -->
+    </main>
+
+  </div><!-- /app-layout -->
+
+  <!-- 使い方 + 説明（SEO） -->
+  <div class="content-area">
+
+    <!-- 広告ユニット3（コンテンツ上） -->
+    <div class="ad-unit" id="ad-howto" aria-hidden="true"></div>
+
+    <section id="howto" class="howto-section">
+      <h2>ブランドスタイルガイド作成ツールの使い方</h2>
+      <ol class="howto-list">
+        <li><strong>ブランド基本情報を入力</strong> — ブランド名・キャッチコピー・説明文を入力してください。右のプレビューにリアルタイムで反映されます。</li>
+        <li><strong>カラーパレットを設定</strong> — プライマリ・セカンダリ・アクセント・背景・テキストの5色をカラーピッカーで選択。HEX・RGB・HSLが自動表示されます。</li>
+        <li><strong>フォントを設定</strong> — 見出し・本文フォントにGoogleフォント名を入力するとプレビューに即反映されます。フォントサイズスケールも自動表示されます。</li>
+        <li><strong>ロゴスタイルを選択</strong> — テキスト・イニシャル・バッジの3スタイルからロゴ表示形式を選択できます。</li>
+        <li><strong>PDF印刷ボタンで保存</strong> — 「PDF印刷 / 保存」ボタンを押すと印刷ダイアログが開きます。PDFプリンターを選択すればスタイルガイドをPDFとして保存できます。</li>
+      </ol>
+
+      <h2>ブランドスタイルガイドとは</h2>
+      <p>ブランドスタイルガイド（ブランドガイドライン）とは、ブランドの視覚的・言語的なルールをまとめたドキュメントです。カラーパレット・フォント・ロゴの使用ルールを定義することで、Webサイト・SNS・名刺・広告など複数の媒体でブランドの一貫性を保つことができます。スタートアップや個人事業主のブランディング初期に作成すると、デザイナーや外注先への指示もスムーズになります。本ツールはCorebook°やFrontifyの代替として、ブラウザだけで無料でスタイルガイドを作成・PDF保存できます。入力データはブラウザのlocalStorageに自動保存されるため、次回アクセス時も設定が維持されます。</p>
+    </section>
+  </div>
+
+  <footer class="site-footer">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

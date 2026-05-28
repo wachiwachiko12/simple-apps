@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="背景グラデーションとbox-shadowをGUIで設計してCSSコードとTailwind CSSクラスを生成。グラスモーフィズム・ニューモーフィズムプリセット付き。登録不要・無料。">
+  <meta property="og:title" content="グラデーション・シャドウCSSジェネレーター【無料・Tailwind対応】| Keisanlab">
+  <meta property="og:description" content="背景グラデーションとbox-shadowをGUIで設計してCSSコードとTailwind CSSクラスを生成。グラスモーフィズム・ニューモーフィズムプリセット付き。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/gradient-shadow-generator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-gradient-shadow-generator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="グラデーション・シャドウCSSジェネレーター【無料・Tailwind対応】| Keisanlab">
+  <meta name="twitter:description" content="背景グラデーションとbox-shadowをGUIで設計してCSSコードとTailwind CSSクラスを生成。グラスモーフィズム・ニューモーフィズムプリセット付き。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-gradient-shadow-generator.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/gradient-shadow-generator/">
+  <title>グラデーション・シャドウCSSジェネレーター【無料・Tailwind対応】| Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/" class="back-link" aria-label="ツール一覧に戻る">← ツール一覧</a>
+    <h1>グラデーション・シャドウCSSジェネレーター — Tailwind対応・プリセット付き</h1>
+    <p class="subtitle">GUIでグラデーションとbox-shadowを設計。CSS・Tailwindコードをワンクリックでコピー。</p>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <section id="tool" class="tool-section">
+
+      <!-- プリセット選択 -->
+      <div class="preset-bar">
+        <span class="preset-label">プリセット：</span>
+        <div class="preset-buttons" role="group" aria-label="スタイルプリセット">
+          <button class="preset-btn" data-preset="glassmorphism" type="button">グラスモーフィズム</button>
+          <button class="preset-btn" data-preset="neumorphism" type="button">ニューモーフィズム</button>
+          <button class="preset-btn" data-preset="sunset" type="button">サンセット</button>
+          <button class="preset-btn" data-preset="ocean" type="button">オーシャン</button>
+          <button class="preset-btn" data-preset="aurora" type="button">オーロラ</button>
+          <button class="preset-btn" data-preset="soft" type="button">ソフトシャドウ</button>
+          <button class="preset-btn" data-preset="neon" type="button">ネオン</button>
+          <button class="preset-btn" data-preset="minimal" type="button">ミニマル</button>
+        </div>
+      </div>
+
+      <div class="editor-layout">
+
+        <!-- 左：コントロールパネル -->
+        <div class="controls-panel">
+
+          <!-- グラデーション設定 -->
+          <div class="control-group">
+            <h2 class="control-title">グラデーション設定</h2>
+
+            <div class="control-row">
+              <label for="grad-type">種類</label>
+              <select id="grad-type" aria-label="グラデーション種類">
+                <option value="linear">linear（直線）</option>
+                <option value="radial">radial（放射状）</option>
+                <option value="conic">conic（円錐状）</option>
+              </select>
+            </div>
+
+            <div class="control-row" id="angle-row">
+              <label for="grad-angle">角度: <span id="angle-val">135</span>°</label>
+              <input type="range" id="grad-angle" min="0" max="360" value="135" aria-label="グラデーション角度">
+            </div>
+
+            <div class="color-stops-header">
+              <label>カラーストップ</label>
+              <button class="btn-small" id="add-stop-btn" type="button" aria-label="カラーストップを追加">+ 追加</button>
+            </div>
+            <div id="color-stops-list" class="color-stops-list" aria-label="カラーストップ一覧">
+              <!-- JS で生成 -->
+            </div>
+          </div>
+
+          <!-- シャドウ設定 -->
+          <div class="control-group">
+            <h2 class="control-title">シャドウ設定（box-shadow）</h2>
+            <div class="shadow-layers-header">
+              <label>シャドウレイヤー</label>
+              <button class="btn-small" id="add-shadow-btn" type="button" aria-label="シャドウレイヤーを追加">+ 追加</button>
+            </div>
+            <div id="shadow-layers-list" class="shadow-layers-list" aria-label="シャドウレイヤー一覧">
+              <!-- JS で生成 -->
+            </div>
+          </div>
+
+          <!-- プレビュー背景色 -->
+          <div class="control-group">
+            <h2 class="control-title">プレビュー背景色</h2>
+            <div class="control-row bg-color-row">
+              <input type="color" id="preview-bg-color" value="#1a1a2e" aria-label="プレビュー背景色">
+              <div class="bg-presets" role="group" aria-label="背景色プリセット">
+                <button class="bg-swatch" data-color="#1a1a2e" style="background:#1a1a2e;" type="button" aria-label="ダーク"></button>
+                <button class="bg-swatch" data-color="#ffffff" style="background:#ffffff;border:1px solid #ddd;" type="button" aria-label="ホワイト"></button>
+                <button class="bg-swatch" data-color="#f0f0f0" style="background:#f0f0f0;" type="button" aria-label="ライトグレー"></button>
+                <button class="bg-swatch" data-color="#0f172a" style="background:#0f172a;" type="button" aria-label="ネイビー"></button>
+                <button class="bg-swatch" data-color="#18181b" style="background:#18181b;" type="button" aria-label="ブラック"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右：プレビュー + 出力 -->
+        <div class="preview-output-panel">
+
+          <!-- プレビュー -->
+          <div class="preview-wrapper">
+            <div id="preview-bg" class="preview-bg" aria-label="プレビュー背景">
+              <div id="preview-card" class="preview-card" aria-label="スタイルプレビューカード">
+                <span class="preview-card-label">Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 広告ユニット2（プレビュー下） -->
+          <div class="ad-unit" id="ad-preview" aria-hidden="true"></div>
+
+          <!-- CSS出力 -->
+          <div class="output-block">
+            <div class="output-header">
+              <span class="output-label">CSS</span>
+              <button class="copy-btn" id="copy-css-btn" type="button" aria-label="CSSをコピー">コピー</button>
+            </div>
+            <pre id="css-output" class="code-output" aria-live="polite" aria-label="生成されたCSS"></pre>
+          </div>
+
+          <!-- Tailwind出力 -->
+          <div class="output-block">
+            <div class="output-header">
+              <span class="output-label">Tailwind CSS</span>
+              <button class="copy-btn" id="copy-tw-btn" type="button" aria-label="Tailwindをコピー">コピー</button>
+            </div>
+            <pre id="tw-output" class="code-output" aria-live="polite" aria-label="生成されたTailwind CSS"></pre>
+          </div>
+
+          <!-- 広告ユニット3（出力下） -->
+          <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>プリセットを選ぶ</strong> — グラスモーフィズムやニューモーフィズムなど8種のプリセットをワンクリックで適用できます。そのままコピーするか、さらにカスタマイズしてください。</li>
+        <li><strong>グラデーションを設定する</strong> — 種類（linear / radial / conic）を選択し、角度スライダーで方向を変更します。「+ 追加」ボタンでカラーストップを増やし、色と位置を自由に調整できます。</li>
+        <li><strong>シャドウを重ねる</strong> — 「シャドウレイヤー」で複数の box-shadow を積み重ねられます。X/Y/blur/spread/カラー/inset を個別に設定し、精細な立体感を作れます。</li>
+        <li><strong>プレビュー背景色を変える</strong> — 白・黒・ダーク系などの背景色を切り替えて、実際の配色環境で仕上がりを確認してください。</li>
+        <li><strong>コードをコピーする</strong> — 「CSS」ボックスのコピーボタンで <code>background</code> と <code>box-shadow</code> の生のCSSを取得。「Tailwind CSS」ボックスではTailwind v3対応のクラス文字列（カスタム値はJIT形式）を取得できます。</li>
+      </ol>
+
+      <h2>グラデーション・シャドウCSSジェネレーターとは</h2>
+      <p>このツールは、Webデザインで頻繁に使われる <code>background</code>（グラデーション）と <code>box-shadow</code> をGUIで直感的に組み合わせ、すぐに使えるCSSコードを生成する無料ジェネレーターです。グラスモーフィズム（すりガラス風）・ニューモーフィズム（柔らかい浮き上がり）など、近年のUIトレンドに対応したプリセットを収録しています。また、Tailwind CSS v3 のユーティリティクラス形式にも対応しており、JIT（Just-In-Time）モードのカスタム値形式で出力するため、そのままHTMLに貼り付けてすぐ使えます。設定はブラウザの localStorage に自動保存されるため、ページをリロードしても前回の状態が復元されます。外部サーバーへのデータ送信は一切なく、完全にブラウザ内で動作します。デザイナー・フロントエンドエンジニア・Webデザインを学ぶ方にとって、CSSの視覚的な理解を深めながら実用的なコードを素早く生成できる便利なツールです。</p>
+
+      <h2>Tailwind CSS 出力について</h2>
+      <p>標準的なグラデーション方向（上から下 / 右上など）は <code>bg-gradient-to-*</code> クラスで表現します。カスタム角度や radial / conic の場合は、Tailwind v3 のJIT形式（<code>bg-[conic-gradient(...)]</code> など）で出力します。box-shadow は標準の <code>shadow-*</code> クラスにマッチしない場合、<code>shadow-[...]</code> のカスタム値形式で出力します。</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

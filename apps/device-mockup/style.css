@@ -1,0 +1,560 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background: #f4f6fa;
+}
+
+/* ========== HEADER ========== */
+.site-header {
+  background: linear-gradient(135deg, #1a2340 0%, #2c3e6b 100%);
+  color: white;
+  padding: 1rem 1rem 1.25rem;
+  text-align: center;
+  position: relative;
+}
+
+.back-link {
+  display: inline-block;
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+  min-height: 44px;
+  line-height: 44px;
+}
+
+.back-link:hover {
+  color: #fff;
+}
+
+.site-header h1 {
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+  line-height: 1.4;
+  padding: 0 2rem;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 0.4rem;
+}
+
+/* ========== MAIN ========== */
+main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ========== AD UNIT ========== */
+.ad-unit {
+  margin: 1.25rem 0;
+}
+
+/* ========== TOOL SECTION ========== */
+.tool-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.step-block {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+
+.step-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a2340;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #4a90e2;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+/* ========== DROP ZONE ========== */
+.drop-zone {
+  border: 2px dashed #b0c4de;
+  border-radius: 10px;
+  background: #f7f9ff;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #4a90e2;
+  background: #eef4ff;
+}
+
+.drop-zone-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.drop-zone-text {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.drop-zone-text span {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  background: #4a90e2;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-height: 44px;
+  line-height: 44px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: background 0.2s;
+}
+
+.file-label:hover {
+  background: #357abd;
+}
+
+#file-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.upload-status {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #4caf50;
+  min-height: 1.2em;
+}
+
+.upload-status.error {
+  color: #e53935;
+}
+
+/* ========== DEVICE SELECTOR ========== */
+.device-selector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.device-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.5rem;
+  background: #f4f6fa;
+  border: 2px solid #dde3ef;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 80px;
+}
+
+.device-btn:hover {
+  border-color: #4a90e2;
+  background: #eef4ff;
+}
+
+.device-btn.active {
+  border-color: #4a90e2;
+  background: #eef4ff;
+  color: #1a5fb4;
+}
+
+/* Device mini icons (CSS-drawn) */
+.device-icon {
+  display: block;
+  position: relative;
+}
+
+/* iPhone icon */
+.device-icon-iphone {
+  width: 22px;
+  height: 36px;
+  border: 2.5px solid currentColor;
+  border-radius: 5px;
+  background: #fff;
+}
+.device-icon-iphone::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 2.5px;
+  background: currentColor;
+  border-radius: 2px;
+}
+.device-icon-iphone::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
+/* iPad icon */
+.device-icon-ipad {
+  width: 36px;
+  height: 28px;
+  border: 2.5px solid currentColor;
+  border-radius: 4px;
+  background: #fff;
+}
+.device-icon-ipad::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 10px;
+  background: currentColor;
+  border-radius: 0 2px 2px 0;
+}
+
+/* MacBook icon */
+.device-icon-macbook {
+  width: 36px;
+  height: 24px;
+  border: 2.5px solid currentColor;
+  border-radius: 3px 3px 0 0;
+  background: #fff;
+}
+.device-icon-macbook::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  width: 44px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 0 0 2px 2px;
+}
+
+/* Browser icon */
+.device-icon-browser {
+  width: 38px;
+  height: 28px;
+  border: 2.5px solid currentColor;
+  border-radius: 4px;
+  background: #fff;
+}
+.device-icon-browser::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background: currentColor;
+  border-radius: 1px 1px 0 0;
+  opacity: 0.25;
+}
+.device-icon-browser::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  width: 14px;
+  height: 3px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+/* ========== OPTIONS ========== */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.option-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.bg-type-selector {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.bg-btn {
+  flex: 1;
+  padding: 0.45rem 0.25rem;
+  background: #f4f6fa;
+  border: 1.5px solid #dde3ef;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  min-height: 44px;
+}
+
+.bg-btn:hover {
+  border-color: #4a90e2;
+}
+
+.bg-btn.active {
+  border-color: #4a90e2;
+  background: #eef4ff;
+  color: #1a5fb4;
+}
+
+#bg-color,
+#grad-color1,
+#grad-color2 {
+  width: 100%;
+  height: 44px;
+  border: 1.5px solid #dde3ef;
+  border-radius: 6px;
+  padding: 2px 4px;
+  cursor: pointer;
+  background: none;
+}
+
+.gradient-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gradient-row input[type="color"] {
+  flex: 1;
+}
+
+.grad-arrow {
+  font-size: 1rem;
+  color: #888;
+  flex-shrink: 0;
+}
+
+#scale-slider {
+  width: 100%;
+  accent-color: #4a90e2;
+  height: 6px;
+  cursor: pointer;
+}
+
+/* ========== PREVIEW ========== */
+.preview-area {
+  position: relative;
+  background: #e8edf6;
+  border-radius: 10px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+#preview-canvas {
+  max-width: 100%;
+  max-height: 480px;
+  border-radius: 6px;
+  display: none;
+  object-fit: contain;
+}
+
+.preview-placeholder {
+  color: #aaa;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-download {
+  flex: 1;
+  min-width: 140px;
+  padding: 0 1rem;
+  height: 56px;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-primary:not(:disabled):hover,
+.btn-download:not(:disabled):hover {
+  opacity: 0.88;
+}
+
+.btn-primary:not(:disabled):active,
+.btn-download:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: #2c3e6b;
+  color: white;
+}
+
+.btn-download {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-primary:disabled,
+.btn-download:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* ========== HOWTO ========== */
+.howto-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+
+.howto-section h2 {
+  font-size: 1.05rem;
+  color: #1a2340;
+  margin-bottom: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol,
+.howto-section p {
+  font-size: 0.93rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.howto-section ol {
+  padding-left: 1.25rem;
+}
+
+.howto-section li {
+  margin-bottom: 0.6rem;
+}
+
+/* ========== FOOTER ========== */
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 1.5rem;
+}
+
+.site-footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (min-width: 640px) {
+  .site-header h1 {
+    font-size: 1.4rem;
+    padding: 0 4rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  .device-selector {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .step-block {
+    padding: 1.5rem 1.75rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ベースフォントサイズとスケール比率から見出し〜本文のフォントサイズ階層を自動計算。CSS変数とTailwind設定をワンクリックでコピー。デザインシステム構築に。登録不要・無料。">
+  <meta property="og:title" content="タイポグラフィスケール設計ツール【無料】CSS変数・Tailwind対応 | Keisanlab">
+  <meta property="og:description" content="ベースフォントサイズとスケール比率から見出し〜本文のフォントサイズ階層を自動計算。CSS変数とTailwind設定をワンクリックでコピー。デザインシステム構築に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/typography-scale/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-typography-scale.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="タイポグラフィスケール設計ツール【無料】CSS変数・Tailwind対応 | Keisanlab">
+  <meta name="twitter:description" content="ベースフォントサイズとスケール比率から見出し〜本文のフォントサイズ階層を自動計算。CSS変数とTailwind設定をワンクリックでコピー。デザインシステム構築に。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-typography-scale.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/typography-scale/">
+  <title>タイポグラフィスケール設計ツール【無料】CSS変数・Tailwind対応 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link">← ツール一覧</a>
+      <h1>タイポグラフィスケール設計ツール — フォントサイズ階層をGUIで設計</h1>
+      <p class="subtitle">ベースサイズとスケール比率を選ぶだけでCSS変数・Tailwind設定を自動生成</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- 設定パネル -->
+      <div class="settings-panel">
+
+        <!-- ベースフォントサイズ -->
+        <div class="setting-group">
+          <label for="base-size">ベースフォントサイズ</label>
+          <div class="slider-row">
+            <input type="range" id="base-size" min="12" max="24" step="0.5" value="16" aria-label="ベースフォントサイズ">
+            <div class="size-display">
+              <span id="base-size-val">16</span>
+              <select id="base-unit" aria-label="単位">
+                <option value="px">px</option>
+                <option value="rem">rem</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- スケール比率 -->
+        <div class="setting-group">
+          <label for="scale-ratio">スケール比率</label>
+          <div class="ratio-grid" id="ratio-grid" role="group" aria-label="スケール比率プリセット">
+            <button class="ratio-btn" data-ratio="1.067" aria-pressed="false">Minor Second<br><span>1.067</span></button>
+            <button class="ratio-btn" data-ratio="1.125" aria-pressed="false">Major Second<br><span>1.125</span></button>
+            <button class="ratio-btn active" data-ratio="1.200" aria-pressed="true">Minor Third<br><span>1.200</span></button>
+            <button class="ratio-btn" data-ratio="1.250" aria-pressed="false">Major Third<br><span>1.250</span></button>
+            <button class="ratio-btn" data-ratio="1.333" aria-pressed="false">Perfect Fourth<br><span>1.333</span></button>
+            <button class="ratio-btn" data-ratio="1.414" aria-pressed="false">Augmented Fourth<br><span>1.414</span></button>
+            <button class="ratio-btn" data-ratio="1.500" aria-pressed="false">Perfect Fifth<br><span>1.500</span></button>
+            <button class="ratio-btn" data-ratio="1.618" aria-pressed="false">Golden Ratio<br><span>1.618</span></button>
+          </div>
+        </div>
+
+        <!-- 行間・字間 -->
+        <div class="line-letter-row">
+          <div class="setting-group half">
+            <label for="line-height-base">行間 (line-height)</label>
+            <div class="slider-row">
+              <input type="range" id="line-height-base" min="1.0" max="2.0" step="0.05" value="1.5" aria-label="行間">
+              <span id="line-height-val">1.5</span>
+            </div>
+          </div>
+          <div class="setting-group half">
+            <label for="letter-spacing-base">字間 (letter-spacing em)</label>
+            <div class="slider-row">
+              <input type="range" id="letter-spacing-base" min="-0.05" max="0.2" step="0.005" value="0" aria-label="字間">
+              <span id="letter-spacing-val">0</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /settings-panel -->
+
+      <!-- プレビュー -->
+      <div class="preview-area" id="preview-area" aria-label="フォントサイズプレビュー">
+        <!-- JS で動的生成 -->
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+      <!-- 出力パネル -->
+      <div class="output-panel">
+        <div class="output-tabs" role="tablist">
+          <button class="tab-btn active" data-tab="css" role="tab" aria-selected="true">CSS変数</button>
+          <button class="tab-btn" data-tab="tailwind" role="tab" aria-selected="false">Tailwind config</button>
+        </div>
+
+        <div class="tab-content active" id="tab-css">
+          <pre id="css-output" class="code-block" aria-label="CSS変数出力"></pre>
+          <button class="copy-btn" id="copy-css" aria-label="CSS変数をコピー">コピー</button>
+        </div>
+
+        <div class="tab-content" id="tab-tailwind">
+          <pre id="tailwind-output" class="code-block" aria-label="Tailwind config出力"></pre>
+          <button class="copy-btn" id="copy-tailwind" aria-label="Tailwind設定をコピー">コピー</button>
+        </div>
+      </div><!-- /output-panel -->
+
+    </section><!-- /tool -->
+
+    <!-- 広告ユニット3（使い方上） -->
+    <div class="ad-unit" id="ad-howto" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>ベースフォントサイズ</strong>のスライダーで基準となる文字サイズを設定します（通常 16px）。</li>
+        <li><strong>スケール比率</strong>のプリセットから用途に合った音楽的比率を選択します。見出しが大きくメリハリをつけたい場合は Major Third（1.25）以上を推奨します。</li>
+        <li><strong>行間・字間</strong>スライダーで全体の読みやすさを調整します。</li>
+        <li>プレビューエリアに各ステップのフォントサイズと実際のテキスト表示が更新されます。</li>
+        <li>下部の「CSS変数」または「Tailwind config」タブを選び、<strong>コピーボタン</strong>でクリップボードにコピーします。</li>
+        <li>コピーしたコードをプロジェクトの CSS ファイルや <code>tailwind.config.js</code> に貼り付けて完了です。</li>
+      </ol>
+
+      <h2>タイポグラフィスケールとは</h2>
+      <p>タイポグラフィスケールとは、見出し（h1〜h6）・本文・小見出しなどのフォントサイズを、ひとつの比率に基づいて数学的に導き出す設計手法です。音楽の音程比（ドレミ）と同様に、隣り合うサイズが一定の比率を持つことで、視覚的な調和とリズムが生まれます。デザインシステムやコンポーネントライブラリを構築する際に、場当たり的なフォントサイズ指定を避け、一貫性のある UI を実現するために広く使われています。本ツールはベースサイズとスケール比率を入力するだけで CSS カスタムプロパティ（変数）および Tailwind CSS の <code>fontSize</code> 設定を自動生成し、すぐにプロジェクトへ導入できます。登録不要・無料でご利用いただけます。</p>
+
+      <h2>比率の選び方ガイド</h2>
+      <ul class="guide-list">
+        <li><strong>Minor Second (1.067)</strong> — 差が小さく、本文主体のコンテンツ向き。</li>
+        <li><strong>Major Second (1.125)</strong> — 細やかなスケール。ブログや記事サイト向き。</li>
+        <li><strong>Minor Third (1.2)</strong> — バランスが取れた標準的な選択肢。汎用的に使いやすい。</li>
+        <li><strong>Major Third (1.25)</strong> — 程よいメリハリ。ランディングページ向き。</li>
+        <li><strong>Perfect Fourth (1.333)</strong> — クラシックな比率。モダンなWebデザインでよく見られる。</li>
+        <li><strong>Augmented Fourth (1.414)</strong> — √2 の比率。力強い見出しと本文のコントラスト。</li>
+        <li><strong>Perfect Fifth (1.5)</strong> — 大胆なコントラスト。ポートフォリオ・プロモーション向き。</li>
+        <li><strong>Golden Ratio (1.618)</strong> — 黄金比。最もドラマチックなスケール。大画面向け。</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

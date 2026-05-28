@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="スクリーンショット画像をiPhone・MacBook・ブラウザフレームに合成してPNG保存。App Store・ポートフォリオ・プレゼン用モックアップをブラウザで無料作成。登録不要。">
+  <meta property="og:title" content="デバイスモックアップ作成ツール【無料】| Keisanlab">
+  <meta property="og:description" content="スクリーンショットをiPhone・MacBook・ブラウザフレームに合成してPNG保存。登録不要・完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/device-mockup/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-device-mockup.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="デバイスモックアップ作成ツール【無料】| Keisanlab">
+  <meta name="twitter:description" content="スクリーンショットをiPhone・MacBook・ブラウザフレームに合成してPNG保存。登録不要・完全無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-device-mockup.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/device-mockup/">
+  <title>デバイスモックアップ作成ツール【無料】スクショをiPhone・PCフレームに合成 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/" class="back-link">← ツール一覧</a>
+    <h1>デバイスモックアップ作成ツール — スクショをフレームに合成・PNG保存</h1>
+    <p class="subtitle">iPhone・MacBook・ブラウザ・iPadフレームにスクリーンショットを合成して無料ダウンロード</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- Step 1: 画像アップロード -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">1</span> スクリーンショットをアップロード</h2>
+        <div
+          id="drop-zone"
+          class="drop-zone"
+          role="button"
+          tabindex="0"
+          aria-label="画像をドラッグ&ドロップまたはクリックしてファイルを選択"
+        >
+          <div class="drop-zone-inner">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+              <rect width="48" height="48" rx="10" fill="#e8f0fe"/>
+              <path d="M24 14v14m0-14l-5 5m5-5l5 5" stroke="#4a90e2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 34h20" stroke="#4a90e2" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <p class="drop-zone-text">ここにドラッグ＆ドロップ<br><span>または</span></p>
+            <label class="file-label" for="file-input">ファイルを選択</label>
+            <input type="file" id="file-input" accept="image/*" aria-label="画像ファイルを選択">
+          </div>
+        </div>
+        <p id="upload-status" class="upload-status" aria-live="polite"></p>
+      </div>
+
+      <!-- Step 2: デバイス選択 -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">2</span> デバイスを選択</h2>
+        <div class="device-selector" role="radiogroup" aria-label="デバイスフレーム選択">
+          <button class="device-btn active" data-device="iphone" aria-pressed="true" aria-label="iPhoneを選択">
+            <span class="device-icon device-icon-iphone" aria-hidden="true"></span>
+            iPhone
+          </button>
+          <button class="device-btn" data-device="ipad" aria-pressed="false" aria-label="iPadを選択">
+            <span class="device-icon device-icon-ipad" aria-hidden="true"></span>
+            iPad
+          </button>
+          <button class="device-btn" data-device="macbook" aria-pressed="false" aria-label="MacBookを選択">
+            <span class="device-icon device-icon-macbook" aria-hidden="true"></span>
+            MacBook
+          </button>
+          <button class="device-btn" data-device="browser" aria-pressed="false" aria-label="ブラウザウィンドウを選択">
+            <span class="device-icon device-icon-browser" aria-hidden="true"></span>
+            ブラウザ
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: 背景・スケール設定 -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">3</span> 背景・サイズを設定</h2>
+        <div class="options-grid">
+          <div class="option-group">
+            <label for="bg-type">背景タイプ</label>
+            <div class="bg-type-selector" role="radiogroup" aria-label="背景タイプ">
+              <button class="bg-btn active" data-bg="solid" aria-pressed="true">単色</button>
+              <button class="bg-btn" data-bg="gradient" aria-pressed="false">グラデーション</button>
+              <button class="bg-btn" data-bg="transparent" aria-pressed="false">透明</button>
+            </div>
+          </div>
+
+          <div class="option-group" id="color-picker-wrap">
+            <label for="bg-color">背景色</label>
+            <input type="color" id="bg-color" value="#f0f4ff" aria-label="背景色を選択">
+          </div>
+
+          <div class="option-group" id="gradient-picker-wrap" style="display:none;">
+            <label>グラデーション</label>
+            <div class="gradient-row">
+              <input type="color" id="grad-color1" value="#667eea" aria-label="グラデーション開始色">
+              <span class="grad-arrow" aria-hidden="true">→</span>
+              <input type="color" id="grad-color2" value="#764ba2" aria-label="グラデーション終了色">
+            </div>
+          </div>
+
+          <div class="option-group full-width">
+            <label for="scale-slider">スケール: <span id="scale-value">80</span>%</label>
+            <input
+              type="range"
+              id="scale-slider"
+              min="40"
+              max="100"
+              value="80"
+              aria-label="合成サイズのスケール"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: プレビュー & ダウンロード -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">4</span> プレビュー &amp; ダウンロード</h2>
+        <div class="preview-area">
+          <canvas id="preview-canvas" aria-label="モックアッププレビュー"></canvas>
+          <p id="preview-placeholder" class="preview-placeholder">スクリーンショットをアップロードするとプレビューが表示されます</p>
+        </div>
+        <div class="action-buttons">
+          <button id="generate-btn" class="btn-primary" disabled aria-label="モックアップを生成する">
+            プレビューを更新
+          </button>
+          <button id="download-btn" class="btn-download" disabled aria-label="PNGファイルをダウンロードする">
+            PNG でダウンロード
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>デバイスモックアップ作成ツールの使い方</h2>
+      <ol>
+        <li><strong>スクリーンショットをアップロード：</strong>ドラッグ＆ドロップまたは「ファイルを選択」ボタンで画像を読み込みます。PNG・JPEG・WebP 等、主要な画像形式に対応しています。</li>
+        <li><strong>デバイスを選択：</strong>iPhone（ノッチ付き縦型）・iPad・MacBook・ブラウザウィンドウ（Chrome風）の4種類から合成したいフレームを選びます。</li>
+        <li><strong>背景・サイズを設定：</strong>背景を単色・グラデーション・透明から選び、スライダーでデバイスのサイズを調整します。</li>
+        <li><strong>プレビューを確認し PNG でダウンロード：</strong>「プレビューを更新」でキャンバスに反映し、見た目を確認してから「PNG でダウンロード」でファイルを保存します。</li>
+      </ol>
+
+      <h2>こんな場面に使えます</h2>
+      <p>App Store・Google Play のストアスクリーンショット作成、ポートフォリオサイトへの掲載、プレゼン資料・提案書への差し込み、SNS 投稿用の見栄えの良い画像作成など、様々な場面でご活用いただけます。すべてブラウザ内で完結するため、画像が外部サーバーに送信されることはなく、プライバシーを守りながら安心してお使いいただけます。ソフトウェアのインストールや会員登録も一切不要で、すぐに利用開始できます。</p>
+
+      <h2>対応デバイスフレームについて</h2>
+      <p>iPhone フレームはノッチ（Dynamic Island 風のデザイン）を備えた縦型スマートフォン、iPad は横長タブレット、MacBook はキーボードと画面を持つノートPC、ブラウザウィンドウは Chrome 風のタブバー付きウィンドウをそれぞれ CSS と Canvas API で描画しています。外部 SVG ファイルや画像素材は使用していないため、読み込みが高速です。</p>
+    </section>
+
+    <!-- 広告ユニット3（フッター上） -->
+    <div class="ad-unit" id="ad-footer" aria-hidden="true"></div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

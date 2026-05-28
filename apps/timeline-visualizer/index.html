@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="出来事・プロジェクト工程・歴史年表をインタラクティブなタイムラインで可視化。PNG画像出力対応。プレゼン・報告書・学習に。登録不要・無料・ブラウザ完結。">
+  <meta property="og:title" content="タイムライン作成ツール【無料】出来事を時系列で可視化・PNG出力 | Keisanlab">
+  <meta property="og:description" content="出来事・プロジェクト工程・歴史年表をインタラクティブなタイムラインで可視化。PNG画像出力対応。登録不要・無料・ブラウザ完結。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/timeline-visualizer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-timeline-visualizer.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="タイムライン作成ツール【無料】出来事を時系列で可視化・PNG出力 | Keisanlab">
+  <meta name="twitter:description" content="出来事・プロジェクト工程・歴史年表をインタラクティブなタイムラインで可視化。PNG画像出力対応。登録不要・無料・ブラウザ完結。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-timeline-visualizer.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/timeline-visualizer/">
+  <title>タイムライン作成ツール【無料】出来事を時系列で可視化・PNG出力 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/" class="back-link" aria-label="ツール一覧に戻る">← ツール一覧</a>
+    <div class="header-content">
+      <h1>タイムライン作成ツール — 出来事を時系列で可視化・PNG出力</h1>
+      <p class="subtitle">出来事・プロジェクト・歴史をインタラクティブに時系列表示。無料・登録不要・ブラウザ完結。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- イベント入力フォーム -->
+    <section id="tool" class="tool-section">
+      <div class="tool-header">
+        <h2>イベントを追加</h2>
+        <button class="btn-sample" id="btn-sample" aria-label="サンプルデータを読み込む">サンプルデータを使う</button>
+      </div>
+
+      <form id="event-form" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="event-title">タイトル <span class="required">*</span></label>
+            <input type="text" id="event-title" placeholder="例：iPhone発売" maxlength="60" required>
+          </div>
+          <div class="form-group">
+            <label for="event-date">日付 <span class="required">*</span></label>
+            <input type="date" id="event-date" required>
+          </div>
+          <div class="form-group">
+            <label for="event-category">カテゴリ</label>
+            <input type="text" id="event-category" placeholder="例：製品・出来事・マイルストーン" maxlength="30" list="category-list">
+            <datalist id="category-list"></datalist>
+          </div>
+          <div class="form-group">
+            <label for="event-color">カラー</label>
+            <div class="color-row">
+              <input type="color" id="event-color" value="#3b82f6">
+              <div class="preset-colors" id="preset-colors">
+                <button type="button" class="color-preset" data-color="#3b82f6" style="background:#3b82f6" title="ブルー"></button>
+                <button type="button" class="color-preset" data-color="#10b981" style="background:#10b981" title="グリーン"></button>
+                <button type="button" class="color-preset" data-color="#f59e0b" style="background:#f59e0b" title="イエロー"></button>
+                <button type="button" class="color-preset" data-color="#ef4444" style="background:#ef4444" title="レッド"></button>
+                <button type="button" class="color-preset" data-color="#8b5cf6" style="background:#8b5cf6" title="パープル"></button>
+                <button type="button" class="color-preset" data-color="#ec4899" style="background:#ec4899" title="ピンク"></button>
+                <button type="button" class="color-preset" data-color="#06b6d4" style="background:#06b6d4" title="シアン"></button>
+                <button type="button" class="color-preset" data-color="#64748b" style="background:#64748b" title="グレー"></button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label for="event-desc">説明</label>
+            <textarea id="event-desc" placeholder="イベントの詳細説明（任意）" rows="2" maxlength="200"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary" id="btn-add-event">イベントを追加</button>
+          <button type="button" class="btn-secondary" id="btn-cancel-edit" style="display:none">キャンセル</button>
+        </div>
+      </form>
+
+      <!-- エラーメッセージ -->
+      <div id="form-error" class="form-error" role="alert" aria-live="polite"></div>
+    </section>
+
+    <!-- 広告ユニット2（タイムライン上） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- タイムライン表示 -->
+    <section id="timeline-section" class="timeline-section">
+      <div class="timeline-controls">
+        <h2>タイムライン</h2>
+        <div class="control-buttons">
+          <div class="layout-toggle" role="group" aria-label="レイアウト切り替え">
+            <button class="btn-layout active" id="btn-horizontal" data-layout="horizontal" aria-pressed="true">水平</button>
+            <button class="btn-layout" id="btn-vertical" data-layout="vertical" aria-pressed="false">垂直</button>
+          </div>
+          <button class="btn-export-png" id="btn-png" aria-label="PNG画像として保存">PNG保存</button>
+          <button class="btn-export-json" id="btn-export-json" aria-label="JSONファイルとしてエクスポート">JSONエクスポート</button>
+          <label class="btn-import-json" for="import-json-input" aria-label="JSONファイルをインポート">
+            JSONインポート
+            <input type="file" id="import-json-input" accept=".json" style="display:none">
+          </label>
+          <button class="btn-clear" id="btn-clear" aria-label="全イベントを削除">全削除</button>
+        </div>
+      </div>
+
+      <div id="timeline-empty" class="timeline-empty">
+        <p>イベントがまだありません。上のフォームから追加するか「サンプルデータを使う」をクリックしてください。</p>
+      </div>
+
+      <!-- タイムライン描画エリア（PNG出力対象） -->
+      <div id="timeline-canvas" class="timeline-canvas">
+        <div id="timeline-inner" class="timeline-inner horizontal">
+          <!-- JS で生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- イベント一覧（編集・削除） -->
+    <section id="event-list-section" class="event-list-section" style="display:none">
+      <h2>イベント一覧</h2>
+      <div id="event-list" class="event-list"></div>
+    </section>
+
+    <!-- 広告ユニット3（使い方の前） -->
+    <div class="ad-unit" id="ad-howto" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li>「タイトル」と「日付」を入力し、必要に応じてカテゴリ・カラー・説明を設定します。</li>
+        <li>「イベントを追加」ボタンをクリックすると、タイムラインに自動で日付順に追加されます。</li>
+        <li>水平 / 垂直ボタンでレイアウトを切り替えられます。</li>
+        <li>「PNG保存」でタイムラインを画像としてダウンロードできます（プレゼン・資料に最適）。</li>
+        <li>「JSONエクスポート」でデータを保存し、「JSONインポート」で復元できます。</li>
+        <li>イベント一覧の編集ボタンから内容を変更、削除ボタンで削除できます。</li>
+      </ol>
+
+      <h2>タイムライン作成ツールとは</h2>
+      <p>タイムライン作成ツールは、出来事・プロジェクトの工程・歴史年表などを時系列のビジュアルで整理するためのウェブアプリです。Preceden や TimelineJS のような有料・設定複雑なツールの代わりに、ブラウザだけで即座に使えます。登録不要・完全無料で、入力したデータはブラウザのローカルストレージに自動保存されるため、ページを閉じても安心です。カテゴリ別に色を設定することで、複数の系統を持つ複雑なタイムラインも一目で把握しやすくなります。作成したタイムラインはPNG画像としてダウンロードでき、プレゼン資料・報告書・学習ノートへの貼り付けに活用できます。JSONエクスポート・インポートに対応しているため、データを保存・共有することも可能です。プロジェクト管理・歴史学習・個人の記録など、あらゆる場面でご活用ください。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
