@@ -175,6 +175,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://keisanlab.jp/apps/css-grid-builder/</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://keisanlab.jp/privacy-policy.html</loc>
     <lastmod>2026-05-09</lastmod>
     <changefreq>yearly</changefreq>

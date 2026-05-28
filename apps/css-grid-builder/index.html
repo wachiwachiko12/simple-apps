@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="CSS GridとFlexboxのレイアウトをビジュアル操作で簡単作成。列・行・ギャップを設定してCSSコードとTailwind CSSクラスを自動生成。grid-template-areas対応・プリセット付き。登録不要・無料。">
+  <!-- OGP -->
+  <meta property="og:title" content="CSS Grid・Flexboxジェネレーター【無料・日本語】Tailwind対応 | Keisanlab">
+  <meta property="og:description" content="CSS GridとFlexboxのレイアウトをビジュアル操作で簡単作成。列・行・ギャップを設定してCSSコードとTailwind CSSクラスを自動生成。grid-template-areas対応・プリセット付き。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/css-grid-builder/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-css-grid-builder.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSS Grid・Flexboxジェネレーター【無料・日本語】Tailwind対応 | Keisanlab">
+  <meta name="twitter:description" content="CSS GridとFlexboxのレイアウトをビジュアル操作で簡単作成。CSSコードとTailwind CSSクラスを自動生成。grid-template-areas対応・プリセット付き。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-css-grid-builder.png">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/css-grid-builder/">
+  <title>CSS Grid・Flexboxジェネレーター【無料・日本語】Tailwind対応 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="back-link">&#8592; ツール一覧</a>
+      <h1>CSS Grid・Flexboxジェネレーター — 無料ビジュアルレイアウトビルダー</h1>
+      <p class="subtitle">GUI操作でレイアウトを設計 → CSS &amp; Tailwindコードをリアルタイム生成</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- モード切り替えタブ -->
+    <div class="mode-tabs" role="tablist" aria-label="レイアウトモード">
+      <button class="tab-btn active" id="tab-grid" role="tab" aria-selected="true" aria-controls="panel-grid" data-mode="grid">
+        CSS Grid
+      </button>
+      <button class="tab-btn" id="tab-flex" role="tab" aria-selected="false" aria-controls="panel-flex" data-mode="flex">
+        Flexbox
+      </button>
+    </div>
+
+    <!-- ===== CSS Grid パネル ===== -->
+    <section id="panel-grid" class="tool-panel" role="tabpanel" aria-labelledby="tab-grid">
+
+      <!-- プリセット -->
+      <div class="preset-bar">
+        <span class="preset-label">プリセット:</span>
+        <div class="preset-buttons">
+          <button class="preset-btn" data-preset="2col">2カラム</button>
+          <button class="preset-btn" data-preset="3col">3カラム</button>
+          <button class="preset-btn" data-preset="header-sidebar-main">ヘッダー＋サイドバー＋メイン</button>
+          <button class="preset-btn" data-preset="card-grid">カード格子</button>
+          <button class="preset-btn" data-preset="holy-grail">Holy Grail</button>
+        </div>
+      </div>
+
+      <!-- グリッド設定コントロール -->
+      <div class="controls-grid">
+        <div class="control-group">
+          <label for="grid-cols">列数 (columns)</label>
+          <div class="number-control">
+            <button class="num-btn" data-target="grid-cols" data-delta="-1" aria-label="列数を減らす">&#8722;</button>
+            <input type="number" id="grid-cols" min="1" max="12" value="3" aria-label="列数">
+            <button class="num-btn" data-target="grid-cols" data-delta="1" aria-label="列数を増やす">&#43;</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="grid-rows">行数 (rows)</label>
+          <div class="number-control">
+            <button class="num-btn" data-target="grid-rows" data-delta="-1" aria-label="行数を減らす">&#8722;</button>
+            <input type="number" id="grid-rows" min="1" max="8" value="3" aria-label="行数">
+            <button class="num-btn" data-target="grid-rows" data-delta="1" aria-label="行数を増やす">&#43;</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="grid-col-gap">column-gap</label>
+          <div class="gap-control">
+            <input type="range" id="grid-col-gap" min="0" max="64" value="16" aria-label="列間隔">
+            <span class="gap-value" id="grid-col-gap-val">16px</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="grid-row-gap">row-gap</label>
+          <div class="gap-control">
+            <input type="range" id="grid-row-gap" min="0" max="64" value="16" aria-label="行間隔">
+            <span class="gap-value" id="grid-row-gap-val">16px</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="grid-col-template">grid-template-columns</label>
+          <select id="grid-col-template" aria-label="列テンプレート">
+            <option value="repeat(N, 1fr)">均等 (1fr × N)</option>
+            <option value="repeat(N, minmax(0, 1fr))">minmax(0, 1fr)</option>
+            <option value="auto">auto</option>
+            <option value="custom">カスタム...</option>
+          </select>
+        </div>
+        <div class="control-group" id="custom-col-group" style="display:none">
+          <label for="grid-col-custom">カスタム列定義</label>
+          <input type="text" id="grid-col-custom" placeholder="例: 200px 1fr 2fr" aria-label="カスタム列定義">
+        </div>
+        <div class="control-group">
+          <label for="grid-row-template">grid-template-rows</label>
+          <select id="grid-row-template" aria-label="行テンプレート">
+            <option value="auto">auto</option>
+            <option value="repeat(N, 1fr)">均等 (1fr × N)</option>
+            <option value="repeat(N, minmax(0, 1fr))">minmax(0, 1fr)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="grid-align-items">align-items</label>
+          <select id="grid-align-items" aria-label="align-items">
+            <option value="stretch">stretch</option>
+            <option value="start">start</option>
+            <option value="center">center</option>
+            <option value="end">end</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="grid-justify-items">justify-items</label>
+          <select id="grid-justify-items" aria-label="justify-items">
+            <option value="stretch">stretch</option>
+            <option value="start">start</option>
+            <option value="center">center</option>
+            <option value="end">end</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- グリッドプレビュー -->
+      <div class="preview-wrapper">
+        <div class="preview-header">
+          <h2 class="section-title">プレビュー</h2>
+          <span class="hint-text">セルをクリックして span を設定</span>
+        </div>
+        <div class="grid-preview-scroll">
+          <div id="grid-preview" class="grid-preview" aria-label="グリッドプレビュー"></div>
+        </div>
+      </div>
+
+      <!-- span 設定パネル（セル選択時に表示） -->
+      <div id="span-panel" class="span-panel" aria-live="polite" style="display:none">
+        <h3 class="span-panel-title">選択セル: <span id="span-cell-label">-</span></h3>
+        <div class="span-controls">
+          <div class="control-group">
+            <label for="span-col">column-span</label>
+            <div class="number-control">
+              <button class="num-btn" data-target="span-col" data-delta="-1" aria-label="列spanを減らす">&#8722;</button>
+              <input type="number" id="span-col" min="1" max="12" value="1" aria-label="列span">
+              <button class="num-btn" data-target="span-col" data-delta="1" aria-label="列spanを増やす">&#43;</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="span-row">row-span</label>
+            <div class="number-control">
+              <button class="num-btn" data-target="span-row" data-delta="-1" aria-label="行spanを減らす">&#8722;</button>
+              <input type="number" id="span-row" min="1" max="8" value="1" aria-label="行span">
+              <button class="num-btn" data-target="span-row" data-delta="1" aria-label="行spanを増やす">&#43;</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="span-bg">背景色</label>
+            <input type="color" id="span-bg" value="#c7d2fe" aria-label="セル背景色">
+          </div>
+          <div class="control-group">
+            <label for="span-label-input">ラベル</label>
+            <input type="text" id="span-label-input" placeholder="例: header" maxlength="20" aria-label="セルラベル">
+          </div>
+        </div>
+        <button id="reset-span-btn" class="secondary-btn">このセルをリセット</button>
+      </div>
+
+      <!-- 広告ユニット2（結果上） -->
+      <div class="ad-unit" id="ad-mid" aria-hidden="true"></div>
+
+      <!-- コード出力 -->
+      <div class="code-output-section">
+        <div class="code-tabs">
+          <button class="code-tab active" data-output="css" aria-pressed="true">CSS</button>
+          <button class="code-tab" data-output="tailwind" aria-pressed="false">Tailwind CSS</button>
+        </div>
+        <div class="code-block-wrapper">
+          <pre id="grid-code-output" class="code-block" aria-label="生成されたCSSコード"></pre>
+          <button class="copy-btn" id="copy-grid-btn" aria-label="コードをコピー">コピー</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== Flexbox パネル ===== -->
+    <section id="panel-flex" class="tool-panel hidden" role="tabpanel" aria-labelledby="tab-flex">
+
+      <!-- Flexプリセット -->
+      <div class="preset-bar">
+        <span class="preset-label">プリセット:</span>
+        <div class="preset-buttons">
+          <button class="preset-btn flex-preset-btn" data-flex-preset="row-center">中央揃え（横）</button>
+          <button class="preset-btn flex-preset-btn" data-flex-preset="col-center">中央揃え（縦）</button>
+          <button class="preset-btn flex-preset-btn" data-flex-preset="space-between">スペース均等</button>
+          <button class="preset-btn flex-preset-btn" data-flex-preset="nav-bar">ナビゲーションバー</button>
+          <button class="preset-btn flex-preset-btn" data-flex-preset="card-row">カード横並び</button>
+        </div>
+      </div>
+
+      <!-- Flex設定コントロール -->
+      <div class="controls-grid">
+        <div class="control-group">
+          <label for="flex-direction">flex-direction</label>
+          <select id="flex-direction" aria-label="flex-direction">
+            <option value="row">row</option>
+            <option value="row-reverse">row-reverse</option>
+            <option value="column">column</option>
+            <option value="column-reverse">column-reverse</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="flex-wrap">flex-wrap</label>
+          <select id="flex-wrap" aria-label="flex-wrap">
+            <option value="nowrap">nowrap</option>
+            <option value="wrap">wrap</option>
+            <option value="wrap-reverse">wrap-reverse</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="justify-content">justify-content</label>
+          <select id="justify-content" aria-label="justify-content">
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center">center</option>
+            <option value="space-between">space-between</option>
+            <option value="space-around">space-around</option>
+            <option value="space-evenly">space-evenly</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="align-items">align-items</label>
+          <select id="align-items" aria-label="align-items">
+            <option value="stretch">stretch</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center">center</option>
+            <option value="baseline">baseline</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="align-content">align-content</label>
+          <select id="align-content" aria-label="align-content">
+            <option value="normal">normal</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="center">center</option>
+            <option value="space-between">space-between</option>
+            <option value="space-around">space-around</option>
+            <option value="stretch">stretch</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="flex-gap">gap</label>
+          <div class="gap-control">
+            <input type="range" id="flex-gap" min="0" max="64" value="16" aria-label="gap">
+            <span class="gap-value" id="flex-gap-val">16px</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="flex-item-count">アイテム数</label>
+          <div class="number-control">
+            <button class="num-btn" data-target="flex-item-count" data-delta="-1" aria-label="アイテムを減らす">&#8722;</button>
+            <input type="number" id="flex-item-count" min="1" max="12" value="4" aria-label="アイテム数">
+            <button class="num-btn" data-target="flex-item-count" data-delta="1" aria-label="アイテムを増やす">&#43;</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <label for="flex-item-basis">flex-basis (各アイテム)</label>
+          <select id="flex-item-basis" aria-label="flex-basis">
+            <option value="auto">auto</option>
+            <option value="0">0</option>
+            <option value="100px">100px</option>
+            <option value="150px">150px</option>
+            <option value="200px">200px</option>
+            <option value="25%">25%</option>
+            <option value="33.333%">33%</option>
+            <option value="50%">50%</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="flex-item-grow">flex-grow (各アイテム)</label>
+          <select id="flex-item-grow" aria-label="flex-grow">
+            <option value="0">0</option>
+            <option value="1">1</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Flexプレビュー -->
+      <div class="preview-wrapper">
+        <div class="preview-header">
+          <h2 class="section-title">プレビュー</h2>
+        </div>
+        <div class="flex-preview-scroll">
+          <div id="flex-preview" class="flex-preview" aria-label="Flexboxプレビュー"></div>
+        </div>
+      </div>
+
+      <!-- コード出力（Flex） -->
+      <div class="code-output-section">
+        <div class="code-tabs">
+          <button class="code-tab active flex-code-tab" data-output="css" aria-pressed="true">CSS</button>
+          <button class="code-tab flex-code-tab" data-output="tailwind" aria-pressed="false">Tailwind CSS</button>
+        </div>
+        <div class="code-block-wrapper">
+          <pre id="flex-code-output" class="code-block" aria-label="生成されたFlexbox CSSコード"></pre>
+          <button class="copy-btn" id="copy-flex-btn" aria-label="コードをコピー">コピー</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット3（howtoの上） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>モードを選択</strong> — 上部タブで「CSS Grid」か「Flexbox」を選びます。</li>
+        <li><strong>パラメータを調整</strong> — 列数・行数・gapなどを変更するとプレビューがリアルタイムで更新されます。</li>
+        <li><strong>プリセットを活用</strong> — よく使うレイアウトをプリセットから即座に選択できます。</li>
+        <li><strong>セルをカスタマイズ（Gridのみ）</strong> — プレビュー内のセルをクリックすると、column-span・row-spanを設定できます。ラベルや背景色も変更可能です。</li>
+        <li><strong>コードを出力</strong> — 「CSS」タブで純粋なCSSコード、「Tailwind CSS」タブでTailwind CSSクラスを確認します。</li>
+        <li><strong>コピー</strong> — 「コピー」ボタンを押してコードをクリップボードにコピーします。</li>
+      </ol>
+
+      <h2>CSSグリッドレイアウトビルダーとは</h2>
+      <p>
+        本ツールは、CSS GridとFlexboxのレイアウトをブラウザ上のGUI（グラフィカルユーザーインターフェース）で視覚的に設計し、対応するCSSコードとTailwind CSSクラスをリアルタイムに生成する無料のウェブアプリです。コードを書く前にレイアウトを目で確認できるため、フロントエンドエンジニアやデザイナーの開発効率を大幅に向上させます。
+      </p>
+      <p>
+        CSS Gridは縦横の2次元レイアウトを制御するための強力なCSSモジュールです。<code>grid-template-columns</code>や<code>grid-template-rows</code>でトラックを定義し、<code>gap</code>で間隔を設定します。<code>grid-column</code>や<code>grid-row</code>プロパティを使うと、特定のアイテムを複数のセルにまたがって配置（span）できます。
+      </p>
+      <p>
+        Flexboxは1次元（横または縦方向）のレイアウトに特化しており、ナビゲーションバーやカードの横並び配置など、シンプルなレイアウトで力を発揮します。<code>justify-content</code>で主軸方向の配置、<code>align-items</code>で交差軸方向の配置をコントロールできます。設定はlocalStorageに自動保存されるため、ページを再読み込みしても作業を再開できます。
+      </p>
+
+      <h2>出力コードの使い方</h2>
+      <p>
+        生成されたCSSコードは、コンテナ要素に直接適用できます。Tailwind CSSクラスはHTMLの<code>class</code>属性にそのまま貼り付けてご利用ください。プリセットのレイアウトは実際のWebサイトでよく使われるパターンをまとめており、学習用途にも最適です。
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
