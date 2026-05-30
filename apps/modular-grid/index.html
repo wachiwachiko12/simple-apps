@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Webサイトのカラムグリッド・ガター・ベースラインをブラウザで設計。CSS変数・Tailwind設定を自動生成。デザインシステム構築・レイアウト設計に。登録不要・無料。">
+  <title>グリッドシステム設計ツール【無料】カラムグリッド・ベースライン生成 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/modular-grid/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- OGP -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="グリッドシステム設計ツール【無料】カラムグリッド・ベースライン生成 | Keisanlab">
+  <meta property="og:description" content="Webサイトのカラムグリッド・ガター・ベースラインをブラウザで設計。CSS変数・Tailwind設定を自動生成。デザインシステム構築・レイアウト設計に。登録不要・無料。">
+  <meta property="og:url" content="https://keisanlab.jp/apps/modular-grid/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-modular-grid.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="グリッドシステム設計ツール【無料】カラムグリッド・ベースライン生成 | Keisanlab">
+  <meta name="twitter:description" content="Webサイトのカラムグリッド・ガター・ベースラインをブラウザで設計。CSS変数・Tailwind設定を自動生成。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-modular-grid.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>グリッドシステム設計ツール — カラムグリッド・ベースラインプレビュアー</h1>
+    <p class="subtitle">カラム数・ガター・マージンをリアルタイムプレビュー。CSS変数・Tailwind設定を自動生成。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+      <div class="tool-layout">
+        <!-- 左パネル: 設定 -->
+        <div class="panel-controls">
+
+          <!-- デバイスサイズ切替 -->
+          <div class="control-group">
+            <h2 class="panel-title">デバイスサイズ</h2>
+            <div class="device-buttons" role="group" aria-label="デバイスサイズ選択">
+              <button type="button" class="device-btn active" data-width="375" aria-pressed="true">スマホ<br><small>375px</small></button>
+              <button type="button" class="device-btn" data-width="768" aria-pressed="false">タブレット<br><small>768px</small></button>
+              <button type="button" class="device-btn" data-width="1440" aria-pressed="false">PC<br><small>1440px</small></button>
+            </div>
+          </div>
+
+          <!-- プリセット -->
+          <div class="control-group">
+            <h2 class="panel-title">プリセット</h2>
+            <div class="preset-buttons" role="group" aria-label="グリッドプリセット選択">
+              <button type="button" class="preset-btn" data-preset="12col">12カラム</button>
+              <button type="button" class="preset-btn" data-preset="8pt">8ptグリッド</button>
+              <button type="button" class="preset-btn" data-preset="golden">黄金比</button>
+              <button type="button" class="preset-btn" data-preset="bootstrap">Bootstrap</button>
+              <button type="button" class="preset-btn" data-preset="material">Material</button>
+            </div>
+          </div>
+
+          <!-- カラムグリッド設定 -->
+          <div class="control-group">
+            <h2 class="panel-title">カラムグリッド</h2>
+
+            <div class="slider-row">
+              <label for="columns">カラム数</label>
+              <div class="slider-wrap">
+                <input type="range" id="columns" min="1" max="24" value="12" class="slider">
+                <output for="columns" id="columns-val">12</output>
+              </div>
+            </div>
+
+            <div class="slider-row">
+              <label for="gutter">ガター (px)</label>
+              <div class="slider-wrap">
+                <input type="range" id="gutter" min="0" max="64" value="16" class="slider">
+                <output for="gutter" id="gutter-val">16</output>
+              </div>
+            </div>
+
+            <div class="slider-row">
+              <label for="margin">マージン (px)</label>
+              <div class="slider-wrap">
+                <input type="range" id="margin" min="0" max="120" value="24" class="slider">
+                <output for="margin" id="margin-val">24</output>
+              </div>
+            </div>
+          </div>
+
+          <!-- ベースライングリッド設定 -->
+          <div class="control-group">
+            <h2 class="panel-title">ベースライングリッド</h2>
+
+            <div class="toggle-row">
+              <label for="baseline-toggle" class="toggle-label">ベースライン表示</label>
+              <label class="switch" aria-label="ベースラインの表示切り替え">
+                <input type="checkbox" id="baseline-toggle" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+
+            <div class="slider-row">
+              <label for="baseline">ベースライン間隔 (px)</label>
+              <div class="slider-wrap">
+                <input type="range" id="baseline" min="4" max="32" value="8" class="slider">
+                <output for="baseline" id="baseline-val">8</output>
+              </div>
+            </div>
+
+            <div class="slider-row">
+              <label for="row-height">行モジュール高さ (px)</label>
+              <div class="slider-wrap">
+                <input type="range" id="row-height" min="20" max="120" value="60" class="slider">
+                <output for="row-height" id="row-height-val">60</output>
+              </div>
+            </div>
+          </div>
+
+          <!-- カラー設定 -->
+          <div class="control-group">
+            <h2 class="panel-title">表示色</h2>
+            <div class="color-row">
+              <label for="col-color">カラム色</label>
+              <input type="color" id="col-color" value="#5b8dee" class="color-input">
+            </div>
+            <div class="color-row">
+              <label for="baseline-color">ベースライン色</label>
+              <input type="color" id="baseline-color" value="#e06c75" class="color-input">
+            </div>
+            <div class="slider-row">
+              <label for="opacity">グリッド不透明度</label>
+              <div class="slider-wrap">
+                <input type="range" id="opacity" min="5" max="50" value="20" class="slider">
+                <output for="opacity" id="opacity-val">20</output>%
+              </div>
+            </div>
+          </div>
+
+          <!-- ダウンロード -->
+          <div class="control-group">
+            <button type="button" id="btn-download" class="btn-primary" aria-label="グリッドガイド画像をPNGでダウンロード">
+              PNG出力 (グリッドガイド)
+            </button>
+          </div>
+        </div>
+
+        <!-- 右パネル: プレビュー -->
+        <div class="panel-preview">
+          <div class="preview-header">
+            <span class="preview-label">プレビュー</span>
+            <span id="canvas-size-label" class="size-label">375 × 600 px</span>
+          </div>
+          <div class="canvas-scroll">
+            <canvas id="grid-canvas" width="375" height="600" aria-label="グリッドプレビューキャンバス"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（コード出力の上） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- コード出力セクション -->
+    <section id="code-output" class="output-section">
+      <h2>コード出力</h2>
+      <div class="output-tabs" role="tablist" aria-label="出力形式の選択">
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="css" id="tab-css">CSS変数</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="tailwind" id="tab-tailwind">Tailwind設定</button>
+      </div>
+      <div class="code-block-wrap">
+        <pre id="code-output-css" class="code-block" role="tabpanel" aria-labelledby="tab-css"></pre>
+        <pre id="code-output-tailwind" class="code-block hidden" role="tabpanel" aria-labelledby="tab-tailwind"></pre>
+        <button type="button" id="btn-copy" class="btn-copy" aria-label="コードをクリップボードにコピー">コピー</button>
+      </div>
+    </section>
+
+    <!-- 広告ユニット3（コンテンツ下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>デバイスサイズを選択</strong> — スマホ(375px)・タブレット(768px)・PC(1440px)から対象ビューポートを選択します。</li>
+        <li><strong>プリセットを選択（任意）</strong> — 12カラムグリッド・8ptグリッド・黄金比などのプリセットを選んで素早く設定できます。</li>
+        <li><strong>スライダーで調整</strong> — カラム数・ガター・マージン・ベースライン間隔をドラッグして設定し、右のキャンバスにリアルタイム反映されます。</li>
+        <li><strong>コードをコピー</strong> — CSS変数またはTailwind設定をボタンでコピーし、プロジェクトに貼り付けます。</li>
+        <li><strong>PNG出力</strong> — グリッドガイド画像をダウンロードし、FigmaやIllustratorのデザインファイルに重ねて使えます。</li>
+      </ol>
+
+      <h2>グリッドシステムとは</h2>
+      <p>グリッドシステムとは、Webサイトやアプリの画面をカラム（縦の列）・ガター（カラム間の余白）・マージン（左右の外側の余白）に分割した設計ルールです。一貫したグリッドを使うことで、コンポーネントの配置が規則的になり、デザインの統一感と開発効率が向上します。</p>
+      <p>Bootstrapは12カラム・30pxガター・15pxマージンが標準です。Material Designは4dpまたは8dpグリッドを基本とし、UIコンポーネントのサイズや余白が8の倍数になるよう設計されています。本ツールはAdobe InDesignなどの有料ソフト不要で、ブラウザだけで即座にグリッドを可視化・コード化できます。</p>
+
+      <h2>ベースライングリッドとは</h2>
+      <p>ベースライングリッドは、テキストの行の下端が揃う水平方向のガイドラインです。印刷物では昔から使われており、Webデザインでもタイポグラフィの一貫性を保つために活用されます。ベースライン間隔には8px・4px・行高の倍数が一般的に使われます。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/">Keisanlab トップ</a></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

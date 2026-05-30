@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ブラウザで使えるドット絵・ピクセルアート作成エディタ。レイヤー・アニメーションフレーム・PNG出力対応。インディゲーム開発・アイコン作成に。登録不要・無料。">
+  <title>ドット絵エディタ【無料・ブラウザ】ピクセルアート作成ツール | Keisanlab</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="ドット絵エディタ【無料・ブラウザ】ピクセルアート作成ツール | Keisanlab">
+  <meta property="og:description" content="ブラウザで使えるドット絵・ピクセルアート作成エディタ。レイヤー・アニメーションフレーム・PNG出力対応。インディゲーム開発・アイコン作成に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/pixel-art-editor/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-pixel-art-editor.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ドット絵エディタ【無料・ブラウザ】ピクセルアート作成ツール | Keisanlab">
+  <meta name="twitter:description" content="ブラウザで使えるドット絵・ピクセルアート作成エディタ。レイヤー・アニメーションフレーム・PNG出力対応。インディゲーム開発・アイコン作成に。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-pixel-art-editor.png">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/pixel-art-editor/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>ドット絵エディタ — ブラウザで作るピクセルアート作成ツール</h1>
+      <p class="subtitle">無料・登録不要・スマホ対応 | レイヤー / アニメーション / PNG出力</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- エディタ本体 -->
+    <section id="editor-section" class="editor-section" aria-label="ピクセルアートエディタ">
+
+      <!-- ツールバー上段：キャンバス設定 -->
+      <div class="toolbar-row toolbar-top">
+        <div class="toolbar-group">
+          <label for="canvas-size" class="toolbar-label">サイズ:</label>
+          <select id="canvas-size" title="キャンバスサイズ">
+            <option value="8">8×8</option>
+            <option value="16" selected>16×16</option>
+            <option value="32">32×32</option>
+            <option value="64">64×64</option>
+          </select>
+        </div>
+        <div class="toolbar-group">
+          <button id="btn-toggle-grid" class="icon-btn" title="グリッド表示切替" aria-label="グリッド表示切替">
+            <span class="icon">&#9638;</span>
+          </button>
+          <button id="btn-undo" class="icon-btn" title="元に戻す (Ctrl+Z)" aria-label="元に戻す">
+            <span class="icon">&#8617;</span>
+          </button>
+          <button id="btn-redo" class="icon-btn" title="やり直し (Ctrl+Y)" aria-label="やり直し">
+            <span class="icon">&#8618;</span>
+          </button>
+          <button id="btn-clear" class="icon-btn icon-btn--danger" title="全クリア" aria-label="全クリア">
+            <span class="icon">&#128465;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="editor-body">
+        <!-- 左：ツール選択 & カラーパレット -->
+        <aside class="sidebar" aria-label="ツールとパレット">
+          <!-- ツール選択 -->
+          <div class="panel">
+            <div class="panel-title">ツール</div>
+            <div class="tool-buttons">
+              <button id="tool-pen"    class="tool-btn active" title="ペン" aria-label="ペン" data-tool="pen">&#9998;</button>
+              <button id="tool-eraser" class="tool-btn" title="消しゴム" aria-label="消しゴム" data-tool="eraser">&#9723;</button>
+              <button id="tool-fill"   class="tool-btn" title="バケツ塗り" aria-label="バケツ塗り" data-tool="fill">&#9727;</button>
+              <button id="tool-picker" class="tool-btn" title="スポイト" aria-label="スポイト" data-tool="picker">&#128230;</button>
+            </div>
+          </div>
+
+          <!-- カレント色 -->
+          <div class="panel">
+            <div class="panel-title">カラー</div>
+            <div class="color-current-wrap">
+              <div id="color-current" class="color-current" title="現在の色"></div>
+              <input type="color" id="color-picker-input" value="#000000" title="カスタムカラー" aria-label="カスタムカラー選択">
+            </div>
+          </div>
+
+          <!-- カラーパレット -->
+          <div class="panel">
+            <div class="panel-title">パレット</div>
+            <div class="palette-tabs">
+              <button class="palette-tab active" data-palette="gameboy">GB</button>
+              <button class="palette-tab" data-palette="famicom">FC</button>
+              <button class="palette-tab" data-palette="nes">NES</button>
+              <button class="palette-tab" data-palette="custom">MY</button>
+            </div>
+            <div id="palette-grid" class="palette-grid" role="listbox" aria-label="カラーパレット"></div>
+            <button id="btn-add-color" class="small-btn" title="現在の色をMYパレットに追加" aria-label="色を保存">+ 色を保存</button>
+          </div>
+
+          <!-- レイヤー -->
+          <div class="panel">
+            <div class="panel-title">レイヤー</div>
+            <div id="layer-list" class="layer-list" aria-label="レイヤー一覧"></div>
+            <button id="btn-add-layer" class="small-btn" aria-label="レイヤー追加">+ レイヤー追加</button>
+          </div>
+        </aside>
+
+        <!-- 中央：キャンバス -->
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="pixel-canvas" aria-label="ピクセルアートキャンバス"></canvas>
+          <canvas id="grid-canvas"  aria-hidden="true" class="overlay-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- ツールバー下段：フレーム & 出力 -->
+      <div class="toolbar-row toolbar-bottom">
+        <!-- アニメーションフレーム -->
+        <div class="toolbar-group frames-group">
+          <span class="toolbar-label">フレーム:</span>
+          <div id="frame-list" class="frame-list"></div>
+          <button id="btn-add-frame" class="small-btn" aria-label="フレーム追加">+</button>
+        </div>
+
+        <div class="toolbar-group">
+          <button id="btn-preview" class="action-btn" aria-label="アニメーションプレビュー">&#9654; プレビュー</button>
+          <select id="export-scale" title="出力スケール" aria-label="出力スケール">
+            <option value="1">1x</option>
+            <option value="2" selected>2x</option>
+            <option value="4">4x</option>
+            <option value="8">8x</option>
+          </select>
+          <button id="btn-export" class="action-btn action-btn--primary" aria-label="PNG保存">&#8659; PNG保存</button>
+        </div>
+      </div>
+
+      <!-- アニメーションプレビューモーダル -->
+      <div id="preview-modal" class="modal" role="dialog" aria-modal="true" aria-label="アニメーションプレビュー" hidden>
+        <div class="modal-inner">
+          <div class="modal-header">
+            <span>アニメーションプレビュー</span>
+            <button id="btn-close-preview" class="icon-btn" aria-label="閉じる">&#10005;</button>
+          </div>
+          <canvas id="preview-canvas" class="preview-canvas"></canvas>
+          <div class="preview-controls">
+            <label>FPS:
+              <input type="range" id="fps-slider" min="1" max="24" value="8">
+              <span id="fps-value">8</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（エディタ直下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>キャンバスサイズを選択</strong>する（8×8〜64×64）。ゲームキャラは16×16、アイコンは32×32がおすすめです。</li>
+        <li><strong>ツールを選択</strong>する。ペン・消しゴム・バケツ塗り・スポイトの4種類から選べます。</li>
+        <li><strong>カラーパレットから色を選ぶ</strong>か、カスタムカラーピッカーで好みの色を指定します。ゲームボーイ・ファミコン・NESの3種類のレトロパレットを収録しています。</li>
+        <li><strong>キャンバスに描画</strong>する。クリック＆ドラッグで連続描画、スマートフォンはタッチで操作できます。</li>
+        <li><strong>レイヤーを活用</strong>する。最大3レイヤーを追加し、背景・キャラ・エフェクトを分けて描けます。レイヤーの不透明度も調整可能です。</li>
+        <li><strong>アニメーションフレームを追加</strong>して歩行・攻撃モーションなどを作成します。最大8フレームまで対応しています。</li>
+        <li><strong>プレビューボタン</strong>でアニメーションを確認し、FPSを調整します。</li>
+        <li>満足したら<strong>PNG保存</strong>ボタンで書き出し。1x〜8xのスケールを選んでダウンロードできます。</li>
+      </ol>
+
+      <h2>ショートカットキー</h2>
+      <table class="shortcut-table">
+        <thead><tr><th>キー</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr><td>Ctrl + Z</td><td>元に戻す</td></tr>
+          <tr><td>Ctrl + Y</td><td>やり直し</td></tr>
+          <tr><td>P</td><td>ペン</td></tr>
+          <tr><td>E</td><td>消しゴム</td></tr>
+          <tr><td>F</td><td>バケツ塗り</td></tr>
+          <tr><td>I</td><td>スポイト</td></tr>
+          <tr><td>G</td><td>グリッド表示切替</td></tr>
+        </tbody>
+      </table>
+
+      <h2>ドット絵エディタとは</h2>
+      <p>
+        ドット絵エディタ（ピクセルアートエディタ）とは、画像を1ピクセル単位で描画・編集するためのツールです。
+        レトロゲームのグラフィックやインディゲームのスプライト、アイコン、SNSアイコンなどの制作に広く使われています。
+        海外ではAsepriteが$19.99の有料ソフトとして定評がありますが、本ツールはブラウザ上で無料・ソフトウェアインストール不要で同等の基本機能を提供します。
+        レイヤー機能で描画を分けて管理でき、アニメーションフレーム機能でキャラクターの歩行・攻撃・エフェクトなどのモーションも作成可能です。
+        完成したドット絵はPNG形式で1x〜8xのスケールでダウンロードできるため、ゲームエンジン（Unity・Godot・RPGツクール）へそのまま取り込めます。
+      </p>
+    </section>
+
+    <!-- 広告ユニット3（使い方下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/">トップページ</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

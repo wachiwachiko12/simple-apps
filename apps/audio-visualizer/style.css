@@ -1,0 +1,465 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background: #f0f2f5;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #fff;
+  padding: 1.5rem 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-top: 0.375rem;
+}
+
+/* ===== MAIN ===== */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* ===== AD UNIT ===== */
+.ad-unit {
+  margin: 1.25rem 0;
+}
+
+/* ===== STEP BLOCK ===== */
+.step-block {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.step-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1rem;
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  background: #e94560;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* ===== DROP ZONE ===== */
+.drop-zone {
+  position: relative;
+  border: 2px dashed #b0b8c8;
+  border-radius: 10px;
+  padding: 2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: #f7f9fc;
+}
+
+.drop-zone:hover,
+.drop-zone:focus,
+.drop-zone.drag-over {
+  border-color: #e94560;
+  background: #fff0f3;
+  outline: none;
+}
+
+.drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.drop-icon {
+  color: #b0b8c8;
+  margin-bottom: 0.5rem;
+}
+
+.drop-zone:hover .drop-icon,
+.drop-zone.drag-over .drop-icon {
+  color: #e94560;
+}
+
+.drop-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.drop-sub {
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 0.25rem;
+}
+
+/* ===== FILE INFO ===== */
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #eaf4ff;
+  border-radius: 8px;
+  padding: 0.6rem 0.875rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.file-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1a5fad;
+  font-weight: 600;
+}
+
+.btn-clear {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #666;
+  min-height: 44px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.btn-clear:hover {
+  background: #f5f5f5;
+}
+
+/* ===== DIVIDER OR ===== */
+.divider-or {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: #bbb;
+  font-size: 0.85rem;
+}
+
+.divider-or::before,
+.divider-or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+/* ===== MIC BUTTON ===== */
+.btn-mic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: #fff;
+  color: #444;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.btn-mic:hover {
+  border-color: #e94560;
+  color: #e94560;
+  background: #fff0f3;
+}
+
+.btn-mic.active {
+  background: #e94560;
+  border-color: #e94560;
+  color: #fff;
+}
+
+.mic-status {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #e94560;
+  font-weight: 600;
+}
+
+/* ===== CONTROLS GRID ===== */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.control-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.control-group select,
+.control-group input[type="text"] {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.95rem;
+  border: 1px solid #d0d5de;
+  border-radius: 8px;
+  background: #fafafa;
+  min-height: 44px;
+  transition: border-color 0.15s;
+}
+
+.control-group select:focus,
+.control-group input[type="text"]:focus {
+  outline: none;
+  border-color: #e94560;
+}
+
+/* ===== COLOR ROW ===== */
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.color-row input[type="color"] {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border: 2px solid #d0d5de;
+  border-radius: 8px;
+  padding: 2px;
+  cursor: pointer;
+  background: none;
+}
+
+.color-hex {
+  font-size: 0.85rem;
+  color: #666;
+  font-family: monospace;
+}
+
+/* ===== DRAW BUTTON ===== */
+.btn-draw {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 1.25rem;
+  padding: 0.75rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e94560, #c73652);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-draw:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-draw:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-draw:disabled {
+  background: #c8cdd6;
+  cursor: not-allowed;
+}
+
+/* ===== CANVAS WRAPPER ===== */
+.canvas-wrapper {
+  position: relative;
+  background: #1a1a2e;
+  border-radius: 10px;
+  overflow: hidden;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#waveCanvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.canvas-placeholder {
+  position: absolute;
+  color: #555;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+  pointer-events: none;
+}
+
+/* ===== SAVE BUTTON ===== */
+.btn-save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0f3460, #16213e);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-save:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btn-save:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-save:disabled {
+  background: #c8cdd6;
+  cursor: not-allowed;
+}
+
+/* ===== HOWTO SECTION ===== */
+.howto-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  margin-bottom: 1rem;
+}
+
+.howto-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section ol {
+  padding-left: 1.375rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.howto-section li {
+  margin-bottom: 0.6rem;
+}
+
+.howto-section p {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.75;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+footer a {
+  color: #666;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* ===== DESKTOP ===== */
+@media (min-width: 640px) {
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  .controls-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .step-block {
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .controls-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

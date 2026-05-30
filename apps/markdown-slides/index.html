@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="Markdownでプレゼンスライドを作成。---でスライド分割・4テーマ選択・フルスクリーン発表・PDF出力対応。インストール不要・登録不要・無料。エンジニアのLT発表に。">
+
+  <!-- OGP -->
+  <meta property="og:title" content="Markdownスライド作成ツール【無料・ブラウザ完結】| Keisanlab">
+  <meta property="og:description" content="Markdownでプレゼンスライドを作成。---でスライド分割・4テーマ選択・フルスクリーン発表・PDF出力対応。インストール不要・登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/markdown-slides/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-markdown-slides.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Markdownスライド作成ツール【無料・ブラウザ完結】| Keisanlab">
+  <meta name="twitter:description" content="Markdownでプレゼンスライドを作成。---でスライド分割・4テーマ選択・フルスクリーン発表・PDF出力対応。インストール不要・登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-markdown-slides.png">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/markdown-slides/">
+
+  <title>Markdownスライド作成ツール【無料・ブラウザ完結】プレゼン資料をMDで作成 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- marked.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+  <!-- DOMPurify: XSS sanitizer for marked output -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+</head>
+<body>
+
+  <!-- フルスクリーンプレゼンオーバーレイ -->
+  <div id="present-overlay" class="present-overlay" role="dialog" aria-modal="true" aria-label="プレゼンテーション画面" hidden>
+    <div id="present-slide" class="present-slide"></div>
+    <div class="present-controls">
+      <button id="btn-prev" class="present-btn" aria-label="前のスライド">&#8592;</button>
+      <span id="present-counter" class="present-counter">1 / 1</span>
+      <button id="btn-next" class="present-btn" aria-label="次のスライド">&#8594;</button>
+      <button id="btn-exit" class="present-btn present-btn--exit" aria-label="プレゼン終了">&#10005; 終了</button>
+    </div>
+    <div class="present-hint">← → キーまたはクリックでページ送り　Esc で終了</div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <h1 class="app-title">Markdownスライド作成ツール — ブラウザでプレゼン資料を作成</h1>
+      <p class="app-subtitle">Markdownを書くだけでスライドが完成。登録不要・完全無料。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- ツールバー -->
+    <div class="toolbar" role="toolbar" aria-label="ツール操作">
+      <div class="toolbar-group">
+        <label for="theme-select" class="sr-only">テーマ選択</label>
+        <select id="theme-select" class="toolbar-select" aria-label="スライドテーマを選択">
+          <option value="dark">テーマ: ダーク</option>
+          <option value="light">テーマ: ライト</option>
+          <option value="blue">テーマ: ブルー</option>
+          <option value="green">テーマ: グリーン</option>
+        </select>
+      </div>
+      <div class="toolbar-group">
+        <button id="btn-present" class="btn btn--primary" aria-label="フルスクリーンで発表開始">
+          &#9654; 発表開始
+        </button>
+        <button id="btn-print" class="btn btn--secondary" aria-label="PDFとして印刷・保存">
+          &#128438; PDF保存
+        </button>
+        <button id="btn-clear" class="btn btn--danger" aria-label="内容をリセット">
+          &#128465; リセット
+        </button>
+      </div>
+      <div class="toolbar-status">
+        <span id="slide-count-label">スライド数: <strong id="slide-count">1</strong></span>
+        <span class="save-indicator" id="save-indicator" aria-live="polite">自動保存済み</span>
+      </div>
+    </div>
+
+    <!-- メインエディタ -->
+    <section id="tool" class="editor-area" aria-label="スライドエディタ">
+      <!-- 左: Markdownエディタ -->
+      <div class="editor-pane">
+        <div class="pane-header">
+          <span class="pane-label">Markdown 入力</span>
+          <span class="pane-hint">--- でスライドを区切る</span>
+        </div>
+        <textarea
+          id="md-editor"
+          class="md-textarea"
+          placeholder="# スライドタイトル&#10;&#10;- 箇条書き 1&#10;- 箇条書き 2&#10;&#10;---&#10;&#10;# 2枚目のスライド&#10;&#10;```js&#10;console.log('Hello, World!');&#10;```"
+          aria-label="Markdownエディタ"
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <!-- 右: スライドプレビュー -->
+      <div class="preview-pane">
+        <div class="pane-header">
+          <span class="pane-label">スライドプレビュー</span>
+          <span class="pane-hint" id="current-slide-label">スライド 1 / 1</span>
+        </div>
+        <div id="slide-preview" class="slide-preview theme-dark" aria-label="スライドプレビュー" aria-live="polite"></div>
+        <div class="slide-nav" role="navigation" aria-label="スライドナビゲーション">
+          <button id="preview-prev" class="slide-nav-btn" aria-label="前のスライドを表示">&#8592;</button>
+          <button id="preview-next" class="slide-nav-btn" aria-label="次のスライドを表示">&#8594;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- スライドサムネイル一覧 -->
+    <section class="thumbnails-section" aria-label="スライド一覧">
+      <h2 class="section-heading">スライド一覧</h2>
+      <div id="thumbnails" class="thumbnails-grid" role="list" aria-label="スライドサムネイル"></div>
+    </section>
+
+    <!-- 広告ユニット2（ツール下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section" aria-label="使い方">
+      <h2>使い方</h2>
+      <ol class="howto-list">
+        <li>左のエディタにMarkdownを入力します。</li>
+        <li><code>---</code>（ハイフン3つの行）でスライドを区切ります。</li>
+        <li>右のプレビューでスライドの見た目をリアルタイム確認できます。</li>
+        <li>上部のテーマ選択で4種類の配色から選べます（ダーク・ライト・ブルー・グリーン）。</li>
+        <li>「発表開始」ボタンでフルスクリーン発表モードに入ります。左右キーまたはクリックでページ送りができます。</li>
+        <li>「PDF保存」ボタンでブラウザの印刷ダイアログを開き、PDFとして保存できます。</li>
+        <li>内容はlocalStorageに自動保存されます。ページを閉じても次回訪問時に復元されます。</li>
+      </ol>
+
+      <h2>Markdownスライドメーカーとは</h2>
+      <p>
+        MarkdownスライドメーカーはPowerPointやGoogleスライドを使わず、Markdownテキストだけでプレゼンスライドを作成できるブラウザ完結ツールです。エンジニア・研究者・技術発表者向けに設計しており、LT（Lightning Talk）発表・社内勉強会・技術カンファレンスの発表資料をすばやく作成できます。iA Presenterのような有料ツールの代替として登録不要・インストール不要で無料でご利用いただけます。
+      </p>
+      <p>
+        見出し（#, ##, ###）・箇条書き（-）・番号付きリスト（1.）・コードブロック（```）・太字（**）・斜体（*）・テーブルといった主要なMarkdown記法に対応しています。発表内容をテキストで管理できるため、Gitでのバージョン管理にも適しています。
+      </p>
+
+      <h2>対応するMarkdown記法</h2>
+      <table class="md-table" aria-label="Markdown記法一覧">
+        <thead>
+          <tr><th>記法</th><th>表示</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code># 見出し1</code></td><td>大見出し</td></tr>
+          <tr><td><code>## 見出し2</code></td><td>中見出し</td></tr>
+          <tr><td><code>- 項目</code></td><td>箇条書き</td></tr>
+          <tr><td><code>**太字**</code></td><td><strong>太字</strong></td></tr>
+          <tr><td><code>*斜体*</code></td><td><em>斜体</em></td></tr>
+          <tr><td><code>```code```</code></td><td>コードブロック</td></tr>
+          <tr><td><code>---</code>（行単独）</td><td>スライド区切り</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 広告ユニット3（フッター上） -->
+    <div class="ad-unit" id="ad-footer" aria-hidden="true"></div>
+  </main>
+
+  <footer class="app-footer">
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <a href="/">ホーム</a>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+    </nav>
+    <p class="footer-copy"><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

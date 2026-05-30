@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="CSSアニメーションをGUI操作でリアルタイム確認しながら作成。@keyframesコードを自動生成。フェード・スライド・バウンスなどプリセット10種。登録不要・無料。">
+  <title>CSSアニメーションジェネレーター【無料・GUI】keyframesコード自動生成 | Keisanlab</title>
+
+  <!-- OGP -->
+  <meta property="og:title" content="CSSアニメーションジェネレーター【無料・GUI】keyframesコード自動生成 | Keisanlab">
+  <meta property="og:description" content="CSSアニメーションをGUI操作でリアルタイム確認しながら作成。@keyframesコードを自動生成。フェード・スライド・バウンスなどプリセット10種。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/css-animation-editor/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-css-animation-editor.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CSSアニメーションジェネレーター【無料・GUI】keyframesコード自動生成 | Keisanlab">
+  <meta name="twitter:description" content="CSSアニメーションをGUI操作でリアルタイム確認しながら作成。@keyframesコードを自動生成。フェード・スライド・バウンスなどプリセット10種。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-css-animation-editor.png">
+
+  <link rel="canonical" href="https://keisanlab.jp/apps/css-animation-editor/">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="site-logo">Keisanlab</a>
+      <h1>CSSアニメーションジェネレーター — GUIでkeyframesを作成・コード出力</h1>
+      <p class="subtitle">リアルタイムプレビューで確認しながら@keyframesを自動生成。登録不要・完全無料。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- プリセットセクション -->
+    <section id="presets" class="tool-section" aria-label="アニメーションプリセット">
+      <h2>プリセットを選ぶ</h2>
+      <div class="preset-grid" role="list">
+        <button class="preset-btn" data-preset="fade-in" role="listitem">Fade In</button>
+        <button class="preset-btn" data-preset="fade-out" role="listitem">Fade Out</button>
+        <button class="preset-btn" data-preset="slide-in-left" role="listitem">Slide In Left</button>
+        <button class="preset-btn" data-preset="slide-in-right" role="listitem">Slide In Right</button>
+        <button class="preset-btn" data-preset="slide-up" role="listitem">Slide Up</button>
+        <button class="preset-btn" data-preset="bounce" role="listitem">Bounce</button>
+        <button class="preset-btn" data-preset="pulse" role="listitem">Pulse</button>
+        <button class="preset-btn" data-preset="spin" role="listitem">Spin</button>
+        <button class="preset-btn" data-preset="shake" role="listitem">Shake</button>
+        <button class="preset-btn" data-preset="zoom-in" role="listitem">Zoom In</button>
+      </div>
+    </section>
+
+    <!-- メインエディタ -->
+    <div class="editor-layout">
+      <!-- 左：設定パネル -->
+      <div class="editor-left">
+        <!-- プレビュー要素選択 -->
+        <section class="tool-section" aria-label="プレビュー要素">
+          <h2>プレビュー要素</h2>
+          <div class="shape-selector" role="group" aria-label="要素タイプ">
+            <button class="shape-btn active" data-shape="square" aria-pressed="true">四角</button>
+            <button class="shape-btn" data-shape="circle" aria-pressed="false">丸</button>
+            <button class="shape-btn" data-shape="text" aria-pressed="false">テキスト</button>
+          </div>
+        </section>
+
+        <!-- タイミング設定 -->
+        <section class="tool-section" aria-label="タイミング設定">
+          <h2>タイミング設定</h2>
+
+          <div class="form-group">
+            <label for="duration">duration（秒）</label>
+            <div class="range-row">
+              <input type="range" id="duration" min="0.1" max="5" step="0.1" value="1" aria-valuemin="0.1" aria-valuemax="5">
+              <span class="range-val" id="duration-val">1.0s</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="delay">delay（秒）</label>
+            <div class="range-row">
+              <input type="range" id="delay" min="0" max="3" step="0.1" value="0" aria-valuemin="0" aria-valuemax="3">
+              <span class="range-val" id="delay-val">0.0s</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="iteration">iteration-count</label>
+            <div class="iter-row">
+              <select id="iteration" aria-label="繰り返し回数">
+                <option value="1">1回</option>
+                <option value="2">2回</option>
+                <option value="3">3回</option>
+                <option value="5">5回</option>
+                <option value="infinite">無限 (infinite)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="direction">direction</label>
+            <select id="direction" aria-label="再生方向">
+              <option value="normal">normal</option>
+              <option value="reverse">reverse</option>
+              <option value="alternate">alternate</option>
+              <option value="alternate-reverse">alternate-reverse</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="timing">timing-function</label>
+            <select id="timing" aria-label="タイミング関数">
+              <option value="ease">ease</option>
+              <option value="ease-in">ease-in</option>
+              <option value="ease-out">ease-out</option>
+              <option value="ease-in-out">ease-in-out</option>
+              <option value="linear">linear</option>
+              <option value="steps(4, end)">steps(4)</option>
+              <option value="custom">カスタム cubic-bezier</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- cubic-bezierエディタ -->
+        <section class="tool-section bezier-section" id="bezier-section" aria-label="cubic-bezierエディタ" hidden>
+          <h2>cubic-bezier エディタ</h2>
+          <canvas id="bezier-canvas" width="200" height="200" role="img" aria-label="イージング曲線グラフ"></canvas>
+          <div class="bezier-values">
+            <div class="bezier-input-row">
+              <label for="bx1">P1x</label>
+              <input type="number" id="bx1" min="0" max="1" step="0.01" value="0.25">
+              <label for="by1">P1y</label>
+              <input type="number" id="by1" min="-1" max="2" step="0.01" value="0.1">
+            </div>
+            <div class="bezier-input-row">
+              <label for="bx2">P2x</label>
+              <input type="number" id="bx2" min="0" max="1" step="0.01" value="0.25">
+              <label for="by2">P2y</label>
+              <input type="number" id="by2" min="-1" max="2" step="0.01" value="1">
+            </div>
+          </div>
+          <p class="bezier-output" id="bezier-output">cubic-bezier(0.25, 0.1, 0.25, 1)</p>
+        </section>
+
+        <!-- キーフレームエディタ -->
+        <section class="tool-section" aria-label="キーフレームエディタ">
+          <h2>キーフレームエディタ</h2>
+          <div id="keyframe-list" aria-label="キーフレーム一覧"></div>
+          <button class="btn-add-kf" id="add-keyframe" aria-label="キーフレームを追加">+ キーフレーム追加</button>
+        </section>
+      </div>
+
+      <!-- 右：プレビュー + コード出力 -->
+      <div class="editor-right">
+        <!-- プレビュー -->
+        <section class="tool-section preview-section" aria-label="アニメーションプレビュー">
+          <h2>プレビュー</h2>
+          <div class="preview-area" id="preview-area">
+            <div class="preview-element" id="preview-el" aria-label="アニメーションプレビュー要素"></div>
+          </div>
+          <div class="preview-controls">
+            <button class="btn-play" id="btn-play" aria-label="アニメーション再生">再生</button>
+            <button class="btn-stop" id="btn-stop" aria-label="アニメーション停止">停止</button>
+          </div>
+        </section>
+
+        <!-- 広告ユニット2（プレビュー下） -->
+        <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+        <!-- CSS出力 -->
+        <section class="tool-section output-section" aria-label="CSS出力">
+          <h2>生成されたCSS</h2>
+          <div class="output-toolbar">
+            <button class="btn-copy" id="btn-copy" aria-label="CSSコードをコピー">コピー</button>
+            <span class="copy-msg" id="copy-msg" aria-live="polite"></span>
+          </div>
+          <pre class="css-output" id="css-output" role="region" aria-label="生成CSSコード"><code id="css-code"></code></pre>
+        </section>
+      </div>
+    </div>
+
+    <!-- 広告ユニット3（使い方セクション上） -->
+    <div class="ad-unit" id="ad-howto" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>プリセット選択</strong> — 「Fade In」「Bounce」などのプリセットボタンをクリックすると、キーフレームとタイミングが自動入力されます。</li>
+        <li><strong>プレビュー要素の選択</strong> — 四角・丸・テキストから対象要素を選んでください。</li>
+        <li><strong>タイミング設定</strong> — duration（再生時間）・delay（開始遅延）・iteration-count（繰り返し）・direction（再生方向）・timing-function（加速度）をスライダーや選択肢で調整します。</li>
+        <li><strong>キーフレーム編集</strong> — 0% / 50% / 100% などの各コマでtransform・opacity・color・backgroundを個別に設定できます。</li>
+        <li><strong>再生ボタンで確認</strong> — 「再生」ボタンを押すとリアルタイムでアニメーションが動作します。</li>
+        <li><strong>CSSコードをコピー</strong> — 「コピー」ボタンで@keyframesとanimationプロパティを一括コピーし、自分のプロジェクトに貼り付けてください。</li>
+      </ol>
+
+      <h2>CSSアニメーションとは</h2>
+      <p>CSSアニメーションはJavaScriptなしでHTML要素に動きをつける技術です。<code>@keyframes</code>ルールで各コマの状態を定義し、<code>animation</code>プロパティで要素に適用します。主なプロパティは<code>animation-duration</code>（再生時間）、<code>animation-delay</code>（開始遅延）、<code>animation-iteration-count</code>（繰り返し回数）、<code>animation-direction</code>（再生方向）、<code>animation-timing-function</code>（イージング）です。フェード・スライド・バウンスなどWebサイトのUXを高める演出に広く使われており、GPUアクセラレーションが効くtransformとopacityを組み合わせるとパフォーマンスも最適化できます。</p>
+
+      <h2>cubic-bezierとは</h2>
+      <p>cubic-bezierはアニメーションの速度変化（イージング）をカスタムで定義する関数です。4つの値 <code>cubic-bezier(x1, y1, x2, y2)</code> で制御点を指定し、ease・ease-in・ease-outなどの既定値では表現できない独自の動きを作れます。当ツールのcanvasエディタでは制御点をドラッグして視覚的に曲線を確認できます。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
