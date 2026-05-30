@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="y=sin(x)・二次関数・指数関数などをブラウザで即グラフ描画。パラメータをスライダーで変化させてリアルタイム確認。高校数学・大学数学の理解に。登録不要・無料。">
+
+  <!-- OGP -->
+  <meta property="og:title" content="数学グラフ計算ツール【無料】関数グラフ描画シミュレーター | Keisanlab">
+  <meta property="og:description" content="y=sin(x)・二次関数・指数関数などをブラウザで即グラフ描画。パラメータをスライダーで変化させてリアルタイム確認。高校数学・大学数学の理解に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/math-visualizer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-math-visualizer.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="数学グラフ計算ツール【無料】関数グラフ描画シミュレーター | Keisanlab">
+  <meta name="twitter:description" content="y=sin(x)・二次関数・指数関数などをブラウザで即グラフ描画。パラメータをスライダーで変化させてリアルタイム確認。高校数学・大学数学の理解に。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-math-visualizer.png">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/math-visualizer/">
+
+  <title>数学グラフ計算ツール【無料】関数グラフ描画シミュレーター | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>数学グラフ計算ツール — 関数グラフ描画シミュレーター</h1>
+    <p class="subtitle">y=f(x)の関数をリアルタイム描画。スライダーでパラメータを変化させて数学の動きを直感的に理解。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section" aria-label="グラフ描画ツール">
+
+      <!-- 関数入力パネル -->
+      <div class="panel function-panel">
+        <h2>関数を設定</h2>
+
+        <!-- プリセット -->
+        <div class="preset-row">
+          <label for="preset-select">プリセット関数</label>
+          <select id="preset-select" aria-label="プリセット関数を選択">
+            <option value="">-- プリセットを選択 --</option>
+            <option value="sin">y = a·sin(b·x + c)</option>
+            <option value="cos">y = a·cos(b·x + c)</option>
+            <option value="tan">y = a·tan(b·x + c)</option>
+            <option value="quad">y = a·x² + b·x + c</option>
+            <option value="cubic">y = a·x³ + b·x + c</option>
+            <option value="exp">y = a·e^(b·x)</option>
+            <option value="log">y = a·ln(b·x)</option>
+            <option value="abs">y = a·|x + b| + c</option>
+            <option value="sqrt">y = a·√(x + b) + c</option>
+            <option value="linear">y = a·x + b</option>
+          </select>
+        </div>
+
+        <!-- 関数リスト（最大3本） -->
+        <div id="function-list" class="function-list">
+          <!-- 関数1 -->
+          <div class="func-entry" data-index="0">
+            <div class="func-header">
+              <span class="func-color-dot" style="background:#e74c3c;" aria-hidden="true"></span>
+              <span class="func-label">関数 1</span>
+              <label class="func-visible-toggle" title="表示/非表示">
+                <input type="checkbox" class="func-visible" checked aria-label="関数1を表示">
+                <span>表示</span>
+              </label>
+              <button class="func-remove-btn" aria-label="関数1を削除" disabled>削除</button>
+            </div>
+            <div class="func-expr-row">
+              <label for="func-expr-0">y =</label>
+              <input type="text" id="func-expr-0" class="func-expr" value="sin(x)" placeholder="例: sin(x)" autocomplete="off" spellcheck="false">
+              <span class="func-error" aria-live="polite"></span>
+            </div>
+          </div>
+        </div>
+
+        <button id="add-func-btn" class="btn-secondary" aria-label="関数を追加（最大3本）">+ 関数を追加</button>
+
+        <!-- パラメータスライダー -->
+        <div class="slider-group" aria-label="パラメータ設定">
+          <h3>パラメータ</h3>
+          <div class="slider-row">
+            <label for="param-a">a = <span id="param-a-val">1.0</span></label>
+            <input type="range" id="param-a" min="-5" max="5" step="0.1" value="1.0" aria-label="パラメータa">
+          </div>
+          <div class="slider-row">
+            <label for="param-b">b = <span id="param-b-val">1.0</span></label>
+            <input type="range" id="param-b" min="-5" max="5" step="0.1" value="1.0" aria-label="パラメータb">
+          </div>
+          <div class="slider-row">
+            <label for="param-c">c = <span id="param-c-val">0.0</span></label>
+            <input type="range" id="param-c" min="-5" max="5" step="0.1" value="0.0" aria-label="パラメータc">
+          </div>
+        </div>
+
+        <!-- 描画範囲 -->
+        <div class="range-group" aria-label="描画範囲設定">
+          <h3>描画範囲</h3>
+          <div class="range-row">
+            <label for="x-min">x 最小</label>
+            <input type="number" id="x-min" value="-10" step="1" aria-label="x軸最小値">
+            <label for="x-max">x 最大</label>
+            <input type="number" id="x-max" value="10" step="1" aria-label="x軸最大値">
+          </div>
+          <div class="range-row">
+            <label for="y-min">y 最小</label>
+            <input type="number" id="y-min" value="-5" step="1" aria-label="y軸最小値">
+            <label for="y-max">y 最大</label>
+            <input type="number" id="y-max" value="5" step="1" aria-label="y軸最大値">
+          </div>
+          <button id="auto-range-btn" class="btn-ghost">Y軸 自動調整</button>
+        </div>
+      </div>
+
+      <!-- キャンバス -->
+      <div class="canvas-wrapper">
+        <canvas id="graph-canvas" aria-label="グラフ描画エリア"></canvas>
+        <div id="coord-display" class="coord-display" aria-live="polite" aria-label="現在の座標">x = 0.00, y = 0.00</div>
+        <button id="download-btn" class="btn-download" aria-label="グラフをPNG形式でダウンロード">PNG ダウンロード</button>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（ツール下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>プリセット関数</strong>を選ぶか、テキストボックスに直接 <code>sin(x)</code>・<code>x^2</code> などの式を入力します。</li>
+        <li><strong>パラメータ a・b・c のスライダー</strong>を動かすと、グラフがリアルタイムで変化します。係数や位相のずれを直感的に確認できます。</li>
+        <li>「<strong>+ 関数を追加</strong>」で最大3本の関数を重ね描きできます。交点や大小関係の比較に便利です。</li>
+        <li><strong>描画範囲</strong>の入力欄で x 軸・y 軸の表示幅を変えられます。「Y軸 自動調整」ボタンで最適な y 範囲を自動計算します。</li>
+        <li><strong>グラフ上にマウスを乗せる（またはタップ）</strong>と、その位置の (x, y) 座標がリアルタイムで表示されます。</li>
+        <li>「<strong>PNG ダウンロード</strong>」でグラフ画像を保存。レポートや課題提出に使えます。</li>
+      </ol>
+
+      <h2>利用できる関数・演算子</h2>
+      <div class="syntax-table-wrap">
+        <table class="syntax-table">
+          <thead><tr><th>記法</th><th>意味</th><th>例</th></tr></thead>
+          <tbody>
+            <tr><td>x^2, x^3</td><td>べき乗</td><td>x^2 → x²</td></tr>
+            <tr><td>sqrt(x)</td><td>平方根</td><td>sqrt(x+1)</td></tr>
+            <tr><td>abs(x)</td><td>絶対値</td><td>abs(x-2)</td></tr>
+            <tr><td>sin, cos, tan</td><td>三角関数</td><td>sin(2*x)</td></tr>
+            <tr><td>asin, acos, atan</td><td>逆三角関数</td><td>asin(x)</td></tr>
+            <tr><td>exp(x)</td><td>eのx乗</td><td>exp(0.5*x)</td></tr>
+            <tr><td>log(x), ln(x)</td><td>自然対数</td><td>log(x)</td></tr>
+            <tr><td>log10(x)</td><td>常用対数</td><td>log10(x)</td></tr>
+            <tr><td>PI, E</td><td>円周率・自然定数</td><td>sin(PI*x)</td></tr>
+            <tr><td>a, b, c</td><td>スライダー値</td><td>a*sin(b*x+c)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>数学グラフ描画ツールとは</h2>
+      <p>
+        数学グラフ描画ツールは、高校数学・大学数学で学ぶ関数（三角関数・二次関数・指数関数・対数関数など）をブラウザ上でグラフ化するシミュレーターです。
+        教科書に出てくる <code>y = a·sin(bx + c)</code> の形で、スライダーを動かすと振幅・周期・位相がどのように変わるか視覚的に確認できます。
+        数式の暗記だけでなく、パラメータがグラフ形状に与える影響を体験的に学べるため、定期テスト対策・大学入試・家庭教師の指導ツールとしても活用できます。
+        インストール不要・ログイン不要で、スマートフォンでも動作します。
+      </p>
+    </section>
+
+    <!-- 広告ユニット3（フッター上） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

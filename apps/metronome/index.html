@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ブラウザで使えるオンラインメトロノーム。BPMを叩いて検出するタップテンポ機能付き。拍子・スウィング設定対応。ギター・ピアノ・ドラム練習に。登録不要・無料。">
+  <title>メトロノーム【無料・オンライン】BPMタップテンポ検出 | Keisanlab</title>
+
+  <meta property="og:title" content="メトロノーム【無料・オンライン】BPMタップテンポ検出 | Keisanlab">
+  <meta property="og:description" content="ブラウザで使えるオンラインメトロノーム。BPMを叩いて検出するタップテンポ機能付き。拍子・スウィング設定対応。ギター・ピアノ・ドラム練習に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/metronome/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-metronome.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-metronome.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/metronome/">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link" aria-label="ツール一覧に戻る">&#8592; ツール一覧</a>
+      <h1>オンラインメトロノーム — BPMタップテンポ検出ツール</h1>
+      <p class="subtitle">ギター・ピアノ・ドラム練習に。タップしてBPMを自動検出。登録不要・無料。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メトロノームセクション -->
+    <section id="tool" class="tool-section" aria-label="メトロノーム">
+
+      <!-- 視覚フィードバック（ビジュアルビート） -->
+      <div class="beat-display" id="beat-display" role="status" aria-live="off" aria-label="拍インジケーター">
+        <div class="beat-dot" id="beat-dot-1" aria-hidden="true"></div>
+        <div class="beat-dot" id="beat-dot-2" aria-hidden="true"></div>
+        <div class="beat-dot" id="beat-dot-3" aria-hidden="true"></div>
+        <div class="beat-dot" id="beat-dot-4" aria-hidden="true"></div>
+        <div class="beat-dot hidden" id="beat-dot-5" aria-hidden="true"></div>
+        <div class="beat-dot hidden" id="beat-dot-6" aria-hidden="true"></div>
+      </div>
+
+      <!-- BPM表示＆速度記号 -->
+      <div class="bpm-display" aria-live="polite">
+        <div class="bpm-number" id="bpm-number" aria-label="現在のBPM">120</div>
+        <div class="tempo-name" id="tempo-name">Moderato</div>
+      </div>
+
+      <!-- BPMスライダー -->
+      <div class="control-row">
+        <label for="bpm-slider" class="control-label">BPM</label>
+        <div class="slider-wrap">
+          <span class="slider-min">20</span>
+          <input
+            type="range"
+            id="bpm-slider"
+            min="20"
+            max="300"
+            value="120"
+            step="1"
+            aria-label="BPM設定スライダー"
+          >
+          <span class="slider-max">300</span>
+        </div>
+        <input
+          type="number"
+          id="bpm-input"
+          min="20"
+          max="300"
+          value="120"
+          class="bpm-input-num"
+          aria-label="BPM数値入力"
+        >
+      </div>
+
+      <!-- 拍子設定 -->
+      <div class="control-row">
+        <label class="control-label">拍子</label>
+        <div class="time-sig-group" role="group" aria-label="拍子選択">
+          <button class="time-sig-btn" data-beats="2" data-division="4" aria-label="2/4拍子">2/4</button>
+          <button class="time-sig-btn active" data-beats="4" data-division="4" aria-label="4/4拍子">4/4</button>
+          <button class="time-sig-btn" data-beats="3" data-division="4" aria-label="3/4拍子">3/4</button>
+          <button class="time-sig-btn" data-beats="6" data-division="8" aria-label="6/8拍子">6/8</button>
+          <button class="time-sig-btn" data-beats="5" data-division="4" aria-label="5/4拍子">5/4</button>
+        </div>
+      </div>
+
+      <!-- スウィング設定 -->
+      <div class="control-row">
+        <label for="swing-slider" class="control-label">スウィング</label>
+        <div class="slider-wrap">
+          <span class="slider-min">0%</span>
+          <input
+            type="range"
+            id="swing-slider"
+            min="0"
+            max="50"
+            value="0"
+            step="5"
+            aria-label="スウィング率スライダー"
+          >
+          <span class="slider-max">50%</span>
+        </div>
+        <span class="swing-value" id="swing-value" aria-live="polite">0%</span>
+      </div>
+
+      <!-- 開始・停止ボタン -->
+      <div class="main-controls">
+        <button class="btn-start-stop" id="btn-start-stop" aria-label="メトロノーム開始">
+          <span class="btn-icon" id="btn-icon" aria-hidden="true">&#9654;</span>
+          <span id="btn-label">開始</span>
+        </button>
+      </div>
+
+      <!-- 広告ユニット2（メインツール内・結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+      <!-- タップテンポ -->
+      <div class="tap-section">
+        <h2 class="section-title">タップテンポ</h2>
+        <p class="tap-desc">リズムに合わせてボタンを叩くとBPMを自動検出します（直近8回の平均）</p>
+        <button class="btn-tap" id="btn-tap" aria-label="タップしてBPMを検出">
+          TAP
+        </button>
+        <div class="tap-result" id="tap-result" aria-live="polite"></div>
+        <button class="btn-reset-tap" id="btn-reset-tap" aria-label="タップリセット">タップリセット</button>
+      </div>
+
+      <!-- 曲名メモ -->
+      <div class="memo-section">
+        <h2 class="section-title">練習メモ</h2>
+        <div class="memo-row">
+          <label for="song-name" class="memo-label">曲名</label>
+          <input
+            type="text"
+            id="song-name"
+            class="memo-input"
+            placeholder="例: 月光ソナタ"
+            maxlength="60"
+            aria-label="練習曲名"
+          >
+        </div>
+        <div class="memo-row">
+          <label for="target-bpm" class="memo-label">目標BPM</label>
+          <input
+            type="number"
+            id="target-bpm"
+            class="memo-input memo-bpm"
+            placeholder="例: 144"
+            min="20"
+            max="300"
+            aria-label="目標BPM"
+          >
+        </div>
+        <button class="btn-save-memo" id="btn-save-memo" aria-label="メモを保存">保存する</button>
+        <div class="memo-saved-list" id="memo-saved-list" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>BPMスライダーまたは数値入力で練習したいテンポを設定する</li>
+        <li>拍子ボタン（4/4・3/4・6/8など）で拍子を選ぶ</li>
+        <li>「開始」ボタンを押すとメトロノームが動作し、拍に合わせてドットが光る</li>
+        <li>曲のリズムに合わせて「TAP」ボタンを繰り返し叩くとBPMが自動検出される</li>
+        <li>スウィングスライダーを動かすとジャズ・ブルース系のスウィングリズムに対応</li>
+        <li>「練習メモ」に曲名と目標BPMを入力して保存すると次回も引き継がれる</li>
+      </ol>
+
+      <h2>BPM速度記号（テンポ）一覧</h2>
+      <div class="tempo-table-wrap">
+        <table class="tempo-table">
+          <thead>
+            <tr><th>速度記号</th><th>BPM範囲</th><th>意味</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Largo</td><td>20〜59</td><td>非常に遅く・広大に</td></tr>
+            <tr><td>Adagio</td><td>60〜72</td><td>ゆっくりと・ゆったりと</td></tr>
+            <tr><td>Andante</td><td>73〜89</td><td>歩くような速さで</td></tr>
+            <tr><td>Moderato</td><td>90〜120</td><td>中くらいの速さで</td></tr>
+            <tr><td>Allegro</td><td>121〜168</td><td>速く・生き生きと</td></tr>
+            <tr><td>Vivace</td><td>169〜200</td><td>速く・活発に</td></tr>
+            <tr><td>Presto</td><td>201〜300</td><td>非常に速く</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>オンラインメトロノームとは</h2>
+      <p>
+        メトロノームとは一定のテンポを刻む道具で、音楽演奏の練習に欠かせません。
+        このオンラインメトロノームはブラウザだけで動作し、アプリのインストールは一切不要です。
+        Web Audio APIを使った高精度なクリック音と視覚フィードバックで、ギター・ピアノ・ドラム・バイオリンなどあらゆる楽器の練習に対応しています。
+        タップテンポ機能では、聴いた曲のリズムを叩くだけでBPMを自動計測できるため、楽譜のないポップスやロックの曲テンポを素早く把握したい場面でも役立ちます。
+        強拍（1拍目）は高い音、弱拍は低い音で区別するため、拍子感を体に染み込ませる練習に効果的です。
+        スウィング設定はジャズやブルースのリズム練習に対応しており、0%でストレート、高い値ほどスウィング感が強くなります。
+      </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>音が出ない場合は？</dt>
+        <dd>ブラウザのサイト設定で音声が許可されているか確認してください。iOSのサイレントモード（マナーモード）は解除してください。初回クリックで音声コンテキストが初期化されます。</dd>
+        <dt>タップテンポの精度はどのくらいですか？</dt>
+        <dd>直近8回のタップ間隔の平均を取るため、3〜4回以上タップすると精度が上がります。誤タップが入った場合は「タップリセット」で初期化できます。</dd>
+        <dt>練習メモはどこに保存されますか？</dt>
+        <dd>ブラウザのlocalStorageに保存されるため、同じブラウザであれば次回アクセス時も引き継がれます。ブラウザのキャッシュを削除すると消える場合があります。</dd>
+        <dt>スマートフォンでも使えますか？</dt>
+        <dd>はい、iPhone・Androidのスマートフォン・タブレット・PCすべてに対応しています。</dd>
+      </dl>
+    </section>
+
+    <!-- 広告ユニット3（フッター直上） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

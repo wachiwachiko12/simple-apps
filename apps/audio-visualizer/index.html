@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="音声ファイルの波形をCanvas上で可視化してPNG保存。ポッドキャスト・音楽のSNS投稿用サムネイル作成に。完全ブラウザ処理・透かしなし・登録不要・無料。">
+  <title>音声波形ビジュアライザー【無料】SNS用サムネイル画像を作成 | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/audio-visualizer/">
+
+  <!-- OGP -->
+  <meta property="og:title" content="音声波形ビジュアライザー【無料】SNS用サムネイル画像を作成 | Keisanlab">
+  <meta property="og:description" content="音声ファイルの波形をCanvas上で可視化してPNG保存。ポッドキャスト・音楽のSNS投稿用サムネイル作成に。完全ブラウザ処理・透かしなし・登録不要・無料。">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-audio-visualizer.png">
+  <meta property="og:url" content="https://keisanlab.jp/apps/audio-visualizer/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Keisanlab">
+  <meta property="og:locale" content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="音声波形ビジュアライザー【無料】SNS用サムネイル画像を作成 | Keisanlab">
+  <meta name="twitter:description" content="音声ファイルの波形をCanvas上で可視化してPNG保存。ポッドキャスト・音楽のSNS投稿用サムネイル作成に。完全ブラウザ処理・透かしなし・登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-audio-visualizer.png">
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+
+  <header>
+    <h1>音声波形ビジュアライザー — SNS用波形サムネイル画像作成ツール</h1>
+    <p class="subtitle">音声ファイルをアップロードして波形をCanvasで描画・PNG保存。ポッドキャスト・音楽SNS投稿に。完全無料・透かしなし</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- ステップ1: ファイル読み込み -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">1</span> 音声ファイルを選択</h2>
+
+        <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="音声ファイルをドラッグ&ドロップまたはクリックして選択">
+          <div class="drop-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 19V6l12-3v13M9 19c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm12 0c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/>
+            </svg>
+          </div>
+          <p class="drop-text">MP3 / WAV / OGG をドラッグ&ドロップ</p>
+          <p class="drop-sub">またはクリックしてファイルを選択</p>
+          <input type="file" id="audioFile" accept="audio/mp3,audio/wav,audio/ogg,audio/*" aria-label="音声ファイルを選択">
+        </div>
+
+        <div class="file-info" id="fileInfo" hidden>
+          <span class="file-name" id="fileName"></span>
+          <button type="button" class="btn-clear" id="btnClearFile" aria-label="ファイルをクリア">✕ クリア</button>
+        </div>
+
+        <div class="divider-or"><span>または</span></div>
+
+        <button type="button" class="btn-mic" id="btnMic" aria-label="マイクからリアルタイム波形を取得">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/>
+          </svg>
+          マイクから波形を取得
+        </button>
+        <p class="mic-status" id="micStatus" hidden></p>
+      </div>
+
+      <!-- ステップ2: カスタマイズ -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">2</span> デザインをカスタマイズ</h2>
+
+        <div class="controls-grid">
+
+          <div class="control-group">
+            <label for="canvasSize">出力サイズ</label>
+            <select id="canvasSize">
+              <option value="1200x630">1200 × 630 px（OGP / SNSシェア用）</option>
+              <option value="1080x1080">1080 × 1080 px（Instagram 正方形）</option>
+              <option value="1500x500">1500 × 500 px（Twitter ヘッダー）</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="waveStyle">波形スタイル</label>
+            <select id="waveStyle">
+              <option value="bar">バー型（縦棒）</option>
+              <option value="line">ライン型（なめらか）</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="bgColor">背景色</label>
+            <div class="color-row">
+              <input type="color" id="bgColor" value="#1a1a2e" aria-label="背景色を選択">
+              <span class="color-hex" id="bgColorHex">#1a1a2e</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="waveColor1">波形グラデーション（開始色）</label>
+            <div class="color-row">
+              <input type="color" id="waveColor1" value="#e94560" aria-label="波形グラデーション開始色を選択">
+              <span class="color-hex" id="waveColor1Hex">#e94560</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="waveColor2">波形グラデーション（終了色）</label>
+            <div class="color-row">
+              <input type="color" id="waveColor2" value="#0f3460" aria-label="波形グラデーション終了色を選択">
+              <span class="color-hex" id="waveColor2Hex">#0f3460</span>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="trackTitle">曲名 / タイトル（任意）</label>
+            <input type="text" id="trackTitle" placeholder="例: My Podcast Ep.1" maxlength="60">
+          </div>
+
+          <div class="control-group">
+            <label for="artistName">アーティスト名 / サブテキスト（任意）</label>
+            <input type="text" id="artistName" placeholder="例: Keisanlab Podcast" maxlength="60">
+          </div>
+
+          <div class="control-group">
+            <label for="fontColor">テキスト色</label>
+            <div class="color-row">
+              <input type="color" id="fontColor" value="#ffffff" aria-label="テキスト色を選択">
+              <span class="color-hex" id="fontColorHex">#ffffff</span>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="button" class="btn-draw" id="btnDraw" disabled aria-label="波形を描画する">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          波形を描画
+        </button>
+      </div>
+
+      <!-- ステップ3: プレビュー・保存 -->
+      <div class="step-block">
+        <h2 class="step-title"><span class="step-num">3</span> プレビュー確認 &amp; 保存</h2>
+
+        <div class="canvas-wrapper" id="canvasWrapper">
+          <canvas id="waveCanvas" aria-label="波形プレビュー"></canvas>
+          <p class="canvas-placeholder" id="canvasPlaceholder">音声ファイルを選択して「波形を描画」を押してください</p>
+        </div>
+
+        <button type="button" class="btn-save" id="btnSave" disabled aria-label="PNG画像として保存する">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          PNG として保存（透かしなし・無料）
+        </button>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>音声ファイルを選択</strong> — MP3・WAV・OGGをドラッグ&ドロップするか、クリックしてファイルを選択します。マイクボタンからリアルタイム収録も可能です。</li>
+        <li><strong>デザインをカスタマイズ</strong> — 出力サイズ（OGP用1200×630 / Instagram用1080×1080 / Twitter用1500×500）、波形スタイル（バー型・ライン型）、背景色・グラデーション色を設定します。曲名やアーティスト名のテキストオーバーレイも追加できます。</li>
+        <li><strong>波形を描画</strong> — 「波形を描画」ボタンを押すと、Web Audio APIで音声データを解析し、Canvas上に波形を描画します。</li>
+        <li><strong>PNG保存</strong> — プレビューを確認して「PNG として保存」を押すと、透かしなしの画像がダウンロードされます。</li>
+      </ol>
+
+      <h2>音声波形ビジュアライザーとは</h2>
+      <p>
+        音声波形ビジュアライザーは、MP3・WAVなどの音声ファイルの振幅データをグラフィカルに描画し、SNS投稿用のサムネイル画像として書き出すツールです。
+        ポッドキャストの告知投稿やSpotify・Apple Podcastsへの誘導画像、音楽リリース告知のSNSカードとして広く活用されています。
+        本ツールはすべての処理をブラウザ内（Web Audio API + Canvas API）で完結させているため、音声データがサーバーにアップロードされることはなく、プライバシーが保護されます。
+        登録不要・透かしなし・完全無料でご利用いただけます。
+      </p>
+
+      <h2>対応フォーマットと出力サイズ</h2>
+      <p>
+        入力フォーマットはMP3・WAV・OGGに対応しています。
+        出力サイズはOGP/SNSシェア用の1200×630px、Instagram正方形の1080×1080px、Twitterヘッダー用の1500×500pxから選択できます。
+        すべてPNG形式で出力されるため、背景透過や高品質な画像品質が保たれます。
+        ポッドキャスターや音楽制作者がSNSマーケティングで使える波形ビジュアル素材を、専用ソフト不要でブラウザから手軽に作成できます。
+      </p>
+    </section>
+
+    <!-- 広告ユニット3（コンテンツ下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/">Keisanlab トップ</a></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="JSONの整形・圧縮・バリデーション・スキーマ自動生成をブラウザで完結。ツリービュー表示・CSV/YAML変換対応。API設計・データ確認に。登録不要・無料。">
+  <!-- OGP -->
+  <meta property="og:title" content="JSONエディタ・スキーマジェネレーター【無料・日本語】 | Keisanlab">
+  <meta property="og:description" content="JSONの整形・圧縮・バリデーション・スキーマ自動生成をブラウザで完結。ツリービュー表示・CSV/YAML変換対応。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/json-schema-editor/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-json-schema-editor.png">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSONエディタ・スキーマジェネレーター【無料・日本語】 | Keisanlab">
+  <meta name="twitter:description" content="JSONの整形・圧縮・バリデーション・スキーマ自動生成をブラウザで完結。ツリービュー表示・CSV/YAML変換対応。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-json-schema-editor.png">
+  <!-- Canonical -->
+  <link rel="canonical" href="https://keisanlab.jp/apps/json-schema-editor/">
+  <title>JSONエディタ・スキーマジェネレーター【無料・日本語】 | Keisanlab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <h1>JSONエディタ・スキーマジェネレーター — 整形・変換・バリデーション</h1>
+      <p class="subtitle">JSONの整形・圧縮・スキーマ生成・CSV/YAML変換をブラウザ完結で。登録不要・無料。</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- タブナビゲーション -->
+    <nav class="tab-nav" role="tablist" aria-label="機能タブ">
+      <button class="tab-btn active" data-tab="editor" role="tab" aria-selected="true" aria-controls="tab-editor">エディタ</button>
+      <button class="tab-btn" data-tab="tree" role="tab" aria-selected="false" aria-controls="tab-tree">ツリービュー</button>
+      <button class="tab-btn" data-tab="schema" role="tab" aria-selected="false" aria-controls="tab-schema">スキーマ生成</button>
+      <button class="tab-btn" data-tab="validate" role="tab" aria-selected="false" aria-controls="tab-validate">バリデーション</button>
+      <button class="tab-btn" data-tab="convert" role="tab" aria-selected="false" aria-controls="tab-convert">変換</button>
+    </nav>
+
+    <!-- タブ1: エディタ -->
+    <section id="tab-editor" class="tab-panel active" role="tabpanel" aria-labelledby="tab-editor">
+      <div class="tool-section">
+        <div class="editor-header">
+          <h2>JSONエディタ</h2>
+          <div class="editor-actions">
+            <button class="btn-sm" id="btn-prettify" aria-label="JSON整形">整形</button>
+            <button class="btn-sm" id="btn-minify" aria-label="JSON圧縮">圧縮</button>
+            <button class="btn-sm" id="btn-clear-editor" aria-label="クリア">クリア</button>
+            <button class="btn-sm" id="btn-copy-json" aria-label="JSONをコピー">コピー</button>
+            <label class="btn-sm btn-file" for="file-input" aria-label="ファイルを開く">
+              ファイル読込
+              <input type="file" id="file-input" accept=".json,application/json" aria-label="JSONファイル選択">
+            </label>
+          </div>
+        </div>
+
+        <div
+          id="drop-zone"
+          class="drop-zone"
+          aria-label="JSONをここにドラッグ&ドロップ"
+          role="region"
+          aria-describedby="drop-hint"
+        >
+          <p id="drop-hint" class="drop-hint">JSONファイルをここにドラッグ&ドロップ</p>
+          <textarea
+            id="json-input"
+            class="json-textarea"
+            placeholder='{"name": "Keisanlab", "version": "1.0"}'
+            spellcheck="false"
+            aria-label="JSON入力エリア"
+          ></textarea>
+        </div>
+
+        <div id="editor-status" class="status-bar" role="status" aria-live="polite">
+          <span id="status-icon" class="status-icon"></span>
+          <span id="status-msg">JSONを入力してください</span>
+          <span id="char-count" class="char-count"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- タブ2: ツリービュー -->
+    <section id="tab-tree" class="tab-panel" role="tabpanel" aria-labelledby="tab-tree">
+      <div class="tool-section">
+        <div class="editor-header">
+          <h2>ツリービュー</h2>
+          <div class="editor-actions">
+            <button class="btn-sm" id="btn-expand-all">すべて展開</button>
+            <button class="btn-sm" id="btn-collapse-all">すべて折りたたむ</button>
+          </div>
+        </div>
+        <div id="tree-view" class="tree-view" role="tree" aria-label="JSONツリービュー">
+          <p class="placeholder-text">エディタタブでJSONを入力するとツリーが表示されます</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- タブ3: スキーマ生成 -->
+    <section id="tab-schema" class="tab-panel" role="tabpanel" aria-labelledby="tab-schema">
+      <div class="tool-section">
+        <div class="editor-header">
+          <h2>JSON Schema生成（draft-07）</h2>
+          <div class="editor-actions">
+            <button class="btn-sm" id="btn-generate-schema">スキーマ生成</button>
+            <button class="btn-sm" id="btn-copy-schema">コピー</button>
+          </div>
+        </div>
+        <p class="section-desc">エディタタブのJSONからJSON Schema（draft-07）を自動生成します。</p>
+        <textarea
+          id="schema-output"
+          class="json-textarea"
+          placeholder="スキーマ生成ボタンを押すと結果が表示されます"
+          readonly
+          aria-label="生成されたJSONスキーマ"
+          spellcheck="false"
+        ></textarea>
+      </div>
+    </section>
+
+    <!-- タブ4: バリデーション -->
+    <section id="tab-validate" class="tab-panel" role="tabpanel" aria-labelledby="tab-validate">
+      <div class="tool-section">
+        <h2>スキーマバリデーション</h2>
+        <p class="section-desc">JSONとJSON Schemaを入力して、データがスキーマに準拠しているか確認します。</p>
+
+        <label for="validate-json" class="field-label">検証するJSON</label>
+        <textarea
+          id="validate-json"
+          class="json-textarea json-textarea--half"
+          placeholder='{"name": "Alice", "age": 30}'
+          spellcheck="false"
+          aria-label="バリデーション対象JSON"
+        ></textarea>
+
+        <label for="validate-schema" class="field-label">JSON Schema</label>
+        <textarea
+          id="validate-schema"
+          class="json-textarea json-textarea--half"
+          placeholder='{"type": "object", "required": ["name"], "properties": {"name": {"type": "string"}, "age": {"type": "number"}}}'
+          spellcheck="false"
+          aria-label="バリデーション用JSONスキーマ"
+        ></textarea>
+
+        <button class="btn-primary" id="btn-validate">バリデーション実行</button>
+
+        <div id="validate-result" class="validate-result" role="status" aria-live="polite" hidden></div>
+      </div>
+    </section>
+
+    <!-- タブ5: 変換 -->
+    <section id="tab-convert" class="tab-panel" role="tabpanel" aria-labelledby="tab-convert">
+      <div class="tool-section">
+        <h2>JSON変換</h2>
+        <p class="section-desc">エディタタブのJSONをCSVまたはYAML形式に変換します。</p>
+
+        <div class="convert-btns">
+          <button class="btn-primary" id="btn-to-csv">CSV に変換</button>
+          <button class="btn-primary" id="btn-to-yaml">YAML に変換</button>
+        </div>
+
+        <div class="editor-header convert-output-header" hidden id="convert-output-header">
+          <label class="field-label" id="convert-label">変換結果</label>
+          <button class="btn-sm" id="btn-copy-convert">コピー</button>
+        </div>
+        <textarea
+          id="convert-output"
+          class="json-textarea"
+          readonly
+          placeholder="変換ボタンを押すと結果が表示されます"
+          aria-label="変換結果"
+          spellcheck="false"
+          hidden
+        ></textarea>
+        <div id="convert-error" class="error-msg" role="alert" aria-live="assertive" hidden></div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（ツール下部） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol class="howto-list">
+        <li><strong>エディタ</strong>タブにJSONを貼り付けるか、ファイルをドラッグ&ドロップします。構文エラーはリアルタイムで下部に表示されます。</li>
+        <li><strong>整形</strong>ボタンでインデント付き見やすい形式に整形、<strong>圧縮</strong>ボタンで1行に圧縮できます。</li>
+        <li><strong>ツリービュー</strong>タブでJSON構造をツリー形式で確認。ノードをクリックして折りたたみ展開が可能です。</li>
+        <li><strong>スキーマ生成</strong>タブで、入力したJSONのデータ構造からJSON Schema（draft-07）を自動生成します。</li>
+        <li><strong>バリデーション</strong>タブでJSONとJSON Schemaをそれぞれ入力し、データがスキーマに準拠しているか検証します。</li>
+        <li><strong>変換</strong>タブでJSONをCSVまたはYAML形式に変換し、クリップボードにコピーできます。</li>
+      </ol>
+
+      <h2>JSONエディタ・スキーマジェネレーターとは</h2>
+      <p>
+        このツールはJSON（JavaScript Object Notation）の編集・検証・変換をブラウザ上で完結できる無料Webアプリです。
+        エンジニアのAPI設計やデータ確認作業を効率化します。
+        JSON Schemaとはデータの構造を定義する仕様で、APIリクエスト・レスポンスのバリデーションや
+        設定ファイルのドキュメント化に広く使われています。本ツールはJSON Schema draft-07に対応しており、
+        type・required・properties・items・enum などの主要キーワードを自動生成します。
+        変換機能ではJSONオブジェクト配列をCSVに変換して表計算ソフトへの取り込みが、
+        YAML変換ではKubernetesやAnsibleなどのインフラ設定ファイル作成に役立ちます。
+        データはすべてブラウザ内で処理されるため、サーバーへの送信は一切ありません。
+      </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>入力したJSONはサーバーに送信されますか？</dt>
+        <dd>いいえ。すべての処理はブラウザ内（クライアントサイド）で完結しており、データは外部に送信されません。</dd>
+        <dt>JSON Schema draft-07とは何ですか？</dt>
+        <dd>JSONデータの構造を記述するための仕様です。フィールドの型・必須項目・取りうる値の範囲などを定義でき、バリデーションや自動コード生成に使われます。</dd>
+        <dt>CSV変換は配列以外のJSONでも使えますか？</dt>
+        <dd>CSV変換はJSONがオブジェクトの配列（例: <code>[{"a":1},{"a":2}]</code>）の場合に利用できます。ネストされたオブジェクトはJSON文字列化されます。</dd>
+      </dl>
+    </section>
+
+    <!-- 広告ユニット3（使い方セクション下） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

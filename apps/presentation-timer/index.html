@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="発表残り時間を大画面に表示。残り時間で色変化・複数セッション管理・フルスクリーン対応。学会発表・セミナー・LTイベントの進行に。登録不要・無料。">
+  <title>プレゼンタイマー【無料・フルスクリーン】登壇者・MC用ステージタイマー | Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/presentation-timer/">
+
+  <!-- OGP -->
+  <meta property="og:title" content="プレゼンタイマー【無料・フルスクリーン】登壇者・MC用ステージタイマー | Keisanlab">
+  <meta property="og:description" content="発表残り時間を大画面に表示。残り時間で色変化・複数セッション管理・フルスクリーン対応。学会発表・セミナー・LTイベントの進行に。登録不要・無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/presentation-timer/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-presentation-timer.png">
+  <meta property="og:site_name" content="Keisanlab">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="プレゼンタイマー【無料・フルスクリーン】登壇者・MC用ステージタイマー | Keisanlab">
+  <meta name="twitter:description" content="発表残り時間を大画面に表示。残り時間で色変化・複数セッション管理・フルスクリーン対応。学会発表・セミナー・LTイベントの進行に。登録不要・無料。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-presentation-timer.png">
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Google AdSense -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+</head>
+<body>
+  <header>
+    <h1>プレゼンタイマー — 登壇者・MC用フルスクリーンステージタイマー</h1>
+    <p class="subtitle">発表・セミナー・学会・LTイベントの残り時間を大画面に表示。無料・登録不要。</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- タブ切り替え -->
+      <div class="tab-bar" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="single">シングルタイマー</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="session">セッション管理</button>
+      </div>
+
+      <!-- シングルタイマー設定 -->
+      <div id="panel-single" class="tab-panel">
+        <div class="preset-row" aria-label="プリセット時間">
+          <span class="preset-label">プリセット:</span>
+          <button class="preset-btn" data-min="5" aria-label="5分">5分</button>
+          <button class="preset-btn" data-min="10" aria-label="10分">10分</button>
+          <button class="preset-btn" data-min="15" aria-label="15分">15分</button>
+          <button class="preset-btn" data-min="20" aria-label="20分">20分</button>
+          <button class="preset-btn" data-min="30" aria-label="30分">30分</button>
+        </div>
+
+        <div class="input-row">
+          <label for="input-min">分</label>
+          <input id="input-min" type="number" min="0" max="99" value="5" inputmode="numeric" aria-label="分">
+          <span class="colon">:</span>
+          <label for="input-sec">秒</label>
+          <input id="input-sec" type="number" min="0" max="59" value="0" inputmode="numeric" aria-label="秒">
+        </div>
+
+        <div class="input-row message-row">
+          <label for="input-message">表示メッセージ（演題名など）</label>
+          <input id="input-message" type="text" placeholder="例: 発表タイトル・登壇者名" maxlength="60" aria-label="タイマー下に表示するメッセージ">
+        </div>
+
+        <div class="btn-row">
+          <button id="btn-start" class="btn-primary" aria-label="タイマー開始">開始</button>
+          <button id="btn-pause" class="btn-secondary" disabled aria-label="一時停止">一時停止</button>
+          <button id="btn-reset" class="btn-secondary" aria-label="リセット">リセット</button>
+          <button id="btn-fullscreen" class="btn-accent" aria-label="フルスクリーン表示">フルスクリーン</button>
+        </div>
+      </div>
+
+      <!-- セッション管理 -->
+      <div id="panel-session" class="tab-panel hidden">
+        <p class="session-desc">複数のセッションを順番に進行できます。各セッションの時間とラベルを設定してください。</p>
+
+        <div id="session-list" aria-label="セッションリスト">
+          <!-- JS で動的生成 -->
+        </div>
+
+        <button id="btn-add-session" class="btn-secondary btn-add" aria-label="セッション追加">+ セッション追加</button>
+
+        <div class="btn-row">
+          <button id="btn-session-start" class="btn-primary" aria-label="セッション開始">セッション開始</button>
+          <button id="btn-session-fullscreen" class="btn-accent" aria-label="フルスクリーン表示">フルスクリーン</button>
+        </div>
+      </div>
+
+      <!-- タイマー表示（インライン） -->
+      <div id="timer-display" class="timer-display" aria-live="polite" aria-label="タイマー表示">
+        <div id="timer-clock" class="timer-clock">00:00</div>
+        <div id="timer-msg" class="timer-msg"></div>
+        <div id="timer-status" class="timer-status">待機中</div>
+        <div id="session-progress" class="session-progress hidden"></div>
+        <button id="btn-next-session" class="btn-next-session hidden" aria-label="次のセッションへ進む">次のセッションへ &rarr;</button>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（タイマー下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <ol>
+        <li><strong>時間を設定する</strong>: プリセットボタン（5分・10分・15分・20分・30分）またはテキストボックスで分・秒を入力します。</li>
+        <li><strong>メッセージを入力する</strong>: 演題名や登壇者名など、タイマー下に表示したい文字を入力します（省略可）。</li>
+        <li><strong>開始ボタンを押す</strong>: カウントダウンが始まります。残り2分で黄色、残り1分で赤色に背景が変化します。</li>
+        <li><strong>フルスクリーンで表示する</strong>: 「フルスクリーン」ボタンを押すと、会場のスクリーンや別モニターにフルサイズで残り時間を表示できます。</li>
+        <li><strong>セッション管理を使う</strong>: 「セッション管理」タブで複数の発表・質疑応答をリスト化し、順番に進行できます。</li>
+      </ol>
+
+      <h2>このツールについて</h2>
+      <p>
+        プレゼンタイマーは、学会発表・セミナー・LTイベント・社内勉強会など、時間管理が重要な場面で活躍する無料のステージタイマーです。
+        残り時間を画面いっぱいに大きく表示し、残り2分になると背景が黄色、残り1分になると赤色に自動切り替えされるため、演者が時間超過に気づきやすい設計です。
+        フルスクリーン機能を使えばセカンドモニターや会場プロジェクターにそのまま投影でき、海外有料サービス「StageTimer.io」の代替として無料でお使いいただけます。
+        セッション管理機能では「発表15分→質疑5分」のように複数の時間枠を事前に設定し、終了するたびに自動で次のセッションへ切り替わります。
+        登録・インストール不要でブラウザのみで動作します。
+      </p>
+
+      <h2>こんな場面におすすめ</h2>
+      <ul>
+        <li>学会・研究発表会のタイムキーパー</li>
+        <li>セミナー・研修の進行MC</li>
+        <li>LT（ライトニングトーク）イベントの5分タイマー</li>
+        <li>社内勉強会・朝礼の時間管理</li>
+        <li>オンライン会議・ウェビナーの持ち時間表示</li>
+      </ul>
+    </section>
+
+    <!-- 広告ユニット3（フッター上） -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true"></div>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/">Keisanlab トップ</a></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <!-- フルスクリーンオーバーレイ -->
+  <div id="fs-overlay" class="fs-overlay hidden" role="dialog" aria-modal="true" aria-label="フルスクリーンタイマー">
+    <div id="fs-clock" class="fs-clock">00:00</div>
+    <div id="fs-msg" class="fs-msg"></div>
+    <div id="fs-status" class="fs-status">待機中</div>
+    <div id="fs-session-progress" class="fs-session-progress"></div>
+    <div class="fs-controls">
+      <button id="fs-btn-start" class="fs-btn" aria-label="開始">開始</button>
+      <button id="fs-btn-pause" class="fs-btn" disabled aria-label="一時停止">一時停止</button>
+      <button id="fs-btn-reset" class="fs-btn" aria-label="リセット">リセット</button>
+      <button id="fs-btn-next" class="fs-btn hidden" aria-label="次のセッション">次へ</button>
+      <button id="fs-btn-exit" class="fs-btn fs-btn-exit" aria-label="フルスクリーン終了">閉じる</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
