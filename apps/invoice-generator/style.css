@@ -1,17 +1,33 @@
+:root {
+  --primary: #0f766e;
+  --primary-hover: #0d6b63;
+  --primary-rgb: 15, 118, 110;
+  --primary-soft: #f0fdfa;
+  --primary-border: #99f6e4;
+  --bg: #f9f7f4;
+  --surface: #ffffff;
+  --text: #1a1a2e;
+  --muted: #6b7280;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
   font-size: 15px;
-  color: #333;
-  background: #f0f2f5;
+  color: var(--text);
+  background: var(--bg);
 }
 
 /* ===== HEADER ===== */
 header {
-  background: #1b5e20;
+  background: linear-gradient(135deg, #065f52 0%, #0f766e 60%, #14b8a6 100%);
   color: white;
-  padding: 1.2rem 1rem;
+  padding: 1.2rem 1.25rem;
   text-align: center;
 }
 header h1 { font-size: 1.25rem; font-weight: 700; }
@@ -29,7 +45,7 @@ header h1 { font-size: 1.25rem; font-weight: 700; }
   width: 300px;
   min-width: 300px;
   background: white;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -40,7 +56,7 @@ header h1 { font-size: 1.25rem; font-weight: 700; }
 
 .tab-bar {
   display: flex;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .tab-btn {
@@ -50,16 +66,17 @@ header h1 { font-size: 1.25rem; font-weight: 700; }
   font-weight: 600;
   border: none;
   background: white;
-  color: #666;
+  color: #9ca3af;
   cursor: pointer;
   transition: all 0.15s;
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
+  min-height: 44px;
 }
 
 .tab-btn.active {
-  color: #1b5e20;
-  border-bottom-color: #1b5e20;
+  color: var(--primary);
+  border-bottom-color: var(--primary);
 }
 
 .tab-content {
@@ -72,15 +89,15 @@ header h1 { font-size: 1.25rem; font-weight: 700; }
 .tab-content.active { display: block; }
 
 .tab-content h2 {
-  font-size: 0.9rem;
-  color: #1b5e20;
+  font-size: 0.875rem;
+  color: var(--primary);
   margin-bottom: 0.75rem;
   font-weight: 700;
 }
 
 .save-note {
   font-size: 0.72rem;
-  color: #888;
+  color: #9ca3af;
   margin-bottom: 0.75rem;
 }
 
@@ -88,7 +105,7 @@ label {
   display: block;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #555;
+  color: #374151;
   margin: 0.7rem 0 0.25rem;
 }
 
@@ -100,25 +117,27 @@ textarea {
   width: 100%;
   padding: 0.5rem 0.6rem;
   font-size: 1rem;
-  border: 1.5px solid #ddd;
+  border: 1.5px solid var(--border);
   border-radius: 6px;
   background: white;
   font-family: inherit;
   -webkit-text-size-adjust: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: #1b5e20;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.15);
 }
 
 textarea { resize: vertical; }
 
 /* ===== LINE ITEMS ===== */
 .item-row {
-  background: #f9f9f9;
-  border: 1px solid #eee;
-  border-radius: 6px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
   padding: 0.6rem;
   margin-bottom: 0.5rem;
 }
@@ -138,7 +157,7 @@ textarea { resize: vertical; }
   text-align: right;
   font-size: 0.82rem;
   font-weight: 700;
-  color: #1b5e20;
+  color: var(--primary);
   margin-top: 0.3rem;
 }
 
@@ -148,12 +167,16 @@ textarea { resize: vertical; }
   margin-top: 0.4rem;
   padding: 0.3rem;
   font-size: 0.75rem;
-  color: #c62828;
+  color: #dc2626;
   background: white;
-  border: 1px solid #ffcdd2;
+  border: 1px solid #fecaca;
   border-radius: 4px;
   cursor: pointer;
+  transition: background 0.15s;
+  min-height: 44px;
 }
+
+.remove-row-btn:hover { background: #fef2f2; }
 
 .add-row-btn {
   display: block;
@@ -162,14 +185,17 @@ textarea { resize: vertical; }
   padding: 0.5rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #1b5e20;
-  background: #f1f8e9;
-  border: 1.5px dashed #81c784;
-  border-radius: 6px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  border: 1.5px dashed var(--primary-border);
+  border-radius: 8px;
   cursor: pointer;
   min-height: 44px;
   touch-action: manipulation;
+  transition: background 0.15s;
 }
+
+.add-row-btn:hover { background: #ccfbf1; }
 
 /* ===== PREVIEW PANEL ===== */
 .preview-panel {
@@ -190,25 +216,31 @@ textarea { resize: vertical; }
 }
 
 .print-btn {
-  padding: 0.6rem 1.5rem;
+  padding: 0.625rem 1.5rem;
   font-size: 0.9rem;
   font-weight: 700;
-  background: #1b5e20;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+  min-height: 44px;
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
 }
 
-.print-btn:hover { background: #2e7d32; }
+.print-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+}
 
-/* ===== INVOICE ===== */
+/* ===== INVOICE (keep professional/print style) ===== */
 .invoice {
   width: 100%;
   max-width: 760px;
   background: white;
   padding: 2.5rem 3rem;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.1);
   min-height: 297mm;
 }
 
@@ -238,7 +270,6 @@ textarea { resize: vertical; }
   margin-right: 0.5rem;
 }
 
-/* 宛先・発行者 */
 .inv-parties {
   display: flex;
   justify-content: space-between;
@@ -261,7 +292,6 @@ textarea { resize: vertical; }
 
 .sender-name { font-size: 1rem; font-weight: 700; color: #222; }
 
-/* 請求金額ボックス */
 .inv-total-box {
   border: 2px solid #1a237e;
   border-radius: 6px;
@@ -275,7 +305,6 @@ textarea { resize: vertical; }
 .inv-total-label { font-size: 0.9rem; font-weight: 600; color: #333; }
 .inv-total-amount { font-size: 1.6rem; font-weight: 700; color: #1a237e; }
 
-/* 明細テーブル */
 .inv-table {
   width: 100%;
   border-collapse: collapse;
@@ -305,7 +334,6 @@ textarea { resize: vertical; }
 .col-price { width: 17%; text-align: right; }
 .col-amount{ width: 18%; text-align: right; font-weight: 600; }
 
-/* 小計・合計 */
 .inv-subtotals {
   border-top: 2px solid #1a237e;
   padding-top: 0.5rem;
@@ -329,7 +357,6 @@ textarea { resize: vertical; }
   color: #1a237e;
 }
 
-/* 振込先 */
 .inv-bank {
   background: #f5f5f5;
   border-radius: 6px;
@@ -345,7 +372,6 @@ textarea { resize: vertical; }
   font-size: 0.82rem;
 }
 
-/* 備考 */
 .inv-note-section {
   border-top: 1px solid #e0e0e0;
   padding-top: 0.75rem;
@@ -369,15 +395,16 @@ textarea { resize: vertical; }
 }
 
 .howto-inner {
-  background: white;
-  border-radius: 10px;
+  background: var(--surface);
+  border-radius: var(--radius);
   padding: 1.5rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,0.04);
 }
 
 .howto-inner h2 {
   font-size: 0.95rem;
-  color: #1b5e20;
+  color: var(--primary);
   margin: 1rem 0 0.5rem;
   font-weight: 700;
 }
@@ -386,7 +413,7 @@ textarea { resize: vertical; }
 
 .howto-inner ol, .howto-inner p {
   font-size: 0.85rem;
-  color: #555;
+  color: var(--muted);
   line-height: 1.7;
 }
 
@@ -397,13 +424,13 @@ footer {
   text-align: center;
   padding: 1.5rem 1rem;
   font-size: 0.82rem;
-  color: #888;
+  color: #9ca3af;
 }
-footer a { color: #666; }
+footer a { color: #6b7280; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 
-/* ===== 広告ユニット ===== */
+/* ===== 広告 ===== */
 .ad-unit {
-  min-height: 90px;
   margin: 1.5rem auto;
   max-width: 728px;
   text-align: center;
@@ -413,9 +440,9 @@ footer a { color: #666; }
 .affiliate-block {
   margin: 1rem 0 1.5rem;
   padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  background: #f9fafb;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
   text-align: center;
 }
 .affiliate-label {
@@ -423,14 +450,14 @@ footer a { color: #666; }
   font-size: 0.7rem;
   font-weight: 700;
   color: #fff;
-  background: #999;
+  background: #9ca3af;
   padding: 1px 6px;
   border-radius: 3px;
   margin-bottom: 0.5rem;
 }
 .affiliate-desc {
   font-size: 0.85rem;
-  color: #555;
+  color: var(--muted);
   margin-bottom: 0.75rem;
 }
 
@@ -470,10 +497,9 @@ footer a { color: #666; }
 }
 
 @media (max-width: 700px) {
-  /* モバイルビュー切り替えバー */
   .mobile-view-bar {
     display: flex;
-    background: #1b5e20;
+    background: var(--primary);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -503,19 +529,19 @@ footer a { color: #666; }
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
     font-weight: 600;
-    color: #1b5e20;
-    background: #f1f8e9;
-    border: 1.5px solid #81c784;
+    color: var(--primary);
+    background: var(--primary-soft);
+    border: 1.5px solid var(--primary-border);
     border-radius: 6px;
     cursor: pointer;
     touch-action: manipulation;
+    min-height: 44px;
   }
 
   .app-layout {
     flex-direction: column;
   }
 
-  /* デフォルト: フォームを表示、プレビューを非表示 */
   .form-panel {
     width: 100%;
     min-width: unset;
@@ -530,7 +556,6 @@ footer a { color: #666; }
     padding: 0.75rem 0.5rem;
   }
 
-  /* プレビュー表示時 */
   .app-layout.show-preview .form-panel {
     display: none;
   }
@@ -557,7 +582,6 @@ footer a { color: #666; }
   .inv-parties { flex-direction: column; gap: 1rem; }
   .inv-sender { text-align: left; min-width: unset; }
 
-  /* テーブルをスクロール可能に */
   .inv-table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;

@@ -133,9 +133,10 @@ button {
   cursor: pointer;
   font-weight: 600;
   font-size: 0.85rem;
-  min-height: 36px;
+  min-height: 44px;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.15s, background 0.15s, transform 0.12s;
 }
 
 button:hover:enabled {
@@ -449,7 +450,6 @@ body.resizing-level, body.resizing-level * { cursor: ew-resize !important; }
 
 /* ===== 広告ユニット ===== */
 .ad-unit {
-  min-height: 90px;
   margin: 1.5rem auto;
   max-width: 728px;
   text-align: center;

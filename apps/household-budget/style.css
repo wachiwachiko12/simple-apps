@@ -2,19 +2,19 @@
    CSS Variables & Reset
 =========================== */
 :root {
-  --accent:       #2d6a4f;
-  --accent-dark:  #1b4332;
-  --accent-light: #d8f3dc;
-  --income-color: #2d6a4f;
-  --expense-color:#d62828;
-  --balance-color:#023e8a;
-  --bg:           #f4f6f4;
+  --accent:       #059669;
+  --accent-dark:  #047857;
+  --accent-light: #d1fae5;
+  --income-color: #059669;
+  --expense-color:#dc2626;
+  --balance-color:#2563eb;
+  --bg:           #f9f7f4;
   --card-bg:      #ffffff;
-  --border:       #dee2e6;
-  --text:         #212529;
-  --muted:        #6c757d;
-  --radius:       8px;
-  --shadow:       0 1px 4px rgba(0,0,0,0.10);
+  --border:       #e2e8f0;
+  --text:         #1a1a2e;
+  --muted:        #6b7280;
+  --radius:       10px;
+  --shadow:       0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
 }
 
 *, *::before, *::after {
@@ -35,7 +35,7 @@ body {
    Header / Topbar
 =========================== */
 .topbar {
-  background: var(--accent-dark);
+  background: linear-gradient(135deg, #064e3b 0%, #047857 60%, #059669 100%);
   color: #fff;
   padding: 1.25rem 1rem;
 }
@@ -84,16 +84,7 @@ main {
    Ad Units
 =========================== */
 .ad-unit {
-  min-height: 90px;
-  background: #e9ecef;
   margin: 1.25rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #adb5bd;
-  font-size: 0.75rem;
-  border-radius: var(--radius);
-  border: 1px dashed #ced4da;
 }
 
 /* ===========================
@@ -261,11 +252,19 @@ input:focus, select:focus {
   cursor: pointer;
   min-height: 44px;
   touch-action: manipulation;
-  transition: background 0.2s;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.15s;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
 }
 
 .btn-primary:hover {
   background: var(--accent-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 /* ===========================
