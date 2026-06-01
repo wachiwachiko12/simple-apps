@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="無料で使えるWebツール・計算機の一覧。スマホ対応・登録不要で今すぐ使えます。">
-  <title>無料Webツール集 | Simple Apps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="登録不要・無料で使えるWebツール50本以上。計算・変換、金融、デザイン、開発など幅広いカテゴリに対応。スマホ・PCで今すぐ使えます。">
+  <title>無料Webツール集 | Keisanlab</title>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
   <script>
@@ -15,59 +15,255 @@
     gtag('config', 'G-DK2WQM49L6');
   </script>
   <!-- OGP -->
-  <meta property="og:title" content="無料Webツール集 | Simple Apps">
-  <meta property="og:description" content="無料で使えるWebツール・計算機の一覧。スマホ対応・登録不要で今すぐ使えます。">
+  <meta property="og:title" content="無料Webツール集 | Keisanlab">
+  <meta property="og:description" content="登録不要・無料で使えるWebツール50本以上。計算・変換、金融、デザイン、開発など幅広いカテゴリに対応。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://keisanlab.jp/">
   <meta property="og:image" content="https://keisanlab.jp/images/ogp-default.png">
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="無料Webツール集 | Simple Apps">
-  <meta name="twitter:description" content="無料で使えるWebツール・計算機の一覧。スマホ対応・登録不要で今すぐ使えます。">
+  <meta name="twitter:title" content="無料Webツール集 | Keisanlab">
+  <meta name="twitter:description" content="登録不要・無料で使えるWebツール50本以上。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-default.png">
-  <!-- Canonical -->
   <link rel="canonical" href="https://keisanlab.jp/">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
        crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif; background: #f8f9fa; color: #333; }
-    header { background: #2c3e50; color: white; padding: 2rem 1rem; text-align: center; }
-    header h1 { font-size: 1.6rem; }
-    header p { margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.85; }
-    main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-    h2 { font-size: 1.1rem; color: #2c3e50; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #2c3e50; }
-    .app-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
-    .app-card { background: white; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.2s; display: block; }
-    .app-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); transform: translateY(-2px); }
-    .app-card h3 { font-size: 1rem; color: #2c3e50; margin-bottom: 0.4rem; }
-    .app-card p { font-size: 0.85rem; color: #666; }
-    .coming-soon { opacity: 0.5; cursor: default; }
-    .coming-soon:hover { box-shadow: 0 1px 4px rgba(0,0,0,0.08); transform: none; }
-    .badge { display: inline-block; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 99px; margin-bottom: 0.5rem; }
-    .badge-new { background: #e8f5e9; color: #2e7d32; }
-    .badge-soon { background: #f3e5f5; color: #6a1b9a; }
-    footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: #888; }
-    footer a { color: #666; }
+
+    :root {
+      --bg: #f9f7f4;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 6px 20px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic Medium", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ===== Header ===== */
+    header {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+      color: white;
+      padding: 2.25rem 1.25rem 1.75rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 60%, rgba(255,255,255,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(255,255,255,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    header h1 {
+      font-size: clamp(1.5rem, 5vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      position: relative;
+    }
+    header > p {
+      margin-top: 0.4rem;
+      font-size: 0.875rem;
+      opacity: 0.85;
+      position: relative;
+    }
+    .header-stats {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.25rem;
+      position: relative;
+    }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 1.35rem; font-weight: 700; display: block; }
+    .stat-label { font-size: 0.7rem; opacity: 0.8; }
+
+    /* ===== Search ===== */
+    .search-wrapper {
+      max-width: 640px;
+      margin: 1.5rem auto 0;
+      padding: 0 1.25rem;
+      position: relative;
+    }
+    .search-icon {
+      position: absolute;
+      left: 2.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 1rem;
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      font-size: 0.9375rem;
+      font-family: inherit;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.14);
+      outline: none;
+      color: var(--text);
+      transition: box-shadow 0.15s;
+    }
+    .search-input:focus {
+      box-shadow: 0 2px 14px rgba(0,0,0,0.14), 0 0 0 3px rgba(37,99,168,0.25);
+    }
+    .search-input::placeholder { color: #9ca3af; }
+
+    /* ===== Main ===== */
+    main { max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 3.5rem; }
+
+    /* ===== Category sections ===== */
+    .category-section { margin-bottom: 2.75rem; }
+    .category-section:last-of-type { margin-bottom: 0; }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .category-header h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .cat-count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: #f3f4f6;
+      padding: 0.1rem 0.5rem;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .cat-hidden { display: none; }
+
+    /* ===== App grid ===== */
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 0.875rem;
+    }
+
+    /* ===== App card ===== */
+    .app-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.04);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .app-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      margin-bottom: 0.5rem;
+    }
+    .badge-new { background: #dcfce7; color: #166534; }
+    .badge-soon { background: #f3e8ff; color: #6b21a8; }
+    .app-card h3 {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+      line-height: 1.4;
+    }
+    .app-card p {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .coming-soon { opacity: 0.45; cursor: default; }
+    .coming-soon:hover { box-shadow: var(--shadow); transform: none; }
+
+    /* ===== No results ===== */
+    .no-results {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+    .no-results-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .no-results p { font-size: 0.95rem; }
+
+    /* ===== Footer ===== */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.25rem;
+      font-size: 0.85rem;
+      color: #9ca3af;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: #6b7280; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer p + p { margin-top: 0.5rem; }
+
+    @media (max-width: 480px) {
+      .header-stats { gap: 1.25rem; }
+      .stat-num { font-size: 1.2rem; }
+      .app-grid { grid-template-columns: 1fr 1fr; gap: 0.625rem; }
+      .app-card { padding: 1rem; }
+      .app-card h3 { font-size: 0.85rem; }
+      .app-card p { display: none; }
+    }
+    @media (max-width: 360px) {
+      .app-grid { grid-template-columns: 1fr; }
+      .app-card p { display: block; }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>無料Webツール集</h1>
-    <p>登録不要・無料で今すぐ使えるシンプルなツール</p>
+    <h1>⚗️ Keisanlab</h1>
+    <p>登録不要・無料で今すぐ使えるWebツール集</p>
+    <div class="header-stats">
+      <div class="stat-item"><span class="stat-num">50+</span><span class="stat-label">無料ツール</span></div>
+      <div class="stat-item"><span class="stat-num">0円</span><span class="stat-label">完全無料</span></div>
+      <div class="stat-item"><span class="stat-num">登録不要</span><span class="stat-label">すぐ使える</span></div>
+    </div>
   </header>
 
+  <div class="search-wrapper">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="search" placeholder="ツール名・機能で検索…（例：請求書、タイマー、CSS）" id="search-input" autocomplete="off">
+  </div>
+
   <main>
-    <section>
-      <h2>計算・変換ツール</h2>
-      <div class="app-grid" id="apps-list">
-        <!-- アプリが増えるたびにここに追加 -->
-        <a href="/apps/wareki-converter/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>和暦・西暦 変換ツール</h3>
-          <p>令和・平成・昭和・大正・明治 ⇔ 西暦を即変換。年齢計算つき。</p>
-        </a>
+
+    <!-- フリーランス・ビジネス -->
+    <section class="category-section" data-category="フリーランス・ビジネス">
+      <div class="category-header">
+        <h2>💼 フリーランス・ビジネス</h2>
+        <span class="cat-count">6</span>
+      </div>
+      <div class="app-grid">
         <a href="/apps/freelance-tax-simulator/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>確定申告シミュレーター</h3>
@@ -77,26 +273,6 @@
           <span class="badge badge-new">公開中</span>
           <h3>請求書ジェネレーター</h3>
           <p>品目・金額を入力してそのまま印刷。消費税・振込先対応。</p>
-        </a>
-        <a href="/apps/mind-map/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>マインドマップ作成ツール</h3>
-          <p>ブラウザで作れる無料マインドマップ。Excel出力・自動保存対応。</p>
-        </a>
-        <a href="/apps/household-budget/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>家計簿アプリ</h3>
-          <p>収入・支出を記録してカテゴリ別グラフで管理。CSV出力・自動保存対応。</p>
-        </a>
-        <a href="/apps/bmi-calorie/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>BMI・カロリー収支ダッシュボード</h3>
-          <p>BMI計算・基礎代謝・消費カロリー・体重記録をまとめて管理。</p>
-        </a>
-        <a href="/apps/business-day-counter/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>営業日計算ツール</h3>
-          <p>N営業日後の日付・月末締め翌月払いを自動計算。2026〜2027年祝日対応。</p>
         </a>
         <a href="/apps/resume-generator/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -108,50 +284,80 @@
           <h3>名刺作成ツール（インボイス対応）</h3>
           <p>インボイス番号対応・登録不要。ブラウザで名刺を作成しPNG保存・印刷。</p>
         </a>
+        <a href="/apps/okr-planner/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>OKR目標管理シート</h3>
+          <p>個人・フリーランス向け四半期OKRを1画面で可視化。円グラフ・カラーバーで管理。</p>
+        </a>
+        <a href="/apps/meeting-cost/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>会議コスト・ROIカウンター</h3>
+          <p>参加人数・役職を設定してスタート。会議費用をリアルタイムでカウント。ROI算出付き。</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 生活・健康 -->
+    <section class="category-section" data-category="生活・健康">
+      <div class="category-header">
+        <h2>🏡 生活・健康</h2>
+        <span class="cat-count">6</span>
+      </div>
+      <div class="app-grid">
+        <a href="/apps/household-budget/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>家計簿アプリ</h3>
+          <p>収入・支出を記録してカテゴリ別グラフで管理。CSV出力・自動保存対応。</p>
+        </a>
+        <a href="/apps/bmi-calorie/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>BMI・カロリー収支ダッシュボード</h3>
+          <p>BMI計算・基礎代謝・消費カロリー・体重記録をまとめて管理。</p>
+        </a>
         <a href="/apps/sleep-optimizer/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>睡眠時間計算ツール</h3>
           <p>REM周期90分から最適な就寝・起床時刻を逆算。何時に寝ればいい？すぐ分かる。</p>
         </a>
-        <a href="/apps/decision-matrix/" class="app-card">
+        <a href="/apps/habit-tracker/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>意思決定マトリクスツール</h3>
-          <p>転職・案件選択・ツール選定を重み付きスコアで比較。最適な選択肢を数値化。</p>
+          <h3>習慣トラッカー</h3>
+          <p>ストリーク・月間ヒートマップで習慣継続を可視化。登録不要・データはブラウザに保存。</p>
         </a>
-        <a href="/apps/readability-scorer/" class="app-card">
+        <a href="/apps/wareki-converter/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>日本語文章 可読性スコアラー</h3>
-          <p>文章を貼り付けるだけで読みやすさを0〜100点でスコアリング。漢字密度・平均文長を分析。</p>
+          <h3>和暦・西暦 変換ツール</h3>
+          <p>令和・平成・昭和・大正・明治 ⇔ 西暦を即変換。年齢計算つき。</p>
         </a>
-        <a href="/apps/ogp-generator/" class="app-card">
+        <a href="/apps/business-day-counter/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>OGPカード画像ジェネレーター</h3>
-          <p>SNSシェア用サムネイル（1200×630px）をブラウザで無料作成・PNG保存。日本語フォント対応。</p>
+          <h3>営業日計算ツール</h3>
+          <p>N営業日後の日付・月末締め翌月払いを自動計算。2026〜2027年祝日対応。</p>
         </a>
-        <a href="/apps/wcag-contrast/" class="app-card">
+      </div>
+    </section>
+
+    <!-- 学習・生産性 -->
+    <section class="category-section" data-category="学習・生産性">
+      <div class="category-header">
+        <h2>📚 学習・生産性</h2>
+        <span class="cat-count">8</span>
+      </div>
+      <div class="app-grid">
+        <a href="/apps/mind-map/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>WCAGコントラスト比チェッカー</h3>
-          <p>文字色・背景色のコントラスト比をリアルタイム計算。AA/AAA基準の合否を即判定。</p>
+          <h3>マインドマップ作成ツール</h3>
+          <p>ブラウザで作れる無料マインドマップ。Excel出力・自動保存対応。</p>
         </a>
-        <a href="/apps/meeting-cost/" class="app-card">
+        <a href="/apps/pomodoro/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>会議コスト・ROIカウンター</h3>
-          <p>参加人数・役職を設定してスタートするだけ。会議費用をリアルタイムでカウント。ROI算出付き。</p>
+          <h3>ポモドーロタイマー × タスク管理</h3>
+          <p>25分集中＋5分休憩サイクルを自動化。タスクリスト連携でポモドーロ数を記録。</p>
         </a>
-        <a href="/apps/tategumi-preview/" class="app-card">
+        <a href="/apps/flashcard/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>縦書きテキスト・小説原稿プレビュアー</h3>
-          <p>小説・エッセイを縦書きでリアルタイムプレビュー。原稿用紙換算・ルビ記法対応。なろう・カクヨム投稿前確認に。</p>
-        </a>
-        <a href="/apps/regex-visualizer/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>正規表現ビジュアルフローチャート化ツール</h3>
-          <p>正規表現を鉄道図（Railroad Diagram）でリアルタイム可視化。エンジニア・QA向け無料ツール。</p>
-        </a>
-        <a href="/apps/code-snapshot/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>コードスニペット画像化ツール</h3>
-          <p>コードをPNG画像に変換。Carbon代替・日本語フォント対応。Zenn・Qiita・SNS投稿に最適。</p>
+          <h3>間隔反復フラッシュカード</h3>
+          <p>SM-2アルゴリズムで効率的に暗記。語学・資格・医学学習に。デッキ作成・CSV対応。</p>
         </a>
         <a href="/apps/typing-practice/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -163,173 +369,259 @@
           <h3>資格試験 問題ランダム出題ツール</h3>
           <p>CSVで問題を持ち込んでランダム出題。ITパスポート・FP・宅建・英検など資格学習に。</p>
         </a>
-        <a href="/apps/flashcard/" class="app-card">
+        <a href="/apps/learning-roadmap/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>間隔反復フラッシュカード</h3>
-          <p>SM-2アルゴリズムで効率的に暗記。語学・資格・医学学習に。デッキ作成・CSV対応。</p>
+          <h3>プログラミング学習ロードマップ</h3>
+          <p>目標別にロードマップを表示。各技術の説明付き・進捗チェック機能。登録不要・無料。</p>
         </a>
-        <a href="/apps/habit-tracker/" class="app-card">
+        <a href="/apps/decision-matrix/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>習慣トラッカー</h3>
-          <p>ストリーク・月間ヒートマップで習慣継続を可視化。登録不要・データはブラウザに保存。</p>
+          <h3>意思決定マトリクスツール</h3>
+          <p>転職・案件選択・ツール選定を重み付きスコアで比較。最適な選択肢を数値化。</p>
         </a>
-        <a href="/apps/pomodoro/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>ポモドーロタイマー × タスク管理</h3>
-          <p>25分集中＋5分休憩サイクルを自動化。タスクリスト連携でポモドーロ数を記録。テレワーク・勉強の集中力UPに。</p>
-        </a>
+        <a href="/apps/okr-planner/" class="app-card" style="display:none" aria-hidden="true"></a>
+      </div>
+    </section>
+
+    <!-- 仕事・会議 -->
+    <section class="category-section" data-category="仕事・会議">
+      <div class="category-header">
+        <h2>🤝 仕事・会議</h2>
+        <span class="cat-count">4</span>
+      </div>
+      <div class="app-grid">
         <a href="/apps/meeting-agenda/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>会議アジェンダ・議事録テンプレート</h3>
-          <p>会議アジェンダと議事録を登録不要で即作成。日本式ビジネスフォーマット対応・PDF印刷・自動保存。</p>
+          <p>会議アジェンダと議事録を登録不要で即作成。日本式ビジネスフォーマット・PDF印刷対応。</p>
         </a>
         <a href="/apps/timezone-scheduler/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>タイムゾーン ミーティングスケジューラー</h3>
-          <p>東京・NY・ロンドン等の時差を横並び表示。全員の業務時間が重なる会議時間を自動提案。夏時間対応。</p>
-        </a>
-        <a href="/apps/okr-planner/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>OKR目標管理シート</h3>
-          <p>個人・フリーランス向け四半期OKRを1画面で可視化。Objective・KR進捗を円グラフ・カラーバーで管理。登録不要・無料。</p>
-        </a>
-        <a href="/apps/sitemap-planner/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>ビジュアルサイトマップ作成ツール</h3>
-          <p>Webサイトのページ構成をツリー図で設計・可視化。登録不要・PNG出力対応。IA設計・サイト構成の検討に。</p>
-        </a>
-        <a href="/apps/markdown-table-editor/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>Markdownテーブル作成ツール</h3>
-          <p>ExcelライクなGUIでMarkdownテーブルを作成・編集。Tab/Enter移動・アライメント設定・即コピー。スマホ対応。</p>
-        </a>
-        <a href="/apps/css-grid-builder/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>CSS Grid・Flexboxジェネレーター</h3>
-          <p>CSS GridとFlexboxのレイアウトをGUIで設計し、CSSコードとTailwind CSSクラスを自動生成。プリセット10種付き。</p>
-        </a>
-        <a href="/apps/web-performance-budget/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>Webパフォーマンス予算ツール</h3>
-          <p>Core Web Vitals目標値・バンドルサイズ予算をリソース別に設定・可視化。LCP/CLS/INP管理に。プリセット4種・JSON出力対応。</p>
-        </a>
-        <a href="/apps/git-commit-formatter/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>Gitコミットメッセージフォーマッター</h3>
-          <p>Conventional Commits規約に対応したGUIフォーマッター。10タイプ選択・スコープサジェスト・BREAKING CHANGE対応。commitlint代替。</p>
-        </a>
-        <a href="/apps/learning-roadmap/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>プログラミング学習ロードマップ</h3>
-          <p>フロントエンド・バックエンド・データサイエンスなど目標別にロードマップを表示。各技術の説明付き・進捗チェック機能。登録不要・無料。</p>
-        </a>
-        <a href="/apps/brand-style-guide/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>ブランドスタイルガイド作成ツール</h3>
-          <p>カラーパレット・フォント・スペーシングをまとめたブランドガイドラインをブラウザで作成。PDF印刷・自動保存対応。Corebook°代替。</p>
-        </a>
-        <a href="/apps/ruby-furigana/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>ふりがな自動付与ツール</h3>
-          <p>日本語テキストの漢字にふりがな（ルビ）を自動付与。HTMLルビタグ・かっこ形式・縦書き形式で出力。学年別漢字対応。教材作成に。</p>
-        </a>
-        <a href="/apps/typography-scale/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>タイポグラフィスケール設計ツール</h3>
-          <p>ベースサイズ・スケール比率からフォントサイズ体系を自動生成。CSS変数・Tailwind設定コードを即出力。デザインシステム構築に。</p>
-        </a>
-        <a href="/apps/svg-icon-colorizer/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>SVGアイコンカラーカスタマイザー</h3>
-          <p>SVGアイコンのfill/strokeをブラウザで変更・ダウンロード。複数色を一括カスタマイズ。ブランドカラーへの変換に。完全ローカル処理。</p>
-        </a>
-        <a href="/apps/gradient-shadow-generator/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>グラデーション・シャドウCSSジェネレーター</h3>
-          <p>linear/radial/conicグラデーションと複数レイヤーbox-shadowをGUIで設計。CSS・Tailwind CSSコードを自動生成。グラスモーフィズムプリセット付き。</p>
-        </a>
-        <a href="/apps/device-mockup/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>デバイスモックアップ作成ツール</h3>
-          <p>スクリーンショットをiPhone・MacBook・ブラウザフレームに合成してPNG保存。App Store・ポートフォリオ・プレゼン用モックアップを無料作成。</p>
-        </a>
-        <a href="/apps/csv-cleaner/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>CSVクリーニング・変換ツール</h3>
-          <p>重複削除・空白行除去・列選択・フィルタリング。Shift-JIS自動判別・UTF-8 BOM付き出力対応。ブラウザ完結でプライバシー安全。</p>
-        </a>
-        <a href="/apps/timeline-visualizer/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>タイムライン・年表作成ツール</h3>
-          <p>プロジェクト年表・沿革・歴史年表をブラウザで作成・PNG出力。水平・垂直レイアウト切替・JSON保存対応。登録不要・無料。</p>
-        </a>
-        <a href="/apps/text-density-visualizer/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>文章密度ビジュアライザー</h3>
-          <p>漢字密度・平均文長・段落分布をヒートマップと棒グラフで可視化。ブログ・Webライティングの読みやすさ改善に。登録不要・無料。</p>
+          <p>東京・NY・ロンドン等の時差を横並び表示。全員の業務時間が重なる時間を自動提案。</p>
         </a>
         <a href="/apps/speech-timer/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>プレゼン原稿タイマー</h3>
-          <p>発表原稿をペーストして音読練習。話速（文字/分）をリアルタイム計測・残り時間を色で警告。就活・プレゼン・LTトークの練習に。</p>
-        </a>
-        <a href="/apps/math-visualizer/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>数学グラフ計算ツール</h3>
-          <p>sin/cos・二次関数・指数関数などをブラウザで即グラフ描画。パラメータをスライダーで変化させてリアルタイム確認。高校数学・大学数学の理解に。</p>
-        </a>
-        <a href="/apps/json-schema-editor/" class="app-card">
-          <span class="badge badge-new">公開中</span>
-          <h3>JSONエディタ・スキーマジェネレーター</h3>
-          <p>JSONの整形・圧縮・バリデーション・スキーマ自動生成をブラウザで完結。ツリービュー・CSV/YAML変換対応。API設計・データ確認に。</p>
+          <p>発表原稿をペーストして音読練習。話速をリアルタイム計測・残り時間を色で警告。</p>
         </a>
         <a href="/apps/presentation-timer/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>プレゼンタイマー（フルスクリーン）</h3>
-          <p>発表残り時間を大画面に表示。残り時間で色変化・複数セッション管理・フルスクリーン対応。学会発表・セミナー・LTイベントの進行に。</p>
+          <p>発表残り時間を大画面に表示。残り時間で色変化・複数セッション管理対応。</p>
         </a>
-        <a href="/apps/metronome/" class="app-card">
+      </div>
+    </section>
+
+    <!-- デザイン・クリエイティブ -->
+    <section class="category-section" data-category="デザイン・クリエイティブ">
+      <div class="category-header">
+        <h2>🎨 デザイン・クリエイティブ</h2>
+        <span class="cat-count">13</span>
+      </div>
+      <div class="app-grid">
+        <a href="/apps/css-grid-builder/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>オンラインメトロノーム</h3>
-          <p>ブラウザで使えるメトロノーム。BPMを叩いて検出するタップテンポ機能付き。拍子・スウィング設定対応。ギター・ピアノ・ドラム練習に。</p>
+          <h3>CSS Grid・Flexboxジェネレーター</h3>
+          <p>CSS GridとFlexboxのレイアウトをGUIで設計し、CSSコードとTailwindクラスを自動生成。</p>
         </a>
-        <a href="/apps/markdown-slides/" class="app-card">
+        <a href="/apps/ogp-generator/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>Markdownスライド作成ツール</h3>
-          <p>Markdownでプレゼンスライドを作成。---でスライド分割・4テーマ選択・フルスクリーン発表・PDF出力対応。エンジニアのLT発表に。</p>
+          <h3>OGPカード画像ジェネレーター</h3>
+          <p>SNSシェア用サムネイル（1200×630px）をブラウザで無料作成・PNG保存。日本語フォント対応。</p>
         </a>
-        <a href="/apps/modular-grid/" class="app-card">
+        <a href="/apps/wcag-contrast/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>グリッドシステム設計ツール</h3>
-          <p>Webサイトのカラムグリッド・ガター・ベースラインをブラウザで設計。CSS変数・Tailwind設定を自動生成。デザインシステム構築・レイアウト設計に。</p>
+          <h3>WCAGコントラスト比チェッカー</h3>
+          <p>文字色・背景色のコントラスト比をリアルタイム計算。AA/AAA基準の合否を即判定。</p>
         </a>
-        <a href="/apps/audio-visualizer/" class="app-card">
+        <a href="/apps/brand-style-guide/" class="app-card">
           <span class="badge badge-new">公開中</span>
-          <h3>音声波形ビジュアライザー</h3>
-          <p>音声ファイルの波形をCanvas上で可視化してPNG保存。ポッドキャスト・音楽のSNS投稿用サムネイル作成に。完全ブラウザ処理・透かしなし。</p>
+          <h3>ブランドスタイルガイド作成ツール</h3>
+          <p>カラーパレット・フォント・スペーシングをまとめたブランドガイドラインをブラウザで作成。</p>
+        </a>
+        <a href="/apps/typography-scale/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>タイポグラフィスケール設計ツール</h3>
+          <p>ベースサイズ・スケール比率からフォントサイズ体系を自動生成。CSS変数・Tailwind設定を出力。</p>
+        </a>
+        <a href="/apps/svg-icon-colorizer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>SVGアイコンカラーカスタマイザー</h3>
+          <p>SVGアイコンのfill/strokeをブラウザで変更・ダウンロード。複数色を一括カスタマイズ。</p>
+        </a>
+        <a href="/apps/gradient-shadow-generator/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>グラデーション・シャドウCSSジェネレーター</h3>
+          <p>linear/radial/conicグラデーションと複数レイヤーbox-shadowをGUIで設計。グラスモーフィズム対応。</p>
+        </a>
+        <a href="/apps/device-mockup/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>デバイスモックアップ作成ツール</h3>
+          <p>スクリーンショットをiPhone・MacBook・ブラウザフレームに合成してPNG保存。無料作成。</p>
         </a>
         <a href="/apps/css-animation-editor/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>CSSアニメーションジェネレーター</h3>
-          <p>CSSアニメーションをGUI操作でリアルタイム確認しながら作成。@keyframesコードを自動生成。フェード・スライド・バウンスなどプリセット10種。</p>
+          <p>CSSアニメーションをGUI操作でリアルタイム確認しながら作成。@keyframesコードを自動生成。</p>
+        </a>
+        <a href="/apps/modular-grid/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>グリッドシステム設計ツール</h3>
+          <p>Webサイトのカラムグリッド・ガター・ベースラインをブラウザで設計。CSS変数を自動生成。</p>
         </a>
         <a href="/apps/pixel-art-editor/" class="app-card">
           <span class="badge badge-new">公開中</span>
           <h3>ドット絵エディタ</h3>
-          <p>ブラウザで使えるドット絵・ピクセルアート作成エディタ。レイヤー・アニメーションフレーム・PNG出力対応。インディゲーム開発・アイコン作成に。</p>
+          <p>ブラウザで使えるドット絵・ピクセルアート作成エディタ。レイヤー・アニメーション・PNG出力対応。</p>
         </a>
-        <div class="app-card coming-soon">
-          <span class="badge badge-soon">近日公開</span>
-          <h3>フリーランス単価計算ツール</h3>
-          <p>適正な時給・月額単価を自動計算</p>
-        </div>
+        <a href="/apps/sitemap-planner/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>ビジュアルサイトマップ作成ツール</h3>
+          <p>Webサイトのページ構成をツリー図で設計・可視化。登録不要・PNG出力対応。IA設計に。</p>
+        </a>
+        <a href="/apps/audio-visualizer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>音声波形ビジュアライザー</h3>
+          <p>音声ファイルの波形をCanvas上で可視化してPNG保存。ポッドキャスト・SNS投稿用に。</p>
+        </a>
       </div>
     </section>
+
+    <!-- 文章・テキスト -->
+    <section class="category-section" data-category="文章・テキスト">
+      <div class="category-header">
+        <h2>✍️ 文章・テキスト</h2>
+        <span class="cat-count">6</span>
+      </div>
+      <div class="app-grid">
+        <a href="/apps/readability-scorer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>日本語文章 可読性スコアラー</h3>
+          <p>文章を貼り付けるだけで読みやすさを0〜100点でスコアリング。漢字密度・平均文長を分析。</p>
+        </a>
+        <a href="/apps/tategumi-preview/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>縦書きテキスト・小説原稿プレビュアー</h3>
+          <p>小説・エッセイを縦書きでリアルタイムプレビュー。原稿用紙換算・ルビ記法対応。</p>
+        </a>
+        <a href="/apps/timeline-visualizer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>タイムライン・年表作成ツール</h3>
+          <p>プロジェクト年表・沿革をブラウザで作成・PNG出力。水平・垂直レイアウト切替対応。</p>
+        </a>
+        <a href="/apps/text-density-visualizer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>文章密度ビジュアライザー</h3>
+          <p>漢字密度・平均文長・段落分布をヒートマップと棒グラフで可視化。ライティング改善に。</p>
+        </a>
+        <a href="/apps/markdown-table-editor/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>Markdownテーブル作成ツール</h3>
+          <p>ExcelライクなGUIでMarkdownテーブルを作成・編集。Tab/Enter移動・即コピー。スマホ対応。</p>
+        </a>
+        <a href="/apps/ruby-furigana/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>ふりがな自動付与ツール</h3>
+          <p>日本語テキストの漢字にふりがな（ルビ）を自動付与。HTMLルビタグ・かっこ形式・縦書き対応。</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- 開発・エンジニア -->
+    <section class="category-section" data-category="開発・エンジニア">
+      <div class="category-header">
+        <h2>💻 開発・エンジニア</h2>
+        <span class="cat-count">9</span>
+      </div>
+      <div class="app-grid">
+        <a href="/apps/regex-visualizer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>正規表現ビジュアルフローチャート化ツール</h3>
+          <p>正規表現を鉄道図（Railroad Diagram）でリアルタイム可視化。エンジニア・QA向け。</p>
+        </a>
+        <a href="/apps/code-snapshot/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>コードスニペット画像化ツール</h3>
+          <p>コードをPNG画像に変換。Carbon代替・日本語フォント対応。Zenn・Qiita・SNS投稿に。</p>
+        </a>
+        <a href="/apps/web-performance-budget/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>Webパフォーマンス予算ツール</h3>
+          <p>Core Web Vitals目標値・バンドルサイズ予算をリソース別に設定・可視化。LCP/CLS/INP管理に。</p>
+        </a>
+        <a href="/apps/git-commit-formatter/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>Gitコミットメッセージフォーマッター</h3>
+          <p>Conventional Commits規約に対応したGUIフォーマッター。10タイプ選択・BREAKING CHANGE対応。</p>
+        </a>
+        <a href="/apps/json-schema-editor/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>JSONエディタ・スキーマジェネレーター</h3>
+          <p>JSONの整形・圧縮・バリデーション・スキーマ自動生成。ツリービュー・CSV/YAML変換対応。</p>
+        </a>
+        <a href="/apps/markdown-slides/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>Markdownスライド作成ツール</h3>
+          <p>Markdownでプレゼンスライドを作成。---でスライド分割・4テーマ選択・フルスクリーン対応。</p>
+        </a>
+        <a href="/apps/math-visualizer/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>数学グラフ計算ツール</h3>
+          <p>sin/cos・二次関数・指数関数などをブラウザで即グラフ描画。スライダーでリアルタイム確認。</p>
+        </a>
+        <a href="/apps/csv-cleaner/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>CSVクリーニング・変換ツール</h3>
+          <p>重複削除・空白行除去・列選択・フィルタリング。Shift-JIS自動判別・UTF-8 BOM付き出力対応。</p>
+        </a>
+        <a href="/apps/metronome/" class="app-card">
+          <span class="badge badge-new">公開中</span>
+          <h3>オンラインメトロノーム</h3>
+          <p>ブラウザで使えるメトロノーム。BPMを叩いて検出するタップテンポ機能付き。拍子・スウィング設定対応。</p>
+        </a>
+      </div>
+    </section>
+
+    <div class="no-results" id="no-results">
+      <div class="no-results-icon">🔍</div>
+      <p>「<span id="no-results-query"></span>」に一致するツールが見つかりませんでした</p>
+    </div>
+
   </main>
 
   <footer>
     <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/contact.html">お問い合わせ</a> ｜ <a href="/about.html">このサイトについて</a></p>
-    <p><small>&copy; 2025 Simple Apps</small></p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
   </footer>
+
+  <script>
+    const searchInput = document.getElementById('search-input');
+    const noResults = document.getElementById('no-results');
+    const noResultsQuery = document.getElementById('no-results-query');
+    const sections = document.querySelectorAll('.category-section');
+    const cards = document.querySelectorAll('.app-card:not([aria-hidden])');
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      let totalVisible = 0;
+
+      sections.forEach(section => {
+        const sectionCards = section.querySelectorAll('.app-card:not([aria-hidden])');
+        let sectionVisible = 0;
+        sectionCards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          const visible = !q || text.includes(q);
+          card.style.display = visible ? '' : 'none';
+          if (visible) sectionVisible++;
+        });
+        section.style.display = sectionVisible === 0 ? 'none' : '';
+        totalVisible += sectionVisible;
+      });
+
+      noResults.style.display = totalVisible === 0 && q ? 'block' : 'none';
+      noResultsQuery.textContent = searchInput.value.trim();
+    });
+  </script>
 </body>
 </html>
