@@ -101,6 +101,12 @@ html, body {
   box-shadow: 0 0 0 2px var(--accent-soft);
 }
 
+.topbar-app-icon {
+  font-size: 1.2rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
 .topbar h1 {
   margin: 0;
   font-size: 1.05rem;

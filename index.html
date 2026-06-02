@@ -25,6 +25,8 @@
   <meta name="twitter:description" content="登録不要・無料で使えるWebツール50本以上。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-default.png">
   <link rel="canonical" href="https://keisanlab.jp/">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
        crossorigin="anonymous"></script>
@@ -91,6 +93,11 @@
     .stat-num { font-size: 1.35rem; font-weight: 700; display: block; }
     .stat-label { font-size: 0.7rem; opacity: 0.8; }
 
+    /* ===== Icons ===== */
+    header h1 .bi { font-size: 0.85em; vertical-align: -0.05em; margin-right: 0.15em; }
+    .category-header h2 .bi { font-size: 1rem; vertical-align: -0.12em; margin-right: 0.1em; opacity: 0.8; }
+    .no-results-icon .bi { font-size: 2.5rem; color: #d1d5db; }
+
     /* ===== Search ===== */
     .search-wrapper {
       max-width: 640px;
@@ -106,6 +113,7 @@
       color: #9ca3af;
       font-size: 1rem;
       pointer-events: none;
+      line-height: 1;
     }
     .search-input {
       width: 100%;
@@ -241,7 +249,7 @@
 </head>
 <body>
   <header>
-    <h1>⚗️ Keisanlab</h1>
+    <h1><i class="bi bi-flask-fill"></i> Keisanlab</h1>
     <p>登録不要・無料で今すぐ使えるWebツール集</p>
     <div class="header-stats">
       <div class="stat-item"><span class="stat-num">50+</span><span class="stat-label">無料ツール</span></div>
@@ -251,7 +259,7 @@
   </header>
 
   <div class="search-wrapper">
-    <span class="search-icon">🔍</span>
+    <i class="bi bi-search search-icon"></i>
     <input class="search-input" type="search" placeholder="ツール名・機能で検索…（例：請求書、タイマー、CSS）" id="search-input" autocomplete="off">
   </div>
 
@@ -260,7 +268,7 @@
     <!-- フリーランス・ビジネス -->
     <section class="category-section" data-category="フリーランス・ビジネス">
       <div class="category-header">
-        <h2>💼 フリーランス・ビジネス</h2>
+        <h2><i class="bi bi-briefcase-fill"></i> フリーランス・ビジネス</h2>
         <span class="cat-count">6</span>
       </div>
       <div class="app-grid">
@@ -300,7 +308,7 @@
     <!-- 生活・健康 -->
     <section class="category-section" data-category="生活・健康">
       <div class="category-header">
-        <h2>🏡 生活・健康</h2>
+        <h2><i class="bi bi-house-heart-fill"></i> 生活・健康</h2>
         <span class="cat-count">6</span>
       </div>
       <div class="app-grid">
@@ -340,7 +348,7 @@
     <!-- 学習・生産性 -->
     <section class="category-section" data-category="学習・生産性">
       <div class="category-header">
-        <h2>📚 学習・生産性</h2>
+        <h2><i class="bi bi-book-fill"></i> 学習・生産性</h2>
         <span class="cat-count">8</span>
       </div>
       <div class="app-grid">
@@ -386,7 +394,7 @@
     <!-- 仕事・会議 -->
     <section class="category-section" data-category="仕事・会議">
       <div class="category-header">
-        <h2>🤝 仕事・会議</h2>
+        <h2><i class="bi bi-people-fill"></i> 仕事・会議</h2>
         <span class="cat-count">4</span>
       </div>
       <div class="app-grid">
@@ -416,7 +424,7 @@
     <!-- デザイン・クリエイティブ -->
     <section class="category-section" data-category="デザイン・クリエイティブ">
       <div class="category-header">
-        <h2>🎨 デザイン・クリエイティブ</h2>
+        <h2><i class="bi bi-palette-fill"></i> デザイン・クリエイティブ</h2>
         <span class="cat-count">13</span>
       </div>
       <div class="app-grid">
@@ -491,7 +499,7 @@
     <!-- 文章・テキスト -->
     <section class="category-section" data-category="文章・テキスト">
       <div class="category-header">
-        <h2>✍️ 文章・テキスト</h2>
+        <h2><i class="bi bi-pencil-fill"></i> 文章・テキスト</h2>
         <span class="cat-count">6</span>
       </div>
       <div class="app-grid">
@@ -531,7 +539,7 @@
     <!-- 開発・エンジニア -->
     <section class="category-section" data-category="開発・エンジニア">
       <div class="category-header">
-        <h2>💻 開発・エンジニア</h2>
+        <h2><i class="bi bi-code-slash"></i> 開発・エンジニア</h2>
         <span class="cat-count">9</span>
       </div>
       <div class="app-grid">
@@ -584,7 +592,7 @@
     </section>
 
     <div class="no-results" id="no-results">
-      <div class="no-results-icon">🔍</div>
+      <div class="no-results-icon"><i class="bi bi-search"></i></div>
       <p>「<span id="no-results-query"></span>」に一致するツールが見つかりませんでした</p>
     </div>
 
