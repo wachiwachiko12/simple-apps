@@ -39,6 +39,15 @@ header {
 header h1 {
   font-size: clamp(1.15rem, 4vw, 1.5rem);
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+header h1 .bi {
+  font-size: 1.1em;
+  opacity: 0.9;
 }
 
 .subtitle {

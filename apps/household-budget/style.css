@@ -54,6 +54,11 @@ body {
   flex-wrap: wrap;
 }
 
+.topbar h1 .bi {
+  font-size: 1.15em;
+  opacity: 0.9;
+}
+
 .badge {
   font-size: 0.7rem;
   background: #52b788;
