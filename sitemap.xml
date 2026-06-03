@@ -313,6 +313,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://keisanlab.jp/apps/weibull-simulator/</loc>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://keisanlab.jp/about.html</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>yearly</changefreq>

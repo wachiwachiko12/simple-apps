@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ワイブル分布の形状パラメータ（β）と尺度パラメータ（η）をスライダーで調整し、ワイブル確率紙プロットとヒストグラムをリアルタイム表示。信頼性工学・品質管理の学習に。">
+  <title>ワイブルプロット シミュレーター | 形状・尺度パラメータをリアルタイム可視化</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- OGP -->
+  <meta property="og:title" content="ワイブルプロット シミュレーター | 形状・尺度パラメータをリアルタイム可視化">
+  <meta property="og:description" content="ワイブル分布の形状パラメータ（β）と尺度パラメータ（η）をスライダーで調整し、ワイブル確率紙プロットとヒストグラムをリアルタイム表示。信頼性工学・品質管理の学習に。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/weibull-simulator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-weibull-simulator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ワイブルプロット シミュレーター | 形状・尺度パラメータをリアルタイム可視化">
+  <meta name="twitter:description" content="ワイブル分布の形状・尺度パラメータをスライダーで調整してリアルタイム可視化。信頼性工学・品質管理の学習に。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-weibull-simulator.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/weibull-simulator/">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1><i class="bi bi-activity"></i> ワイブルプロット シミュレーター</h1>
+      <p class="subtitle">形状・尺度パラメータをスライダーで調整してリアルタイム可視化</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <section class="params-section">
+      <h2><i class="bi bi-sliders"></i> パラメータ設定</h2>
+
+      <div class="slider-group">
+        <div class="slider-row">
+          <label for="beta-slider">
+            <span class="param-sym">β</span>
+            <span class="param-name">形状パラメータ</span>
+          </label>
+          <div class="slider-control">
+            <input type="range" id="beta-slider" min="0.5" max="5.0" step="0.1" value="1.5" aria-label="形状パラメータ β">
+            <span class="slider-val" id="beta-val">1.50</span>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <label for="eta-slider">
+            <span class="param-sym">η</span>
+            <span class="param-name">尺度パラメータ（特性寿命）</span>
+          </label>
+          <div class="slider-control">
+            <input type="range" id="eta-slider" min="10" max="200" step="5" value="100" aria-label="尺度パラメータ η">
+            <span class="slider-val" id="eta-val">100</span>
+          </div>
+        </div>
+
+        <div class="slider-row">
+          <label for="n-slider">
+            <span class="param-sym">N</span>
+            <span class="param-name">サンプルサイズ</span>
+          </label>
+          <div class="slider-control">
+            <input type="range" id="n-slider" min="20" max="500" step="10" value="100" aria-label="サンプルサイズ N">
+            <span class="slider-val" id="n-val">100</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">平均寿命 μ</span>
+          <span class="stat-value" id="stat-mean">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">中央値</span>
+          <span class="stat-value" id="stat-median">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">標準偏差 σ</span>
+          <span class="stat-value" id="stat-std">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">B10寿命</span>
+          <span class="stat-value" id="stat-b10">—</span>
+        </div>
+      </div>
+
+      <div class="resample-row">
+        <button id="resample-btn" aria-label="再サンプリング">
+          <i class="bi bi-arrow-repeat"></i> 再サンプリング
+        </button>
+      </div>
+    </section>
+
+    <div class="ad-unit" id="ad-mid" aria-hidden="true"></div>
+
+    <section class="charts-section">
+      <div class="chart-grid">
+        <div class="chart-card">
+          <h3>ワイブル確率紙プロット</h3>
+          <canvas id="weibull-plot" aria-label="ワイブル確率紙プロット"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3 id="hist-title">ヒストグラム（β=1.50: 摩耗故障型）</h3>
+          <canvas id="histogram" aria-label="ヒストグラムと確率密度関数"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="howto-section">
+      <h2>ワイブル分布とは</h2>
+      <p>ワイブル分布は信頼性工学・品質管理で広く使われる確率分布です。形状パラメータ β によって多様な故障パターンを表現できます。製品の寿命試験データや設備の故障履歴の解析に広く用いられており、自動車部品・電子機器・機械設備など幅広い分野で活用されています。</p>
+
+      <h2>パラメータの意味</h2>
+      <dl>
+        <dt>β（形状パラメータ）</dt>
+        <dd>故障のパターンを決めます。β&lt;1 で初期故障（乳児死亡期）、β=1 で偶発故障（指数分布）、β&gt;1 で摩耗故障を表します。バスタブ曲線の各フェーズに対応しており、故障のメカニズムを数値一つで表現できます。</dd>
+        <dt>η（尺度パラメータ / 特性寿命）</dt>
+        <dd>全体の時間スケールを決めます。t=η のとき、故障確率は常に約 63.2% になります。製品の寿命スケールを調整するパラメータで、単位は時間・サイクル・距離など用途に応じて設定します。</dd>
+        <dt>N（サンプルサイズ）</dt>
+        <dd>シミュレーションで生成するランダムサンプル数です。Nを増やすとデータのばらつきが小さくなり、理論直線への当てはまりが良くなります。</dd>
+      </dl>
+
+      <h2>ワイブル確率紙について</h2>
+      <p>縦軸に ln(−ln(1−F))、横軸に ln(t) をとると、ワイブル分布のデータは直線状に並びます。この変換により、直線の傾きが β（形状パラメータ）、切片から η（特性寿命）を推定できます。実際の寿命試験では、観測データをこの座標系にプロットして直線に当てはめることでパラメータを推定します（グラフィカル推定法）。赤い破線が理論直線です。サンプル点が赤線に沿って並ぶほどワイブル分布への当てはまりが良いことを示します。</p>
+
+      <h2>B10寿命とは</h2>
+      <p>10% の製品が故障するまでの時間（10% 故障確率時の寿命）です。自動車部品や機械部品の信頼性基準として広く使われます。たとえば「B10寿命 10万 km」は、10万 km 走行時点で全体の 10% が故障することを意味します。同様に B50寿命は中央値（50% 故障確率）、B63 はほぼ特性寿命 η に対応します。</p>
+
+      <h2>使い方</h2>
+      <ol>
+        <li>スライダーで β（形状）・η（尺度）・N（サンプルサイズ）を調整します。</li>
+        <li>ワイブル確率紙プロット（左）とヒストグラム（右）がリアルタイムで更新されます。</li>
+        <li>特性値カード（平均寿命・中央値・標準偏差・B10寿命）が自動計算されます。</li>
+        <li>「再サンプリング」ボタンで同じパラメータのまま乱数を振り直し、サンプリングのばらつきを確認できます。</li>
+      </ol>
+    </section>
+
+    <div class="affiliate-block">
+      <p><i class="bi bi-info-circle"></i> 信頼性工学・品質管理の学習には、専門書やオンライン講座も合わせてご活用ください。</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/">ツール一覧</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
