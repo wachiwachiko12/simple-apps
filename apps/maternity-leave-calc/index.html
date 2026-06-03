@@ -69,6 +69,15 @@
         <input type="date" id="due-date" class="form-input" aria-label="出産予定日を入力してください">
       </div>
 
+      <div class="form-group">
+        <label class="form-label" for="actual-date">
+          <i class="bi bi-calendar-check" style="color:#0f766e"></i> 実際の出産日
+          <span style="font-size:0.72rem;font-weight:400;color:var(--muted);margin-left:0.25rem">（任意）</span>
+        </label>
+        <input type="date" id="actual-date" class="form-input" aria-label="実際の出産日（任意）">
+        <p class="actual-input-hint"><i class="bi bi-info-circle"></i> 入力すると予定日との差分を比較表示します</p>
+      </div>
+
       <div class="toggle-row">
         <label class="toggle-label" for="multiple-toggle">
           <i class="bi bi-people-fill"></i> 多胎児（双子・三つ子など）
@@ -172,29 +181,82 @@
              data-ad-slot="auto"></ins>
       </div>
 
+      <!-- 差分比較カード（実際の出産日入力時のみ表示） -->
+      <div class="card diff-card" id="diff-section" hidden>
+        <div class="diff-card-header">
+          <div class="diff-icon"><i class="bi bi-arrow-left-right"></i></div>
+          <div>
+            <h3>予定日 vs 実際の出産日</h3>
+            <span class="diff-summary-pill" id="diff-summary-pill"></span>
+          </div>
+        </div>
+        <table class="diff-table">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th class="col-due">予定日基準</th>
+              <th class="col-actual">実際基準</th>
+              <th>差分</th>
+            </tr>
+          </thead>
+          <tbody id="diff-table-body"></tbody>
+        </table>
+      </div>
+
       <!-- タイムライン -->
       <div class="card timeline-card">
         <h3 class="timeline-title"><i class="bi bi-layout-three-columns"></i> 休業期間タイムライン</h3>
         <div class="timeline-wrapper">
-          <div class="tl-bar" id="tl-bar">
-            <div class="tl-prenatal" id="tl-prenatal">
-              <span class="tl-label-inside">産前</span>
+
+          <!-- 予定日行（常に表示） -->
+          <div class="tl-rows" id="tl-rows">
+            <div class="tl-row tl-row--due">
+              <span class="tl-row-label" id="tl-due-label">予定</span>
+              <div class="tl-row-bar" id="tl-bar">
+                <div class="tl-prenatal" id="tl-prenatal">
+                  <span class="tl-label-inside">産前</span>
+                </div>
+                <div class="tl-birth" title="出産予定日">
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <div class="tl-postnatal" id="tl-postnatal">
+                  <span class="tl-label-inside">産後</span>
+                </div>
+              </div>
             </div>
-            <div class="tl-birth" title="出産予定日">
-              <i class="bi bi-star-fill"></i>
-            </div>
-            <div class="tl-postnatal" id="tl-postnatal">
-              <span class="tl-label-inside">産後</span>
+
+            <!-- 実際の出産日行（入力時のみ表示） -->
+            <div class="tl-row tl-row--actual" id="tl-actual-row" hidden>
+              <span class="tl-row-label" style="color:#0f766e">実際</span>
+              <div class="tl-row-bar" id="tl-actual-bar">
+                <div class="tl-prenatal" id="tl-actual-prenatal">
+                  <span class="tl-label-inside">産前</span>
+                </div>
+                <div class="tl-birth-actual" title="実際の出産日">
+                  <i class="bi bi-star-fill"></i>
+                </div>
+                <div class="tl-postnatal" id="tl-actual-postnatal">
+                  <span class="tl-label-inside">産後</span>
+                </div>
+              </div>
             </div>
           </div>
+
           <div id="tl-today-marker" class="tl-today-marker" hidden>
             <div class="tl-today-line"></div>
             <div class="tl-today-label">今日</div>
           </div>
+
           <div class="tl-dates" id="tl-dates">
             <span id="tl-date-start"></span>
             <span id="tl-date-due"></span>
             <span id="tl-date-end"></span>
+          </div>
+
+          <div class="tl-legend" id="tl-legend-actual" hidden>
+            <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--primary)"></div> 産前（予定）</div>
+            <div class="tl-legend-item"><div class="tl-legend-dot" style="background:var(--postnatal)"></div> 産後（予定）</div>
+            <div class="tl-legend-item"><div class="tl-legend-dot" style="background:#0f766e"></div> 出産日（実際）</div>
           </div>
         </div>
       </div>
