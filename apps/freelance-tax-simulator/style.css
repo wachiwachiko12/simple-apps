@@ -21,13 +21,17 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-family: 'Outfit', 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   line-height: 1.7;
   color: var(--text);
   background: var(--bg);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+h1, h2, h3 { letter-spacing: -0.02em; }
 
 header {
   background: linear-gradient(135deg, #065f52 0%, #0f766e 60%, #14b8a6 100%);

@@ -25,6 +25,10 @@
   <meta name="twitter:description" content="登録不要・無料で使えるWebツール50本以上。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-default.png">
   <link rel="canonical" href="https://keisanlab.jp/">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <!-- Google AdSense -->
@@ -45,12 +49,15 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic Medium", sans-serif;
+      font-family: 'Outfit', 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.75;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+    h1, h2, h3 { letter-spacing: -0.02em; }
 
     /* ===== Header ===== */
     header {
