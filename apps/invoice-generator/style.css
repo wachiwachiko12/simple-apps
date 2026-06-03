@@ -17,7 +17,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Outfit', 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 15px;
   color: var(--text);
   background: var(--bg);

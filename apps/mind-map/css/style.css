@@ -15,7 +15,7 @@
 html, body {
   margin: 0;
   width: 100%;
-  font-family: 'Outfit', 'Zen Kaku Gothic New', "Segoe UI", "Hiragino Sans", sans-serif;
+  font-family: 'Outfit', 'BIZ UDPGothic', "Segoe UI", "Hiragino Sans", sans-serif;
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
