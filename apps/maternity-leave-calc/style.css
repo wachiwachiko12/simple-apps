@@ -1,0 +1,775 @@
+/* =============================================
+   産前産後休暇 計算ツール — style.css
+   Design: Mobile-first, pink/warm theme
+   ============================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #e0547a;
+  --primary-hover: #c9486d;
+  --primary-rgb: 224, 84, 122;
+  --primary-soft: #fff0f4;
+  --postnatal: #f97316;
+  --postnatal-soft: #fff7ed;
+  --total: #8b5cf6;
+  --total-soft: #f5f3ff;
+  --bg: #f9f7f4;
+  --surface: #ffffff;
+  --text: #1a1a2e;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
+  --transition: 0.15s ease;
+}
+
+body {
+  font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+}
+
+/* ===== Header ===== */
+header {
+  background: linear-gradient(135deg, #b5274d 0%, #e0547a 60%, #f08098 100%);
+  color: white;
+  padding: 2.25rem 1.25rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 15%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.header-inner {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.header-icon {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+  opacity: 0.95;
+}
+
+header h1 {
+  font-size: clamp(1.35rem, 5vw, 1.85rem);
+  font-weight: 800;
+}
+
+.header-sub {
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  opacity: 0.88;
+}
+
+/* ===== Main ===== */
+main {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* ===== Card ===== */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  margin-bottom: 1rem;
+}
+
+/* ===== Section title ===== */
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.section-title .bi {
+  color: var(--primary);
+}
+
+/* ===== Form ===== */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.form-label .bi {
+  color: var(--primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.18);
+}
+
+/* ===== Toggle switch ===== */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--primary-soft);
+  border-radius: 10px;
+  margin-bottom: 1.25rem;
+}
+
+.toggle-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.toggle-label .bi {
+  display: inline;
+  color: var(--primary);
+  margin-right: 0.25rem;
+}
+
+.toggle-note {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #d1d5db;
+  border-radius: 28px;
+  transition: background var(--transition);
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 4px;
+  bottom: 4px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform var(--transition);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--primary);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(24px);
+}
+
+.toggle-switch:focus-within .toggle-slider {
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.25);
+}
+
+/* ===== Calculate button ===== */
+.btn-calc {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.35);
+}
+
+.btn-calc:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 4px 14px rgba(var(--primary-rgb), 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-calc:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(var(--primary-rgb), 0.3);
+}
+
+/* ===== Results area ===== */
+.results-area {
+  margin-top: 0;
+}
+
+/* ===== Result cards ===== */
+.result-card {
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.result-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.result-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.125rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.result-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.prenatal-icon {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.postnatal-icon {
+  background: var(--postnatal-soft);
+  color: var(--postnatal);
+}
+
+.total-icon {
+  background: var(--total-soft);
+  color: var(--total);
+}
+
+.result-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.result-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.6rem;
+  border-radius: 100px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.postnatal-badge {
+  background: var(--postnatal-soft);
+  color: var(--postnatal);
+}
+
+.total-badge {
+  background: var(--total-soft);
+  color: var(--total);
+}
+
+.result-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 0.875rem;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.result-row-label {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.result-row-label .bi {
+  font-size: 0.75rem;
+}
+
+.result-row-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text);
+  text-align: right;
+}
+
+.result-row-value.highlight {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.result-postnatal .result-row-value.highlight {
+  color: var(--postnatal);
+}
+
+.result-total .result-row-value.highlight {
+  color: var(--total);
+}
+
+.result-note {
+  font-size: 0.775rem;
+  color: var(--muted);
+  background: var(--bg);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  line-height: 1.5;
+}
+
+.result-note .bi {
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ===== Timeline card ===== */
+.timeline-card {
+  overflow: hidden;
+}
+
+.timeline-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.timeline-title .bi {
+  color: var(--muted);
+}
+
+.timeline-wrapper {
+  position: relative;
+}
+
+.tl-bar {
+  display: flex;
+  align-items: stretch;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.625rem;
+}
+
+.tl-prenatal {
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  position: relative;
+  transition: flex var(--transition);
+}
+
+.tl-postnatal {
+  background: var(--postnatal);
+  flex: 56;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+}
+
+.tl-birth {
+  width: 28px;
+  flex-shrink: 0;
+  background: #1a1a2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fbbf24;
+  font-size: 0.75rem;
+  z-index: 1;
+}
+
+.tl-label-inside {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 6px;
+}
+
+.tl-today-marker {
+  position: absolute;
+  top: 0;
+  height: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.tl-today-line {
+  width: 2px;
+  height: 44px;
+  background: #1a1a2e;
+  opacity: 0.7;
+}
+
+.tl-today-label {
+  position: absolute;
+  top: -20px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: #1a1a2e;
+  color: white;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.tl-dates {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.725rem;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 0 0;
+  margin-top: 0.25rem;
+}
+
+.tl-dates span {
+  flex: 1;
+  text-align: center;
+}
+
+.tl-dates span:first-child {
+  text-align: left;
+}
+
+.tl-dates span:last-child {
+  text-align: right;
+}
+
+/* ===== Copy button ===== */
+.btn-copy {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
+  background: transparent;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.btn-copy:hover {
+  background: var(--primary-soft);
+  transform: translateY(-1px);
+}
+
+.btn-copy:active {
+  transform: translateY(0);
+}
+
+.copy-msg {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #16a34a;
+  font-weight: 600;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+/* ===== Ad unit ===== */
+.ad-unit {
+  background: #f3f4f6;
+  border-radius: 8px;
+  min-height: 90px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+/* ===== How-to section ===== */
+.howto-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  margin-top: 1rem;
+}
+
+.howto-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--primary-soft);
+}
+
+.howto-section h2:first-child {
+  margin-top: 0;
+}
+
+.howto-section p {
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.8;
+  margin-bottom: 0.75rem;
+}
+
+.howto-steps {
+  padding-left: 1.25rem;
+  font-size: 0.875rem;
+  color: #374151;
+  line-height: 1.9;
+}
+
+.howto-steps li {
+  margin-bottom: 0.25rem;
+}
+
+/* ===== Rule table ===== */
+.rule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin-bottom: 0.5rem;
+}
+
+.rule-table th,
+.rule-table td {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.rule-table thead tr {
+  background: var(--primary-soft);
+}
+
+.rule-table th {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.75rem;
+}
+
+.rule-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* ===== Notes list ===== */
+.notes-list {
+  padding-left: 1.25rem;
+  font-size: 0.8375rem;
+  color: #374151;
+  line-height: 1.9;
+}
+
+.notes-list li {
+  margin-bottom: 0.25rem;
+}
+
+/* ===== Benefits list ===== */
+.benefits-list {
+  font-size: 0.8375rem;
+  color: #374151;
+}
+
+.benefits-list dt {
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.benefits-list dt .bi {
+  color: var(--primary);
+}
+
+.benefits-list dt:first-child {
+  margin-top: 0;
+}
+
+.benefits-list dd {
+  margin-left: 1.25rem;
+  margin-top: 0.2rem;
+  line-height: 1.75;
+  color: #4b5563;
+}
+
+/* ===== Footer ===== */
+footer {
+  text-align: center;
+  padding: 2.5rem 1.25rem;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  border-top: 1px solid var(--border);
+}
+
+footer a {
+  color: #6b7280;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: var(--primary);
+}
+
+footer p + p {
+  margin-top: 0.5rem;
+}
+
+/* ===== Responsive ===== */
+@media (min-width: 640px) {
+  main {
+    padding: 2rem 1.25rem 3.5rem;
+  }
+
+  .card {
+    padding: 1.75rem;
+  }
+
+  .howto-section {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .result-row-value {
+    text-align: left;
+  }
+
+  .tl-label-inside {
+    font-size: 0.6rem;
+    padding: 0 3px;
+  }
+
+  .rule-table th,
+  .rule-table td {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
