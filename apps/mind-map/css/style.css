@@ -15,9 +15,11 @@
 html, body {
   margin: 0;
   width: 100%;
-  font-family: "Segoe UI", "Yu Gothic UI", "Hiragino Sans", sans-serif;
+  font-family: 'Outfit', 'Zen Kaku Gothic New', "Segoe UI", "Hiragino Sans", sans-serif;
   color: var(--ink);
   background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===== アプリ部分（ビューポート全体） ===== */
