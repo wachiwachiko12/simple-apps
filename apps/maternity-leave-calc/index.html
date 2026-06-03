@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="出産予定日を入力するだけで産前・産後休暇の開始日・終了日を自動計算。多胎児（双子・三つ子）の14週間産前休暇にも対応。育児休業開始日も表示。">
+  <title>産前産後休暇 計算ツール | 出産予定日から休業開始・終了日を自動計算</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/maternity-leave-calc/">
+  <!-- OGP -->
+  <meta property="og:title" content="産前産後休暇 計算ツール | 出産予定日から休業開始・終了日を自動計算">
+  <meta property="og:description" content="出産予定日を入力するだけで産前・産後休暇の開始日・終了日を自動計算。多胎児（双子・三つ子）の14週間産前休暇にも対応。育児休業開始日も表示。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/maternity-leave-calc/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-maternity-leave-calc.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="産前産後休暇 計算ツール | 出産予定日から休業開始・終了日を自動計算">
+  <meta name="twitter:description" content="出産予定日を入力するだけで産前・産後休暇の開始日・終了日を自動計算。多胎児（双子・三つ子）の14週間産前休暇にも対応。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-maternity-leave-calc.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <h1>産前産後休暇 計算ツール</h1>
+      <p class="header-sub">出産予定日を入力するだけで休業開始日・終了日を自動計算</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- 入力カード -->
+    <section class="card input-card" id="tool">
+      <h2 class="section-title"><i class="bi bi-calendar-heart-fill"></i> 出産予定日を入力</h2>
+
+      <div class="form-group">
+        <label class="form-label" for="due-date">
+          <i class="bi bi-calendar3"></i> 出産予定日
+        </label>
+        <input type="date" id="due-date" class="form-input" aria-label="出産予定日を入力してください">
+      </div>
+
+      <div class="toggle-row">
+        <label class="toggle-label" for="multiple-toggle">
+          <i class="bi bi-people-fill"></i> 多胎児（双子・三つ子など）
+          <span class="toggle-note">産前休暇が14週間（98日）に延長されます</span>
+        </label>
+        <label class="toggle-switch">
+          <input type="checkbox" id="multiple-toggle" aria-label="多胎児の場合はオンにしてください">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <button class="btn-calc" id="calc-btn" type="button">
+        <i class="bi bi-calculator-fill"></i> 計算する
+      </button>
+    </section>
+
+    <!-- 計算結果 -->
+    <div id="results" class="results-area" hidden>
+
+      <!-- 産前休暇カード -->
+      <div class="card result-card result-prenatal">
+        <div class="result-card-header">
+          <div class="result-icon prenatal-icon"><i class="bi bi-calendar-minus-fill"></i></div>
+          <div>
+            <h3>産前休暇</h3>
+            <span class="result-badge" id="prenatal-badge">単胎: 6週間前（42日）</span>
+          </div>
+        </div>
+        <div class="result-rows">
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-play-circle-fill"></i> 開始日</span>
+            <span class="result-row-value" id="prenatal-start-date">-</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-stop-circle-fill"></i> 終了日</span>
+            <span class="result-row-value" id="prenatal-end-date">-</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-clock-fill"></i> 期間</span>
+            <span class="result-row-value highlight" id="prenatal-duration">-</span>
+          </div>
+        </div>
+        <p class="result-note"><i class="bi bi-info-circle"></i> 産前休暇は労働者本人の請求によって取得できます</p>
+      </div>
+
+      <!-- 産後休暇カード -->
+      <div class="card result-card result-postnatal">
+        <div class="result-card-header">
+          <div class="result-icon postnatal-icon"><i class="bi bi-calendar-plus-fill"></i></div>
+          <div>
+            <h3>産後休暇</h3>
+            <span class="result-badge postnatal-badge">8週間（56日間）</span>
+          </div>
+        </div>
+        <div class="result-rows">
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-play-circle-fill"></i> 開始日</span>
+            <span class="result-row-value" id="postnatal-start-date">-</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-stop-circle-fill"></i> 終了日</span>
+            <span class="result-row-value" id="postnatal-end-date">-</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-clock-fill"></i> 期間</span>
+            <span class="result-row-value highlight" id="postnatal-duration">8週間（56日間）</span>
+          </div>
+        </div>
+        <p class="result-note"><i class="bi bi-exclamation-triangle-fill"></i> 産後6週間は強制休業。6週間経過後は本人申出と医師許可で就業可能</p>
+      </div>
+
+      <!-- 合計期間カード -->
+      <div class="card result-card result-total">
+        <div class="result-card-header">
+          <div class="result-icon total-icon"><i class="bi bi-bar-chart-steps"></i></div>
+          <div>
+            <h3>合計休暇期間</h3>
+            <span class="result-badge total-badge">産前から産後まで</span>
+          </div>
+        </div>
+        <div class="result-rows">
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-arrows-expand"></i> 合計日数</span>
+            <span class="result-row-value highlight" id="total-duration">-</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label"><i class="bi bi-baby2"></i> 育児休業開始可能日</span>
+            <span class="result-row-value" id="ikuji-start-date">-</span>
+          </div>
+        </div>
+        <p class="result-note"><i class="bi bi-info-circle"></i> 育児休業開始日は産後休業終了翌日から。育児休業給付金の受給開始日となります</p>
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- タイムライン -->
+      <div class="card timeline-card">
+        <h3 class="timeline-title"><i class="bi bi-layout-three-columns"></i> 休業期間タイムライン</h3>
+        <div class="timeline-wrapper">
+          <div class="tl-bar" id="tl-bar">
+            <div class="tl-prenatal" id="tl-prenatal">
+              <span class="tl-label-inside">産前</span>
+            </div>
+            <div class="tl-birth" title="出産予定日">
+              <i class="bi bi-star-fill"></i>
+            </div>
+            <div class="tl-postnatal" id="tl-postnatal">
+              <span class="tl-label-inside">産後</span>
+            </div>
+          </div>
+          <div id="tl-today-marker" class="tl-today-marker" hidden>
+            <div class="tl-today-line"></div>
+            <div class="tl-today-label">今日</div>
+          </div>
+          <div class="tl-dates" id="tl-dates">
+            <span id="tl-date-start"></span>
+            <span id="tl-date-due"></span>
+            <span id="tl-date-end"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- コピーボタン -->
+      <button class="btn-copy" id="copy-btn" type="button">
+        <i class="bi bi-clipboard-fill"></i> 結果をコピー
+      </button>
+      <div id="copy-msg" class="copy-msg" hidden>
+        <i class="bi bi-check-circle-fill"></i> クリップボードにコピーしました
+      </div>
+
+    </div>
+
+    <!-- 使い方・SEOセクション -->
+    <section class="howto-section" id="howto">
+
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>「出産予定日」の日付入力欄に予定日を選択します</li>
+        <li>双子・三つ子などの多胎児の場合は「多胎児」トグルをオンにします</li>
+        <li>「計算する」ボタンを押すと、産前・産後休暇の開始日・終了日・育児休業開始日が表示されます</li>
+        <li>タイムラインで休業期間全体を視覚的に確認できます</li>
+        <li>「結果をコピー」ボタンで計算結果をテキストとしてコピーできます</li>
+      </ol>
+
+      <h2>産前産後休暇とは</h2>
+      <p>産前産後休暇とは、労働基準法第65条に基づき、出産前後の働く女性が取得できる休業制度です。産前休業は出産予定日の6週間前（多胎の場合は14週間前）から、産後休業は出産翌日から8週間が対象期間となります。この期間中、雇用保険の被保険者であれば出産手当金を受け取ることができます。休業中も社会保険料の免除申請が可能です。</p>
+      <p>産後8週間の休業期間が終了した翌日から育児休業を取得することができます。育児休業中は育児休業給付金（雇用保険から支給）を受け取ることができます。本ツールはこれらの日程をあらかじめ把握するためのシミュレーションを目的としています。</p>
+
+      <h2>計算ルール（労働基準法第65条）</h2>
+      <table class="rule-table">
+        <thead>
+          <tr><th>区分</th><th>期間</th><th>備考</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>産前休業（単胎）</td>
+            <td>出産予定日の6週間前〜出産日</td>
+            <td>本人請求で取得</td>
+          </tr>
+          <tr>
+            <td>産前休業（多胎）</td>
+            <td>出産予定日の14週間前〜出産日</td>
+            <td>双子・三つ子等</td>
+          </tr>
+          <tr>
+            <td>産後休業</td>
+            <td>出産翌日〜8週間後</td>
+            <td>最初の6週は強制休業</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>注意事項</h2>
+      <ul class="notes-list">
+        <li>実際の出産日が予定日と異なる場合、産後休暇の終了日もずれます（本ツールは予定日基準で計算）</li>
+        <li>産前休暇は労働者本人が請求した場合のみ取得できます（強制ではありません）</li>
+        <li>産後6週間は強制休業期間です（本人が希望しても就業不可）</li>
+        <li>産後6〜8週間は、本人申出と医師の許可があれば就業可能です</li>
+        <li>公務員・自営業者は適用外の場合があります。詳しくは勤務先または社会保険労務士にご確認ください</li>
+        <li>本ツールは情報提供を目的としており、法的アドバイスではありません</li>
+      </ul>
+
+      <h2>関連する給付金</h2>
+      <dl class="benefits-list">
+        <dt><i class="bi bi-cash-coin"></i> 出産手当金</dt>
+        <dd>健康保険加入者が産前産後休業中に受け取れる給付金。1日あたり標準報酬日額の2/3相当。出産日から98日前まで（多胎は156日前）が対象期間。</dd>
+        <dt><i class="bi bi-cash-coin"></i> 育児休業給付金</dt>
+        <dd>雇用保険加入者が育児休業中に受け取れる給付金。産後休業終了翌日から取得可能。最初の6ヶ月は休業前賃金の67%、その後は50%が支給されます。</dd>
+        <dt><i class="bi bi-cash-coin"></i> 社会保険料免除</dt>
+        <dd>産前産後休業中および育児休業中は、本人・事業主双方の社会保険料（健康保険・厚生年金）が免除されます。年金受給額への影響はありません。</dd>
+      </dl>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2025 Keisanlab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
