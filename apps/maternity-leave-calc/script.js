@@ -8,12 +8,18 @@
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
 
 // ===== DOM References =====
-const dueDateInput = document.getElementById('due-date');
-const multipleToggle = document.getElementById('multiple-toggle');
-const calcBtn = document.getElementById('calc-btn');
-const resultsArea = document.getElementById('results');
-const copyBtn = document.getElementById('copy-btn');
-const copyMsg = document.getElementById('copy-msg');
+const dueDateInput    = document.getElementById('due-date');
+const actualDateInput = document.getElementById('actual-date');
+const multipleToggle  = document.getElementById('multiple-toggle');
+const calcBtn         = document.getElementById('calc-btn');
+const resultsArea     = document.getElementById('results');
+const copyBtn         = document.getElementById('copy-btn');
+const copyMsg         = document.getElementById('copy-msg');
+const diffSection     = document.getElementById('diff-section');
+const diffSummaryPill = document.getElementById('diff-summary-pill');
+const diffTableBody   = document.getElementById('diff-table-body');
+const tlActualRow     = document.getElementById('tl-actual-row');
+const tlLegendActual  = document.getElementById('tl-legend-actual');
 
 // ===== Date Utilities =====
 
@@ -100,6 +106,112 @@ function calculate(dueDateStr, isMultiple) {
   };
 }
 
+// ===== Diff calculation =====
+function calcDiff(dueDateStr, actualDateStr, isMultiple) {
+  const dueDate    = new Date(dueDateStr    + 'T00:00:00');
+  const actualDate = new Date(actualDateStr + 'T00:00:00');
+  const diffDays   = Math.round((actualDate - dueDate) / 86400000); // positive = late
+
+  const prenatalDays = isMultiple ? 98 : 42;
+
+  // Actual-based dates (prenatalStart unchanged)
+  const prenatalStartA  = new Date(dueDate);
+  prenatalStartA.setDate(dueDate.getDate() - prenatalDays);
+
+  const postnatalStartA = new Date(actualDate);
+  postnatalStartA.setDate(actualDate.getDate() + 1);
+
+  const postnatalEndA   = new Date(actualDate);
+  postnatalEndA.setDate(actualDate.getDate() + 56);
+
+  const ikujiStartA     = new Date(postnatalEndA);
+  ikujiStartA.setDate(postnatalEndA.getDate() + 1);
+
+  const prenatalDurActual = prenatalDays + diffDays;
+
+  return {
+    diffDays,
+    prenatalStart: prenatalStartA,   // same as due-based
+    prenatalEnd: actualDate,
+    prenatalDuration: prenatalDurActual,
+    postnatalStart: postnatalStartA,
+    postnatalEnd: postnatalEndA,
+    ikujiStart: ikujiStartA
+  };
+}
+
+// ===== Render Diff section =====
+function renderDiff(calcDue, actualResult, diffDays) {
+  // Summary pill
+  let pillText, pillClass;
+  if (diffDays === 0) {
+    pillText = '予定日どおり出産'; pillClass = 'same';
+  } else if (diffDays < 0) {
+    pillText = `予定より${Math.abs(diffDays)}日早く出産`; pillClass = 'early';
+  } else {
+    pillText = `予定より${diffDays}日遅く出産`; pillClass = 'late';
+  }
+  diffSummaryPill.textContent = pillText;
+  diffSummaryPill.className   = `diff-summary-pill ${pillClass}`;
+
+  // Table rows
+  const rows = [
+    {
+      label: '産前休暇 終了日',
+      due:    formatDate(calcDue.dueDate),
+      actual: formatDate(actualResult.prenatalEnd),
+      delta:  diffDays
+    },
+    {
+      label: '産前休暇 日数',
+      due:    `${calcDue.prenatalDays}日間`,
+      actual: `${actualResult.prenatalDuration}日間`,
+      delta:  diffDays
+    },
+    {
+      label: '産後休暇 開始日',
+      due:    formatDate(calcDue.postnatalStart),
+      actual: formatDate(actualResult.postnatalStart),
+      delta:  diffDays
+    },
+    {
+      label: '産後休暇 終了日',
+      due:    formatDate(calcDue.postnatalEnd),
+      actual: formatDate(actualResult.postnatalEnd),
+      delta:  diffDays
+    },
+    {
+      label: '育休 開始可能日',
+      due:    formatDate(calcDue.ikujiStart),
+      actual: formatDate(actualResult.ikujiStart),
+      delta:  diffDays
+    }
+  ];
+
+  diffTableBody.innerHTML = rows.map(r => {
+    const d = r.delta;
+    const pillClass = d < 0 ? 'neg' : d > 0 ? 'pos' : 'zero';
+    const pillLabel = d === 0 ? '変更なし' : (d > 0 ? `+${d}日` : `${d}日`);
+    return `<tr>
+      <td class="row-label">${r.label}</td>
+      <td class="col-due" style="font-size:0.78rem">${r.due}</td>
+      <td class="col-actual" style="font-size:0.78rem">${r.actual}</td>
+      <td><span class="delta-pill ${pillClass}">${pillLabel}</span></td>
+    </tr>`;
+  }).join('');
+
+  diffSection.removeAttribute('hidden');
+}
+
+// ===== Render Actual Timeline row =====
+function renderActualTimeline(prenatalDays, diffDays) {
+  const actualPrenatalDays = prenatalDays + diffDays;
+  document.getElementById('tl-actual-prenatal').style.flex = String(Math.max(1, actualPrenatalDays));
+  document.getElementById('tl-actual-postnatal').style.flex = '56';
+  tlActualRow.removeAttribute('hidden');
+  tlLegendActual.removeAttribute('hidden');
+}
+
 // ===== Render Results =====
 
 /**
@@ -132,6 +244,11 @@ function renderResults(calc, isMultiple) {
 
   // --- Timeline ---
   renderTimeline(calc);
+
+  // Hide diff section until actual date is processed
+  diffSection.setAttribute('hidden', '');
+  tlActualRow.setAttribute('hidden', '');
+  tlLegendActual.setAttribute('hidden', '');
 
   // Show results
   resultsArea.removeAttribute('hidden');
@@ -233,8 +350,11 @@ let lastIsMultiple = false;
 
 // ===== Event Handlers =====
 
-calcBtn.addEventListener('click', () => {
-  const dueDateStr = dueDateInput.value;
+function runCalculation() {
+  const dueDateStr    = dueDateInput.value;
+  const actualDateStr = actualDateInput.value;
+  const isMultiple    = multipleToggle.checked;
+
   if (!dueDateStr) {
     dueDateInput.focus();
     dueDateInput.style.borderColor = '#ef4444';
@@ -246,35 +366,35 @@ calcBtn.addEventListener('click', () => {
     return;
   }
 
-  const isMultiple = multipleToggle.checked;
   lastCalc = calculate(dueDateStr, isMultiple);
   lastIsMultiple = isMultiple;
   renderResults(lastCalc, isMultiple);
 
-  // Smooth scroll to results on mobile
+  // Diff section
+  if (actualDateStr) {
+    const actual = calcDiff(dueDateStr, actualDateStr, isMultiple);
+    renderDiff(lastCalc, actual, actual.diffDays);
+    renderActualTimeline(lastCalc.prenatalDays, actual.diffDays);
+  }
+}
+
+calcBtn.addEventListener('click', () => {
+  runCalculation();
   setTimeout(() => {
     resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 80);
 });
 
-// Re-calculate when toggle changes and a date is already set
 multipleToggle.addEventListener('change', () => {
-  if (dueDateInput.value && lastCalc) {
-    const isMultiple = multipleToggle.checked;
-    lastCalc = calculate(dueDateInput.value, isMultiple);
-    lastIsMultiple = isMultiple;
-    renderResults(lastCalc, isMultiple);
-  }
+  if (dueDateInput.value && lastCalc) runCalculation();
 });
 
-// Also recalc on date change if results are already visible
 dueDateInput.addEventListener('change', () => {
-  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) {
-    const isMultiple = multipleToggle.checked;
-    lastCalc = calculate(dueDateInput.value, isMultiple);
-    lastIsMultiple = isMultiple;
-    renderResults(lastCalc, isMultiple);
-  }
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+actualDateInput.addEventListener('change', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
 });
 
 copyBtn.addEventListener('click', () => {

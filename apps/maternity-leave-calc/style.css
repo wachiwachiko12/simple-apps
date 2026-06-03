@@ -710,6 +710,184 @@ main {
   color: #4b5563;
 }
 
+/* ===== Actual date input (secondary) ===== */
+.actual-input-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ===== Diff card ===== */
+.diff-card {
+  border-left: 4px solid #0f766e;
+}
+
+.diff-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.diff-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #f0fdfa;
+  color: #0f766e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.diff-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.diff-summary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.75rem;
+  border-radius: 100px;
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.diff-summary-pill.early { background: #fef3c7; color: #92400e; }
+.diff-summary-pill.late  { background: #fee2e2; color: #991b1b; }
+.diff-summary-pill.same  { background: #f0fdf4; color: #166534; }
+
+.diff-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin-bottom: 0.75rem;
+}
+
+.diff-table th {
+  padding: 0.5rem 0.625rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.diff-table td {
+  padding: 0.55rem 0.625rem;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+.diff-table tr:last-child td { border-bottom: none; }
+
+.diff-table .row-label {
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.diff-table .col-due   { color: var(--primary); }
+.diff-table .col-actual { color: #0f766e; }
+
+.delta-pill {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.5rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.delta-pill.neg  { background: #fef3c7; color: #92400e; }
+.delta-pill.pos  { background: #fee2e2; color: #991b1b; }
+.delta-pill.zero { background: #f0fdf4; color: #166534; }
+
+/* ===== Dual timeline (due vs actual) ===== */
+.tl-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.tl-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tl-row-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 28px;
+  flex-shrink: 0;
+  color: var(--muted);
+  text-align: right;
+}
+
+.tl-row-bar {
+  display: flex;
+  align-items: stretch;
+  height: 36px;
+  border-radius: 6px;
+  overflow: hidden;
+  flex: 1;
+  position: relative;
+}
+
+/* actual row slightly translucent */
+.tl-row--actual .tl-prenatal { opacity: 0.75; }
+.tl-row--actual .tl-postnatal { opacity: 0.75; }
+
+.tl-birth-actual {
+  width: 28px;
+  flex-shrink: 0;
+  background: #0f766e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.7rem;
+  z-index: 1;
+}
+
+.tl-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.625rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.tl-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.tl-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
 /* ===== Footer ===== */
 footer {
   text-align: center;
