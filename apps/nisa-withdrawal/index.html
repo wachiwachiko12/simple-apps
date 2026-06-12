@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="NISA・投資資産の取崩しをシミュレーション。毎月いくら引き出せるか、何年持つかを計算。4%ルール対応。登録不要・無料。">
+  <title>新NISA取崩しシミュレーター｜老後資産はいつまで持つ？出口戦略を計算 | 計算Lab</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/nisa-withdrawal/">
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- FAQ 構造化データ (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "利回り4%は現実的ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "全世界株式インデックスファンドの過去平均リターンは年率5〜7%程度です。ただしインフレ・税金・手数料を差し引くと実質3〜4%が現実的な目安です。4%ルールは米国の研究に基づくため、日本の物価・税制に合わせて3〜3.5%で計算することを推奨する専門家もいます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "インフレの影響は考慮されていますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このシミュレーターはインフレを自動計算しません。インフレを考慮する場合は、利回りから想定インフレ率（例：1〜2%）を差し引いた「実質利回り」を入力してください。例えば名目利回り5%・インフレ2%の場合は3%で計算します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "NISA口座からの出金に税金はかかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "新NISAの成長投資枠・つみたて投資枠での運用益（売却益・配当）は非課税です。ただし特定口座・一般口座に移した場合は通常の課税（約20.315%）が適用されます。このシミュレーターは税引後の実取得額を基準に入力することを推奨します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "4%ルールとは何ですか？日本でも使えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "4%ルールは米国の研究（トリニティスタディ）で示された「年間引出し率を資産の4%以下に抑えれば30年間資産が持続する確率が高い」という指針です。日本では株式市場の成長率や物価上昇率が異なるため、3〜3.5%を目安にする意見もあります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "毎月の引出し額は途中で変えられますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このシミュレーターは一定額の引出しを前提としています。実際には市場環境に応じて引出し額を柔軟に調整する「可変引出し戦略」が有効です。好況時に多く引き出し、不況時に減らすことで資産の枯渇リスクを下げられます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "資産額にはどの口座を含めればよいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "新NISA口座だけでなく、iDeCo・特定口座・預貯金など老後に活用できる全資産の合計を入力することで、より現実的なシミュレーションができます。ただし各口座の税制が異なるため、最終的な税引後資産額を目安としてください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "配当金を受け取りながら取崩す場合はどう計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "配当利回りも含めた総利回り（値上がり益＋配当）を「想定年利回り」に入力してください。例えば値上がり益3%＋配当2%＝合計5%の場合は5%を入力します。配当再投資しない場合は利回りをやや低めに設定するのが安全です。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google Fonts: Outfit + BIZ UDPGothic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <p class="header-badge"><i class="bi bi-graph-down-arrow"></i> 出口戦略ツール</p>
+      <h1>新NISA取崩しシミュレーター<span class="header-sub">（出口戦略）</span></h1>
+      <p class="subtitle">老後資産はいつまで持つ？毎月いくら引き出せる？4%ルール対応・無料</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告スペース</div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section card">
+
+      <p class="privacy-note"><i class="bi bi-shield-lock-fill"></i> 入力データはブラウザ内のみで計算され、サーバーには一切送信されません。</p>
+
+      <!-- タブUI -->
+      <div class="tab-group" role="tablist" aria-label="計算モード選択">
+        <button class="tab-btn active" data-tab="reverse" role="tab" aria-selected="true" aria-controls="panel-reverse" id="tab-reverse">
+          <i class="bi bi-calculator"></i> いくら引き出せる？
+        </button>
+        <button class="tab-btn" data-tab="duration" role="tab" aria-selected="false" aria-controls="panel-duration" id="tab-duration">
+          <i class="bi bi-calendar3"></i> 何年持つ？
+        </button>
+      </div>
+
+      <!-- タブ1: 逆算モード -->
+      <div class="tab-panel active" id="panel-reverse" role="tabpanel" aria-labelledby="tab-reverse">
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label" for="r-asset">現在の資産額</label>
+            <div class="input-wrap">
+              <input type="number" id="r-asset" value="1800" min="1" max="100000" step="1" aria-describedby="r-asset-hint">
+              <span class="input-unit">万円</span>
+            </div>
+            <span class="field-hint" id="r-asset-hint">NISAや投資口座の合計額</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="r-rate">想定年利回り</label>
+            <div class="input-wrap">
+              <input type="number" id="r-rate" value="4.0" min="0" max="20" step="0.1" aria-describedby="r-rate-hint">
+              <span class="input-unit">%</span>
+            </div>
+            <span class="field-hint" id="r-rate-hint">4%ルールは4.0%が目安</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="r-years">取崩し期間</label>
+            <div class="input-wrap">
+              <input type="number" id="r-years" value="30" min="1" max="60" step="1" aria-describedby="r-years-hint">
+              <span class="input-unit">年</span>
+            </div>
+            <span class="field-hint" id="r-years-hint">例：65歳〜95歳なら30年</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- タブ2: 期間モード -->
+      <div class="tab-panel" id="panel-duration" role="tabpanel" aria-labelledby="tab-duration" hidden>
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label" for="d-asset">現在の資産額</label>
+            <div class="input-wrap">
+              <input type="number" id="d-asset" value="1800" min="1" max="100000" step="1" aria-describedby="d-asset-hint">
+              <span class="input-unit">万円</span>
+            </div>
+            <span class="field-hint" id="d-asset-hint">NISAや投資口座の合計額</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="d-rate">想定年利回り</label>
+            <div class="input-wrap">
+              <input type="number" id="d-rate" value="4.0" min="0" max="20" step="0.1" aria-describedby="d-rate-hint">
+              <span class="input-unit">%</span>
+            </div>
+            <span class="field-hint" id="d-rate-hint">実質利回り（インフレ考慮後）</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="d-monthly">毎月の引出し額</label>
+            <div class="input-wrap">
+              <input type="number" id="d-monthly" value="6" min="0.1" max="1000" step="0.1" aria-describedby="d-monthly-hint">
+              <span class="input-unit">万円</span>
+            </div>
+            <span class="field-hint" id="d-monthly-hint">生活費から年金を引いた不足分</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 結果表示エリア -->
+      <div class="result-area" id="result-area">
+        <div class="result-main-card" id="result-main">
+          <div class="result-icon-wrap"><i class="bi bi-coin" id="result-icon-i"></i></div>
+          <div class="result-value-wrap">
+            <span class="result-label" id="result-label">毎月引き出せる金額</span>
+            <div class="result-value-row">
+              <span class="result-prefix" id="result-prefix">毎月</span>
+              <span class="result-value" id="result-main-value">--.-</span>
+              <span class="result-unit" id="result-main-unit">万円</span>
+            </div>
+            <span class="result-sublabel" id="result-sublabel">引き出せます</span>
+          </div>
+        </div>
+
+        <!-- 4%ルール比較バッジ -->
+        <div class="four-pct-badge" id="four-pct-badge">
+          <i class="bi bi-info-circle"></i>
+          <span id="four-pct-text">4%ルール適用時の月額: --万円</span>
+        </div>
+
+        <!-- サマリーカード -->
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">総引出し額（想定）</span>
+            <span class="summary-value" id="s-total">-- 万円</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">運用益（想定）</span>
+            <span class="summary-value positive" id="s-gain">-- 万円</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">元本消化ペース</span>
+            <span class="summary-value" id="s-pace">-- 万円/年</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">取崩し終了時残高</span>
+            <span class="summary-value" id="s-remain">-- 万円</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">広告スペース</div>
+
+    <!-- グラフセクション -->
+    <section class="card chart-section" id="chart-section">
+      <h2 class="section-title"><i class="bi bi-bar-chart-line"></i> 資産推移グラフ</h2>
+      <div class="chart-container">
+        <canvas id="assetChart" role="img" aria-label="資産推移グラフ"></canvas>
+      </div>
+    </section>
+
+    <!-- シナリオ比較テーブル -->
+    <section class="card scenario-section" id="scenario-section">
+      <h2 class="section-title"><i class="bi bi-table"></i> 利回り別シナリオ比較</h2>
+      <div class="table-wrap">
+        <table class="scenario-table" id="scenario-table">
+          <thead>
+            <tr>
+              <th>年利</th>
+              <th id="scenario-col-header">毎月引出し可能額</th>
+            </tr>
+          </thead>
+          <tbody id="scenario-tbody">
+            <!-- JS で挿入 -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="card howto-section">
+      <h2 class="section-title"><i class="bi bi-book"></i> 使い方</h2>
+      <ol class="howto-steps">
+        <li class="howto-step">
+          <span class="step-num">1</span>
+          <div>
+            <strong>計算モードを選択</strong><br>
+            「いくら引き出せる？」タブで毎月の引出し可能額を逆算、「何年持つ？」タブで資産が持続する期間を計算できます。
+          </div>
+        </li>
+        <li class="howto-step">
+          <span class="step-num">2</span>
+          <div>
+            <strong>資産額・利回り・期間を入力</strong><br>
+            NISAやiDeCoなど老後に活用できる資産の合計を「現在の資産額」に入力。利回りは税引後の実質値を想定しています。
+          </div>
+        </li>
+        <li class="howto-step">
+          <span class="step-num">3</span>
+          <div>
+            <strong>結果をリアルタイムで確認</strong><br>
+            入力値が変わると即座に再計算されます。グラフで資産の推移を視覚的に確認できます。
+          </div>
+        </li>
+        <li class="howto-step">
+          <span class="step-num">4</span>
+          <div>
+            <strong>シナリオ比較で安全域を確認</strong><br>
+            利回り別の比較表で、想定より低い利回りになった場合の影響を確認し、余裕を持った計画を立てましょう。
+          </div>
+        </li>
+      </ol>
+
+      <!-- アコーディオン -->
+      <div class="accordion-list">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-percent"></i>
+            <span>4%ルールとは？日本での注意点</span>
+            <i class="bi bi-chevron-down accordion-chevron"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>4%ルールとは、1994年に米国の研究者ウィリアム・ベンゲンが発表した引出し戦略の指針です。米国の株式・債券データを分析した結果、「年間の引出し額を資産総額の4%以下に抑えれば、30年間資産が枯渇するリスクが低い」とされています。</p>
+            <p class="mt-3"><strong>日本での注意点：</strong>この研究は米国市場を前提としており、日本では以下の点に注意が必要です。</p>
+            <ul class="accordion-list-items">
+              <li>日本株の過去平均リターンは米国より低い傾向があります</li>
+              <li>インフレ率の違いを考慮する必要があります（近年は日本も物価上昇中）</li>
+              <li>新NISAは非課税ですが、特定口座分は約20.315%の税金がかかります</li>
+              <li>全世界株式への分散投資であれば4%は一つの目安となります</li>
+            </ul>
+            <p class="mt-3">日本の専門家の間では、より保守的に<strong>3〜3.5%</strong>を推奨する声もあります。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span>シミュレーションの前提・注意事項</span>
+            <i class="bi bi-chevron-down accordion-chevron"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>このシミュレーターは以下を前提としています。実際の運用結果は異なる場合があります。</p>
+            <ul class="accordion-list-items">
+              <li><strong>利回りは一定</strong>：実際には市場変動により毎年異なります</li>
+              <li><strong>インフレ非考慮</strong>：インフレを考慮する場合は「想定年利回り」から想定インフレ率を差し引いてください（例：利回り5%－インフレ2%＝3%で入力）</li>
+              <li><strong>税金非考慮</strong>：新NISA口座の運用益は非課税ですが、特定口座分には約20.315%の税金がかかります。特定口座の資産は税引後の実取得額を入力することを推奨します</li>
+              <li><strong>手数料非考慮</strong>：信託報酬などのコストは利回りから差し引いて入力してください</li>
+              <li><strong>引出し額は一定</strong>：可変引出し戦略（市況に応じた調整）は計算していません</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-question-circle"></i>
+            <span>よくある質問（FAQ）</span>
+            <i class="bi bi-chevron-down accordion-chevron"></i>
+          </summary>
+          <div class="accordion-body">
+            <div class="faq-list">
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-chat-right-quote"></i> 利回り4%は現実的ですか？</p>
+                <p class="faq-a">全世界株式インデックスファンドの過去平均リターンは年率5〜7%程度です。税金・手数料・インフレを差し引くと実質3〜4%が現実的な目安です。保守的に見積もりたい場合は3%前後で試してみてください。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-chat-right-quote"></i> インフレ考慮はしていますか？</p>
+                <p class="faq-a">自動計算はしていません。インフレを考慮する場合は「想定年利回り」から想定インフレ率を引いた実質利回りを入力してください（名目利回り5%、インフレ2%なら3%を入力）。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-chat-right-quote"></i> NISA口座からの出金に税金はかかりますか？</p>
+                <p class="faq-a">新NISAの運用益（売却益・配当）は非課税です。ただし特定口座・一般口座の資産には通常の課税（約20.315%）が適用されます。混在している場合は口座ごとに計算することをおすすめします。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-chat-right-quote"></i> 資産額にはどの口座を含めればよいですか？</p>
+                <p class="faq-a">新NISA・iDeCo・特定口座・預貯金など、老後に活用する全資産の合計を入力すると実態に近い計算ができます。各口座の税制差を考慮して合計額を調整することをおすすめします。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-chat-right-quote"></i> 利回り0%で計算できますか？</p>
+                <p class="faq-a">はい。利回りを0%にすると運用なし・元本のみの取崩しをシミュレーションできます。最も保守的な試算として参考にしてください。</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-link-45deg"></i>
+            <span>参照・免責事項</span>
+            <i class="bi bi-chevron-down accordion-chevron"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>このツールは情報提供を目的としており、投資助言ではありません。資産運用に関する決定は自己責任で行い、必要に応じてファイナンシャルプランナー等の専門家にご相談ください。</p>
+            <ul class="accordion-list-items mt-3">
+              <li><a href="https://www.fsa.go.jp/policy/nisa2/" target="_blank" rel="noopener">金融庁 — 新しいNISA制度について</a></li>
+              <li><a href="https://www.stat.go.jp/data/cpi/" target="_blank" rel="noopener">総務省統計局 — 消費者物価指数（CPI）</a></li>
+              <li><a href="https://www.cao.go.jp/zei-cho/" target="_blank" rel="noopener">内閣府税制調査会</a></li>
+            </ul>
+            <p class="disclaimer-note mt-3">本シミュレーターの計算結果は将来の運用成果を保証するものではありません。実際の利回りは市場環境により大きく変動します。</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/apps/">トップへ戻る</a>
+        <a href="/about.html">このサイトについて</a>
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 計算Lab. 金融シミュレーションツール</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
