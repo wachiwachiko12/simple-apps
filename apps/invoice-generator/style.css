@@ -638,3 +638,69 @@ footer a:hover { text-decoration: underline; }
   margin-top: 0.75rem;
 }
 .disclaimer-note strong { color: #374151; }
+
+/* ===== アコーディオン ===== */
+.accordion-group {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: var(--radius, 10px);
+  overflow: hidden;
+}
+.accordion-item {
+  border-bottom: 1px solid var(--border, #e2e8f0);
+}
+.accordion-item:last-child { border-bottom: none; }
+.accordion-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  list-style: none;
+  background: #fff;
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.accordion-summary::-webkit-details-marker { display: none; }
+.accordion-summary:hover { background: #f8fafb; }
+.accordion-icon::after {
+  content: '+';
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #6b7280;
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+details[open] > .accordion-summary .accordion-icon::after { content: '−'; }
+.accordion-body {
+  padding: 0.25rem 1.1rem 1.1rem;
+  background: #fff;
+}
+.accordion-body p,
+.accordion-body dl,
+.accordion-body ul,
+.accordion-body ol {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.accordion-body dt {
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 0.75rem;
+}
+.accordion-body dd {
+  margin-left: 1rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+.accordion-body ul {
+  padding-left: 1.25rem;
+}
+.accordion-body li {
+  margin-bottom: 0.3rem;
+}

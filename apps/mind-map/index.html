@@ -128,25 +128,76 @@
       <ol>
         <li>中心ノード（ルート）をクリックして選択し、「子を追加」でブランチを追加します。</li>
         <li>ノードをダブルクリック（またはノード選択後「編集」）でテキストと背景色を変更できます。</li>
-        <li>ノードをドラッグ＆ドロップして別の親に移動できます。</li>
+        <li>ノードをドラッグ＆ドロップして別の親ノードへ移動できます。</li>
         <li>「保存(.json)」でマップをファイルに書き出し、「インポート」で再読み込みできます。</li>
-        <li>「Excel出力」でマップ構造をExcelファイルに出力できます。</li>
+        <li>「Excel出力」でマップ構造をExcelファイルに出力して共有・編集できます。</li>
       </ol>
-      <h2>キーボードショートカット</h2>
-      <table class="shortcut-table">
-        <tbody>
-          <tr><td>Tab</td><td>選択ノードの子に移動</td></tr>
-          <tr><td>Shift+Tab</td><td>親ノードに移動</td></tr>
-          <tr><td>↑ / ↓</td><td>兄弟ノードを移動</td></tr>
-          <tr><td>Escape</td><td>メニュー・編集を閉じる</td></tr>
-        </tbody>
-      </table>
-      <h2>データの保存について</h2>
-      <p>マップデータはブラウザのlocalStorageに自動保存されます。外部サーバーへの送信は一切行いません。ブラウザのキャッシュ削除で消えるため、大切なデータは「保存(.json)」でファイルに書き出してください。</p>
 
-      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールで作成・保存したデータの消失・破損について、運営者は責任を負いかねます。重要なデータは必ずJSONファイルに書き出してバックアップしてください。</p>
+      <p style="font-size:0.9rem;color:var(--muted);margin-top:0.75rem;">マップデータはブラウザのlocalStorageに自動保存されます。外部サーバーへの送信は一切行いません。ブラウザのキャッシュ削除で消える場合があるため、重要なデータは「保存(.json)」でファイルに書き出してください。</p>
 
-      <h2>このツールで収益化を始めませんか</h2>
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>キーボードショートカット一覧</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <tbody>
+                <tr><td>Tab</td><td>選択ノードの子ノードに移動</td></tr>
+                <tr><td>Shift + Tab</td><td>親ノードに移動</td></tr>
+                <tr><td>↑ / ↓</td><td>兄弟ノード間を移動</td></tr>
+                <tr><td>Enter / ダブルクリック</td><td>ノードの編集を開始</td></tr>
+                <tr><td>Delete / Backspace</td><td>選択ノードを削除</td></tr>
+                <tr><td>Escape</td><td>メニュー・編集ダイアログを閉じる</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>マインドマップの活用例</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>マインドマップはアイデアの整理・構造化に広く活用されています。主な活用シーンをご紹介します。<br><br>
+            <strong>会議メモ・議事録</strong>：中心に会議テーマを置き、議題・決定事項・担当者をブランチで整理。後から見返しやすく、次のアクションも明確になります。<br><br>
+            <strong>プロジェクト設計</strong>：タスクの洗い出し・依存関係の可視化・担当振り分けに活用。Excel出力でチームへの共有も簡単です。<br><br>
+            <strong>勉強・学習整理</strong>：参考書のキーワードを中心に置き、関連概念をブランチで展開。知識の全体像を視覚的に把握できます。<br><br>
+            <strong>文章構成・アウトライン作成</strong>：ブログ記事・レポート・プレゼン資料の章立てやアイデア出しに。思考の流れを視覚化することで文章構成がスムーズになります。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>作成したマインドマップはどこに保存されますか？</dt>
+              <dd>マップデータはブラウザのlocalStorageに自動保存されます。外部サーバーへの送信は一切行いません。ブラウザのキャッシュ削除で消えるため、大切なデータは「保存(.json)」でファイルに書き出してください。</dd>
+              <dt>ノード数の上限はありますか？</dt>
+              <dd>技術的な上限はありませんが、ブラウザのメモリとlocalStorageの容量（通常5MB程度）に依存します。数百ノード程度であれば問題なく動作します。</dd>
+              <dt>Excel出力はどのような形式ですか？</dt>
+              <dd>マインドマップの階層構造をExcel（.xlsx形式）に出力します。各ノードがインデントされた形式で書き出されるため、会議の議事録や企画書の整理にも活用できます。</dd>
+              <dt>スマホでも使えますか？</dt>
+              <dd>はい、モバイルブラウザでも動作します。ノードのタップ操作・ドラッグ移動も対応しています。ただし大きなマップは画面が小さいPCでの作業をおすすめします。</dd>
+              <dt>Excelで作成したデータをインポートできますか？</dt>
+              <dd>現時点ではJSON形式（このツールの「保存(.json)」で作成したファイル）のみインポートに対応しています。Excelファイルの直接インポートは未対応です。</dd>
+              <dt>ノードに画像や絵文字は追加できますか？</dt>
+              <dd>現在はテキストと背景色のみ対応しています。絵文字はテキストとして入力可能です（例：絵文字を含む文字列）。</dd>
+              <dt>共有・チーム利用はできますか？</dt>
+              <dd>JSONファイルを書き出して相手に送付することで、同じツールで読み込んで共有できます。リアルタイム共同編集には現在対応していません。</dd>
+            </dl>
+          </div>
+        </details>
+
+      </div>
+
+      <h2 style="margin-top:1.5rem;">このツールで収益化を始めませんか</h2>
       <div class="affiliate-block">
         <p class="affiliate-label">PR</p>
         <p class="affiliate-desc">アフィリエイトを始めるならA8.net。国内最大級の案件数で、サイト・SNS・ブログで収益化できます。無料登録OK。</p>

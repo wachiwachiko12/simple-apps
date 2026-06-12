@@ -161,6 +161,14 @@
       <h2>ワイブル分布とは</h2>
       <p>ワイブル分布は信頼性工学・品質管理で広く使われる確率分布です。形状パラメータ β によって多様な故障パターンを表現できます。製品の寿命試験データや設備の故障履歴の解析に広く用いられており、自動車部品・電子機器・機械設備など幅広い分野で活用されています。</p>
 
+      <h2>使い方</h2>
+      <ol>
+        <li>スライダーで β（形状）・η（尺度）・N（サンプルサイズ）を調整します。</li>
+        <li>ワイブル確率紙プロット（左）とヒストグラム（右）がリアルタイムで更新されます。</li>
+        <li>特性値カード（平均寿命・中央値・標準偏差・B10寿命）が自動計算されます。</li>
+        <li>「再サンプリング」ボタンで同じパラメータのまま乱数を振り直し、サンプリングのばらつきを確認できます。</li>
+      </ol>
+
       <h2>パラメータの意味</h2>
       <dl>
         <dt>β（形状パラメータ）</dt>
@@ -171,25 +179,66 @@
         <dd>シミュレーションで生成するランダムサンプル数です。Nを増やすとデータのばらつきが小さくなり、理論直線への当てはまりが良くなります。</dd>
       </dl>
 
-      <h2>ワイブル確率紙について</h2>
-      <p>縦軸に ln(−ln(1−F))、横軸に ln(t) をとると、ワイブル分布のデータは直線状に並びます。この変換により、直線の傾きが β（形状パラメータ）、切片から η（特性寿命）を推定できます。実際の寿命試験では、観測データをこの座標系にプロットして直線に当てはめることでパラメータを推定します（グラフィカル推定法）。赤い破線が理論直線です。サンプル点が赤線に沿って並ぶほどワイブル分布への当てはまりが良いことを示します。</p>
+      <div class="accordion-group">
 
-      <h2>B10寿命とは</h2>
-      <p>10% の製品が故障するまでの時間（10% 故障確率時の寿命）です。自動車部品や機械部品の信頼性基準として広く使われます。たとえば「B10寿命 10万 km」は、10万 km 走行時点で全体の 10% が故障することを意味します。同様に B50寿命は中央値（50% 故障確率）、B63 はほぼ特性寿命 η に対応します。</p>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>ワイブル確率紙の読み方</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>ワイブル確率紙（Weibull probability paper）とは、縦軸に ln(−ln(1−F))、横軸に ln(t) をとった座標系です。この変換を行うと、ワイブル分布に従うデータは直線状に並びます。直線の傾きが形状パラメータ β に相当し、傾きが急なほど摩耗故障（摩耗・疲労型）であることを示します。直線の切片から尺度パラメータ η（特性寿命）を読み取ることができます。実際の寿命試験では観測データをこの座標系にプロットして直線に当てはめ（グラフィカル推定法）、パラメータを推定します。本シミュレーターでは赤い破線が理論直線です。サンプル点が赤線に沿って並ぶほどワイブル分布への当てはまりが良いことを示します。</p>
+          </div>
+        </details>
 
-      <h2>使い方</h2>
-      <ol>
-        <li>スライダーで β（形状）・η（尺度）・N（サンプルサイズ）を調整します。</li>
-        <li>ワイブル確率紙プロット（左）とヒストグラム（右）がリアルタイムで更新されます。</li>
-        <li>特性値カード（平均寿命・中央値・標準偏差・B10寿命）が自動計算されます。</li>
-        <li>「再サンプリング」ボタンで同じパラメータのまま乱数を振り直し、サンプリングのばらつきを確認できます。</li>
-      </ol>
-      <h2>参照文献・学術的背景</h2>
-      <ul class="ref-links">
-        <li><a href="https://www.jis-standard.jp" target="_blank" rel="noopener">JIS Z 9015：統計的抜取検査（参考）</a></li>
-        <li>Weibull, W. (1951). "A statistical distribution function of wide applicability". Journal of Applied Mechanics. 18 (3): 293–297.</li>
-      </ul>
-      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールのシミュレーション結果は教育・学習目的の参考値です。実際の製品設計・品質保証への適用には、専門的な統計解析ソフトウェアと信頼性工学の専門家によるレビューをお勧めします。</p>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>B10寿命・平均寿命（MTTF）の意味</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>B10寿命（B10 life）は累積故障確率が10%になる時間です。「B10寿命10万km」であれば、10万km走行時点で全体の10%が故障することを意味します。自動車部品・軸受・歯車の信頼性基準として広く使われます。平均寿命（MTTF: Mean Time To Failure）はすべての製品が故障するまでの平均時間で、ワイブル分布では η × Γ(1 + 1/β) で計算されます（Γはガンマ関数）。B10寿命はMTTFよりも保守的な指標であり、高信頼性が求められる部品評価には B10 や B1 がよく使われます。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>β &lt; 1 の場合は何を意味しますか？</dt>
+              <dd>β&lt;1のとき故障率は時間とともに減少します（初期故障期）。製品出荷直後の不良品・初期不良（バスタブ曲線の左側）に相当し、スクリーニング試験やバーンインで対策します。</dd>
+              <dt>β = 1 の場合は？</dt>
+              <dd>β=1のときワイブル分布は指数分布と一致します。故障率が時間によらず一定の「偶発故障」を意味します。電子部品のランダム故障期がこれに近い特性を示します。</dd>
+              <dt>β &gt; 1 の場合は？</dt>
+              <dd>β&gt;1のとき故障率は時間とともに増加します（摩耗故障・老化故障）。機械部品の疲労破壊・ゴムの劣化・バッテリーの消耗などがこれに該当します。β=2〜3が典型的な摩耗故障です。</dd>
+              <dt>実際の信頼性試験でどう活用しますか？</dt>
+              <dd>寿命試験で得た故障時間データをワイブル確率紙にプロットし、直線当てはめでβとηを推定します。推定したパラメータからB10寿命・MTTFを算出し、保証期間設定・予防保全計画に活用します。</dd>
+              <dt>ワイブル分布はどのような分野で使われますか？</dt>
+              <dd>自動車部品・電子機器・機械設備の寿命試験解析、製品の保証期間設定、予防保全計画の策定、信頼性設計・FMEA（故障モード影響解析）に広く活用されています。</dd>
+              <dt>打ち切りデータ（censored data）にも対応しますか？</dt>
+              <dd>本シミュレーターは完全データ（全サンプルが故障）を前提としています。実際の試験で試験終了時点でまだ故障していないデータ（打ち切りデータ）がある場合は、Kaplan-Meier法や最尤推定法が必要です。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照文献・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www.jis-standard.jp" target="_blank" rel="noopener">JIS Z 9015：統計的抜取検査（参考）</a></li>
+              <li>Weibull, W. (1951). "A statistical distribution function of wide applicability". Journal of Applied Mechanics. 18 (3): 293–297.</li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールのシミュレーション結果は教育・学習目的の参考値です。実際の製品設計・品質保証への適用には、専門的な統計解析ソフトウェアと信頼性工学の専門家によるレビューをお勧めします。</p>
+          </div>
+        </details>
+
+      </div>
     </section>
 
     <div class="affiliate-block">
