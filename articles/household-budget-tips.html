@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="家計管理が続かない理由を分析し、固定費・変動費・特別費の3分類と50:30:20ルールで月1時間だけで家計を把握する具体的な方法を解説します。">
+  <title>家計管理を習慣化するコツ：月1時間で把握できる予算管理術｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.com/articles/household-budget-tips.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="家計管理を習慣化するコツ：月1時間で把握できる予算管理術">
+  <meta property="og:description" content="家計管理が続かない理由を分析し、固定費・変動費・特別費の3分類と50:30:20ルールで月1時間だけで家計を把握する具体的な方法を解説します。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.com/articles/household-budget-tips.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "家計管理を習慣化するコツ：月1時間で把握できる予算管理術",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar { background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%); }
+    .topbar-inner { max-width: 800px; margin: 0 auto; padding: 0.875rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .site-name { font-size: 1.125rem; font-weight: 700; color: white; text-decoration: none; }
+    .topbar nav a { color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+    .topbar nav a:hover { color: white; }
+
+    main { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+    .ad-unit { min-height: 90px; background: #f0f0ee; border: 1px dashed #d1d5db; border-radius: var(--radius); margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.75rem; }
+
+    article { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05); padding: 2rem 1.5rem; }
+    @media (min-width: 640px) { article { padding: 2.5rem 2rem; } }
+
+    .article-category { display: inline-block; background: #d1fae5; color: #065f46; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.625rem; border-radius: 100px; margin-bottom: 1rem; }
+
+    h1 { font-size: clamp(1.4rem, 4vw, 1.875rem); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1rem; }
+
+    .article-meta { font-size: 0.8125rem; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+
+    section { margin-top: 2rem; }
+
+    h2 { font-size: 1.125rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 0.875rem; padding-left: 0.75rem; border-left: 3px solid var(--primary); }
+
+    p { font-size: 0.9375rem; line-height: 1.85; color: #374151; margin-bottom: 0.875rem; word-break: break-word; }
+    p:last-child { margin-bottom: 0; }
+
+    /* Reason list */
+    .reason-list {
+      list-style: none;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .reason-list li {
+      display: flex;
+      gap: 0.875rem;
+      align-items: flex-start;
+      font-size: 0.9375rem;
+      color: #374151;
+    }
+    .reason-list .icon {
+      font-size: 1.125rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .reason-list strong { color: var(--text); }
+
+    /* Category cards */
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.875rem;
+      margin: 1.25rem 0;
+    }
+    @media (min-width: 500px) { .category-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .cat-card {
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .cat-card.fixed { background: #eff6ff; border: 1.5px solid #bfdbfe; }
+    .cat-card.variable { background: #fff7ed; border: 1.5px solid #fed7aa; }
+    .cat-card.special { background: #f5f3ff; border: 1.5px solid #ddd6fe; }
+    .cat-card .cat-name { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .cat-card.fixed .cat-name { color: #1d4ed8; }
+    .cat-card.variable .cat-name { color: #c2410c; }
+    .cat-card.special .cat-name { color: #7c3aed; }
+    .cat-card .cat-desc { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
+
+    /* Rule box */
+    .rule-box {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.25rem 0;
+      text-align: center;
+    }
+    .rule-title { font-size: 1.125rem; font-weight: 700; color: #15803d; margin-bottom: 0.875rem; }
+    .rule-bars { display: flex; gap: 0.625rem; justify-content: center; flex-wrap: wrap; }
+    .rule-bar { padding: 0.625rem 1rem; border-radius: 8px; font-size: 0.875rem; font-weight: 700; min-width: 110px; }
+    .rule-bar.needs { background: #1d4ed8; color: white; }
+    .rule-bar.wants { background: #0891b2; color: white; }
+    .rule-bar.savings { background: #15803d; color: white; }
+    .rule-bar .pct { font-size: 1.125rem; display: block; }
+    .rule-bar .label { font-size: 0.75rem; opacity: 0.9; }
+
+    /* Habit steps */
+    .habit-steps {
+      list-style: none;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      counter-reset: habit-counter;
+    }
+    .habit-steps li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: 0.9375rem;
+      color: #374151;
+      counter-increment: habit-counter;
+      padding: 0.875rem;
+      background: var(--primary-light);
+      border-radius: 8px;
+    }
+    .habit-steps li::before {
+      content: counter(habit-counter);
+      background: var(--primary);
+      color: white;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .internal-link-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: var(--radius); padding: 1.25rem; margin: 2rem 0; display: flex; align-items: center; gap: 0.875rem; }
+    .internal-link-box .link-label { font-size: 0.8125rem; color: #16a34a; font-weight: 600; white-space: nowrap; }
+    .internal-link-box a { color: #15803d; font-weight: 700; text-decoration: none; font-size: 0.9375rem; transition: opacity 0.15s; }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    footer { background: #1a2f4e; color: rgba(255,255,255,0.7); text-align: center; padding: 2rem 1.25rem; font-size: 0.875rem; line-height: 2; margin-top: 3rem; }
+    footer a { color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    .article-nav { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .nav-link { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600; min-height: 44px; padding: 0.5rem 0; transition: opacity 0.15s; }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav><a href="/articles/">コラム一覧</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">家計管理・節約</span>
+
+    <h1>家計管理を習慣化するコツ：月1時間で把握できる予算管理術</h1>
+
+    <p class="article-meta">公開日: 2026年6月12日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>家計管理を続けられない3つの理由</h2>
+      <p>「家計簿をつけようと思っても3日で挫折してしまう」という経験は多くの方に覚えがあるでしょう。家計管理が続かない理由を分析すると、ほぼ3つのパターンに集約されます。</p>
+
+      <ul class="reason-list">
+        <li>
+          <span class="icon">①</span>
+          <span><strong>完璧主義になりすぎる</strong> — すべての支出を1円単位で記録しようとすると、1日でも漏れると「もういいや」とリセットしてしまいます。</span>
+        </li>
+        <li>
+          <span class="icon">②</span>
+          <span><strong>カテゴリが細かすぎる</strong> — 「外食」「コンビニ」「カフェ」と細分化しすぎると分類作業が手間になります。最初は大きなカテゴリで十分です。</span>
+        </li>
+        <li>
+          <span class="icon">③</span>
+          <span><strong>毎日記録しようとする</strong> — 毎日の習慣として取り入れようとするのではなく、月に1回まとめて振り返るだけで十分機能します。</span>
+        </li>
+      </ul>
+
+      <p>家計管理の目的は「完璧な記録を残すこと」ではなく「お金の流れを把握して意思決定に役立てること」です。そのためには月に1時間、大きな数字だけを確認する習慣で十分です。</p>
+    </section>
+
+    <section>
+      <h2>支出を「固定費」「変動費」「特別費」で分ける方法</h2>
+      <p>家計管理を簡単にする最初のステップは、支出を3種類に分類することです。この分類ができると、どこを削れるかが一目でわかります。</p>
+
+      <div class="category-grid">
+        <div class="cat-card fixed">
+          <div class="cat-name">固定費</div>
+          <div class="cat-desc">毎月ほぼ一定<br>家賃・保険・サブスク・通信費</div>
+        </div>
+        <div class="cat-card variable">
+          <div class="cat-name">変動費</div>
+          <div class="cat-desc">月によって変わる<br>食費・外食・交通費・娯楽</div>
+        </div>
+        <div class="cat-card special">
+          <div class="cat-name">特別費</div>
+          <div class="cat-desc">不定期・年数回<br>旅行・家電・医療費・贈り物</div>
+        </div>
+      </div>
+
+      <p>固定費は一度見直すだけで毎月の節約効果が持続します。サブスクリプションサービスの整理や保険料の見直しは、変動費の節約より費用対効果が高い場合が多いです。特別費は年間で予算を立て、毎月積み立てておくと急な出費に慌てなくなります。</p>
+    </section>
+
+    <section>
+      <h2>50:30:20ルール（生活費:趣味:貯蓄）の実践</h2>
+      <p>アメリカで広く知られる「50/30/20ルール」は、手取り収入をシンプルに3分割する予算管理の黄金比です。難しい計算なしに、貯蓄と生活のバランスを保つための指針として活用できます。</p>
+
+      <div class="rule-box">
+        <div class="rule-title">50:30:20ルール</div>
+        <div class="rule-bars">
+          <div class="rule-bar needs">
+            <span class="pct">50%</span>
+            <span class="label">生活費（固定費含む）</span>
+          </div>
+          <div class="rule-bar wants">
+            <span class="pct">30%</span>
+            <span class="label">趣味・娯楽</span>
+          </div>
+          <div class="rule-bar savings">
+            <span class="pct">20%</span>
+            <span class="label">貯蓄・投資</span>
+          </div>
+        </div>
+      </div>
+
+      <p>生活費（家賃・食費・水道光熱費など生活に必要な支出）を手取りの50%以内に抑えるのが理想です。日本の都市部では家賃が高く、この比率が60〜70%になる方も多いですが、その場合は趣味費を削ることで貯蓄率20%を維持することを優先しましょう。</p>
+      <p>貯蓄の20%は「先取り貯蓄」として給与日当日に自動振替で確保するのがコツです。残ったお金で生活する習慣をつけると、貯蓄が後回しになりません。</p>
+    </section>
+
+    <section>
+      <h2>月1回の家計見直し習慣の作り方</h2>
+      <p>毎日の記録を求めず、月末または月初の30〜60分だけ家計を振り返る習慣を「月次家計レビュー」と呼びます。スマートフォンのバンキングアプリやクレジットカードの明細を開いて、3つのカテゴリごとに集計するだけです。</p>
+
+      <ol class="habit-steps">
+        <li>口座・カードの明細をまとめて確認（10分）</li>
+        <li>固定費・変動費・特別費の3カテゴリに仕分け（10分）</li>
+        <li>今月の50:30:20比率を確認し、ズレがあった原因をメモ（10分）</li>
+        <li>来月の改善目標を1つだけ決める（5分）</li>
+      </ol>
+
+      <p>週次・日次ではなく「月次」にこだわることで、多少のブレがあっても「月トータルで帳尻が合えばOK」という気軽なスタンスを維持できます。家計管理は継続することが最も重要であり、100点を狙うより80点を12か月続ける方が圧倒的に効果的です。</p>
+    </section>
+
+    <section>
+      <h2>スマホで簡単に記録できる無料家計簿アプリ</h2>
+      <p>月次の家計レビューをより手軽に行うために、Keisanlabでは収入・固定費・変動費を入力すると50:30:20ルールに基づいた予算配分を自動計算し、月次サマリーを表示できる無料家計簿ツールを提供しています。</p>
+      <p>アカウント登録不要でブラウザだけで動作します。入力したデータはブラウザのローカルストレージに保存されるため、プライバシーの心配もありません。まずは今月の収支を入力するだけでお金の流れが可視化できます。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/household-budget/">家計簿アプリ</a>
+      </div>
+    </section>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>

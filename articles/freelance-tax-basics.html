@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="フリーランスの確定申告で迷いがちな青色申告・白色申告の違いを徹底解説。65万円特別控除のメリットや選び方のポイントをわかりやすく紹介します。">
+  <title>フリーランスの確定申告入門：青色申告と白色申告の違いを徹底解説｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.com/articles/freelance-tax-basics.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="フリーランスの確定申告入門：青色申告と白色申告の違いを徹底解説">
+  <meta property="og:description" content="フリーランスの確定申告で迷いがちな青色申告・白色申告の違いを徹底解説。65万円特別控除のメリットや選び方のポイントをわかりやすく紹介します。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.com/articles/freelance-tax-basics.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "フリーランスの確定申告入門：青色申告と白色申告の違いを徹底解説",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Topbar ===== */
+    .topbar {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+    }
+    .topbar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .topbar nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: white; }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ===== Ad unit ===== */
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Article ===== */
+    article {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) {
+      article { padding: 2.5rem 2rem; }
+    }
+
+    .article-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section {
+      margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.875rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.85;
+      color: #374151;
+      margin-bottom: 0.875rem;
+      word-break: break-word;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    /* ===== Comparison table ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 1.25rem 0;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .compare-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .compare-table tr:nth-child(even) td { background: #f8f9fb; }
+
+    /* ===== Highlight box ===== */
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .highlight-box p {
+      color: #1e3a6e;
+      margin-bottom: 0;
+    }
+
+    /* ===== Internal link ===== */
+    .internal-link-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .internal-link-box .link-label {
+      font-size: 0.8125rem;
+      color: #16a34a;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .internal-link-box a {
+      color: #15803d;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: opacity 0.15s;
+    }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #1a2f4e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 2;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    /* ===== Back nav ===== */
+    .article-nav {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: opacity 0.15s;
+    }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav><a href="/articles/">コラム一覧</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">税務・確定申告</span>
+
+    <h1>フリーランスの確定申告入門：青色申告と白色申告の違いを徹底解説</h1>
+
+    <p class="article-meta">公開日: 2026年6月12日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>確定申告とは？フリーランスが申告すべき理由</h2>
+      <p>確定申告とは、1月1日から12月31日までの1年間に得た所得をまとめて税務署に申告し、納める税金を確定させる手続きです。会社員の場合は勤務先が年末調整を行うため自分で申告する必要はありませんが、フリーランスや個人事業主は所得税・住民税ともに自分で申告しなければなりません。</p>
+      <p>フリーランスとして活動して年間の事業所得が48万円（基礎控除額）を超えると確定申告の義務が生じます。申告を怠ると無申告加算税が課されるほか、青色申告の各種メリットも受けられません。独立後すぐに制度を理解しておくことが大切です。</p>
+      <p>確定申告の方法には「白色申告」と「青色申告」の2種類があります。どちらを選ぶかによって控除額や帳簿管理の手間が大きく変わるため、自分の状況に合った方法を選ぶことが節税の第一歩となります。</p>
+    </section>
+
+    <section>
+      <h2>白色申告のメリット・デメリット</h2>
+      <p>白色申告は、事前の届出が不要で帳簿管理が比較的シンプルな申告方法です。売上と経費の記録があれば申告できるため、独立したばかりで会計に不慣れな方でも取り組みやすいのが特徴です。</p>
+      <p>ただし、白色申告では青色申告特別控除（最大65万円）は使えません。また、赤字（損失）が発生しても翌年以降に繰り越すことができず、その年限りで損失は消えてしまいます。帳簿記帳義務（簡易な記帳）は2014年以降は白色申告者にも課されており、「帳簿なしで申告できる」という時代は終わっています。</p>
+      <div class="highlight-box">
+        <p>白色申告は「事前届出が不要・帳簿が簡易」というメリットがありますが、控除額の大きさや赤字繰越の面で青色申告に劣ります。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>青色申告のメリット・デメリット</h2>
+      <p>青色申告の最大のメリットは「青色申告特別控除」です。複式簿記による帳簿管理とe-Taxでの電子申告を行えば最大65万円の特別控除が受けられます。簡易簿記の場合でも10万円の控除が適用されます。課税所得が65万円分減るため、所得税・住民税の節税効果は非常に大きくなります。</p>
+      <p>さらに、最大3年間の赤字繰越控除（純損失の繰越控除）、家族への給与を経費として計上できる「青色事業専従者給与」、30万円未満の少額減価償却資産を一括費用計上できる特例など、多くの節税メリットがあります。</p>
+      <p>デメリットとしては、開業から2か月以内（または前年1月15日以前開業なら3月15日まで）に「青色申告承認申請書」を税務署に提出しなければならない点です。また、複式簿記での記帳が必要なため、会計ソフトや税理士の活用が現実的です。</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>白色申告</th>
+            <th>青色申告</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>事前申請</td>
+            <td>不要</td>
+            <td>必要（開業2か月以内）</td>
+          </tr>
+          <tr>
+            <td>特別控除</td>
+            <td>なし</td>
+            <td>最大65万円</td>
+          </tr>
+          <tr>
+            <td>帳簿方式</td>
+            <td>簡易記帳</td>
+            <td>複式簿記（65万円控除時）</td>
+          </tr>
+          <tr>
+            <td>赤字繰越</td>
+            <td>不可</td>
+            <td>3年間可能</td>
+          </tr>
+          <tr>
+            <td>家族給与</td>
+            <td>原則不可</td>
+            <td>届出により経費計上可</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>どちらを選ぶべきか？ケース別判断基準</h2>
+      <p>年間所得が200万円を超える見込みがある方や、今後事業を拡大したい方は青色申告を強くお勧めします。65万円控除は所得税率が20%でも13万円の節税になります。年間の手間（会計ソフトへの入力）を考えると費用対効果は非常に高いといえます。</p>
+      <p>一方、副業程度の小規模な活動や、試験的に始めたばかりで収入が少ない場合は、まず白色申告でスタートして確定申告の流れを理解し、翌年度から青色申告に切り替えるというステップも現実的です。ただし、青色申告への切り替えには事前申請が必要なため、年末ぎりぎりに慌てないよう早めに判断しましょう。</p>
+      <p>フリーランスとして本格的に活動するつもりであれば、開業届と同時に「青色申告承認申請書」を提出しておくのが最善です。必要な書類は国税庁のウェブサイトからダウンロードできます。</p>
+    </section>
+
+    <section>
+      <h2>確定申告に役立つ無料ツール</h2>
+      <p>確定申告の前に、おおよその税負担を把握しておくと申告の見通しが立てやすくなります。Keisanlabでは、所得や経費を入力するだけで所得税・住民税の目安額を自動計算できる無料シミュレーターを提供しています。</p>
+      <p>売上から経費を引いた事業所得を入力し、青色申告特別控除の有無を切り替えるだけで節税効果の差を数値で確認できます。確定申告前のシミュレーションや、青色申告に切り替えるべきか判断する際にぜひ活用してください。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/freelance-tax-simulator/">フリーランス税金シミュレーター</a>
+      </div>
+    </section>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>
