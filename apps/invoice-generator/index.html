@@ -216,22 +216,67 @@
     <div class="howto-inner">
       <h2>使い方</h2>
       <ol>
-        <li>「発行者」タブに自分の名前・住所・振込先を入力します（自動保存されます）。</li>
+        <li>「発行者」タブに自分の名前・住所・振込先を入力します（ブラウザに自動保存されます）。</li>
         <li>「請求先」タブに取引先の会社名・担当者を入力します。</li>
-        <li>「明細」タブに品目・数量・単価を入力します。合計は自動計算されます。</li>
-        <li>「印刷 / PDF保存」ボタンを押してブラウザの印刷機能からPDF保存できます。</li>
+        <li>「明細」タブに品目・数量・単価を入力します。消費税込みの合計額が自動計算されます。</li>
+        <li>「印刷 / PDF保存」ボタンを押してブラウザの印刷機能からPDFとして保存できます。</li>
       </ol>
-      <h2>データの保存について</h2>
-      <p>発行者情報と請求書番号はブラウザのlocalStorageに保存されます。データはこの端末のブラウザ内にのみ保存され、外部サーバーには一切送信されません。</p>
+      <p style="font-size:0.9rem;color:var(--muted);margin-top:0.75rem;">発行者情報と請求書番号はブラウザのlocalStorageに保存されます。データはこの端末内にのみ保存され、外部サーバーには一切送信されません。</p>
 
-      <h2>参照法令・出典</h2>
-      <ul class="ref-links">
-        <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6625.htm" target="_blank" rel="noopener">国税庁：適格請求書等保存方式（インボイス制度）</a></li>
-        <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6124.htm" target="_blank" rel="noopener">国税庁：課税仕入れに係る消費税額の計算</a></li>
-      </ul>
-      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールで作成した請求書は参考フォーマットです。インボイス登録番号の記載・税額計算の正確性については、税理士または国税庁の公式情報をご確認の上ご利用ください。</p>
+      <div class="accordion-group">
 
-      <h2>請求書・経理をもっとかんたんに</h2>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>インボイス制度の基本要件</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>2023年10月から始まったインボイス制度（適格請求書等保存方式）では、仕入税額控除を受けるために「適格請求書（インボイス）」の保存が必要になりました。インボイスには、①適格請求書発行事業者の氏名・登録番号（T+13桁）、②取引年月日、③取引内容（軽減税率対象品目はその旨）、④税率ごとの合計額および消費税額、⑤書類の交付先の氏名の5項目の記載が必須です。登録番号がない免税事業者が発行した請求書はインボイスにはなりませんが、取引自体は引き続き行えます。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>登録番号（インボイス番号）がない場合はどうすればよいですか？</dt>
+              <dd>免税事業者の場合は登録番号の記載は不要です。「インボイス登録なし」のまま通常の請求書として発行できます。ただし取引先が仕入税額控除を受けられなくなる場合があります。</dd>
+              <dt>外税・内税の記載方法はどう違いますか？</dt>
+              <dd>外税は「小計 + 消費税 = 合計」と分けて記載する方式で、インボイス制度に対応した標準的な書き方です。内税は合計額に消費税が含まれる表記です。本ツールは外税（税抜き＋消費税表示）に対応しています。</dd>
+              <dt>PDFで保存するにはどうすればよいですか？</dt>
+              <dd>「印刷 / PDF保存」ボタンを押すとブラウザの印刷ダイアログが開きます。プリンターの選択で「PDFに保存」または「Microsoft Print to PDF」を選ぶとPDFファイルとして保存できます。</dd>
+              <dt>請求書の支払期限は何日が一般的ですか？</dt>
+              <dd>一般的には月末締め翌月払い（30〜60日）が多いです。フリーランスの場合は事前に取引先と合意した支払いサイトを「支払期限」欄に明記することを推奨します。</dd>
+              <dt>消費税の端数処理はどうしますか？</dt>
+              <dd>インボイス制度では請求書1枚につき税率ごとに端数処理（切捨て・切上げ・四捨五入のいずれか）を行います。本ツールは小数点以下を切り捨てで計算しています。</dd>
+              <dt>複数の税率（8%と10%）が混在する場合は？</dt>
+              <dd>飲食料品など軽減税率（8%）が適用される品目は「明細」タブの消費税選択で「8%（軽減税率）」を選んでください。税率ごとに小計・税額が分けて表示されます。</dd>
+              <dt>入力データは保存されますか？</dt>
+              <dd>発行者情報と請求書番号のみブラウザのlocalStorageに保存されます。ページを閉じても次回開いたときに自動で復元されます。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照法令・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6625.htm" target="_blank" rel="noopener">国税庁：適格請求書等保存方式（インボイス制度）</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6124.htm" target="_blank" rel="noopener">国税庁：課税仕入れに係る消費税額の計算</a></li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールで作成した請求書は参考フォーマットです。インボイス登録番号の記載・税額計算の正確性については、税理士または国税庁の公式情報をご確認の上ご利用ください。</p>
+          </div>
+        </details>
+
+      </div>
+
+      <h2 style="margin-top:1.5rem;">請求書・経理をもっとかんたんに</h2>
       <div class="affiliate-block">
         <p class="affiliate-label">PR</p>
         <p class="affiliate-desc">発行した請求書を即日現金化。入金サイトが長い取引でも資金繰りの心配なし。フリーランス・個人事業主向けの無料口座開設サービスです。</p>

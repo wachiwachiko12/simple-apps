@@ -171,36 +171,66 @@
       <ol>
         <li>変換したい方向のタブ（西暦→和暦、和暦→西暦、年齢計算）を選択します。</li>
         <li>年号または西暦を入力して「変換する」ボタンを押します。</li>
-        <li>変換結果が即座に表示されます。</li>
+        <li>変換結果が即座に表示されます。干支・六曜も自動表示されます。</li>
       </ol>
 
-      <h2>対応している元号</h2>
-      <p>明治（1868年〜）・大正（1912年〜）・昭和（1926年〜）・平成（1989年〜）・令和（2019年〜）の5つの元号に対応しています。西暦1868年以降であればすべての年を変換できます。</p>
+      <p style="font-size:0.9rem;color:var(--muted);margin-top:0.75rem;">対応元号：明治（1868年〜）・大正（1912年〜）・昭和（1926年〜）・平成（1989年〜）・令和（2019年〜）。西暦1868年以降の全年に対応。生まれた元号と年を入力すると今年（<span id="current-year-text"></span>年）時点の満年齢も計算できます。</p>
 
-      <h2>年齢計算について</h2>
-      <p>生まれた元号と年を入力すると、今年（<span id="current-year-text"></span>年）時点での年齢（数え年ではなく満年齢）を計算します。誕生日を考慮した正確な年齢は、誕生月・日によって±1歳変わる場合があります。</p>
+      <div class="accordion-group">
 
-      <h2>よくある質問</h2>
-      <dl>
-        <dt>昭和64年は存在しますか？</dt>
-        <dd>昭和64年は1989年1月1日〜1月7日の7日間のみ存在します。1989年1月8日からは平成元年となります。</dd>
-        <dt>令和元年は何年ですか？</dt>
-        <dd>令和元年は2019年です。令和は2019年5月1日に始まりました。</dd>
-        <dt>昭和生まれは今何歳ですか？</dt>
-        <dd>2026年時点で、昭和元年（1926年）生まれが100歳、昭和64年（1989年）生まれが37歳です。詳しくは「年齢早見表」タブをご確認ください。</dd>
-        <dt>平成生まれは今何歳ですか？</dt>
-        <dd>2026年時点で、平成元年（1989年）生まれが37歳、平成31年（2019年）生まれが7歳です。</dd>
-      </dl>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>年齢・干支・六曜の計算について</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>年齢計算は満年齢（誕生日を迎えているかで±1歳変わる場合があります）で行います。干支は十二支のサイクルで算出され、12年ごとに同じ干支が巡ってきます。六曜（先勝・友引・先負・仏滅・大安・赤口）は旧暦の月日をもとに計算しており、冠婚葬祭の日程決めの参考としてご活用いただけます。なお、六曜はあくまで伝統的な参考指標であり、公的な根拠はありません。</p>
+          </div>
+        </details>
 
-      <h2>参照情報・出典</h2>
-      <ul class="ref-links">
-        <li><a href="https://www8.cao.go.jp/chosei/gengou/gaiyou.html" target="_blank" rel="noopener">内閣府：元号に関する情報</a></li>
-        <li><a href="https://www.moj.go.jp/MINJI/minji176.html" target="_blank" rel="noopener">法務省：改元に関する情報</a></li>
-      </ul>
-      <p class="ref-note">本ツールの元号定義は内閣府告示および政令に基づいています。令和（2019年5月1日〜）、平成（1989年1月8日〜2019年4月30日）、昭和（1926年12月25日〜1989年1月7日）、大正（1912年7月30日〜1926年12月24日）、明治（1868年1月25日〜1912年7月29日）。</p>
-      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの変換結果は参考値です。公的書類への記入や法的手続きには、必ず公式情報をご確認ください。</p>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>昭和64年と平成元年は同じ日付ですか？</dt>
+              <dd>昭和64年は1989年1月1日〜1月7日の7日間のみ存在します。1989年1月8日からは平成元年となり、同じ西暦の年に2つの元号が存在します。</dd>
+              <dt>令和は何年から始まりましたか？</dt>
+              <dd>令和は2019年5月1日に始まりました。令和元年＝2019年、令和2年＝2020年です。令和7年は2025年、令和8年は2026年になります。</dd>
+              <dt>旧暦（和暦）と西暦の違いは何ですか？</dt>
+              <dd>本ツールが扱う「和暦」は元号を使った日本独自の年号制度（グレゴリオ暦ベース）です。「旧暦」（太陰太陽暦）とは異なり、月日の計算は旧暦ではなく新暦（西暦）と同じです。</dd>
+              <dt>昭和生まれは2026年時点で何歳ですか？</dt>
+              <dd>昭和元年（1926年）生まれが100歳、昭和64年（1989年）生まれが37歳です。詳しくは「年齢早見表」タブをご確認ください。</dd>
+              <dt>平成生まれは2026年時点で何歳ですか？</dt>
+              <dd>平成元年（1989年）生まれが37歳、平成31年（2019年）生まれが7歳です（いずれも誕生日前後±1歳）。</dd>
+              <dt>大正生まれは現在も生存しますか？</dt>
+              <dd>大正は1912年〜1926年です。2026年時点で大正生まれは100〜114歳になります。100歳以上の方が対象です。</dd>
+              <dt>西暦1868年より前の年は変換できますか？</dt>
+              <dd>本ツールは明治元年（1868年）以降に対応しています。それ以前は江戸時代の元号となり、現在の法令上の元号制度の範囲外のため対応外としています。</dd>
+            </dl>
+          </div>
+        </details>
 
-      <h2>関連ツール</h2>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照情報・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www8.cao.go.jp/chosei/gengou/gaiyou.html" target="_blank" rel="noopener">内閣府：元号に関する情報</a></li>
+              <li><a href="https://www.moj.go.jp/MINJI/minji176.html" target="_blank" rel="noopener">法務省：改元に関する情報</a></li>
+            </ul>
+            <p class="ref-note" style="margin-top:0.5rem;">本ツールの元号定義は内閣府告示および政令に基づいています。令和（2019年5月1日〜）、平成（1989年1月8日〜2019年4月30日）、昭和（1926年12月25日〜1989年1月7日）、大正（1912年7月30日〜1926年12月24日）、明治（1868年1月25日〜1912年7月29日）。</p>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの変換結果は参考値です。公的書類への記入や法的手続きには、必ず公式情報をご確認ください。</p>
+          </div>
+        </details>
+
+      </div>
+
+      <h2 style="margin-top:1.5rem;">関連ツール</h2>
       <ul class="related-links">
         <li><a href="/apps/freelance-tax-simulator/">確定申告シミュレーター</a> — 開業年・創業年の和暦確認に</li>
         <li><a href="/apps/household-budget/">家計簿アプリ</a> — 家計の収支記録をはじめる</li>
