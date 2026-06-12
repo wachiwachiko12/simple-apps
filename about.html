@@ -12,107 +12,463 @@
   </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta name="description" content="Keisanlabは、登録不要・無料で使えるWebツールを提供する個人運営サイトです。計算ツール・デザインツール・学習ツールなど50本以上のツールを公開しています。">
+  <meta name="description" content="Keisanlabは、Webフロントエンドエンジニアが個人で運営する無料Webツールサービスです。フリーランス向け計算ツールや生活・開発ツールを50本以上提供。運営者・制作背景・品質へのこだわりをご紹介します。">
   <title>このサイトについて | Keisanlab</title>
   <meta property="og:title" content="このサイトについて | Keisanlab">
-  <meta property="og:description" content="Keisanlabは、登録不要・無料で使えるWebツールを提供する個人運営サイトです。">
+  <meta property="og:description" content="Keisanlabは、Webフロントエンドエンジニアが個人で運営する無料Webツールサービスです。運営者・制作背景・品質へのこだわりをご紹介します。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://keisanlab.jp/about.html">
   <meta property="og:image" content="https://keisanlab.jp/images/ogp-default.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="このサイトについて | Keisanlab">
-  <meta name="twitter:description" content="Keisanlabは、登録不要・無料で使えるWebツールを提供する個人運営サイトです。">
+  <meta name="twitter:description" content="Keisanlabは、Webフロントエンドエンジニアが個人で運営する無料Webツールサービスです。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-default.png">
   <link rel="canonical" href="https://keisanlab.jp/about.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif; background: #f8f9fa; color: #333; line-height: 1.8; }
-    header { background: #2c3e50; color: white; padding: 2rem 1rem; text-align: center; }
-    header h1 { font-size: 1.6rem; }
-    header p { margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.85; }
-    main { max-width: 720px; margin: 2.5rem auto; padding: 0 1.25rem; }
-    section { background: white; border-radius: 8px; padding: 1.75rem; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
-    h2 { font-size: 1.1rem; color: #2c3e50; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #2c3e50; }
-    p { font-size: 0.95rem; color: #444; margin-bottom: 0.9rem; }
-    p:last-child { margin-bottom: 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th, td { padding: 0.7rem 0.75rem; border-bottom: 1px solid #eee; text-align: left; vertical-align: top; }
-    th { width: 30%; color: #555; font-weight: 600; white-space: nowrap; }
-    td { color: #333; }
-    a { color: #2c3e50; }
-    .back-link { display: inline-block; margin-bottom: 1.5rem; color: #2c3e50; text-decoration: none; font-size: 0.9rem; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-dark: #1a2f4e;
+      --primary-light: #2563a8;
+      --accent: #3b82f6;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ===== Header ===== */
+    header {
+      background: linear-gradient(135deg, #1a2f4e 0%, #1e4080 60%, #2563a8 100%);
+      color: white;
+      padding: 3rem 1.25rem 2.5rem;
+      text-align: center;
+    }
+    .header-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.9;
+    }
+    header h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 0.95rem;
+      opacity: 0.8;
+    }
+
+    /* ===== Nav breadcrumb ===== */
+    .breadcrumb {
+      max-width: 760px;
+      margin: 1.25rem auto 0;
+      padding: 0 1.25rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 760px;
+      margin: 0.5rem auto 3rem;
+      padding: 0 1.25rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin: 1.5rem 0;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
     .back-link:hover { text-decoration: underline; }
-    footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: #888; }
-    footer a { color: #666; }
+
+    /* ===== Cards ===== */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--primary);
+    }
+    .card-header i {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+    .card-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #374151;
+      margin-bottom: 0.9rem;
+      line-height: 1.85;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    /* ===== Operator table ===== */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .info-table th,
+    .info-table td {
+      padding: 0.75rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+    .info-table th {
+      width: 34%;
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .info-table td { color: var(--text); }
+    .info-table tr:last-child th,
+    .info-table tr:last-child td { border-bottom: none; }
+    .info-table a { color: var(--accent); text-decoration: none; }
+    .info-table a:hover { text-decoration: underline; }
+
+    /* ===== Feature grid ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .feature-item {
+      background: #f8faff;
+      border: 1px solid #dbeafe;
+      border-radius: 10px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+    .feature-item i {
+      font-size: 1.75rem;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .feature-item strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+    .feature-item span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ===== History list ===== */
+    .history-list {
+      list-style: none;
+    }
+    .history-list li {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    .history-list li:last-child { border-bottom: none; }
+    .history-year {
+      min-width: 56px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .history-desc { color: var(--text); line-height: 1.6; }
+
+    /* ===== Ad section ===== */
+    .ad-notice {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+    }
+    .ad-notice p { font-size: 0.9rem; color: #78350f; margin-bottom: 0.6rem; }
+    .ad-notice p:last-child { margin-bottom: 0; }
+    .ad-notice a { color: #b45309; }
+
+    /* ===== Disclaimer ===== */
+    .disclaimer {
+      background: #fafafa;
+      border-left: 4px solid #94a3b8;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem;
+    }
+    .disclaimer p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .disclaimer p:last-child { margin-bottom: 0; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--primary-dark);
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: #93c5fd; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer .footer-links { margin-bottom: 0.75rem; }
+    footer .footer-links a { margin: 0 0.5rem; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .card { padding: 1.25rem 1.1rem; }
+      .info-table th { width: 38%; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 380px) {
+      .feature-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <header>
+    <div class="header-icon"><i class="bi bi-info-circle"></i></div>
     <h1>このサイトについて</h1>
-    <p>Keisanlab — 無料Webツール集</p>
+    <p>Keisanlab — 個人エンジニアが作る無料Webツール集</p>
   </header>
 
   <main>
-    <a href="/" class="back-link">← トップページへ戻る</a>
+    <a href="/" class="back-link"><i class="bi bi-arrow-left"></i> トップページへ戻る</a>
 
-    <section>
-      <h2>サイト概要</h2>
-      <p>Keisanlabは、ブラウザだけで使える無料のWebツールを提供する個人運営サイトです。</p>
-      <p>フリーランスの確定申告・請求書作成から、エンジニア向け開発ツール、学習・生産性ツールまで、登録不要・インストール不要ですぐに使えるツールを50本以上公開しています。</p>
-      <p>すべてのツールはフロントエンド（HTML/CSS/JavaScript）のみで動作し、入力データはサーバーに送信されません。プライバシーを大切にする方にも安心してご利用いただけます。</p>
+    <!-- 1. サイト紹介 -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-house-heart"></i>
+        <h2>このサイトについて</h2>
+      </div>
+      <p>
+        Keisanlabは、Webフロントエンド開発の実務経験を持つ個人エンジニアが運営する
+        無料Webツールサービスです。
+      </p>
+      <p>
+        「ちょっと計算したいだけなのに、アプリをインストールしたくない」<br>
+        「登録なしで、今すぐ使えるツールがほしい」
+      </p>
+      <p>
+        そんな日常の小さな不満から、このサイトは生まれました。
+      </p>
+      <p>
+        フリーランスとして確定申告を自分でやり始めたとき、「消費税の納税額をサクッと試算できるツールがない」
+        と感じたのが最初のきっかけです。必要なツールを自分で作り、それを公開することで、
+        同じ課題を持つ方の役に立てればという思いで、2024年から開発・公開を続けています。
+      </p>
+      <p>
+        現在はフリーランス向け計算ツール、生活・健康ツール、開発者向けツールなど
+        50本以上を公開しています。各ツールは税法・労働基準法・統計学的手法など、
+        信頼できる根拠に基づいた計算ロジックを採用し、使い方解説と法令参照を
+        必ず付記するよう心がけています。
+      </p>
+      <p>
+        サーバーへのデータ送信はなく、入力した情報はすべてお使いのブラウザ内だけで処理されます。
+        プライバシーを大切にする方にも安心してご利用いただけるよう、設計の段階からこの点を
+        最優先にしています。
+      </p>
     </section>
 
-    <section>
-      <h2>運営者情報</h2>
-      <table>
+    <!-- 2. 運営者情報 -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-person-badge"></i>
+        <h2>運営者情報</h2>
+      </div>
+      <table class="info-table">
         <tr>
           <th>運営者</th>
-          <td>keisanlab</td>
+          <td>Rio（リオ）</td>
         </tr>
         <tr>
-          <th>サイト名</th>
-          <td>Keisanlab（ケイサンラボ）</td>
+          <th>職種</th>
+          <td>Webフロントエンドエンジニア（個人事業主）</td>
+        </tr>
+        <tr>
+          <th>開発言語・技術</th>
+          <td>HTML / CSS / JavaScript / TypeScript</td>
+        </tr>
+        <tr>
+          <th>サイト開設</th>
+          <td>2024年</td>
         </tr>
         <tr>
           <th>サイトURL</th>
-          <td><a href="https://keisanlab.jp/">https://keisanlab.jp/</a></td>
-        </tr>
-        <tr>
-          <th>運営形態</th>
-          <td>個人運営</td>
+          <td><a href="https://keisanlab.jp/" target="_blank" rel="noopener">https://keisanlab.jp/</a></td>
         </tr>
         <tr>
           <th>お問い合わせ</th>
           <td><a href="/contact.html">お問い合わせフォーム</a></td>
         </tr>
+        <tr>
+          <th>所在</th>
+          <td>日本国内</td>
+        </tr>
       </table>
     </section>
 
-    <section>
-      <h2>サービスの特徴</h2>
-      <p><strong>完全無料・登録不要</strong><br>
-      すべてのツールは無料でご利用いただけます。アカウント登録やメールアドレスの入力は一切不要です。</p>
-      <p><strong>プライバシー重視</strong><br>
-      入力したデータは外部サーバーに送信されません。処理はすべてお使いのブラウザ上で完結します。</p>
-      <p><strong>スマホ・PC対応</strong><br>
-      全ツールがモバイルファーストで設計されており、スマートフォン・タブレット・PCのいずれからでも快適にご利用いただけます。</p>
+    <!-- 3. サービスの特徴 -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-stars"></i>
+        <h2>サービスの特徴</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <i class="bi bi-gift"></i>
+          <strong>完全無料・登録不要</strong>
+          <span>すべてのツールは無料でご利用いただけます。アカウント登録やメールアドレスの入力は一切不要です。</span>
+        </div>
+        <div class="feature-item">
+          <i class="bi bi-shield-lock"></i>
+          <strong>プライバシー重視</strong>
+          <span>入力データは外部サーバーに送信されません。処理はすべてブラウザ上で完結します。</span>
+        </div>
+        <div class="feature-item">
+          <i class="bi bi-phone"></i>
+          <strong>スマホ・PC対応</strong>
+          <span>全ツールがモバイルファーストで設計されており、どのデバイスからでも快適にご利用いただけます。</span>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h2>広告について</h2>
-      <p>当サイトではGoogle AdSenseによる広告を掲載しています。広告配信にあたり、Googleが提供するCookieを使用して、ユーザーの興味に基づいた広告が表示される場合があります。</p>
-      <p>詳細については<a href="/privacy-policy.html">プライバシーポリシー</a>をご覧ください。</p>
+    <!-- 4. 品質へのこだわり -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-patch-check"></i>
+        <h2>制作・品質へのこだわり</h2>
+      </div>
+      <p>
+        各ツールの計算ロジックは、国税庁・厚生労働省・総務省などの
+        公的機関が発表する最新の税率・制度情報に基づいて実装しています。
+        税務・法務・医療など専門性の高い領域のツールには、
+        参照した法令条文や公的ウェブサイトへのリンクを必ず掲載し、
+        計算根拠の透明性を確保しています。
+      </p>
+      <p>
+        また、計算結果はあくまで参考値であり、正式な申請や重要な意思決定には
+        専門家（税理士・社会保険労務士・医師など）への相談を推奨する
+        免責事項を各ツールに明記しています。
+      </p>
+      <p>
+        制度改正があった際は速やかにロジックを更新し、ユーザーが誤った情報をもとに
+        判断しないよう、情報の鮮度管理にも注意を払っています。
+        ツール単体の使い勝手だけでなく、「信頼できる情報源として使ってもらえるか」を
+        常に意識しながら開発を続けています。
+      </p>
     </section>
 
-    <section>
-      <h2>免責事項</h2>
-      <p>各ツールの計算結果・出力内容は参考情報です。税務・法務・医療等の重要な判断には、専門家にご相談ください。当サイトの利用により生じた損害について、運営者は一切の責任を負いかねます。</p>
+    <!-- 5. 広告について -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-megaphone"></i>
+        <h2>広告について</h2>
+      </div>
+      <div class="ad-notice">
+        <p>
+          当サイトではGoogle AdSenseによる広告を掲載しています。
+          広告配信にあたり、Googleが提供するCookieを使用して、
+          ユーザーの興味・関心に基づいた広告が表示される場合があります。
+        </p>
+        <p>
+          Cookieの使用を希望されない場合は、ブラウザの設定で無効にできます。
+          詳細は<a href="/privacy-policy.html">プライバシーポリシー</a>をご覧ください。
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. 免責事項 -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-exclamation-triangle"></i>
+        <h2>免責事項</h2>
+      </div>
+      <div class="disclaimer">
+        <p>
+          各ツールの計算結果・出力内容は参考情報です。
+          税務・法務・医療・労務等の重要な判断には、
+          必ず税理士・社会保険労務士・医師等の専門家にご確認ください。
+        </p>
+        <p>
+          計算ロジックは掲載時点の法令・制度に基づいており、
+          制度変更により実態と異なる場合があります。
+        </p>
+        <p>
+          当サイトの利用により生じた損害について、運営者は一切の責任を負いかねます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 7. 更新履歴 -->
+    <section class="card">
+      <div class="card-header">
+        <i class="bi bi-clock-history"></i>
+        <h2>サイト更新・変更履歴</h2>
+      </div>
+      <ul class="history-list">
+        <li>
+          <span class="history-year">2024年</span>
+          <span class="history-desc">Keisanlab サービス開始。フリーランス向け計算ツールを中心に公開を開始。</span>
+        </li>
+        <li>
+          <span class="history-year">2025年</span>
+          <span class="history-desc">ツール本数を拡充（生活・健康・開発者向けジャンル追加）、モバイルデザイン全面刷新。独自ドメイン（keisanlab.jp）取得・移行。</span>
+        </li>
+        <li>
+          <span class="history-year">2026年</span>
+          <span class="history-desc">フォント・デザインシステム統一、Google AdSense対応、コンテンツ・情報量を大幅拡充。50本以上のツールを公開。</span>
+        </li>
+      </ul>
     </section>
   </main>
 
   <footer>
-    <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/contact.html">お問い合わせ</a> ｜ <a href="/about.html">このサイトについて</a></p>
-    <p><small>&copy; 2025 Keisanlab</small></p>
+    <div class="footer-links">
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      <a href="/contact.html">お問い合わせ</a>
+      <a href="/about.html">このサイトについて</a>
+    </div>
+    <p><small>&copy; 2026 Keisanlab</small></p>
   </footer>
 </body>
 </html>
