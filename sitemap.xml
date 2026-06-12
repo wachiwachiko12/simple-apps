@@ -325,6 +325,24 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://keisanlab.jp/apps/mortgage-prepayment/</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://keisanlab.jp/apps/retirement-tax-optimizer/</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://keisanlab.jp/apps/nisa-withdrawal/</loc>
+    <lastmod>2026-06-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://keisanlab.jp/articles/</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>monthly</changefreq>
