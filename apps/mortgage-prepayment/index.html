@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="繰上返済の効果を即計算。期間短縮型・返済額軽減型を比較してグラフで可視化。登録不要・完全無料。住宅ローンの総利息削減額・完済日を瞬時にシミュレーション。">
+  <title>住宅ローン繰上返済シミュレーター｜期間短縮vs返済額軽減を比較 | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/mortgage-prepayment/">
+
+  <!-- FAQ構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "繰上返済手数料はかかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "金融機関によって異なります。ネット銀行の多くは無料ですが、都市銀行や地方銀行では数千円〜数万円の手数料がかかる場合があります。事前に契約書または銀行窓口でご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "変動金利でも計算できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、現時点の金利を入力することで計算できます。ただし変動金利は将来変わる可能性があるため、本シミュレーターの結果はあくまで現在の金利が継続した場合の試算値となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "いくら繰上返済すると効果的ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に、ローン残高の10〜30%程度を繰上返済すると利息削減効果が大きいとされています。また返済期間が長いほど・金利が高いほど・早い時期に繰上返済するほど効果が高くなります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "期間短縮型と返済額軽減型どちらがお得ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "利息削減額だけで比較すると、期間短縮型の方が大きくなります。ただし返済額軽減型は毎月の負担が減るため、家計の余裕が生まれるメリットがあります。生活費の増加が見込まれる場合は返済額軽減型も検討する価値があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "フラット35でも繰上返済できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "フラット35も繰上返済は可能です。住宅金融支援機構のフラット35は一定額以上（100万円以上など）の繰上返済が条件になる場合があります。本シミュレーターで効果の試算ができます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "計算結果は正確ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "元利均等返済方式に基づく試算値です。実際の返済額は金融機関の端数処理ルール・手数料・保険料などによって異なる場合があります。最終的な判断は必ず金融機関にご相談ください。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-badge"><i class="bi bi-house-fill"></i> 住宅ローン計算</div>
+      <h1>住宅ローン繰上返済シミュレーター</h1>
+      <p class="subtitle">期間短縮型・返済額軽減型を比較グラフで可視化。登録不要・完全無料。</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <span>広告</span>
+    </div>
+
+    <!-- 入力フォーム -->
+    <section id="tool" class="card tool-section" aria-labelledby="form-heading">
+      <h2 id="form-heading"><i class="bi bi-calculator"></i> 返済条件を入力</h2>
+      <p class="privacy-note"><i class="bi bi-shield-lock-fill"></i> 入力データはブラウザ内のみで計算され、サーバーには一切送信されません。</p>
+
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label" for="balance">現在の借入残高</label>
+          <div class="input-wrap">
+            <input type="number" id="balance" value="3000" min="100" max="99999" step="100" aria-describedby="balance-hint">
+            <span class="input-suffix">万円</span>
+          </div>
+          <span class="field-hint" id="balance-hint">繰上返済前の残高を入力</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="years">残りの返済期間</label>
+          <div class="input-wrap">
+            <input type="number" id="years" value="25" min="1" max="50" step="1">
+            <span class="input-suffix">年</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="rate">年利</label>
+          <div class="input-wrap">
+            <input type="number" id="rate" value="1.5" min="0.01" max="20" step="0.01">
+            <span class="input-suffix">%</span>
+          </div>
+          <span class="field-hint">変動金利の場合は現在の金利を入力</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="prepay">繰上返済額</label>
+          <div class="input-wrap">
+            <input type="number" id="prepay" value="100" min="1" max="99999" step="10">
+            <span class="input-suffix">万円</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="error-msg" class="error-msg" role="alert" aria-live="polite"></div>
+    </section>
+
+    <!-- 結果セクション -->
+    <section id="result-section" class="result-section" aria-labelledby="result-heading">
+      <h2 id="result-heading" class="section-title"><i class="bi bi-graph-up-arrow"></i> シミュレーション結果</h2>
+
+      <!-- おすすめバッジ -->
+      <div id="recommend-badge" class="recommend-badge" role="status" aria-live="polite"></div>
+
+      <!-- 2列比較カード -->
+      <div class="compare-grid">
+        <div class="compare-card compare-card--shortcut">
+          <div class="compare-card__header">
+            <i class="bi bi-scissors"></i>
+            <span>期間短縮型</span>
+          </div>
+          <div class="compare-item">
+            <div class="compare-label">利息削減額</div>
+            <div class="compare-value" id="shortcut-saving">--</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-label">短縮期間</div>
+            <div class="compare-value compare-value--sm" id="shortcut-period">--</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-label">おすすめ度</div>
+            <div class="compare-stars" id="shortcut-stars">--</div>
+          </div>
+        </div>
+
+        <div class="compare-card compare-card--reduce">
+          <div class="compare-card__header">
+            <i class="bi bi-arrow-down-circle"></i>
+            <span>返済額軽減型</span>
+          </div>
+          <div class="compare-item">
+            <div class="compare-label">利息削減額</div>
+            <div class="compare-value" id="reduce-saving">--</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-label">月削減額</div>
+            <div class="compare-value compare-value--sm" id="reduce-monthly">--</div>
+          </div>
+          <div class="compare-item">
+            <div class="compare-label">おすすめ度</div>
+            <div class="compare-stars" id="reduce-stars">--</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（結果中間） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <span>広告</span>
+      </div>
+
+      <!-- グラフ -->
+      <div class="card chart-card">
+        <h3 class="chart-title"><i class="bi bi-bar-chart-fill"></i> 総利息比較グラフ（万円）</h3>
+        <div class="chart-wrap">
+          <canvas id="interestChart" aria-label="繰上返済なし・期間短縮型・返済額軽減型の総利息比較グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 詳細比較表 -->
+      <div class="card table-card">
+        <h3 class="table-title"><i class="bi bi-table"></i> 詳細比較表</h3>
+        <div class="table-wrap">
+          <table class="compare-table" id="compare-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">繰上なし</th>
+                <th scope="col">期間短縮型</th>
+                <th scope="col">返済額軽減型</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">月返済額</th>
+                <td id="t-monthly-base">--</td>
+                <td id="t-monthly-shortcut" class="cell-same">変わらず</td>
+                <td id="t-monthly-reduce">--</td>
+              </tr>
+              <tr>
+                <th scope="row">総返済額</th>
+                <td id="t-total-base">--</td>
+                <td id="t-total-shortcut">--</td>
+                <td id="t-total-reduce">--</td>
+              </tr>
+              <tr>
+                <th scope="row">総利息</th>
+                <td id="t-interest-base">--</td>
+                <td id="t-interest-shortcut">--</td>
+                <td id="t-interest-reduce">--</td>
+              </tr>
+              <tr>
+                <th scope="row">完済予定</th>
+                <td id="t-finish-base">--</td>
+                <td id="t-finish-shortcut">--</td>
+                <td id="t-finish-reduce">--</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="disclaimer-note"><i class="bi bi-info-circle"></i> 元利均等返済方式による試算値です。実際の返済額は金融機関の端数処理・手数料等により異なります。</p>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="card howto-section" aria-labelledby="howto-heading">
+      <h2 id="howto-heading"><i class="bi bi-book"></i> 使い方</h2>
+      <ol class="howto-steps">
+        <li><strong>返済条件を入力</strong> — 現在の借入残高・残り返済期間・年利を入力します。</li>
+        <li><strong>繰上返済額を入力</strong> — 一括で繰上返済する予定の金額を入力します。</li>
+        <li><strong>結果を確認</strong> — 入力と同時に期間短縮型・返済額軽減型それぞれの効果を計算・比較します。</li>
+        <li><strong>グラフ・表で比較</strong> — 棒グラフと詳細表で総利息・完済日・月返済額の違いを確認できます。</li>
+      </ol>
+
+      <!-- アコーディオン -->
+      <div class="accordion-list">
+
+        <details class="accordion">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-info-circle"></i> 繰上返済の基礎知識（期間短縮型と返済額軽減型の違い）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p><strong>繰上返済</strong>とは、毎月の返済とは別に、まとまった金額をローン元本に充当することで、利息を削減する方法です。繰上返済した分はすべて元本に充当されるため、その後の利息計算の基になる残高が減り、支払利息を大幅に節約できます。</p>
+            <p><strong>期間短縮型</strong>は、毎月の返済額を変えずに返済期間を短くする方法です。利息削減効果が最も大きく、早期完済を目指す方に向いています。一般的な繰上返済では期間短縮型を選ぶ方が多い傾向があります。</p>
+            <p><strong>返済額軽減型</strong>は、返済期間を変えずに毎月の返済額を下げる方法です。月々の家計の負担を減らしたい方や、教育費の増加が見込まれる時期に対応したい方に向いています。一般的には期間短縮型より利息削減効果は小さくなりますが、家計のゆとりが生まれるメリットがあります。</p>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-question-circle"></i> よくある質問（FAQ）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <dl class="faq-list">
+              <div class="faq-item">
+                <dt>繰上返済手数料はかかりますか？</dt>
+                <dd>金融機関によって異なります。ネット銀行の多くは無料ですが、都市銀行や地方銀行では数千円〜数万円の手数料がかかる場合があります。事前に契約書または銀行窓口でご確認ください。</dd>
+              </div>
+              <div class="faq-item">
+                <dt>変動金利でも計算できますか？</dt>
+                <dd>はい、現時点の金利を入力することで計算できます。変動金利は将来変わる可能性があるため、本シミュレーターの結果はあくまで現在の金利が継続した場合の試算値となります。</dd>
+              </div>
+              <div class="faq-item">
+                <dt>いくら繰上返済すると効果的ですか？</dt>
+                <dd>一般的に、ローン残高の10〜30%程度を繰上返済すると利息削減効果が大きいとされています。返済期間が長いほど・金利が高いほど・早い時期に繰上返済するほど効果が高くなります。</dd>
+              </div>
+              <div class="faq-item">
+                <dt>期間短縮型と返済額軽減型どちらがお得ですか？</dt>
+                <dd>利息削減額だけで比較すると、期間短縮型の方が有利です。ただし返済額軽減型は毎月の負担が減るため、生活費が増える時期には返済額軽減型も有効な選択肢となります。</dd>
+              </div>
+              <div class="faq-item">
+                <dt>フラット35でも繰上返済できますか？</dt>
+                <dd>フラット35も繰上返済は可能です。住宅金融支援機構のフラット35は一定額以上（100万円以上など）の繰上返済が条件になる場合があります。本シミュレーターで効果の試算ができます。</dd>
+              </div>
+              <div class="faq-item">
+                <dt>計算結果はどこまで正確ですか？</dt>
+                <dd>元利均等返済方式に基づく試算値です。実際の返済額は金融機関の端数処理ルール・手数料・保険料などによって異なります。最終的な判断は必ず金融機関にご相談ください。</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-shield-check"></i> 参照・免責事項</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>本シミュレーターは元利均等返済方式（毎月の返済額が一定）を前提に計算しています。元金均等返済方式（毎月の元金返済額が一定）には対応していません。</p>
+            <p>計算結果はあくまでも参考値です。実際の繰上返済の効果は、金融機関の端数処理・返済タイミング・手数料・保険料・団体信用生命保険料等によって異なります。繰上返済の実施にあたっては、必ず契約している金融機関にご相談ください。</p>
+            <p>本シミュレーターの計算結果を参考に行った行為について、当サイトは一切の責任を負いません。</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      <a href="/about.html">このサイトについて</a>
+      <a href="/">トップページ</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 計算ラボ</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
