@@ -252,6 +252,78 @@
       .app-grid { grid-template-columns: 1fr; }
       .app-card p { display: block; }
     }
+
+    /* ===== About section ===== */
+    .about-section {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.75rem 1.25rem;
+    }
+    .about-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .about-inner h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.875rem;
+      letter-spacing: -0.02em;
+    }
+    .about-inner p {
+      font-size: 0.875rem;
+      color: #374151;
+      line-height: 1.85;
+      margin-bottom: 0.75rem;
+    }
+    .about-inner p:last-of-type { margin-bottom: 1rem; }
+    .about-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.625rem;
+    }
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+      background: var(--bg);
+      padding: 0.35rem 0.75rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+    .about-feature .bi { color: #2563a8; font-size: 0.875rem; }
+
+    /* ===== Category description ===== */
+    .cat-desc {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 0.875rem;
+      padding: 0 0.125rem;
+    }
+
+    /* ===== Disclaimer section ===== */
+    .disclaimer-section {
+      background: #f8f9fa;
+      border-top: 1px solid var(--border);
+      padding: 1.25rem;
+      margin-top: 0;
+    }
+    .disclaimer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      font-size: 0.78rem;
+      color: #6b7280;
+      line-height: 1.75;
+    }
+    .disclaimer-inner p { margin-bottom: 0.4rem; }
+    .disclaimer-inner p:last-child { margin-bottom: 0; }
+    .disclaimer-inner a { color: #6b7280; text-decoration: underline; }
+    .disclaimer-inner a:hover { color: var(--text); }
+    .disclaimer-inner strong { color: #374151; }
   </style>
 </head>
 <body>
@@ -270,6 +342,32 @@
     <input class="search-input" type="search" placeholder="ツール名・機能で検索…（例：請求書、タイマー、CSS）" id="search-input" autocomplete="off">
   </div>
 
+  <section class="about-section">
+    <div class="about-inner">
+      <h2>Keisanlab とは</h2>
+      <p>Keisanlabは、フリーランス・会社員・学生など、あらゆる方の日常業務や生活をサポートする無料Webツールを提供する個人運営サイトです。確定申告・請求書作成・家計管理といったお金まわりのツールから、和暦変換・マインドマップ・産前産後休暇計算まで、幅広いカテゴリの実用ツールを50本以上公開しています。</p>
+      <p>すべてのツールは<strong>登録不要・完全無料</strong>で使えます。入力したデータはすべてお使いのブラウザ内に保存され、外部サーバーには一切送信されません。スマートフォン・タブレット・PCのいずれからでもご利用いただけます。各ツールの計算根拠・法令参照・使い方解説も掲載しており、ただ使えるだけでなく「なぜその計算になるのか」を理解できる設計にこだわっています。</p>
+      <div class="about-features">
+        <div class="about-feature">
+          <i class="bi bi-shield-check-fill"></i>
+          <span>データは端末内のみ保存</span>
+        </div>
+        <div class="about-feature">
+          <i class="bi bi-phone-fill"></i>
+          <span>スマホ・PC完全対応</span>
+        </div>
+        <div class="about-feature">
+          <i class="bi bi-book-fill"></i>
+          <span>計算根拠・解説付き</span>
+        </div>
+        <div class="about-feature">
+          <i class="bi bi-person-check-fill"></i>
+          <span>登録不要・即利用可</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <main>
 
     <!-- フリーランス・ビジネス -->
@@ -278,6 +376,7 @@
         <h2><i class="bi bi-briefcase-fill"></i> フリーランス・ビジネス</h2>
         <span class="cat-count">6</span>
       </div>
+      <p class="cat-desc">確定申告・請求書・OKR管理など、フリーランス・個人事業主の業務をサポートするツール群です。税法・法令に基づいた計算ロジックを採用し、各ツールに参照法令と免責事項を明記しています。</p>
       <div class="app-grid">
         <a href="/apps/freelance-tax-simulator/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -318,6 +417,7 @@
         <h2><i class="bi bi-house-heart-fill"></i> 生活・健康</h2>
         <span class="cat-count">7</span>
       </div>
+      <p class="cat-desc">家計管理・和暦変換・睡眠計算・産休計算など、日常生活に役立つツール群です。各ツールは労働基準法・健康指標等の公的基準に基づいて設計されています。</p>
       <div class="app-grid">
         <a href="/apps/household-budget/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -363,6 +463,7 @@
         <h2><i class="bi bi-book-fill"></i> 学習・生産性</h2>
         <span class="cat-count">8</span>
       </div>
+      <p class="cat-desc">数学・統計・語学など、学習・研究をサポートするツール群です。専門的な理論を視覚化し、直感的に理解を深めるインタラクティブなシミュレーターを提供しています。</p>
       <div class="app-grid">
         <a href="/apps/mind-map/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -409,6 +510,7 @@
         <h2><i class="bi bi-people-fill"></i> 仕事・会議</h2>
         <span class="cat-count">4</span>
       </div>
+      <p class="cat-desc">会議アジェンダ・議事録・タイムゾーン調整・プレゼンタイマーなど、ビジネスの場での業務効率化をサポートするツール群です。登録不要でブラウザからすぐにご利用いただけます。</p>
       <div class="app-grid">
         <a href="/apps/meeting-agenda/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -439,6 +541,7 @@
         <h2><i class="bi bi-palette-fill"></i> デザイン・クリエイティブ</h2>
         <span class="cat-count">13</span>
       </div>
+      <p class="cat-desc">カラー・タイポグラフィ・レイアウトなど、デザイン作業をサポートするツール群です。WCAGアクセシビリティ基準への準拠チェックにも対応しています。</p>
       <div class="app-grid">
         <a href="/apps/css-grid-builder/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -514,6 +617,7 @@
         <h2><i class="bi bi-pencil-fill"></i> 文章・テキスト</h2>
         <span class="cat-count">6</span>
       </div>
+      <p class="cat-desc">文章校正・読みやすさ評価・フリガナ付与など、文章作成・編集をサポートするツール群です。読者に伝わる文章を書くためのヒントも合わせて提供しています。</p>
       <div class="app-grid">
         <a href="/apps/readability-scorer/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -554,6 +658,7 @@
         <h2><i class="bi bi-code-slash"></i> 開発・エンジニア</h2>
         <span class="cat-count">10</span>
       </div>
+      <p class="cat-desc">マークダウン・CSS・正規表現・コード整形など、開発者の日常業務を効率化するツール群です。ブラウザ完結で動作するため、環境構築不要ですぐに使えます。</p>
       <div class="app-grid">
         <a href="/apps/regex-visualizer/" class="app-card">
           <span class="badge badge-new">公開中</span>
@@ -614,6 +719,13 @@
     </div>
 
   </main>
+
+  <div class="disclaimer-section">
+    <div class="disclaimer-inner">
+      <p><strong>ご利用上の注意：</strong>各ツールの計算結果・出力内容は参考情報です。税務・法務・医療・労務等に関わる重要な判断には、必ず税理士・社会保険労務士・医師等の専門家にご確認ください。計算ロジックは作成時点の法令・制度に基づいており、制度変更により結果が実態と異なる場合があります。当サイトの利用により生じた損害について、運営者は一切の責任を負いかねます。</p>
+      <p><a href="/about.html">このサイトについて</a> ｜ <a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/contact.html">お問い合わせ</a></p>
+    </div>
+  </div>
 
   <footer>
     <p><a href="/privacy-policy.html">プライバシーポリシー</a> ｜ <a href="/contact.html">お問い合わせ</a> ｜ <a href="/about.html">このサイトについて</a></p>
