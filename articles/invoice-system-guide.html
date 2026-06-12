@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="2023年10月開始のインボイス制度（適格請求書等保存方式）をフリーランス向けにわかりやすく解説。記載6要件・免税事業者への影響・登録番号の取得手順まで。">
+  <title>インボイス制度（適格請求書）完全ガイド：フリーランスが押さえる必須ポイント｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.com/articles/invoice-system-guide.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="インボイス制度（適格請求書）完全ガイド：フリーランスが押さえる必須ポイント">
+  <meta property="og:description" content="2023年10月開始のインボイス制度をフリーランス向けにわかりやすく解説。記載6要件・免税事業者への影響・登録番号の取得手順まで。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.com/articles/invoice-system-guide.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "インボイス制度（適格請求書）完全ガイド：フリーランスが押さえる必須ポイント",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar { background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%); }
+    .topbar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name { font-size: 1.125rem; font-weight: 700; color: white; text-decoration: none; }
+    .topbar nav a { color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+    .topbar nav a:hover { color: white; }
+
+    main { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    article {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) { article { padding: 2.5rem 2rem; } }
+
+    .article-category {
+      display: inline-block;
+      background: #fef9c3;
+      color: #a16207;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .article-meta { font-size: 0.8125rem; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+
+    section { margin-top: 2rem; }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.875rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    p { font-size: 0.9375rem; line-height: 1.85; color: #374151; margin-bottom: 0.875rem; word-break: break-word; }
+    p:last-child { margin-bottom: 0; }
+
+    /* Numbered list */
+    .req-list {
+      list-style: none;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+    .req-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      background: var(--primary-light);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      color: #1e3a6e;
+    }
+    .req-list .num {
+      background: var(--primary);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .highlight-box {
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .highlight-box p { color: #9a3412; margin-bottom: 0; }
+
+    .step-list {
+      list-style: none;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      counter-reset: step-counter;
+    }
+    .step-list li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      font-size: 0.9375rem;
+      color: #374151;
+      counter-increment: step-counter;
+    }
+    .step-list li::before {
+      content: "Step " counter(step-counter);
+      background: var(--primary);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .internal-link-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .internal-link-box .link-label { font-size: 0.8125rem; color: #16a34a; font-weight: 600; white-space: nowrap; }
+    .internal-link-box a { color: #15803d; font-weight: 700; text-decoration: none; font-size: 0.9375rem; transition: opacity 0.15s; }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    footer { background: #1a2f4e; color: rgba(255,255,255,0.7); text-align: center; padding: 2rem 1.25rem; font-size: 0.875rem; line-height: 2; margin-top: 3rem; }
+    footer a { color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    .article-nav { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .nav-link { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600; min-height: 44px; padding: 0.5rem 0; transition: opacity 0.15s; }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav><a href="/articles/">コラム一覧</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">インボイス制度</span>
+
+    <h1>インボイス制度（適格請求書）完全ガイド：フリーランスが押さえる必須ポイント</h1>
+
+    <p class="article-meta">公開日: 2026年6月12日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>インボイス制度とは何か（2023年10月開始の背景）</h2>
+      <p>インボイス制度（適格請求書等保存方式）とは、2023年10月1日から始まった消費税の仕入税額控除に関する新しい制度です。取引の買い手側（発注者）が消費税の仕入税額控除を受けるには、適格請求書発行事業者（インボイス発行事業者）が発行した「適格請求書（インボイス）」の保存が必要になりました。</p>
+      <p>この制度が導入された背景には、消費税の「益税問題」があります。これまでは免税事業者（年収1,000万円未満）から仕入れを行っても買い手側は仕入税額控除ができていましたが、インボイス制度導入後は適格請求書がなければ控除できなくなります。フリーランスをはじめとする小規模事業者にとって、登録するかどうかの判断が収入に直結する重要な問題となりました。</p>
+    </section>
+
+    <section>
+      <h2>適格請求書に記載が必要な6つの項目</h2>
+      <p>適格請求書（インボイス）として認められるには、従来の請求書に加えて以下の6つの項目を必ず記載する必要があります。1つでも欠けると買い手が仕入税額控除を受けられなくなるため、発行側は正確に記載することが求められます。</p>
+
+      <ul class="req-list">
+        <li><span class="num">1</span>適格請求書発行事業者の氏名または名称と登録番号</li>
+        <li><span class="num">2</span>取引年月日</li>
+        <li><span class="num">3</span>取引内容（軽減税率の対象品目である旨を含む）</li>
+        <li><span class="num">4</span>税率ごとに区分した合計対価の額（税抜または税込）</li>
+        <li><span class="num">5</span>税率ごとに区分した消費税額等</li>
+        <li><span class="num">6</span>書類の交付を受ける事業者の氏名または名称</li>
+      </ul>
+
+      <p>特に「登録番号」は「T」に続く13桁の番号で、法人の場合は法人番号と同一です。個人事業主の場合は新たに発番された番号が使われます。登録番号がない請求書はインボイスとして認められません。</p>
+    </section>
+
+    <section>
+      <h2>免税事業者（年収1,000万円未満）はどうなる？</h2>
+      <p>前々年の課税売上高が1,000万円未満の免税事業者は、消費税の納税義務がありません。インボイス制度において、免税事業者は原則として適格請求書発行事業者に登録できません。つまり、免税事業者のままでいるとインボイスを発行できず、買い手（取引先）が仕入税額控除を受けられなくなります。</p>
+      <p>この結果、取引先から「インボイスを発行できないなら消費税分を値引きしてほしい」と求められたり、最悪の場合は取引自体を打ち切られるリスクがあります。一方、免税事業者が課税事業者に登録するとインボイスを発行できますが、消費税の申告・納税義務が生じ、収入の実質的な減少につながります。</p>
+      <div class="highlight-box">
+        <p>経過措置として、2026年9月30日まで（令和8年9月30日まで）は免税事業者からの仕入れでも80%の仕入税額控除が認められています。その後は50%に下がり、最終的にはゼロになります。登録の判断は慎重に行いましょう。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>登録番号の取得方法と手順</h2>
+      <p>インボイス発行事業者として登録するには、税務署への申請が必要です。e-Taxを使ったオンライン申請が最も手軽です。申請から登録通知まで、通常1〜2か月程度かかります。</p>
+
+      <ol class="step-list">
+        <li>国税庁「インボイス制度特設サイト」にアクセス</li>
+        <li>e-Taxまたは書面で「適格請求書発行事業者の登録申請書」を提出</li>
+        <li>税務署での審査（通常1〜2か月）</li>
+        <li>登録番号が記載された「登録通知書」を受領</li>
+        <li>請求書・領収書に登録番号を記載して取引開始</li>
+      </ol>
+
+      <p>登録は任意であり、取り消すことも可能です。ただし、一度課税事業者として登録した場合、翌年以降も基本的に課税事業者として申告義務が続く点に注意が必要です。自分のビジネスの取引先構成（BtoB中心かBtoC中心か）を踏まえて慎重に判断してください。</p>
+    </section>
+
+    <section>
+      <h2>無料の請求書作成ツール</h2>
+      <p>インボイス制度対応の請求書を毎回正確に作成するのは手間がかかります。Keisanlabでは、必要項目を入力するだけでインボイス要件を満たした請求書を自動生成できる無料ツールを提供しています。登録番号の入力欄や税率別の消費税計算にも対応しており、PDF出力またはHTML印刷にも対応しています。</p>
+      <p>取引先へのメール添付や郵送向けにフォーマットを統一でき、インボイス制度対応の確認ツールとしてもご利用いただけます。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/invoice-generator/">請求書ジェネレーター</a>
+      </div>
+    </section>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>
