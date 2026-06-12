@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="副業収入の手取り額・所得税・住民税・確定申告の要否を即計算。給与所得との合算対応。登録不要・完全無料。">
+  <title>副業・兼業 手取りシミュレーター｜確定申告が必要か・税金はいくら？を即計算</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/side-income-simulator/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "副業収入が20万円以下でも住民税申告は必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。所得税の確定申告は不要でも、住民税の申告は市区町村に対して別途必要です。副業収入が1円でもある場合、原則として住民税の申告が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "副業の経費として認められるものは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "業務に直接関連する費用が経費として認められます。例：パソコン・スマートフォン代（業務使用割合分）、通信費（業務使用割合分）、書籍・セミナー費用、交通費、消耗品費などです。プライベートと共用する場合は按分が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "フリーランスの副業は事業所得と雑所得のどちらになりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2022年以降の国税庁の改正により、記帳・帳簿保存がある場合は事業所得、ない場合は原則として雑所得として扱われます。また、副業収入が300万円以下で帳簿がない場合は雑所得となる目安が設けられています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "副業収入がいくらから確定申告が必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "給与所得者（会社員）の場合、副業の所得（収入から経費を差し引いた額）が年間20万円を超えると確定申告が必要です。フリーランス（事業所得）の場合は金額にかかわらず確定申告が推奨されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "インボイス制度と副業の関係は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2023年10月開始のインボイス制度により、副業でフリーランスとして取引先から報酬を受け取る場合、適格請求書発行事業者（課税事業者）に登録しないと消費税分を取引先に負担させることになる場合があります。副業の取引先がBtoBかBtoCかによって影響が異なります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "副業収入にかかる住民税を会社に知られないようにできますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "確定申告時に「住民税の納付方法」を「自分で納付（普通徴収）」に選択することで、副業分の住民税を会社の給与天引き（特別徴収）と分離できます。ただし、完全に秘密にできるかは保証されません。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "青色申告特別控除はどんなメリットがありますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "青色申告特別控除を利用すると、事業所得から最大65万円（e-Tax提出の場合）または10万円を差し引けるため、課税所得が減り所得税・住民税が軽減されます。利用には事前に税務署へ青色申告承認申請書の提出が必要です。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-badge"><i class="bi bi-calculator-fill"></i> 税金計算ツール</div>
+      <h1>副業・兼業 手取りシミュレーター</h1>
+      <p class="subtitle">確定申告が必要か・税金はいくら？を即計算</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告</div>
+
+    <!-- プライバシー注記 -->
+    <p class="privacy-note"><i class="bi bi-shield-lock"></i> 入力した数値はお使いのブラウザ内でのみ計算されます。サーバーへの送信・保存は一切行いません。</p>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- 入力フォーム -->
+      <div class="form-panel card">
+        <h2 class="section-title"><i class="bi bi-pencil-square"></i> 収入・条件を入力</h2>
+
+        <!-- 本業情報 -->
+        <div class="form-group-title">本業（給与所得）</div>
+
+        <div class="field">
+          <label class="field-label" for="main-income">本業の年収</label>
+          <div class="input-suffix-wrap">
+            <input type="number" id="main-income" value="500" min="0" max="10000" step="1" aria-label="本業の年収（万円）">
+            <span class="input-suffix">万円</span>
+          </div>
+          <span class="field-hint" id="employment-deduction-display">給与所得控除: <strong id="emp-ded-value">—</strong></span>
+        </div>
+
+        <!-- 副業情報 -->
+        <div class="form-group-title" style="margin-top: 1.5rem;">副業・兼業の情報</div>
+
+        <div class="field">
+          <label class="field-label" for="side-type">副業の種類</label>
+          <select id="side-type" aria-label="副業の種類を選択">
+            <option value="freelance">フリーランス / 個人事業主</option>
+            <option value="parttime">アルバイト・パート</option>
+            <option value="misc">雑所得（その他）</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="side-income">副業の年間収入</label>
+          <div class="input-suffix-wrap">
+            <input type="number" id="side-income" value="50" min="0" max="10000" step="1" aria-label="副業の年間収入（万円）">
+            <span class="input-suffix">万円</span>
+          </div>
+        </div>
+
+        <div class="field" id="expense-field">
+          <label class="field-label" for="side-expense">副業の経費</label>
+          <div class="input-suffix-wrap">
+            <input type="number" id="side-expense" value="0" min="0" max="10000" step="1" aria-label="副業の経費（万円）">
+            <span class="input-suffix">万円</span>
+          </div>
+          <span class="field-hint">業務に直接かかった費用（交通費・機材費など）</span>
+        </div>
+
+        <div class="field" id="aodori-field">
+          <label class="field-label" for="aodori-type">青色申告（節税申請）の有無</label>
+          <select id="aodori-type" aria-label="青色申告（節税申請）の有無を選択">
+            <option value="0">なし（白色申告）</option>
+            <option value="65">65万円控除（e-Tax提出）</option>
+            <option value="10">10万円控除（簡易帳簿）</option>
+          </select>
+          <small class="hint-text">フリーランス・個人事業主が税務署に届け出ると最大65万円の節税が可能です。まだ届け出ていない方は「なし」を選択</small>
+        </div>
+      </div>
+
+      <!-- 結果表示 -->
+      <div class="results-panel" id="results-panel">
+
+        <!-- メインカード -->
+        <div class="result-main-card card">
+          <div class="result-main-inner">
+            <div class="result-main-block">
+              <div class="result-label">副業の手取り額</div>
+              <div class="result-value" id="res-side-takehome">—</div>
+              <div class="result-unit">円</div>
+            </div>
+            <div class="result-divider"></div>
+            <div class="result-main-block">
+              <div class="result-label">副業の実効税率<small class="label-sub">（副業収入に対する税負担の割合）</small></div>
+              <div class="result-value" id="res-effective-rate">—</div>
+              <div class="result-unit">%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 確定申告判定バッジ -->
+        <div class="badge-wrap" id="filing-badge-wrap">
+          <div class="filing-badge" id="filing-badge">
+            <span class="badge-icon" id="badge-icon"></span>
+            <span class="badge-text" id="badge-text"></span>
+          </div>
+        </div>
+
+        <!-- 比較カード -->
+        <div class="comparison-card card">
+          <h3 class="comparison-title"><i class="bi bi-table"></i> 副業前後の税負担比較</h3>
+          <div class="comparison-table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>副業なし</th>
+                  <th>副業あり</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>所得税</td>
+                  <td id="cmp-income-tax-before">—</td>
+                  <td id="cmp-income-tax-after">—</td>
+                </tr>
+                <tr>
+                  <td>住民税</td>
+                  <td id="cmp-resident-tax-before">—</td>
+                  <td id="cmp-resident-tax-after">—</td>
+                </tr>
+                <tr>
+                  <td>税負担合計</td>
+                  <td id="cmp-total-tax-before">—</td>
+                  <td id="cmp-total-tax-after">—</td>
+                </tr>
+                <tr class="highlight-row">
+                  <td>手取り合計</td>
+                  <td id="cmp-takehome-before">—</td>
+                  <td id="cmp-takehome-after">—</td>
+                </tr>
+                <tr class="diff-row">
+                  <td colspan="3" id="cmp-tax-diff">副業による税負担の変化: —</td>
+                </tr>
+                <tr class="net-income-row">
+                  <td colspan="3" id="cmp-net-increase">副業による純増額: —</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- チャートカード -->
+        <div class="chart-card card">
+          <h3 class="comparison-title"><i class="bi bi-bar-chart-fill"></i> 手取り・税金の内訳</h3>
+          <div class="chart-container">
+            <canvas id="incomeChart" aria-label="副業前後の手取りと税金の積み上げ棒グラフ" role="img"></canvas>
+          </div>
+        </div>
+
+      </div><!-- /results-panel -->
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">広告</div>
+
+    <!-- 使い方・情報セクション -->
+    <section id="howto" class="howto-section">
+
+      <h2 class="section-title"><i class="bi bi-info-circle"></i> 使い方</h2>
+      <ol class="howto-steps">
+        <li><strong>本業の年収</strong>を入力します（会社から受け取る年収の総額）</li>
+        <li><strong>副業の種類</strong>を選択します（フリーランス・アルバイト・雑所得）</li>
+        <li><strong>副業の収入と経費</strong>を入力します（フリーランスの場合は経費を入力すると節税効果を確認できます）</li>
+        <li>結果が<strong>リアルタイムで更新</strong>されます。確定申告の要否・税負担増を確認してください</li>
+      </ol>
+
+      <!-- アコーディオン -->
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-question-circle"></i> 副業20万円ルールとは
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>給与所得者（会社員・パート等）が副業で得た所得が年間20万円以下の場合、<strong>所得税の確定申告は不要</strong>です（所得税法第121条）。ただし、これは「所得」（収入 − 経費）が基準です。収入が20万円を超えていても、経費を差し引いた後の所得が20万円以下なら申告不要となります。なお、住民税の申告は別途、居住する市区町村に必要な場合があります。副業が事業所得（フリーランス等）の場合は、金額にかかわらず確定申告を行うことが推奨されます。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-file-earmark-text"></i> 事業所得と雑所得の違い（2022年以降）
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>2022年（令和4年）の国税庁通達改正により、副業収入の所得区分の判断基準が明確化されました。<strong>帳簿書類の記帳・保存がある場合は事業所得</strong>として扱われる可能性が高まりましたが、<strong>副業収入が300万円以下で帳簿がない場合は原則として雑所得</strong>となる目安が示されています。事業所得は青色申告特別控除（最大65万円）や損失の繰越控除が利用できるメリットがあります。一方、雑所得は損失を他の所得と通算できないなどの制限があります。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-chat-left-dots"></i> よくある質問（FAQ）
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <dl class="faq-list">
+              <dt>副業収入が20万円以下でも住民税申告は必要？</dt>
+              <dd>はい。所得税の確定申告が不要でも、住民税の申告は市区町村に対して原則必要です。副業収入が1円でもある場合は申告を行いましょう。</dd>
+
+              <dt>経費に認められるものは？</dt>
+              <dd>業務に直接関連する費用が対象です。例：パソコン・スマートフォン（業務使用割合分）、通信費（業務割合分）、書籍・セミナー費用、交通費、消耗品費など。プライベートと共用の場合は使用割合で按分します。</dd>
+
+              <dt>インボイスと副業の関係は？</dt>
+              <dd>2023年10月開始のインボイス制度（適格請求書等保存方式）により、フリーランスでBtoB取引をする場合、インボイス登録しないと消費税分を取引先が仕入税額控除できなくなります。BtoC中心の副業には影響が少ない場合もあります。</dd>
+
+              <dt>副業の住民税を会社に知られたくない場合は？</dt>
+              <dd>確定申告書の「住民税に関する事項」で「自分で納付」を選択すると、副業分の住民税を給与天引き（特別徴収）と分けて自分で納付できます。ただし完全な秘匿を保証するものではありません。</dd>
+
+              <dt>このシミュレーターの計算は正確ですか？</dt>
+              <dd>概算値です。社会保険料控除は本業年収の15%で概算しており、実際の額は加入している健康保険・年金によって異なります。また、各種所得控除（配偶者控除・扶養控除等）は考慮していません。正確な税額は税理士または税務署にご確認ください。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <i class="bi bi-book"></i> 参照法令・出典・免責事項
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-list">
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1900.htm" target="_blank" rel="noopener noreferrer">国税庁 No.1900 給与所得者で確定申告が必要な人 <i class="bi bi-box-arrow-up-right"></i></a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2260.htm" target="_blank" rel="noopener noreferrer">国税庁 No.2260 所得税の税率 <i class="bi bi-box-arrow-up-right"></i></a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1410.htm" target="_blank" rel="noopener noreferrer">国税庁 No.1410 給与所得控除 <i class="bi bi-box-arrow-up-right"></i></a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/2072.htm" target="_blank" rel="noopener noreferrer">国税庁 No.2072 青色申告特別控除 <i class="bi bi-box-arrow-up-right"></i></a></li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本シミュレーターは概算を提供するものであり、法的・税務的アドバイスではありません。実際の税額は個人の状況（社会保険料・各種控除等）により異なります。正確な税務判断は税理士・税務署等の専門家にご相談ください。本ツールの利用により生じた損害について、当サイトは一切の責任を負いません。</p>
+          </div>
+        </details>
+
+      </div><!-- /accordion-group -->
+
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <nav class="footer-nav">
+        <a href="/about.html">このサイトについて</a>
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/">トップへ戻る</a>
+      </nav>
+      <p class="footer-copy"><small>&copy; 2026 計算ラボ (keisanlab.jp)</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
