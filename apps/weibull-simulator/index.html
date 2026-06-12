@@ -43,6 +43,29 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "ワイブル分布はどのような分野で使われますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ワイブル分布は信頼性工学・品質管理・保全工学で広く使われます。自動車部品・電子機器・機械設備の寿命試験データ解析、製品の保証期間設定、予防保全計画の策定などに活用されています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "β（形状パラメータ）の値が1のとき何を意味しますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "β=1のとき、ワイブル分布は指数分布と一致します。これは故障率が時間によらず一定（偶発故障）であることを意味します。電子部品のランダム故障期がこれに近い特性を示します。" }
+      },
+      {
+        "@type": "Question",
+        "name": "B10寿命とはどういう意味ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "B10寿命は累積故障確率が10%になる時間（使用時間・サイクル数など）です。「B10寿命10万km」は10万km走行時点で全体の10%が故障することを意味します。自動車・軸受・歯車の信頼性基準として広く使われます。" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header>
@@ -161,6 +184,12 @@
         <li>特性値カード（平均寿命・中央値・標準偏差・B10寿命）が自動計算されます。</li>
         <li>「再サンプリング」ボタンで同じパラメータのまま乱数を振り直し、サンプリングのばらつきを確認できます。</li>
       </ol>
+      <h2>参照文献・学術的背景</h2>
+      <ul class="ref-links">
+        <li><a href="https://www.jis-standard.jp" target="_blank" rel="noopener">JIS Z 9015：統計的抜取検査（参考）</a></li>
+        <li>Weibull, W. (1951). "A statistical distribution function of wide applicability". Journal of Applied Mechanics. 18 (3): 293–297.</li>
+      </ul>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールのシミュレーション結果は教育・学習目的の参考値です。実際の製品設計・品質保証への適用には、専門的な統計解析ソフトウェアと信頼性工学の専門家によるレビューをお勧めします。</p>
     </section>
 
     <div class="affiliate-block">
