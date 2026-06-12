@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="退職金とiDeCoをいつ・どの順番で受け取ると税金が最も安いか計算。2024年税制改正（5年ルール廃止）対応。同時受取vs時差受取を4パターン比較。登録不要・無料。">
+  <title>退職金・iDeCo 受取税金最適化シミュレーター｜同時受取vs時差受取を比較</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/retirement-tax-optimizer/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "退職金とiDeCoを同年に受け取ると損ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2024年の税制改正（5年ルール廃止）により、同年に受け取っても退職所得控除を重複適用できるようになりました。勤続年数やiDeCo加入期間によっては同時受取が最も有利になるケースがあります。本ツールで4パターンを比較してご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "iDeCoを年金形式で受け取る場合の税金は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "iDeCoを年金形式で受け取ると「公的年金等の雑所得」として扱われ、公的年金控除が適用されます。一時金受取とは別の控除体系になるため、他の収入との合算で課税される点にご注意ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "2024年税制改正の「5年ルール廃止」とは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "改正前は「退職金を受け取った年から5年以内にiDeCoを受け取る場合、退職所得控除の重複が制限される」というルールがありました。2024年の改正でこのルールが廃止され、同年受取でも退職所得控除を両方に適用できるようになりました。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職所得控除はどう計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "勤続年数20年以下の場合：40万円×勤続年数（最低80万円）。勤続年数20年超の場合：800万円＋70万円×（勤続年数－20年）。iDeCoの場合は加入期間を「勤続年数」として同様に計算します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職所得の税率はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "退職所得＝（退職金－退職所得控除）×0.5 で計算した金額に対して所得税の累進税率が適用されます。控除後の課税退職所得が195万円以下なら税率5%、330万円以下なら10%と段階的に上がります。住民税は一律10%です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "計算結果はいつから有効ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本ツールは2024年以降の税制改正を反映しています。ただし税制は変更される可能性があるため、実際の手続き前は税理士や金融機関にご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "iDeCoを一部一時金・残りを年金で受け取る場合は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "「一時金＋年金」の組み合わせ受取も可能です。一時金部分には退職所得控除、年金部分には公的年金控除が適用されます。本ツールでは受取方法の選択に応じて計算方式を変えています。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-badge"><i class="bi bi-patch-check-fill"></i> 2024年税制改正対応</div>
+      <h1>退職金・iDeCo 受取税金最適化シミュレーター</h1>
+      <p class="subtitle">同時受取 vs 時差受取 ― 4パターンの手取りを自動比較</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告スペース</div>
+
+    <!-- 入力フォーム -->
+    <section id="tool" class="tool-section">
+      <div class="section-title">
+        <i class="bi bi-pencil-square"></i>
+        <h2>条件を入力してください</h2>
+      </div>
+
+      <p class="privacy-note"><i class="bi bi-shield-lock-fill"></i> 入力データはブラウザ内のみで計算され、サーバーには一切送信されません。</p>
+
+      <div class="form-grid">
+        <!-- 退職金情報 -->
+        <div class="form-group-card">
+          <div class="form-group-header">
+            <i class="bi bi-briefcase-fill"></i>
+            <span>退職金情報</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="retirementAmount">退職金額</label>
+            <div class="input-with-unit">
+              <input type="number" id="retirementAmount" value="2000" min="0" max="99999" step="100" aria-label="退職金額（万円）">
+              <span class="unit">万円</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="yearsOfService">勤続年数</label>
+            <div class="input-with-unit">
+              <input type="number" id="yearsOfService" value="30" min="1" max="60" step="1" aria-label="勤続年数（年）">
+              <span class="unit">年</span>
+            </div>
+            <span class="field-hint" id="retirementDeductionPreview"></span>
+          </div>
+        </div>
+
+        <!-- iDeCo情報 -->
+        <div class="form-group-card">
+          <div class="form-group-header">
+            <i class="bi bi-piggy-bank-fill"></i>
+            <span>iDeCo情報</span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="idecoBalance">iDeCo残高</label>
+            <div class="input-with-unit">
+              <input type="number" id="idecoBalance" value="500" min="0" max="99999" step="100" aria-label="iDeCo残高（万円）">
+              <span class="unit">万円</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="idecoYears">iDeCo加入期間</label>
+            <div class="input-with-unit">
+              <input type="number" id="idecoYears" value="25" min="1" max="40" step="1" aria-label="iDeCo加入期間（年）">
+              <span class="unit">年</span>
+            </div>
+            <span class="field-hint" id="idecoDeductionPreview"></span>
+          </div>
+          <div class="field">
+            <label class="field-label" for="idecoReceiveType">iDeCoの受取方法</label>
+            <select id="idecoReceiveType" aria-label="iDeCoの受取方法">
+              <option value="lump">一時金（全額）</option>
+              <option value="annuity">年金（全額）※65歳未満で概算</option>
+              <option value="mixed">一時金＋年金（半々）※65歳未満で概算</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 結果エリア -->
+    <section id="result-section" class="result-section">
+      <!-- 最適バッジ -->
+      <div class="optimal-banner" id="optimalBanner">
+        <div class="optimal-icon"><i class="bi bi-trophy-fill"></i></div>
+        <div class="optimal-text">
+          <div class="optimal-label">最もお得な受取タイミング</div>
+          <div class="optimal-pattern" id="optimalPatternName">計算中...</div>
+        </div>
+        <div class="optimal-saving" id="optimalSaving"></div>
+      </div>
+
+      <!-- グラフ -->
+      <div class="chart-card">
+        <h2 class="chart-title"><i class="bi bi-bar-chart-fill"></i> 手取り合計の比較（万円）</h2>
+        <div class="chart-wrapper">
+          <canvas id="comparisonChart" aria-label="4パターン手取り比較グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 比較テーブル -->
+      <div class="table-card">
+        <h2 class="table-title"><i class="bi bi-table"></i> 詳細比較</h2>
+        <div class="table-scroll">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th class="col-pattern" id="th-0">同時受取</th>
+                <th class="col-pattern" id="th-1">1年後受取</th>
+                <th class="col-pattern" id="th-2">2年後受取</th>
+                <th class="col-pattern" id="th-3">5年後受取</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+          </table>
+        </div>
+        <p class="disclaimer-note">
+          <i class="bi bi-info-circle"></i>
+          本計算は2024年税制改正後の制度を基にした概算です。実際の税額は個人の状況により異なります。詳細は税理士・金融機関にご確認ください。
+        </p>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">広告スペース</div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2 class="howto-main-title"><i class="bi bi-question-circle-fill"></i> 使い方</h2>
+      <ol class="howto-steps">
+        <li><strong>退職金額・勤続年数を入力</strong>：退職時に受け取る退職金の金額と、勤続年数を入力してください。</li>
+        <li><strong>iDeCo残高・加入期間を入力</strong>：iDeCo口座の残高と、これまでの加入期間を入力してください。</li>
+        <li><strong>iDeCoの受取方法を選択</strong>：一時金・年金・一時金＋年金の3つから選べます。</li>
+        <li><strong>比較結果を確認</strong>：4パターン（同時・1年後・2年後・5年後）の手取り額を自動計算し、最もお得なタイミングをハイライト表示します。</li>
+      </ol>
+
+      <!-- アコーディオン -->
+      <div class="accordion-list">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-newspaper"></i> 2024年税制改正のポイント（5年ルール廃止とは）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>改正前は「企業の退職金を受け取った年（または前年）から5年以内にiDeCo（確定拠出年金）を一時金で受け取ると、iDeCoの退職所得控除額が制限される」というルールがありました。これが通称「5年ルール」です。</p>
+            <p>2024年以降の改正により、<strong>このルールが廃止</strong>されました。企業の退職金と同年にiDeCoを受け取っても、それぞれの勤続年数・加入期間を基準とした退職所得控除を両方フルに適用できるようになりました。そのため、場合によっては「同時受取が最もお得」という逆転現象が起きることがあります。</p>
+            <p>ただし、退職所得控除が退職金に完全に使い切られてしまうケースでは、iDeCoを時差受取することで追加の控除を活用できるため、本ツールで具体的な数字を比較することをお勧めします。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-calculator"></i> 退職所得控除の計算方法</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <table class="info-table">
+              <thead>
+                <tr><th>勤続年数（加入期間）</th><th>退職所得控除額</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>20年以下</td><td>40万円 × 勤続年数（最低80万円）</td></tr>
+                <tr><td>20年超</td><td>800万円 + 70万円 × (勤続年数 − 20年)</td></tr>
+              </tbody>
+            </table>
+            <p><strong>課税退職所得の計算式：</strong>（退職金 − 退職所得控除） × 0.5</p>
+            <p>課税退職所得がゼロ以下の場合、所得税・住民税は課税されません。退職所得には1/2課税という優遇があり、給与所得に比べて税負担が大幅に軽くなります。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-chat-dots"></i> よくある質問（FAQ）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <div class="faq-list">
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> 退職一時金とiDeCoを同年に受け取ると損？</div>
+                <div class="faq-a">2024年改正後は必ずしも損ではありません。退職所得控除の上限を超えた部分に課税されるだけで、控除範囲内なら両方非課税です。本ツールで確認してください。</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> iDeCoを年金形式で受け取る場合は？</div>
+                <div class="faq-a">年金形式は「公的年金等の雑所得」として課税されます。65歳未満なら年60万円超、65歳以上なら年110万円超の部分が雑所得になります。一時金と異なる計算体系なため、本ツールでは概算として表示しています。</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> 住民税の計算方法は？</div>
+                <div class="faq-a">退職所得に対する住民税は一律10%です（特別区民税・道府県民税の合算）。所得税と同様に課税退職所得に対して計算されます。</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> iDeCo加入期間が短いと不利ですか？</div>
+                <div class="faq-a">加入期間が短いほど退職所得控除が小さくなります。例えば10年の場合は400万円の控除になります。退職金の控除に比べて小さい場合は、時差受取で独自の控除を活用する戦略が有効です。</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> 計算はいつから有効ですか？</div>
+                <div class="faq-a">2024年以降の税制改正を反映しています。2023年以前に退職した方は旧ルールが適用される場合があります。必ず税理士・勤務先の退職金担当部署にご確認ください。</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> 一時金と年金を組み合わせた場合は？</div>
+                <div class="faq-a">iDeCo残高の一部を一時金、残りを年金で受け取ることも可能です。一時金部分は退職所得控除、年金部分は公的年金控除が別途適用されます。</div>
+              </div>
+              <div class="faq-item">
+                <div class="faq-q"><i class="bi bi-question-circle"></i> 復興特別所得税は含まれていますか？</div>
+                <div class="faq-a">本ツールの所得税額には復興特別所得税（所得税額×2.1%）が含まれています。2037年まで適用される税です。</div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span><i class="bi bi-book"></i> 参照法令・免責事項</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p><strong>参照法令・公的資料</strong></p>
+            <ul class="ref-list">
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1420.htm" target="_blank" rel="noopener noreferrer">国税庁：退職所得の計算方法 <i class="bi bi-box-arrow-up-right"></i></a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1600.htm" target="_blank" rel="noopener noreferrer">国税庁：公的年金等の課税関係 <i class="bi bi-box-arrow-up-right"></i></a></li>
+              <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/nenkin/nenkin/kyoshutsu/index.html" target="_blank" rel="noopener noreferrer">厚生労働省：確定拠出年金（iDeCo）制度 <i class="bi bi-box-arrow-up-right"></i></a></li>
+            </ul>
+            <p><strong>免責事項</strong></p>
+            <p>本ツールの計算結果は一般的な税制に基づく概算であり、個人の状況（他の所得・控除・iDeCoの種類等）によって実際の税額は異なります。本ツールの情報を利用したことによる損害について、運営者は一切の責任を負いません。実際の手続き前は必ず税理士・社労士・金融機関にご相談ください。</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/about.html">このサイトについて</a>
+        <a href="/">トップへ戻る</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 計算ラボ（keisanlab.jp）</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
