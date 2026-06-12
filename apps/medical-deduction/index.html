@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <meta name="description" content="1年間の医療費から所得税の還付金額を即計算。セルフメディケーション税制にも対応。確定申告前に還付見込みを確認。登録不要・完全無料。">
+  <meta property="og:title" content="医療費控除 還付金計算ツール｜確定申告でいくら戻る？">
+  <meta property="og:description" content="年収と医療費を入力するだけで確定申告の還付金額を即計算。セルフメディケーション税制にも対応。登録不要・完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/medical-deduction/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="医療費控除 還付金計算ツール｜確定申告でいくら戻る？">
+  <meta name="twitter:description" content="年収と医療費を入力するだけで確定申告の還付金額を即計算。セルフメディケーション税制にも対応。">
+  <link rel="canonical" href="https://keisanlab.jp/apps/medical-deduction/">
+  <title>医療費控除 還付金計算ツール｜確定申告でいくら戻る？を無料で即計算</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "家族の医療費もまとめて申告できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。生計を一にする家族の医療費は合算して申告できます。共働き夫婦の場合、所得が高い方がまとめて申告するほうが還付金が多くなる場合があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "医療費の領収書はいつまで保管する必要がありますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "確定申告書の提出期限（3月15日）から5年間保管する義務があります。税務調査があった場合に提示を求められることがあるため、大切に保管してください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "医療費控除の申告期限はいつですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "通常の確定申告と同じく、翌年の2月16日〜3月15日が申告期間です。ただし還付申告（還付のみが目的の場合）は5年間さかのぼって申告できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "共働きの場合、どちらが申告したほうが得ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に所得が多い方が申告したほうが、適用される税率が高いため還付金額が大きくなります。ただし所得が少ない方が10万円の基準に達しやすい場合もあるため、両方で試算することをおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "通院交通費は医療費控除に含められますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "公共交通機関（電車・バス）を使った通院交通費は医療費控除の対象になります。領収書がない場合でも交通費の記録（日付・経路・金額）を残しておけば申告できます。タクシーは原則対象外ですが、病状により公共交通機関の利用が困難な場合は対象になります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "セルフメディケーション税制とはどちらが有利ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "通常の医療費控除は医療費合計10万円超が必要ですが、セルフメディケーション税制はOTC医薬品購入額が1.2万円超で適用できます。OTC薬品の購入が多い方にはセルフメディケーション税制が有利な場合があります。ただし両制度は併用できません。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "市販の薬代は医療費控除に含まれますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "通常の医療費控除では、市販の薬（OTC医薬品）は原則として対象外です。市販薬を対象にしたい場合はセルフメディケーション税制を選択してください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <h1><i class="bi bi-hospital-fill"></i> 医療費控除 還付金計算ツール</h1>
+    <p class="subtitle">確定申告でいくら戻る？年収と医療費を入力して即計算</p>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- プライバシー注記 -->
+    <div class="privacy-note">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力された情報はお使いのブラウザ内のみで処理されます。サーバーへの送信・保存は一切行いません。
+    </div>
+
+    <!-- 税制選択 -->
+    <section class="card" id="tax-mode-section">
+      <h2><i class="bi bi-toggles"></i> 税制の選択</h2>
+      <div class="toggle-group" role="radiogroup" aria-label="税制選択">
+        <button class="toggle-btn active" id="btn-normal" data-mode="normal" type="button">
+          <i class="bi bi-heart-pulse-fill"></i>
+          <span class="toggle-title">通常の医療費控除</span>
+          <small>医療費10万円超が目安</small>
+        </button>
+        <button class="toggle-btn" id="btn-self-med" data-mode="self-med" type="button">
+          <i class="bi bi-capsule"></i>
+          <span class="toggle-title">セルフメディケーション税制</span>
+          <small>市販薬（ドラッグストアの薬）を年間1.2万円以上購入した方向け</small>
+        </button>
+      </div>
+    </section>
+
+    <!-- 収入情報 -->
+    <section class="card" id="income-section">
+      <h2><i class="bi bi-wallet2"></i> 収入情報</h2>
+      <div class="field-group">
+        <label for="annual-income">年収（給与所得者）</label>
+        <div class="input-wrap">
+          <input type="number" id="annual-income" value="500" min="0" max="10000" inputmode="decimal" step="1">
+          <span class="unit">万円</span>
+        </div>
+        <p class="hint">源泉徴収票の「支払金額」欄を万円単位で入力してください。</p>
+      </div>
+    </section>
+
+    <!-- 通常の医療費入力 -->
+    <section class="card" id="medical-section">
+      <h2><i class="bi bi-clipboard2-pulse-fill"></i> 医療費の入力</h2>
+
+      <div class="input-mode-tabs" role="tablist">
+        <button class="tab-btn active" id="tab-simple" data-tab="simple" role="tab" aria-selected="true" type="button">シンプル入力</button>
+        <button class="tab-btn" id="tab-detail" data-tab="detail" role="tab" aria-selected="false" type="button">詳細入力（項目別）</button>
+      </div>
+
+      <!-- シンプル入力 -->
+      <div id="panel-simple" class="tab-panel">
+        <div class="field-group" style="margin-top: 1rem;">
+          <label for="total-medical">年間医療費合計</label>
+          <div class="input-wrap">
+            <input type="number" id="total-medical" value="15" min="0" max="10000" inputmode="decimal" step="0.1">
+            <span class="unit">万円</span>
+          </div>
+          <p class="hint">家族全員分の医療費（診察・薬代・入院・歯科・交通費等）の1年間合計</p>
+        </div>
+      </div>
+
+      <!-- 詳細入力 -->
+      <div id="panel-detail" class="tab-panel" style="display:none">
+        <div style="margin-top: 1rem;">
+          <div class="field-group">
+            <label for="d-clinic">診察・入院費</label>
+            <div class="input-wrap">
+              <input type="number" id="d-clinic" value="0" min="0" inputmode="decimal" step="0.1" placeholder="0">
+              <span class="unit">万円</span>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="d-medicine">処方薬代</label>
+            <div class="input-wrap">
+              <input type="number" id="d-medicine" value="0" min="0" inputmode="decimal" step="0.1" placeholder="0">
+              <span class="unit">万円</span>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="d-dental">歯科治療費</label>
+            <div class="input-wrap">
+              <input type="number" id="d-dental" value="0" min="0" inputmode="decimal" step="0.1" placeholder="0">
+              <span class="unit">万円</span>
+            </div>
+            <p class="hint">審美目的（ホワイトニング等）は対象外</p>
+          </div>
+          <div class="field-group">
+            <label for="d-birth">出産費用</label>
+            <div class="input-wrap">
+              <input type="number" id="d-birth" value="0" min="0" inputmode="decimal" step="0.1" placeholder="0">
+              <span class="unit">万円</span>
+            </div>
+            <p class="hint">出産育児一時金等の補填後の実費負担額</p>
+          </div>
+          <div class="field-group">
+            <label for="d-transport">通院交通費</label>
+            <div class="input-wrap">
+              <input type="number" id="d-transport" value="0" min="0" inputmode="decimal" step="0.1" placeholder="0">
+              <span class="unit">万円</span>
+            </div>
+            <p class="hint">公共交通機関（電車・バス）のみ。自家用車は対象外</p>
+          </div>
+          <div class="detail-total-row">
+            <span>詳細入力合計</span>
+            <span id="detail-total-display">0 万円</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-group">
+        <label for="insurance-fill">健康保険からの補填額</label>
+        <div class="input-wrap">
+          <input type="number" id="insurance-fill" value="0" min="0" inputmode="decimal" step="0.1">
+          <span class="unit">万円</span>
+        </div>
+        <p class="hint">高額療養費・傷病手当金など健康保険から支給された金額</p>
+      </div>
+      <div class="field-group">
+        <label for="life-ins-fill">生命保険からの補填額</label>
+        <div class="input-wrap">
+          <input type="number" id="life-ins-fill" value="0" min="0" inputmode="decimal" step="0.1">
+          <span class="unit">万円</span>
+        </div>
+        <p class="hint">入院給付金・手術給付金など生命保険から支給された金額</p>
+      </div>
+    </section>
+
+    <!-- セルフメディケーション入力 -->
+    <section class="card" id="self-med-section" style="display:none">
+      <h2><i class="bi bi-capsule-pill"></i> セルフメディケーション税制の入力</h2>
+      <div class="info-banner">
+        <i class="bi bi-info-circle-fill"></i>
+        セルフメディケーション税制は2026年分まで適用可能です。対象の市販薬（OTC）のレシートを保管してください。
+      </div>
+      <div class="field-group" style="margin-top: 1rem;">
+        <label for="otc-amount">対象の市販薬（OTC）購入額（年間）</label>
+        <div class="input-wrap">
+          <input type="number" id="otc-amount" value="2" min="0" inputmode="decimal" step="0.1">
+          <span class="unit">万円</span>
+        </div>
+        <p class="hint">スイッチ市販薬（OTC）（パッケージに「セルフメディケーション税制対象」の表示があるもの）の年間購入合計</p>
+      </div>
+    </section>
+
+    <!-- 計算結果 -->
+    <section class="card result-card" id="result-section">
+      <h2><i class="bi bi-cash-coin"></i> 還付金の計算結果</h2>
+
+      <div class="filing-notice">会社員の方も医療費控除は確定申告が必要です（年末調整では申告できません）</div>
+
+      <div class="result-hero" id="result-hero">
+        <div class="result-hero-label">確定申告で約</div>
+        <div class="result-hero-amount" id="result-amount">¥0</div>
+        <div class="result-hero-sub">戻ってくる可能性があります</div>
+      </div>
+
+      <div class="verdict-banner" id="verdict-banner">
+        <span id="verdict-icon"></span>
+        <span id="verdict-text">入力値を確認しています...</span>
+      </div>
+
+      <div class="result-grid">
+        <div class="result-item">
+          <div class="result-item-label">医療費控除額</div>
+          <div class="result-item-value" id="r-deduction">¥0</div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label">控除前の所得税</div>
+          <div class="result-item-value" id="r-tax-before">¥0</div>
+        </div>
+        <div class="result-item">
+          <div class="result-item-label">控除後の所得税</div>
+          <div class="result-item-value" id="r-tax-after">¥0</div>
+        </div>
+        <div class="result-item highlight">
+          <div class="result-item-label">還付金（差額）</div>
+          <div class="result-item-value" id="r-refund">¥0</div>
+        </div>
+      </div>
+
+      <!-- Chart.js グラフ -->
+      <div class="chart-wrap" id="chart-wrap">
+        <h3>医療費の内訳グラフ</h3>
+        <canvas id="breakdown-chart" aria-label="医療費内訳グラフ" role="img"></canvas>
+      </div>
+
+      <!-- 控除対象チェックリスト -->
+      <div class="checklist-wrap">
+        <h3>医療費控除の対象確認</h3>
+        <ul class="checklist">
+          <li class="check-ok"><i class="bi bi-check-circle-fill"></i> 治療目的の診察・入院</li>
+          <li class="check-ok"><i class="bi bi-check-circle-fill"></i> 処方箋薬代</li>
+          <li class="check-ok"><i class="bi bi-check-circle-fill"></i> 歯科治療（審美除く）</li>
+          <li class="check-ok"><i class="bi bi-check-circle-fill"></i> 出産費用（補填後の実費）</li>
+          <li class="check-ok"><i class="bi bi-check-circle-fill"></i> 通院交通費（公共交通機関）</li>
+          <li class="check-ng"><i class="bi bi-x-circle-fill"></i> 健康診断費（※異常発見→治療につながれば対象）</li>
+          <li class="check-ng"><i class="bi bi-x-circle-fill"></i> 美容整形・ホワイトニング</li>
+          <li class="check-ng"><i class="bi bi-x-circle-fill"></i> 予防接種</li>
+        </ul>
+      </div>
+
+      <p class="disclaimer">※ この計算は概算です。実際の還付金額は個別の状況により異なります。正確な申告は税理士または国税庁の確定申告書等作成コーナーをご利用ください。</p>
+
+      <div class="next-step-block">
+        <p class="next-step-title">確定申告の手続き</p>
+        <a href="https://www.e-tax.nta.go.jp/" target="_blank" rel="noopener" class="next-step-link">e-Taxで申告する（国税庁）</a>
+        <a href="https://www.keisan.nta.go.jp/" target="_blank" rel="noopener" class="next-step-link">確定申告書作成コーナー（国税庁）</a>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果直下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section">
+      <h2>使い方</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-num">1</span>
+          <div><strong>税制を選択</strong>：「通常の医療費控除」か「セルフメディケーション税制」を選びます。どちらか一方のみ申告できます。</div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div><strong>年収を入力</strong>：源泉徴収票の「支払金額」を万円単位で入力します。</div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div><strong>医療費を入力</strong>：シンプル入力（合計額）または詳細入力（項目別）で1年間の医療費を入力します。健康保険や生命保険の補填額も入力してください。</div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div><strong>還付金を確認</strong>：入力と同時に還付見込みが計算されます。10万円（または年収の1%）を超えた分が控除対象になります。</div>
+        </li>
+      </ol>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>医療費控除の基本ルール（10万円の壁とは）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>医療費控除とは、1年間に支払った医療費が一定額を超えた場合に、所得から控除して税金の還付を受けられる制度です。基準となるのは「医療費合計 − 保険補填額 − min(年収×1%, 10万円)」で算出した額です。年収500万円なら10万円超、年収200万円以下なら年収の1%超が控除の対象になります。控除額の上限は年間200万円です。家族の医療費は生計を一にしていれば合算できるため、まとめて申告することで還付が大きくなることがあります。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>セルフメディケーション税制との違い・使い分け</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>セルフメディケーション税制は、特定の市販薬（OTC）の購入額が年間1.2万円を超えた場合に、超えた額（上限8.8万円）を所得から控除できる制度です。通常の医療費控除は10万円超が目安ですが、こちらは1.2万円超から使えるため、病院にあまりかからない健康な方でも節税できる可能性があります。ただし両制度は同じ年に併用できません。どちらが有利かはこのツールで比較してご確認ください。本税制は2026年分まで適用可能です（延長の可能性あり）。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>医療費控除の対象になるもの・ならないもの</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <div class="table-wrap">
+              <table class="check-table">
+                <thead>
+                  <tr><th>項目</th><th>対象</th><th>備考</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>医師の診察・入院</td><td class="yes">対象</td><td>治療目的に限る</td></tr>
+                  <tr><td>処方薬</td><td class="yes">対象</td><td>医師の処方箋が必要</td></tr>
+                  <tr><td>歯科治療</td><td class="yes">対象</td><td>審美・矯正（成人）は原則対象外</td></tr>
+                  <tr><td>出産費用</td><td class="yes">対象</td><td>一時金等の補填後の実費</td></tr>
+                  <tr><td>通院交通費</td><td class="yes">対象</td><td>公共交通機関のみ</td></tr>
+                  <tr><td>市販薬</td><td class="no">対象外</td><td>セルフメディケーション税制を使用</td></tr>
+                  <tr><td>健康診断</td><td class="no">対象外</td><td>異常発見→治療につながった場合は対象</td></tr>
+                  <tr><td>美容整形・ホワイトニング</td><td class="no">対象外</td><td>治療目的でないため</td></tr>
+                  <tr><td>予防接種</td><td class="no">対象外</td><td>治療目的でないため</td></tr>
+                  <tr><td>タクシー代</td><td class="no">原則対象外</td><td>公共交通機関利用困難な場合のみ対象</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>家族の医療費もまとめて申告できますか？</dt>
+              <dd>はい。生計を一にする家族（配偶者・子ども・親など）の医療費は合算して申告できます。共働き夫婦の場合、所得が高い方が申告するほうが税率が高く還付金額が大きくなります。</dd>
+
+              <dt>領収書は何年間保管する必要がありますか？</dt>
+              <dd>確定申告書の提出期限（翌年3月15日）から5年間保管する必要があります。税務調査の際に提示を求められることがあるため大切に保管してください。</dd>
+
+              <dt>共働きはどちらが申告した方が得ですか？</dt>
+              <dd>一般的には所得の多い方が申告するほうが税率が高いため還付金が多くなります。ただし控除の基準（10万円 or 年収1%）に達しやすいのは所得が少ない方なので、両方を試算して比較するのがおすすめです。</dd>
+
+              <dt>セルフメディケーション税制を使うには条件がありますか？</dt>
+              <dd>健康の維持増進・疾病の予防のための取組（特定健診・インフルエンザ予防接種・定期健診等）を行っていることが条件です。その証明書類も保管してください。</dd>
+
+              <dt>還付申告はいつまでできますか？</dt>
+              <dd>還付申告（還付のみが目的の場合）は5年間さかのぼって申告できます。通常は翌年1月1日から申告可能です。過去の医療費が多かった年も遡って確認してみましょう。</dd>
+
+              <dt>医療費控除の申請方法は？</dt>
+              <dd>確定申告書（第一表・第二表）と医療費控除の明細書を作成して税務署に提出します。e-Tax（電子申告）や確定申告書等作成コーナーを利用すると便利です。会社員でも確定申告が必要です（年末調整では医療費控除を適用できません）。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照・出典・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1120.htm" target="_blank" rel="noopener">国税庁：医療費を支払ったとき（医療費控除）</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1129.htm" target="_blank" rel="noopener">国税庁：セルフメディケーション税制（医療費控除の特例）</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/shoto320.htm" target="_blank" rel="noopener">国税庁：所得税の税率</a></li>
+              <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000124254.html" target="_blank" rel="noopener">厚生労働省：セルフメディケーション税制について</a></li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は参考値です。実際の還付金額は個別の所得・控除条件・自治体の税率等により異なります。正確な税額の確認・申告には、税理士または最寄りの税務署にご相談ください。</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">about</a>
+      ｜ <a href="/">ツール一覧</a>
+    </p>
+    <p><small>&copy; 2026 計算ラボ（keisanlab.jp）</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
