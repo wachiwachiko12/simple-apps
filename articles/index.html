@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="フリーランスの確定申告・産休・インボイス制度・家計管理・信頼性工学まで。Keisanlabが提供する計算・業務に役立つコラム記事一覧。">
+  <title>計算・業務に役立つコラム一覧｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.com/articles/">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="計算・業務に役立つコラム一覧｜Keisanlab">
+  <meta property="og:description" content="フリーランスの確定申告・産休・インボイス制度・家計管理・信頼性工学まで。Keisanlabのお役立ちコラム記事一覧。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.com/articles/">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Topbar ===== */
+    .topbar {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+    }
+    .topbar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .topbar nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: white; }
+
+    /* ===== Page hero ===== */
+    .page-hero {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+      color: white;
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+    }
+    .page-hero h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .page-hero p {
+      font-size: 0.9375rem;
+      opacity: 0.88;
+      margin-top: 0.5rem;
+    }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ===== Ad unit ===== */
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Article grid ===== */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .articles-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ===== Article card ===== */
+    .article-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .article-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+    .card-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      width: fit-content;
+    }
+    .card-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+    .card-desc {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .card-footer {
+      padding: 0 1.25rem 1.25rem;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--primary);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-decoration: none;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: gap 0.15s ease, opacity 0.15s ease;
+    }
+    .card-link:hover {
+      gap: 0.5rem;
+      opacity: 0.8;
+    }
+    .card-link::after { content: ' →'; }
+
+    /* ===== Back link ===== */
+    .back-section {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 0.625rem 1.25rem;
+      border: 1.5px solid var(--primary);
+      border-radius: 8px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .back-link:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .back-link:active { transform: scale(0.98); }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #1a2f4e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 2;
+    }
+    footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav><a href="/articles/">コラム一覧</a></nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>コラム・お役立ち記事</h1>
+  <p>計算・業務・お金に関するわかりやすい解説記事</p>
+</div>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <div class="articles-grid">
+
+    <article class="article-card">
+      <div class="card-body">
+        <span class="card-category">税務・確定申告</span>
+        <h2 class="card-title">フリーランスの確定申告入門：青色申告と白色申告の違いを徹底解説</h2>
+        <p class="card-desc">青色申告65万円控除と白色申告の違いを比較。どちらを選ぶべきかケース別に解説します。フリーランス独立後の最初の確定申告に役立つ基礎知識。</p>
+      </div>
+      <div class="card-footer">
+        <a href="/articles/freelance-tax-basics.html" class="card-link">続きを読む</a>
+      </div>
+    </article>
+
+    <article class="article-card">
+      <div class="card-body">
+        <span class="card-category">産休・育休</span>
+        <h2 class="card-title">産前産後休暇の基礎知識：出産予定日からいつから休める？給付金もわかりやすく解説</h2>
+        <p class="card-desc">産前6週・産後8週の法的根拠から多胎妊娠の特例まで。出産手当金の計算方法と育休との連続取得の流れを丁寧に解説。</p>
+      </div>
+      <div class="card-footer">
+        <a href="/articles/maternity-leave-rights.html" class="card-link">続きを読む</a>
+      </div>
+    </article>
+
+    <article class="article-card">
+      <div class="card-body">
+        <span class="card-category">インボイス制度</span>
+        <h2 class="card-title">インボイス制度（適格請求書）完全ガイド：フリーランスが押さえる必須ポイント</h2>
+        <p class="card-desc">2023年10月開始のインボイス制度。適格請求書の6要件・免税事業者への影響・登録番号の取得手順をフリーランス向けにわかりやすく解説。</p>
+      </div>
+      <div class="card-footer">
+        <a href="/articles/invoice-system-guide.html" class="card-link">続きを読む</a>
+      </div>
+    </article>
+
+    <article class="article-card">
+      <div class="card-body">
+        <span class="card-category">家計管理・節約</span>
+        <h2 class="card-title">家計管理を習慣化するコツ：月1時間で把握できる予算管理術</h2>
+        <p class="card-desc">続かない家計管理の原因を分析し、固定費・変動費・特別費の3分類と50:30:20ルールで家計を劇的にシンプルにする方法を紹介。</p>
+      </div>
+      <div class="card-footer">
+        <a href="/articles/household-budget-tips.html" class="card-link">続きを読む</a>
+      </div>
+    </article>
+
+    <article class="article-card">
+      <div class="card-body">
+        <span class="card-category">信頼性工学</span>
+        <h2 class="card-title">ワイブル分布入門：製品の寿命予測・信頼性工学の基礎をわかりやすく解説</h2>
+        <p class="card-desc">製品故障分析で使われるワイブル分布を初学者向けに解説。形状パラメータβ・尺度パラメータηの意味とワイブル確率紙の読み方まで丁寧に説明。</p>
+      </div>
+      <div class="card-footer">
+        <a href="/articles/weibull-reliability.html" class="card-link">続きを読む</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <div class="back-section">
+    <a href="/" class="back-link">← トップページへ戻る</a>
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>
