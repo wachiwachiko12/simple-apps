@@ -305,6 +305,82 @@
       padding: 0 0.125rem;
     }
 
+    /* ===== Articles section ===== */
+    .articles-section {
+      background: linear-gradient(135deg, #f0f4ff 0%, #faf8f5 100%);
+      border-top: 2px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 1.25rem;
+    }
+    .articles-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .articles-inner h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .articles-inner > p {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .article-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.04);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .article-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+    .article-card .article-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      background: #e0e7ff;
+      color: #3730a3;
+      margin-bottom: 0.4rem;
+    }
+    .article-card h3 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .article-card p {
+      font-size: 0.775rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .articles-more {
+      text-align: right;
+    }
+    .articles-more a {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #1e4080;
+      text-decoration: none;
+    }
+    .articles-more a:hover { text-decoration: underline; }
+    @media (max-width: 480px) {
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+
     /* ===== Disclaimer section ===== */
     .disclaimer-section {
       background: #f8f9fa;
@@ -719,6 +795,41 @@
     </div>
 
   </main>
+
+  <div class="articles-section">
+    <div class="articles-inner">
+      <h2><i class="bi bi-newspaper"></i> コラム・お役立ち記事</h2>
+      <p>ツールの使い方や関連制度の解説記事を掲載しています。</p>
+      <div class="articles-grid">
+        <a href="/articles/freelance-tax-basics.html" class="article-card">
+          <span class="article-tag">税金・確定申告</span>
+          <h3>フリーランスの確定申告入門：青色申告と白色申告の違いを徹底解説</h3>
+          <p>控除額の差・帳簿の義務・どちらを選ぶべきかをわかりやすく比較します。</p>
+        </a>
+        <a href="/articles/maternity-leave-rights.html" class="article-card">
+          <span class="article-tag">産休・育休</span>
+          <h3>産前産後休暇の基礎知識：いつから休める？給付金もわかりやすく解説</h3>
+          <p>法令上の日数・多胎特例・出産手当金の受給条件をまとめました。</p>
+        </a>
+        <a href="/articles/invoice-system-guide.html" class="article-card">
+          <span class="article-tag">インボイス制度</span>
+          <h3>インボイス制度完全ガイド：フリーランスが押さえる必須ポイント</h3>
+          <p>適格請求書の6要件・登録番号の取得手順・免税事業者の対応方法を解説。</p>
+        </a>
+        <a href="/articles/household-budget-tips.html" class="article-card">
+          <span class="article-tag">家計管理</span>
+          <h3>家計管理を習慣化するコツ：月1時間で把握できる予算管理術</h3>
+          <p>50:30:20ルールや月次レビューの習慣化など、続けられる家計管理法を紹介。</p>
+        </a>
+        <a href="/articles/weibull-reliability.html" class="article-card">
+          <span class="article-tag">統計・工学</span>
+          <h3>ワイブル分布入門：製品の寿命予測・信頼性工学の基礎をわかりやすく解説</h3>
+          <p>形状パラメータβの意味・確率紙の読み方・故障解析の手順をやさしく解説。</p>
+        </a>
+      </div>
+      <div class="articles-more"><a href="/articles/">記事一覧を見る →</a></div>
+    </div>
+  </div>
 
   <div class="disclaimer-section">
     <div class="disclaimer-inner">
