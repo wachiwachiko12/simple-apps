@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="ワイブル分布とは何か？信頼性工学での使われ方から形状パラメータβ・尺度パラメータηの意味、ワイブル確率紙による故障解析の手順まで初学者向けに解説。">
+  <title>ワイブル分布入門：製品の寿命予測・信頼性工学の基礎をわかりやすく解説｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.com/articles/weibull-reliability.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="ワイブル分布入門：製品の寿命予測・信頼性工学の基礎をわかりやすく解説">
+  <meta property="og:description" content="ワイブル分布とは何か？信頼性工学での使われ方から形状パラメータβ・尺度パラメータηの意味、ワイブル確率紙による故障解析の手順まで初学者向けに解説。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.com/articles/weibull-reliability.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "ワイブル分布入門：製品の寿命予測・信頼性工学の基礎をわかりやすく解説",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-12",
+    "dateModified": "2026-06-12",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar { background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%); }
+    .topbar-inner { max-width: 800px; margin: 0 auto; padding: 0.875rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .site-name { font-size: 1.125rem; font-weight: 700; color: white; text-decoration: none; }
+    .topbar nav a { color: rgba(255,255,255,0.88); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+    .topbar nav a:hover { color: white; }
+
+    main { max-width: 800px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+    .ad-unit { min-height: 90px; background: #f0f0ee; border: 1px dashed #d1d5db; border-radius: var(--radius); margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-size: 0.75rem; }
+
+    article { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,0.05); padding: 2rem 1.5rem; }
+    @media (min-width: 640px) { article { padding: 2.5rem 2rem; } }
+
+    .article-category { display: inline-block; background: #ede9fe; color: #5b21b6; font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.625rem; border-radius: 100px; margin-bottom: 1rem; }
+
+    h1 { font-size: clamp(1.4rem, 4vw, 1.875rem); font-weight: 700; line-height: 1.35; letter-spacing: -0.02em; color: var(--text); margin-bottom: 1rem; }
+
+    .article-meta { font-size: 0.8125rem; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+
+    section { margin-top: 2rem; }
+
+    h2 { font-size: 1.125rem; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 0.875rem; padding-left: 0.75rem; border-left: 3px solid var(--primary); }
+
+    p { font-size: 0.9375rem; line-height: 1.85; color: #374151; margin-bottom: 0.875rem; word-break: break-word; }
+    p:last-child { margin-bottom: 0; }
+
+    /* Beta table */
+    .beta-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 1.25rem 0;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .beta-table th, .beta-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); text-align: left; }
+    .beta-table th { background: var(--primary); color: white; font-weight: 700; border-bottom: none; }
+    .beta-table tr:last-child td { border-bottom: none; }
+    .beta-table td:first-child { font-weight: 700; white-space: nowrap; }
+    .beta-table .early td { background: #ffe4e6; }
+    .beta-table .random td { background: #e0f2fe; }
+    .beta-table .wear td { background: #fef3c7; }
+
+    /* Formula box */
+    .formula-box {
+      background: #f5f3ff;
+      border: 1.5px solid #c4b5fd;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .formula-title { font-size: 0.8125rem; font-weight: 700; color: #5b21b6; margin-bottom: 0.625rem; font-family: inherit; }
+    .formula { font-size: 0.9375rem; color: #3b0764; line-height: 1.9; }
+
+    /* Step list */
+    .step-list { list-style: none; margin: 1.25rem 0; display: flex; flex-direction: column; gap: 0.75rem; counter-reset: step-counter; }
+    .step-list li { display: flex; gap: 1rem; align-items: flex-start; font-size: 0.9375rem; color: #374151; counter-increment: step-counter; }
+    .step-list li::before { content: "Step " counter(step-counter); background: var(--primary); color: white; font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+
+    .highlight-box { background: var(--primary-light); border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.25rem 0; }
+    .highlight-box p { color: #1e3a6e; margin-bottom: 0; }
+
+    .internal-link-box { background: #f0fdf4; border: 1.5px solid #86efac; border-radius: var(--radius); padding: 1.25rem; margin: 2rem 0; display: flex; align-items: center; gap: 0.875rem; }
+    .internal-link-box .link-label { font-size: 0.8125rem; color: #16a34a; font-weight: 600; white-space: nowrap; }
+    .internal-link-box a { color: #15803d; font-weight: 700; text-decoration: none; font-size: 0.9375rem; transition: opacity 0.15s; }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    footer { background: #1a2f4e; color: rgba(255,255,255,0.7); text-align: center; padding: 2rem 1.25rem; font-size: 0.875rem; line-height: 2; margin-top: 3rem; }
+    footer a { color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    .article-nav { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .nav-link { display: inline-flex; align-items: center; gap: 0.375rem; color: var(--primary); text-decoration: none; font-size: 0.875rem; font-weight: 600; min-height: 44px; padding: 0.5rem 0; transition: opacity 0.15s; }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav><a href="/articles/">コラム一覧</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">信頼性工学</span>
+
+    <h1>ワイブル分布入門：製品の寿命予測・信頼性工学の基礎をわかりやすく解説</h1>
+
+    <p class="article-meta">公開日: 2026年6月12日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>ワイブル分布とは？なぜ信頼性工学で使われるのか</h2>
+      <p>ワイブル分布（Weibull distribution）は、スウェーデンの物理学者ワルロ・ワイブルが1951年に提案した確率分布です。製品や部品の寿命・故障時間のモデリングに広く使われており、信頼性工学・品質工学において最も重要な統計ツールのひとつです。</p>
+      <p>ワイブル分布が信頼性工学で重宝される理由は、そのパラメータを調整するだけで正規分布・指数分布・レイリー分布など様々な分布の形状を近似できる「柔軟性」にあります。製品の初期不良期・偶発故障期・磨耗故障期という3つの故障パターン（バスタブ曲線）をすべてモデル化できます。</p>
+      <p>自動車・航空機・電子機器・電池など、信頼性が求められる製品の設計や保証期間の設定、予防保全のスケジュール策定などに実務的に活用されています。</p>
+    </section>
+
+    <section>
+      <h2>形状パラメータβの意味（β&lt;1・β=1・β&gt;1）</h2>
+      <p>ワイブル分布のパラメータのうち「形状パラメータβ（ベータ）」は故障の特性を決定づける最も重要なパラメータです。βの値によって、どのような種類の故障を示しているかが判断できます。</p>
+
+      <table class="beta-table">
+        <thead>
+          <tr>
+            <th>βの値</th>
+            <th>故障タイプ</th>
+            <th>故障率の傾向</th>
+            <th>主な例</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="early">
+            <td>β &lt; 1</td>
+            <td>初期故障（乳幼児死亡期）</td>
+            <td>時間とともに低下</td>
+            <td>製造不良・設計ミス</td>
+          </tr>
+          <tr class="random">
+            <td>β = 1</td>
+            <td>偶発故障（有効寿命期）</td>
+            <td>ほぼ一定（指数分布）</td>
+            <td>ランダムな外的ストレス</td>
+          </tr>
+          <tr class="wear">
+            <td>β &gt; 1</td>
+            <td>磨耗故障（磨耗故障期）</td>
+            <td>時間とともに増加</td>
+            <td>疲労・腐食・機械的摩耗</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>βの値がわかると、製品の改善策が変わります。β&lt;1（初期故障）であれば出荷前の品質検査強化が有効です。β&gt;1（磨耗故障）であれば定期的な部品交換・予防保全のスケジュール設定が有効となります。実際のデータからβを推定することが故障解析の起点です。</p>
+    </section>
+
+    <section>
+      <h2>尺度パラメータηと特性寿命の意味</h2>
+      <p>「尺度パラメータη（イータ）」は製品の特性寿命（characteristic life）を表します。特性寿命とは、全製品の約63.2%が故障するまでの時間のことで、ワイブル分布では常にR(η) = e^(-1) ≈ 36.8%の生存率に対応します。</p>
+
+      <div class="formula-box">
+        <p class="formula-title">ワイブル分布の信頼度関数（生存関数）</p>
+        <p class="formula">R(t) = exp{ -( t / η )^β }<br><br>
+        t : 時間（寿命・故障時間）<br>
+        β : 形状パラメータ（故障の種類を決定）<br>
+        η : 尺度パラメータ（特性寿命、時間単位）</p>
+      </div>
+
+      <p>ηが大きいほど製品が長寿命であることを示します。たとえばη=1000時間であれば、1000時間経過時点で全体の約36.8%がまだ生存（未故障）していることを意味します。</p>
+      <p>βとηをデータから推定することで、「10%の製品が故障するまでの時間（B10寿命）」や「保証期間内の故障率」を定量的に予測でき、製品保証年数の設定や予防交換のタイミング決定に活用されます。</p>
+    </section>
+
+    <section>
+      <h2>ワイブル確率紙による故障解析の手順</h2>
+      <p>実際の故障データからワイブル分布のパラメータを推定する代表的な方法が「ワイブル確率紙（Weibull probability plot）」を用いた方法です。データを直線化することでパラメータを視覚的に推定できます。</p>
+
+      <div class="highlight-box">
+        <p>ワイブル確率紙では、横軸にlog(t)、縦軸にlog(-log(1-F(t)))を取ることでデータを直線に変換します。直線の傾きがβ、特定の点からηを読み取ります。</p>
+      </div>
+
+      <ol class="step-list">
+        <li>故障時間データを小さい順に並べ替え、累積故障確率 F(t) を求める（メジアンランク法など）</li>
+        <li>各故障時間 t と F(t) をワイブル確率紙にプロット</li>
+        <li>プロットされた点に最小二乗法または最尤推定法で直線を当てはめる</li>
+        <li>直線の傾きから形状パラメータβを読み取る</li>
+        <li>F(t)=63.2%に対応する点からηを読み取り、特性寿命を確認する</li>
+      </ol>
+
+      <p>データ点が直線に乗っているほどワイブル分布でよく近似できていることを示します。複数の直線パターンが見える場合は複数の故障モードが混在していることを示唆します。近年は手作業で行う代わりに、ソフトウェアや計算ツールを使って自動化することが一般的です。</p>
+    </section>
+
+    <section>
+      <h2>ブラウザで動くワイブルプロットシミュレーター</h2>
+      <p>βとηのパラメータを入力するだけで、ワイブル分布の信頼度関数・故障密度関数・ハザード関数のグラフをリアルタイムで描画できるシミュレーターをKeisanlabで公開しています。初学者がβの値を変えながら「どのような故障曲線になるか」を直感的に理解するのに最適です。</p>
+      <p>実際の故障時間データを入力してワイブル確率紙プロットを生成する機能も搭載しており、現場での簡易故障解析にも活用いただけます。ソフトウェアのインストール不要でブラウザだけで動作します。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/weibull-simulator/">ワイブルプロットシミュレーター</a>
+      </div>
+    </section>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>
