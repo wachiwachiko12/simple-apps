@@ -31,6 +31,29 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "作成したマインドマップのデータはどこに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "マップデータはブラウザのlocalStorageに自動保存されます。外部サーバーへの送信は一切行いません。ブラウザのキャッシュ削除で消えるため、大切なデータは「保存(.json)」でファイルに書き出してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "Excel出力はどのような形式で保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "マインドマップの階層構造をExcel（.xlsx形式）に出力します。各ノードがインデントされた形式で書き出されるため、会議の議事録や企画書の整理にも活用できます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ノードは何個まで作成できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "技術的な上限はありませんが、ブラウザのメモリとlocalStorageの容量（通常5MB程度）に依存します。数百ノード程度であれば問題なく動作します。" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -120,6 +143,8 @@
       </table>
       <h2>データの保存について</h2>
       <p>マップデータはブラウザのlocalStorageに自動保存されます。外部サーバーへの送信は一切行いません。ブラウザのキャッシュ削除で消えるため、大切なデータは「保存(.json)」でファイルに書き出してください。</p>
+
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールで作成・保存したデータの消失・破損について、運営者は責任を負いかねます。重要なデータは必ずJSONファイルに書き出してバックアップしてください。</p>
 
       <h2>このツールで収益化を始めませんか</h2>
       <div class="affiliate-block">

@@ -609,3 +609,32 @@ footer a:hover { text-decoration: underline; }
 
   .inv-total-amount { font-size: 1.3rem; }
 }
+
+/* ===== 法令リンク・免責事項 ===== */
+.ref-links {
+  padding-left: 1.25rem;
+  font-size: 0.8375rem;
+  color: #374151;
+  line-height: 1.9;
+  margin-bottom: 0.75rem;
+}
+.ref-links li { margin-bottom: 0.2rem; }
+.ref-links a { color: #1e40af; text-decoration: underline; }
+.ref-links a:hover { color: #1e3a8a; }
+.ref-note {
+  font-size: 0.8125rem;
+  color: #374151;
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+.disclaimer-note {
+  font-size: 0.8rem;
+  color: #6b7280;
+  background: #f8f9fa;
+  border-left: 3px solid #d1d5db;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.75rem;
+}
+.disclaimer-note strong { color: #374151; }

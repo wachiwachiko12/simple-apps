@@ -36,6 +36,29 @@
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "データはどこに保存されますか？クラウドに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "入力したデータはすべてお使いのブラウザのlocalStorageに保存されます。外部サーバーへの送信は一切行いません。ブラウザのデータをクリアするとデータが削除されるため、定期的にCSVエクスポートでバックアップすることをお勧めします。" }
+      },
+      {
+        "@type": "Question",
+        "name": "スマートフォンでも使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい、スマートフォン・タブレット・PCのすべてで動作します。iOSのSafari、AndroidのChromeでも正常に動作します。" }
+      },
+      {
+        "@type": "Question",
+        "name": "CSVエクスポートしたデータはExcelで開けますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい、エクスポートされるCSVファイルはUTF-8（BOM付き）形式で、Excelで直接開いても文字化けしません。Googleスプレッドシートへのインポートも可能です。" }
+      }
+    ]
+  }
+  </script>
 
   <!-- Google AdSense (placeholder) -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
@@ -186,6 +209,8 @@
         外部サーバーへの送信・クラウド同期は一切行いません。ブラウザのデータをクリアするとデータが削除されますので、
         定期的にCSVエクスポートでバックアップされることをおすすめします。
       </p>
+
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールはあくまで家計管理の補助ツールです。税務申告・確定申告・金融商品の購入判断には、税理士・ファイナンシャルプランナー等の専門家にご相談ください。</p>
 
       <h2>家計管理をさらに本格的に</h2>
       <div class="affiliate-block">

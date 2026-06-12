@@ -1,0 +1,21 @@
+﻿{
+  "version": 1,
+  "nextId": 3,
+  "rootId": "n1",
+  "nodes": {
+    "n1": {
+      "id": "n1",
+      "text": "Imported Root",
+      "parentId": null,
+      "children": ["n2"],
+      "color": "#ffffff"
+    },
+    "n2": {
+      "id": "n2",
+      "text": "Imported Child",
+      "parentId": "n1",
+      "children": [],
+      "color": "#ffe8a3"
+    }
+  }
+}
