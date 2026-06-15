@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="医療費控除で税金がいくら戻るか計算方法を解説。対象になる費用・ならない費用の見分け方から、セルフメディケーション税制との比較まで徹底解説。">
+  <title>医療費控除の申告方法と対象費用完全ガイド：還付金はいくらになる？｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/articles/medical-deduction-guide.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="医療費控除の申告方法と対象費用完全ガイド：還付金はいくらになる？">
+  <meta property="og:description" content="医療費控除で税金がいくら戻るか計算方法を解説。対象になる費用・ならない費用の見分け方から、セルフメディケーション税制との比較まで徹底解説。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.jp/articles/medical-deduction-guide.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "医療費控除の申告方法と対象費用完全ガイド：還付金はいくらになる？",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Topbar ===== */
+    .topbar {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+    }
+    .topbar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .topbar nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: white; }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ===== Ad unit ===== */
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Article ===== */
+    article {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) {
+      article { padding: 2.5rem 2rem; }
+    }
+
+    .article-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section {
+      margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.875rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.85;
+      color: #374151;
+      margin-bottom: 0.875rem;
+      word-break: break-word;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 0.75rem 0 0.875rem 1.25rem;
+      color: #374151;
+      font-size: 0.9375rem;
+      line-height: 1.85;
+    }
+    ul li { margin-bottom: 0.25rem; }
+
+    /* ===== Comparison table ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 1.25rem 0;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .compare-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .compare-table tr:nth-child(even) td { background: #f8f9fb; }
+
+    /* ===== Highlight box ===== */
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .highlight-box p {
+      color: #1e3a6e;
+      margin-bottom: 0;
+    }
+
+    /* ===== Internal link ===== */
+    .internal-link-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .internal-link-box .link-label {
+      font-size: 0.8125rem;
+      color: #16a34a;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .internal-link-box a {
+      color: #15803d;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: opacity 0.15s;
+    }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    /* ===== Disclaimer ===== */
+    .disclaimer {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-top: 2rem;
+      font-size: 0.8125rem;
+      color: #713f12;
+      line-height: 1.7;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #1a2f4e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 2;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    /* ===== Back nav ===== */
+    .article-nav {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: opacity 0.15s;
+    }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav>
+      <a href="/">← ツール一覧</a>
+      <a href="/articles/">記事一覧</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">税金・節税</span>
+
+    <h1>医療費控除の申告方法と対象費用完全ガイド：還付金はいくらになる？</h1>
+
+    <p class="article-meta">公開日: 2026年6月15日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>医療費控除とは</h2>
+      <p>医療費控除とは、1年間に自分や家族のために支払った医療費が一定額を超えた場合に、所得から控除できる制度です（所得税法第73条）。年間医療費の合計が10万円（または総所得金額の5%、どちらか少ない方）を超えた部分が控除の対象となります。</p>
+      <p>会社員の場合、医療費控除は年末調整では申告できません。翌年の2月16日から3月15日の確定申告期間中に、自分で税務署へ申告する必要があります。一方、還付申告（税金が戻ってくる申告）の場合は1月1日から5年間申告可能です。過去に申告し忘れた方も遡って申告できます。</p>
+      <div class="highlight-box">
+        <p>医療費控除は年末調整では受けられません。会社員でも確定申告（還付申告）が必要です。申告期限から5年以内なら遡って申請できます。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>還付金の計算方法</h2>
+      <p>医療費控除による還付金は以下の式で計算できます。</p>
+      <p>まず控除額を算出します：「医療費の合計額 − 保険金等で補填される金額 − 10万円（または総所得の5%）」。この控除額に所得税率をかけた金額が還付される税額の目安です。</p>
+      <p>たとえば、年間医療費の合計が25万円、保険金補填が5万円の場合、控除額は「25万円 − 5万円 − 10万円 ＝ 10万円」です。所得税率が10%であれば「10万円 × 10% ＝ 1万円」の所得税が還付されます。さらに住民税も医療費控除の申告後に連動して減額されるため、実際の節税効果はさらに大きくなります。</p>
+    </section>
+
+    <section>
+      <h2>対象になる医療費一覧</h2>
+      <p>医療費控除の対象になる主な費用は以下の通りです。</p>
+      <ul>
+        <li>病院・クリニックでの診療費・治療費</li>
+        <li>処方薬・市販の治療薬（風邪薬・痛み止め等）の購入費</li>
+        <li>通院のための交通費（電車・バス・タクシー）※自家用車のガソリン代は原則対象外</li>
+        <li>入院費（食事代を含む）</li>
+        <li>出産費用（入院・分娩費用）、出産育児一時金で補填された額は除く</li>
+        <li>歯の治療費（インプラントも一定条件下で対象）</li>
+        <li>介護サービス費（一定の条件あり）</li>
+        <li>視力矯正手術（レーシック等）の費用</li>
+      </ul>
+      <p>家族（生計を一にする配偶者・子ども・親等）の医療費も合算できます。家族全員分の領収書を1か所にまとめて管理しておくと申告がスムーズです。</p>
+    </section>
+
+    <section>
+      <h2>対象にならない費用</h2>
+      <p>医療費控除の対象にならない費用も明確に理解しておくことが大切です。</p>
+      <ul>
+        <li>健康診断・人間ドック（病気が発見された場合の治療費は対象）</li>
+        <li>美容整形・美容目的の施術</li>
+        <li>予防接種（インフルエンザ等）</li>
+        <li>栄養補助食品・サプリメント</li>
+        <li>自家用車での通院ガソリン代・駐車場代</li>
+        <li>入院中の自費差額ベッド代（治療上必要でない場合）</li>
+      </ul>
+      <p>健康診断については「病気が見つかった場合」は対象になる点が重要です。健診で異常が見つかり、引き続き精密検査や治療を受けた場合は、健診費用も含めて控除対象となります。</p>
+    </section>
+
+    <div class="ad-unit" aria-label="広告">
+      <!-- AdSense広告ユニット（審査承認後に挿入） -->
+    </div>
+
+    <section>
+      <h2>セルフメディケーション税制との比較</h2>
+      <p>2017年から始まった「セルフメディケーション税制」は、特定の市販薬（スイッチOTC医薬品）の購入費が年間1万2,000円を超えた場合に、超えた部分（最大8万8,000円まで）を所得控除できる制度です。</p>
+      <p>通常の医療費控除とセルフメディケーション税制は、どちらか一方しか選べません。年間の病院受診が少なく、市販薬を多く使う方はセルフメディケーション税制が有利になる場合があります。逆に、入院や大きな治療があった年は通常の医療費控除の方が控除額が大きくなります。</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>医療費控除</th>
+            <th>セルフメディケーション税制</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>控除開始の閾値</td>
+            <td>10万円超（または所得の5%）</td>
+            <td>1万2,000円超</td>
+          </tr>
+          <tr>
+            <td>控除上限</td>
+            <td>200万円</td>
+            <td>8万8,000円</td>
+          </tr>
+          <tr>
+            <td>対象</td>
+            <td>病院・薬代・交通費等</td>
+            <td>特定の市販薬のみ</td>
+          </tr>
+          <tr>
+            <td>健診等の要件</td>
+            <td>なし</td>
+            <td>健診等の受診が必要</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>確定申告の手続き手順</h2>
+      <p>医療費控除を受けるには、確定申告（還付申告）が必要です。手順は以下の通りです。</p>
+      <p>1年間の医療費の領収書を集め、「医療費控除の明細書」に記入します（2017年以降は領収書の添付は不要ですが、5年間自宅で保管義務あり）。国税庁の確定申告書等作成コーナーで申告書を作成します。マイナンバーカードを利用してe-Taxで電子送信するか、書類を印刷して税務署に提出します。</p>
+      <p>源泉徴収票（会社員の場合）と医療費の明細書が主な必要書類です。還付金は申告から1〜2か月程度で指定口座に振り込まれます。医療費控除は年末調整では対応できないため、特に初めての方は早めに準備を始めることをお勧めします。</p>
+    </section>
+
+    <section>
+      <h2>医療費控除の還付金を事前に確認する</h2>
+      <p>医療費が多くかかった年は、確定申告前に還付金の目安を計算しておくことで、申告のモチベーションが上がります。Keisanlabでは、医療費合計・保険補填額・所得を入力するだけで還付金の概算を計算できるツールを提供しています。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/medical-deduction/">医療費控除還付金計算ツール</a>
+      </div>
+    </section>
+
+    <p style="font-size:0.8125rem;color:#6b7280;margin-top:1rem;">参照法令：所得税法第73条 / 国税庁「医療費を支払ったとき（医療費控除）」</p>
+
+    <div class="disclaimer">
+      免責事項：本記事は情報提供を目的としており、税務・法律上のアドバイスではありません。具体的な手続きについては専門家にご相談ください。
+    </div>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>
