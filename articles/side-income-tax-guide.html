@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="副業収入が20万円を超えたら確定申告が必要？20万円ルールの正しい理解と、青色申告・経費計上による節税方法をわかりやすく解説します。">
+  <title>副業の確定申告ガイド：20万円ルールと節税ポイントを徹底解説｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/articles/side-income-tax-guide.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="副業の確定申告ガイド：20万円ルールと節税ポイントを徹底解説">
+  <meta property="og:description" content="副業収入が20万円を超えたら確定申告が必要？20万円ルールの正しい理解と、青色申告・経費計上による節税方法をわかりやすく解説します。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.jp/articles/side-income-tax-guide.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "副業の確定申告ガイド：20万円ルールと節税ポイントを徹底解説",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Topbar ===== */
+    .topbar {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+    }
+    .topbar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .topbar nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: white; }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ===== Ad unit ===== */
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Article ===== */
+    article {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) {
+      article { padding: 2.5rem 2rem; }
+    }
+
+    .article-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section {
+      margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.875rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.85;
+      color: #374151;
+      margin-bottom: 0.875rem;
+      word-break: break-word;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    /* ===== Comparison table ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 1.25rem 0;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .compare-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .compare-table tr:nth-child(even) td { background: #f8f9fb; }
+
+    /* ===== Highlight box ===== */
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .highlight-box p {
+      color: #1e3a6e;
+      margin-bottom: 0;
+    }
+
+    /* ===== Internal link ===== */
+    .internal-link-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .internal-link-box .link-label {
+      font-size: 0.8125rem;
+      color: #16a34a;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .internal-link-box a {
+      color: #15803d;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: opacity 0.15s;
+    }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    /* ===== Disclaimer ===== */
+    .disclaimer {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-top: 2rem;
+      font-size: 0.8125rem;
+      color: #713f12;
+      line-height: 1.7;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #1a2f4e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 2;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    /* ===== Back nav ===== */
+    .article-nav {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: opacity 0.15s;
+    }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav>
+      <a href="/">← ツール一覧</a>
+      <a href="/articles/">記事一覧</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">税金・確定申告</span>
+
+    <h1>副業の確定申告ガイド：20万円ルールと節税ポイントを徹底解説</h1>
+
+    <p class="article-meta">公開日: 2026年6月15日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>副業収入と20万円ルールとは</h2>
+      <p>給与所得者が副業で収入を得た場合、一定の条件を超えると確定申告が必要になります。よく聞かれる「20万円ルール」とは、所得税法第121条に定められた給与所得者の確定申告義務に関するルールです。具体的には、給与以外の所得（副業収入など）の合計が年間20万円を超えた場合、確定申告が必要になります。</p>
+      <p>ここで注意すべき重要なポイントがあります。この20万円は「収入」ではなく「所得」が基準です。所得とは「収入から必要経費を差し引いた金額」を指します。たとえば副業の収入が30万円あっても、経費として15万円かかっていれば所得は15万円となり、20万円以下のため確定申告は不要となります。この違いを正確に理解することが、副業税務の第一歩です。</p>
+      <div class="highlight-box">
+        <p>20万円ルールの基準は「副業の収入」ではなく「収入から経費を引いた所得」です。経費を正確に計上することが節税の鍵になります。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>確定申告が必要なケース・不要なケース</h2>
+      <p>副業の所得が20万円以下であれば、所得税の確定申告は不要です。ただし、これには重要な注意点があります。所得税の申告が不要でも、住民税の申告は別途必要になります。住民税は都道府県・市区町村に申告する義務があり、所得税の20万円ルールは住民税には適用されません。</p>
+      <p>確定申告が必要になる主なケースを整理すると、副業の所得が年間20万円を超えた場合、2か所以上から給与を受け取っており一定の条件に当てはまる場合、医療費控除など他の控除を受けたい場合などが挙げられます。一方、副業所得が20万円以下の方は住民税の申告のみで済みますが、忘れずに市区町村の窓口または確定申告で対応することが必要です。</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>状況</th>
+            <th>所得税の確定申告</th>
+            <th>住民税の申告</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>副業所得が20万円以下</td>
+            <td>不要</td>
+            <td>必要（市区町村へ）</td>
+          </tr>
+          <tr>
+            <td>副業所得が20万円超</td>
+            <td>必要</td>
+            <td>確定申告で兼ねる</td>
+          </tr>
+          <tr>
+            <td>医療費控除等を受けたい</td>
+            <td>必要</td>
+            <td>確定申告で兼ねる</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>副業の種類別：所得区分の違い</h2>
+      <p>副業の所得区分は、その内容によって異なります。所得区分によって課税の仕組みや経費の取り扱いが変わるため、自分の副業がどの区分に該当するかを把握することが重要です。</p>
+      <p>クラウドソーシングやフリーランスとして継続的に業務委託を受けている場合は「事業所得」または「雑所得」に分類されます。事業として継続・反復・独立して行っている場合は事業所得、そうでない場合は雑所得となります。事業所得は赤字の場合に給与所得と損益通算できるメリットがありますが、近年の税制改正（2022年以降）で雑所得との区分が厳格化されています。</p>
+      <p>一方、アルバイトやパートタイム勤務は「給与所得」に分類されます。給与所得の場合、経費として認められるのは給与所得控除のみで、実費経費の計上はできません。このため、業務委託のフリーランス副業とアルバイトでは、節税の余地が大きく異なります。</p>
+    </section>
+
+    <section>
+      <h2>節税のポイント：経費計上できるもの</h2>
+      <p>副業の所得を減らす最も基本的な節税手段が経費計上です。副業に直接関連する支出は経費として認められます。主な経費の例としては、インターネット回線料や携帯電話代（副業利用分）、パソコン・タブレット等の機材費、副業に関連する書籍・セミナー受講料、取引先への交通費・通信費などが挙げられます。</p>
+      <p>ただし、自宅での作業や通信費など、プライベートと副業が混在する支出については「按分」が必要です。たとえば月額5,000円のインターネット料金のうち副業利用が50%なら、経費として計上できるのは2,500円です。按分の根拠（作業時間の割合など）を記録しておくことが重要です。</p>
+      <div class="highlight-box">
+        <p>経費計上のポイントは「副業との関連性」と「按分の根拠」を明確にすること。領収書・レシートは必ず保存し、帳簿に記録しましょう。</p>
+      </div>
+    </section>
+
+    <div class="ad-unit" aria-label="広告">
+      <!-- AdSense広告ユニット（審査承認後に挿入） -->
+    </div>
+
+    <section>
+      <h2>青色申告vs白色申告</h2>
+      <p>副業で事業所得として申告する場合、白色申告と青色申告のどちらかを選択できます。青色申告を選択するには、事前に税務署への「青色申告承認申請書」の提出が必要ですが、その分だけ大きな節税効果が得られます。</p>
+      <p>青色申告の最大のメリットは「青色申告特別控除」です。複式簿記での記帳とe-Taxでの電子申告を行えば最大65万円の控除が受けられます。所得税率が20%の場合、65万円の控除は最大13万円の節税になります。また、副業で赤字が出た場合に翌年以降3年間繰り越せる「純損失の繰越控除」も利用可能です。</p>
+      <p>白色申告は事前申請が不要で帳簿管理も簡易ですが、特別控除がなく赤字繰越もできません。副業で一定以上の収入が見込める場合は、青色申告に切り替えることを強くお勧めします。</p>
+    </section>
+
+    <section>
+      <h2>確定申告の流れ（e-Tax）</h2>
+      <p>確定申告はe-Taxを利用することで自宅から完結できます。マイナンバーカードとICカードリーダー（またはスマートフォン）があれば、国税庁の確定申告書等作成コーナーから申告書を作成・送信できます。</p>
+      <p>主な手順は、1年間の収入・経費を集計して所得を算出する、確定申告書等作成コーナーで申告書を作成する、e-Taxで電子送信する（または印刷して税務署へ持参・郵送する）、という流れです。申告期限は通常翌年の3月15日で、還付申告は1月1日から行えます。帳簿や領収書は5〜7年間保存する義務があります。</p>
+    </section>
+
+    <section>
+      <h2>副業・兼業の手取りを事前に確認する</h2>
+      <p>副業収入がある場合、税金や社会保険料の負担がどう変わるかを事前にシミュレーションしておくと安心です。Keisanlabでは、本業の給与と副業収入を入力するだけで手取り額の目安を計算できる無料ツールを提供しています。</p>
+      <p>確定申告の前に、おおよその税負担を把握しておくことで、節税策を立てたり、必要な経費を再確認したりする際に役立ちます。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/side-income-simulator/">副業・兼業手取りシミュレーター</a>
+      </div>
+    </section>
+
+    <p style="font-size:0.8125rem;color:#6b7280;margin-top:1rem;">参照法令：所得税法第121条 / 国税庁「副業収入がある方へ」</p>
+
+    <div class="disclaimer">
+      免責事項：本記事は情報提供を目的としており、税務・法律上のアドバイスではありません。具体的な手続きについては専門家にご相談ください。
+    </div>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>

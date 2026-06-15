@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="新NISAで積み立てた資産を老後にどう取り崩すか。4%ルールの考え方と実際の運用利回り別シミュレーション、取崩し戦略の考え方を解説します。">
+  <title>新NISAの取崩し方：老後資産をいつまで持たせるか計算する方法｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/articles/nisa-withdrawal-guide.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="新NISAの取崩し方：老後資産をいつまで持たせるか計算する方法">
+  <meta property="og:description" content="新NISAで積み立てた資産を老後にどう取り崩すか。4%ルールの考え方と実際の運用利回り別シミュレーション、取崩し戦略の考え方を解説します。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.jp/articles/nisa-withdrawal-guide.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "新NISAの取崩し方：老後資産をいつまで持たせるか計算する方法",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Topbar ===== */
+    .topbar {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+    }
+    .topbar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .topbar nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: white; }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ===== Ad unit ===== */
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Article ===== */
+    article {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) {
+      article { padding: 2.5rem 2rem; }
+    }
+
+    .article-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section {
+      margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.875rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.85;
+      color: #374151;
+      margin-bottom: 0.875rem;
+      word-break: break-word;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    /* ===== Comparison table ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 1.25rem 0;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .compare-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .compare-table tr:nth-child(even) td { background: #f8f9fb; }
+
+    /* ===== Highlight box ===== */
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .highlight-box p {
+      color: #1e3a6e;
+      margin-bottom: 0;
+    }
+
+    /* ===== Internal link ===== */
+    .internal-link-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .internal-link-box .link-label {
+      font-size: 0.8125rem;
+      color: #16a34a;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .internal-link-box a {
+      color: #15803d;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: opacity 0.15s;
+    }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    /* ===== Disclaimer ===== */
+    .disclaimer {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-top: 2rem;
+      font-size: 0.8125rem;
+      color: #713f12;
+      line-height: 1.7;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #1a2f4e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 2;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    /* ===== Back nav ===== */
+    .article-nav {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: opacity 0.15s;
+    }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav>
+      <a href="/">← ツール一覧</a>
+      <a href="/articles/">記事一覧</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">資産運用・NISA</span>
+
+    <h1>新NISAの取崩し方：老後資産をいつまで持たせるか計算する方法</h1>
+
+    <p class="article-meta">公開日: 2026年6月15日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>新NISAの出口戦略とは</h2>
+      <p>2024年から始まった新しいNISA制度は、年間360万円まで非課税で投資でき、非課税期間も無期限となりました。多くの方がつみたて投資枠を活用して老後資金を積み立てていますが、積立フェーズと同様に重要なのが「どうやって取り崩すか」という出口戦略です。</p>
+      <p>老後に毎月の生活費を賄うために資産を引き出す際、取崩しのペースを間違えると資産が想定より早く枯渇してしまいます。逆に慎重すぎると必要な生活資金が足りなくなる恐れもあります。自分の状況に合った取崩し計画を事前に設計することが、老後の安心につながります。</p>
+      <div class="highlight-box">
+        <p>新NISAは非課税期間が無期限のため、急いで売却する必要はありません。運用しながら必要な分だけ取り崩す「出しながら増やす」戦略が基本です。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>4%ルールとは何か</h2>
+      <p>「4%ルール」とは、1994年に米国のビル・ベンゲン氏が提唱した資産取崩しの指針です。資産残高の4%を毎年取り崩し続ければ、30年間資産が枯渇しない（歴史的な株式・債券の運用実績に基づく）という考え方です。FIRE（経済的自立・早期退職）ムーブメントの広がりとともに世界的に有名になりました。</p>
+      <p>たとえば老後資産が3,000万円あれば、年間120万円（月10万円）を取り崩しても30年間は資産が持つ、という計算になります。言い換えれば「年間生活費 ÷ 4% ＝ 必要な老後資産」という目標額の算出にも使われます。月20万円の生活費であれば6,000万円が目安です。</p>
+    </section>
+
+    <section>
+      <h2>日本人に4%ルールをそのまま当てはめるリスク</h2>
+      <p>4%ルールは米国の株式・債券データに基づくもので、日本の投資環境にそのまま当てはめることには注意が必要です。</p>
+      <p>まず、日本は世界有数の長寿国です。平均寿命が男性81歳・女性87歳の現在、65歳から取り崩しを始めても20〜25年以上かかる場合があり、30年を超えるケースも珍しくありません。4%ルールが想定する「30年」は十分でない可能性があります。</p>
+      <p>また、円安や物価上昇（インフレ）も重要なリスクです。定額で取り崩しても物価が上昇すれば実質的な生活水準は低下します。さらに、日本株を中心に運用する場合は米国株中心の運用より期待リターンが低い可能性もあります。これらのリスクを考慮すると、日本では3〜3.5%程度の取崩し率を基準にするか、公的年金との組み合わせを前提にした計画が現実的です。</p>
+    </section>
+
+    <div class="ad-unit" aria-label="広告">
+      <!-- AdSense広告ユニット（審査承認後に挿入） -->
+    </div>
+
+    <section>
+      <h2>取崩し金額の計算方法</h2>
+      <p>資産の取崩し方法は主に「定率取崩し」と「定額取崩し」の2種類があります。それぞれ特徴が異なります。</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>比較項目</th>
+            <th>定率取崩し（例：年4%）</th>
+            <th>定額取崩し（例：月10万円）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>取崩し額</td>
+            <td>残高に連動して変動する</td>
+            <td>毎月一定額</td>
+          </tr>
+          <tr>
+            <td>資産枯渇リスク</td>
+            <td>理論上は枯渇しにくい</td>
+            <td>市場低迷時に枯渇リスク増</td>
+          </tr>
+          <tr>
+            <td>生活の安定性</td>
+            <td>受取額が変動し不安定</td>
+            <td>月々の受取額が安定</td>
+          </tr>
+          <tr>
+            <td>向いている人</td>
+            <td>多少の変動に耐えられる人</td>
+            <td>生活費が固定の人</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>定率取崩しは、市場が下落したときに自動的に取崩し額も減るため、資産の枯渇リスクを抑える効果があります。一方で生活費として毎月一定額が必要な場合は定額取崩しの方が管理しやすいです。多くのFP（ファイナンシャルプランナー）は、公的年金で最低限の生活費をカバーし、NISAからの取崩しは定率か半定率にすることを勧めています。</p>
+    </section>
+
+    <section>
+      <h2>運用しながら取り崩す戦略</h2>
+      <p>新NISAの最大の特徴は「非課税期間が無期限」であることです。これは、取崩しを始めた後も売却しなかった分は引き続き非課税で運用し続けられることを意味します。急いで全額を引き出す必要はなく、必要な分だけ部分売却して残りは運用継続するという「運用しながら取り崩す」戦略が合理的です。</p>
+      <p>たとえば3,000万円の資産のうち、今年必要な120万円分（4%）だけを売却し、残りの2,880万円は引き続きインデックスファンド等で運用します。翌年も同様に残高の4%程度を売却していくことで、資産を有効活用しながら生活費を確保できます。</p>
+    </section>
+
+    <section>
+      <h2>何歳から取り崩すか</h2>
+      <p>新NISAの取崩し開始タイミングは、公的年金の受給開始年齢と密接に関連します。公的年金を65歳から受給する場合、年金収入で生活費の大部分をカバーできれば、NISAの取崩しは少額で済みます。</p>
+      <p>一方、60歳で早期退職し公的年金受給まで5年間のつなぎとしてNISAを活用する場合は、取崩し額が大きくなります。この5年間は特にNISA資産の減少が加速しやすいため、60〜65歳の生活費をどう賄うかは重点的に計画する必要があります。</p>
+      <p>また、公的年金の繰下げ受給（最大75歳まで）を選択すると、年金額が増える（75歳受給で最大84%増）ため、その分NISAの取崩しを早期に行い年金繰下げ期間の生活費に充てるという戦略も有効です。個々の健康状態・家族構成・生活費水準に合わせて最適な組み合わせを考えましょう。</p>
+    </section>
+
+    <section>
+      <h2>新NISAの取崩しシミュレーションを試してみる</h2>
+      <p>老後の取崩し計画は「資産額・毎月の取崩し額・運用利回り」の3つの変数で大きく変わります。Keisanlabの新NISA取崩しシミュレーターでは、これらの条件を入力することで資産が何年持つか・取崩し可能な月額はいくらかを即座に計算できます。</p>
+      <p>4%ルールの安全性を自分のケースで確認したい方や、公的年金との組み合わせで取崩し計画を立てたい方は、ぜひ活用してみてください。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/nisa-withdrawal/">新NISA取崩しシミュレーター</a>
+      </div>
+    </section>
+
+    <p style="font-size:0.8125rem;color:#6b7280;margin-top:1rem;">参照：金融庁「NISA特設ウェブサイト」</p>
+
+    <div class="disclaimer">
+      免責事項：本記事は情報提供を目的としており、税務・法律上のアドバイスではありません。具体的な手続きについては専門家にご相談ください。
+    </div>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>

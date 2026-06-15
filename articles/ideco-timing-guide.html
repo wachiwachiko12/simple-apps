@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="iDeCoの受取方法（一時金・年金）と退職金の受取タイミングによって税負担は大きく変わります。2024年税制改正後の最適な受取戦略を解説します。">
+  <title>iDeCo受取タイミングで税金が変わる：退職金との最適な組み合わせ方｜Keisanlab</title>
+  <link rel="canonical" href="https://keisanlab.jp/articles/ideco-timing-guide.html">
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- OGP -->
+  <meta property="og:title" content="iDeCo受取タイミングで税金が変わる：退職金との最適な組み合わせ方">
+  <meta property="og:description" content="iDeCoの受取方法（一時金・年金）と退職金の受取タイミングによって税負担は大きく変わります。2024年税制改正後の最適な受取戦略を解説します。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://keisanlab.jp/articles/ideco-timing-guide.html">
+  <!-- Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "iDeCo受取タイミングで税金が変わる：退職金との最適な組み合わせ方",
+    "author": {"@type": "Person", "name": "Rio"},
+    "datePublished": "2026-06-15",
+    "dateModified": "2026-06-15",
+    "publisher": {"@type": "Organization", "name": "Keisanlab"}
+  }
+  </script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e4080;
+      --primary-light: #e8f0fe;
+      --bg: #f9f7f4;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-hover: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Topbar ===== */
+    .topbar {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+    }
+    .topbar-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .site-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+    }
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .topbar nav a {
+      color: rgba(255,255,255,0.88);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .topbar nav a:hover { color: white; }
+
+    /* ===== Main ===== */
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ===== Ad unit ===== */
+    .ad-unit {
+      min-height: 90px;
+      background: #f0f0ee;
+      border: 1px dashed #d1d5db;
+      border-radius: var(--radius);
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 0.75rem;
+    }
+
+    /* ===== Article ===== */
+    article {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      padding: 2rem 1.5rem;
+    }
+    @media (min-width: 640px) {
+      article { padding: 2.5rem 2rem; }
+    }
+
+    .article-category {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.625rem;
+      border-radius: 100px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(1.4rem, 4vw, 1.875rem);
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .article-meta {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section {
+      margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.875rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid var(--primary);
+    }
+
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.85;
+      color: #374151;
+      margin-bottom: 0.875rem;
+      word-break: break-word;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    /* ===== Comparison table ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 1.25rem 0;
+    }
+    .compare-table th, .compare-table td {
+      padding: 0.625rem 0.875rem;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+    .compare-table th {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+    }
+    .compare-table tr:nth-child(even) td { background: #f8f9fb; }
+
+    /* ===== Highlight box ===== */
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.25rem 0;
+    }
+    .highlight-box p {
+      color: #1e3a6e;
+      margin-bottom: 0;
+    }
+
+    /* ===== Internal link ===== */
+    .internal-link-box {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+    .internal-link-box .link-label {
+      font-size: 0.8125rem;
+      color: #16a34a;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .internal-link-box a {
+      color: #15803d;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: opacity 0.15s;
+    }
+    .internal-link-box a:hover { opacity: 0.75; }
+
+    /* ===== Disclaimer ===== */
+    .disclaimer {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      margin-top: 2rem;
+      font-size: 0.8125rem;
+      color: #713f12;
+      line-height: 1.7;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #1a2f4e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 2rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 2;
+      margin-top: 3rem;
+    }
+    footer a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    footer a:hover { color: white; }
+    footer p + p { margin-top: 0.25rem; }
+
+    /* ===== Back nav ===== */
+    .article-nav {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      min-height: 44px;
+      padding: 0.5rem 0;
+      transition: opacity 0.15s;
+    }
+    .nav-link:hover { opacity: 0.75; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="/" class="site-name">Keisanlab</a>
+    <nav>
+      <a href="/">← ツール一覧</a>
+      <a href="/articles/">記事一覧</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+
+  <article>
+    <span class="article-category">資産運用・老後</span>
+
+    <h1>iDeCo受取タイミングで税金が変わる：退職金との最適な組み合わせ方</h1>
+
+    <p class="article-meta">公開日: 2026年6月15日 &nbsp;|&nbsp; 著者: Rio</p>
+
+    <section>
+      <h2>iDeCoの受取方法は3種類</h2>
+      <p>iDeCo（個人型確定拠出年金）は、60歳以降になると積み立てた資産を受け取れるようになります。受取方法は大きく3種類あります。「一時金（一括受取）」「年金（分割受取）」「一時金と年金の組み合わせ」です。</p>
+      <p>一時金として受け取ると「退職所得」として課税され、退職所得控除が適用されます。年金として受け取ると「雑所得」として課税され、公的年金等控除が適用されます。どちらの控除が有利かは、退職金の額・iDeCoの残高・年齢・他の所得の状況によって異なります。受取方法の選択は一度決めると変更が難しいため、慎重に検討することが重要です。</p>
+      <div class="highlight-box">
+        <p>一時金受取→退職所得控除、年金受取→公的年金等控除が適用されます。退職金との組み合わせ次第で、税負担が数十万円単位で変わることがあります。</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>退職所得控除の仕組み</h2>
+      <p>iDeCoを一時金として受け取る場合、退職所得控除が適用されます。退職所得控除額は加入年数（勤続年数）によって計算され、加入20年以下は「40万円 × 年数」（最低80万円）、加入20年超は「800万円 + 70万円 ×（年数 − 20年）」となります。</p>
+      <p>たとえば、勤続30年（iDeCo加入年数も30年と仮定）の場合の退職所得控除額は「800万円 + 70万円 × 10年 ＝ 1,500万円」となります。この控除額以内であれば、退職金とiDeCoの一時金を合わせても税金はゼロになります。控除額を超えた部分は2分の1に圧縮されて課税されるため、非常に有利な税制です。</p>
+    </section>
+
+    <section>
+      <h2>2024年税制改正のポイント</h2>
+      <p>2024年（令和6年）の税制改正で、iDeCoと退職金の受取に関するルールが大きく変わりました。従来は「退職金を受け取った年の翌年以降5年間はiDeCoの一時金受取に退職所得控除を適用できない」という5年ルール（および14年ルール）が存在しましたが、この制限が緩和されました。</p>
+      <p>具体的には、退職金とiDeCoの一時金を同一年に受け取る場合でも、それぞれの加入期間が重複しない部分は控除額を合算できる仕組みに改正されました。この改正により、定年退職時に退職金とiDeCoを同時受取する戦略が以前より有利になっています。ただし細則が複雑なため、具体的なシミュレーションは税理士や年金専門家への相談をお勧めします。</p>
+    </section>
+
+    <div class="ad-unit" aria-label="広告">
+      <!-- AdSense広告ユニット（審査承認後に挿入） -->
+    </div>
+
+    <section>
+      <h2>4パターンの受取比較</h2>
+      <p>退職金3,000万円・iDeCo残高1,000万円（加入30年）を例に、受取タイミング別の課税状況を概算で比較してみましょう。</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>受取パターン</th>
+            <th>税負担の傾向</th>
+            <th>特徴</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>退職金とiDeCo同年受取</td>
+            <td>2024年改正後は有利な場合も</td>
+            <td>加入期間の重複に注意</td>
+          </tr>
+          <tr>
+            <td>退職金受取の2年後にiDeCo</td>
+            <td>控除枠の分散で有利</td>
+            <td>iDeCo残高は運用継続</td>
+          </tr>
+          <tr>
+            <td>退職金受取の5年後にiDeCo</td>
+            <td>旧ルール下では最も有利</td>
+            <td>改正後は同年受取との差縮小</td>
+          </tr>
+          <tr>
+            <td>iDeCoを年金型で受取</td>
+            <td>公的年金等控除を活用</td>
+            <td>長寿の方に有利、所得合算に注意</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>年金型受取のメリット・デメリット</h2>
+      <p>iDeCoを年金として分割受取する場合は、公的年金等控除が適用されます。65歳以上で公的年金等の収入が110万円以下であれば課税されない仕組みがあり、iDeCoの年金受取額が少額の場合は有利に働くことがあります。</p>
+      <p>一方で、年金受取のデメリットとして「受取中も金融機関に口座維持手数料がかかる」「長寿でないと元が取れない」「他の年金収入と合算されると税率が上がる可能性がある」などの点があります。また、年金型で受取中に死亡した場合、残高は遺族に一時金として支払われますが、相続税の対象となります。</p>
+    </section>
+
+    <section>
+      <h2>iDeCo残高の運用は継続した方がいい理由</h2>
+      <p>iDeCoは60歳から75歳までの間に受取開始を選択できます（2022年4月改正後）。受け取るまでの間も運用資産は非課税で増え続けるため、急いで受け取る必要がなければ、受取開始を遅らせることで複利効果がさらに積み上がります。</p>
+      <p>ただし、75歳を過ぎると強制的に給付が開始されます。また、60〜65歳の間は公的年金が受給前の可能性が高く、生活費のキャッシュフローも考慮する必要があります。iDeCoの受取戦略は、公的年金・退職金・資産全体を俯瞰した上で設計することが大切です。</p>
+    </section>
+
+    <section>
+      <h2>退職金・iDeCoの受取税金を最適化する</h2>
+      <p>退職金とiDeCoの組み合わせを複数パターンでシミュレーションすることで、最も税負担が少ない受取戦略を見つけることができます。Keisanlabでは、退職金額・iDeCo残高・勤続年数・受取タイミングを入力して税負担を比較できるツールを提供しています。</p>
+
+      <div class="internal-link-box">
+        <span class="link-label">関連ツール</span>
+        <a href="/apps/retirement-tax-optimizer/">退職金・iDeCo受取税金最適化ツール</a>
+      </div>
+    </section>
+
+    <p style="font-size:0.8125rem;color:#6b7280;margin-top:1rem;">参照法令：所得税法第30条・第31条 / 2024年税制改正大綱</p>
+
+    <div class="disclaimer">
+      免責事項：本記事は情報提供を目的としており、税務・法律上のアドバイスではありません。具体的な手続きについては専門家にご相談ください。
+    </div>
+
+    <nav class="article-nav">
+      <a href="/articles/" class="nav-link">← コラム一覧へ戻る</a>
+    </nav>
+  </article>
+
+  <div class="ad-unit" aria-label="広告">
+    <!-- AdSense広告ユニット（審査承認後に挿入） -->
+  </div>
+</main>
+
+<footer>
+  <p><a href="/">Keisanlab トップ</a> | <a href="/about.html">運営者情報</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+  <p>© 2025-2026 Keisanlab</p>
+</footer>
+
+</body>
+</html>
