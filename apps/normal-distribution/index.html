@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="平均μと標準偏差σを入力して正規分布の確率を計算。上側・下側・区間確率をリアルタイムグラフで可視化。z値変換にも対応した無料の正規分布計算ツールです。">
+  <title>正規分布 確率計算ツール｜上側・下側・区間確率をグラフで可視化</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/normal-distribution/">
+  <!-- OGP -->
+  <meta property="og:title" content="正規分布 確率計算ツール｜上側・下側・区間確率をグラフで可視化">
+  <meta property="og:description" content="平均μと標準偏差σを入力して正規分布の確率を計算。上側・下側・区間確率をリアルタイムグラフで可視化。z値変換にも対応。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/normal-distribution/">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "正規分布の確率計算とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "正規分布の確率計算とは、平均μと標準偏差σで決まる正規分布において、ある値以下（下側確率）、ある値以上（上側確率）、または2つの値の間（区間確率）に収まる確率を求める計算です。累積分布関数（CDF）を用いて計算します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "z値とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "z値（標準化得点）とは、観測値xを標準正規分布（平均0、標準偏差1）に変換した値です。z = (x - μ) / σ で計算します。z値を使うことで、異なる分布の値を統一した尺度で比較できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "偏差値との関係はどうなっていますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "偏差値はz値を変換したものです。偏差値 = z値 × 10 + 50 の式で計算されます。偏差値50が平均点、偏差値60は平均より標準偏差1つ分上の得点に相当します。このツールでμ=50、σ=10に設定すると偏差値の計算に活用できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "68-95-99.7ルールとは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "68-95-99.7ルール（経験則）とは、正規分布において「μ±σの範囲に約68%」「μ±2σの範囲に約95%」「μ±3σの範囲に約99.7%」のデータが含まれるという法則です。品質管理や統計的仮説検定の基準として広く使われます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "標準偏差σを0以下にすることはできますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "標準偏差σは必ず正の値（0より大きい値）である必要があります。σ=0は全データが同じ値に集中することを意味し、正規分布は定義できません。σに0以下の値を入力するとエラーが表示されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "品質管理ではどのように使いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "製造業の品質管理では、製品の寸法や重量が正規分布に従うと仮定し、規格外れ品の割合を推定します。例えば平均100mm、標準偏差0.5mmの部品で99mm〜101mmの規格範囲内に収まる確率を区間確率で計算できます。6σ管理ではμ±6σ範囲外の不良率が約0.00034%となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "上側確率と片側検定はどう関係しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "統計的仮説検定で「z値が一定以上になる確率（p値）」が上側確率に相当します。例えばz=1.645のときの上側確率は約5%で、これが片側検定の有意水準5%の棄却域の境界値です。両側検定の場合はz=1.960のとき上側確率が2.5%（両側合計5%）となります。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-graph-up"></i></div>
+      <h1>正規分布 確率計算ツール</h1>
+      <p class="header-sub">平均・標準偏差を入力して上側・下側・区間確率をリアルタイム可視化</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー注記 -->
+    <p class="privacy-note">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </p>
+
+    <!-- メインツールカード -->
+    <section class="card tool-card" id="tool">
+
+      <!-- モード切替タブ -->
+      <div class="mode-tabs" role="tablist" aria-label="計算モード">
+        <button class="mode-tab active" id="tab-prob" role="tab" aria-selected="true" aria-controls="panel-prob" type="button">
+          <i class="bi bi-calculator"></i> 確率を求める
+        </button>
+        <button class="mode-tab" id="tab-z" role="tab" aria-selected="false" aria-controls="panel-z" type="button">
+          <i class="bi bi-arrow-left-right"></i> z値から確率
+        </button>
+      </div>
+
+      <!-- パネル: 確率を求める -->
+      <div id="panel-prob" class="mode-panel" role="tabpanel" aria-labelledby="tab-prob">
+
+        <!-- 分布パラメータ -->
+        <div class="param-row">
+          <div class="field">
+            <label class="field-label" for="mean">平均 μ</label>
+            <input type="number" id="mean" class="field-input" value="0" step="any" placeholder="例: 0" aria-label="平均μを入力">
+          </div>
+          <div class="field">
+            <label class="field-label" for="sd">標準偏差 σ</label>
+            <input type="number" id="sd" class="field-input" value="1" step="any" min="0.0001" placeholder="例: 1" aria-label="標準偏差σを入力">
+            <span class="field-hint">σ は必ず正の値</span>
+          </div>
+        </div>
+
+        <!-- 計算タイプ -->
+        <fieldset class="calc-type-group">
+          <legend class="field-label">計算タイプ</legend>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="calc-type" value="lower" checked>
+              <span class="radio-custom"></span>
+              下側確率 P(X ≤ a)
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="calc-type" value="upper">
+              <span class="radio-custom"></span>
+              上側確率 P(X ≥ a)
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="calc-type" value="interval">
+              <span class="radio-custom"></span>
+              区間確率 P(a ≤ X ≤ b)
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- 境界値入力 -->
+        <div class="bound-row" id="bound-row">
+          <div class="field" id="field-a">
+            <label class="field-label" for="x-a">境界値 a</label>
+            <input type="number" id="x-a" class="field-input" value="0" step="any" placeholder="例: 0" aria-label="境界値aを入力">
+          </div>
+          <div class="bound-separator" id="field-separator" hidden>
+            <span class="separator-label">〜</span>
+          </div>
+          <div class="field" id="field-b" hidden>
+            <label class="field-label" for="x-b">境界値 b</label>
+            <input type="number" id="x-b" class="field-input" value="1" step="any" placeholder="例: 1" aria-label="境界値bを入力">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- パネル: z値から確率 -->
+      <div id="panel-z" class="mode-panel" hidden role="tabpanel" aria-labelledby="tab-z">
+        <div class="param-row">
+          <div class="field">
+            <label class="field-label" for="z-input">z値</label>
+            <input type="number" id="z-input" class="field-input" value="1.96" step="any" placeholder="例: 1.96" aria-label="z値を入力">
+            <span class="field-hint">標準正規分布（μ=0, σ=1）のz値</span>
+          </div>
+        </div>
+        <div class="z-presets">
+          <span class="field-label" style="font-size:0.8rem;margin-bottom:0.25rem;display:block">よく使う値</span>
+          <div class="preset-btns">
+            <button class="preset-btn" data-z="1.282" type="button">z=1.282 <small>(90%)</small></button>
+            <button class="preset-btn" data-z="1.645" type="button">z=1.645 <small>(95%)</small></button>
+            <button class="preset-btn" data-z="1.960" type="button">z=1.960 <small>(97.5%)</small></button>
+            <button class="preset-btn" data-z="2.326" type="button">z=2.326 <small>(99%)</small></button>
+            <button class="preset-btn" data-z="2.576" type="button">z=2.576 <small>(99.5%)</small></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 計算ボタン -->
+      <button class="btn-primary" id="calc-btn" type="button">
+        <i class="bi bi-calculator-fill"></i> 計算する
+      </button>
+
+    </section>
+
+    <!-- グラフカード -->
+    <section class="card chart-card" id="chart-section">
+      <h2 class="section-title"><i class="bi bi-graph-up-arrow"></i> 正規分布グラフ</h2>
+      <div class="chart-wrapper">
+        <canvas id="dist-chart" role="img" aria-label="正規分布確率グラフ"></canvas>
+      </div>
+      <div class="sigma-legend">
+        <span class="legend-item sigma-1"><span class="legend-dot"></span>μ±σ (68.3%)</span>
+        <span class="legend-item sigma-2"><span class="legend-dot"></span>μ±2σ (95.4%)</span>
+        <span class="legend-item sigma-3"><span class="legend-dot"></span>μ±3σ (99.7%)</span>
+      </div>
+    </section>
+
+    <!-- 結果カード -->
+    <section class="card result-card" id="result-section">
+      <h2 class="section-title"><i class="bi bi-clipboard-data"></i> 計算結果</h2>
+
+      <!-- エンプティステート -->
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon"><i class="bi bi-bar-chart-steps"></i></div>
+        <p class="empty-title">計算を実行してください</p>
+        <p class="empty-desc">上のフォームに値を入力して「計算する」を押してください</p>
+      </div>
+
+      <!-- 結果表示 -->
+      <div class="result-body" id="result-body" hidden>
+
+        <!-- メイン確率 -->
+        <div class="result-main">
+          <div class="result-value-wrap">
+            <div class="result-label-top" id="result-label-top">下側確率 P(X ≤ a)</div>
+            <div class="result-value" id="result-prob-pct">0.00%</div>
+            <div class="result-value-sub" id="result-prob-dec">0.000000</div>
+          </div>
+        </div>
+
+        <!-- z値・解釈 -->
+        <div class="result-sub-grid">
+          <div class="result-sub-item">
+            <div class="result-sub-label">z値（標準化）</div>
+            <div class="result-sub-value" id="result-z">0.000</div>
+            <div class="result-sub-hint" id="result-z-hint"></div>
+          </div>
+          <div class="result-sub-item">
+            <div class="result-sub-label">補確率</div>
+            <div class="result-sub-value" id="result-complement">100.00%</div>
+            <div class="result-sub-hint" id="result-complement-hint">残りの確率</div>
+          </div>
+        </div>
+
+        <!-- 直感的解釈 -->
+        <div class="interpretation" id="interpretation">
+          <i class="bi bi-lightbulb-fill"></i>
+          <span id="interpretation-text"></span>
+        </div>
+
+        <!-- σルール参照 -->
+        <div class="sigma-rule-table">
+          <h3 class="sigma-rule-title"><i class="bi bi-info-circle"></i> 68–95–99.7 ルール（参考）</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>範囲</th>
+                <th>確率</th>
+                <th>外側（片側）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>μ ± σ</td>
+                <td>68.27%</td>
+                <td>15.87%</td>
+              </tr>
+              <tr>
+                <td>μ ± 2σ</td>
+                <td>95.45%</td>
+                <td>2.28%</td>
+              </tr>
+              <tr>
+                <td>μ ± 3σ</td>
+                <td>99.73%</td>
+                <td>0.13%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- エラー表示 -->
+      <div class="error-msg" id="error-msg" hidden>
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span id="error-text"></span>
+      </div>
+
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方・解説セクション -->
+    <section class="howto-section" id="howto">
+
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>「確率を求める」タブで平均μと標準偏差σを入力します（デフォルトは標準正規分布 μ=0、σ=1）</li>
+        <li>計算タイプ（下側確率・上側確率・区間確率）をラジオボタンで選択します</li>
+        <li>境界値aを入力します（区間確率の場合はa〜bの両方を入力）</li>
+        <li>「計算する」ボタンを押すと確率・z値・グラフが表示されます</li>
+        <li>「z値から確率」タブでは標準正規分布のz値を直接入力して確率を逆算できます</li>
+      </ol>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>正規分布とは（68–95–99.7ルール）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>正規分布（ガウス分布）は、平均μと標準偏差σの2つのパラメータで形が決まる連続確率分布です。左右対称のベル型カーブが特徴で、自然界・社会現象の多くがこの分布に近似します（身長・テストの点数・測定誤差など）。</p>
+            <p>正規分布の重要な性質として「68–95–99.7ルール」があります。</p>
+            <ul>
+              <li><strong>μ ± σ の範囲</strong>: 全体の約 <strong>68.27%</strong> が含まれる</li>
+              <li><strong>μ ± 2σ の範囲</strong>: 全体の約 <strong>95.45%</strong> が含まれる</li>
+              <li><strong>μ ± 3σ の範囲</strong>: 全体の約 <strong>99.73%</strong> が含まれる</li>
+            </ul>
+            <p>つまり平均から標準偏差3つ分以上離れた値は約0.27%（約370回に1回）しか起きません。この性質は品質管理・リスク評価・統計的検定で広く活用されます。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>標準正規分布とz値の意味</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>標準正規分布とは平均μ=0・標準偏差σ=1の正規分布です。任意の正規分布の確率を計算するとき、まずz値（標準化得点）に変換します。</p>
+            <p style="background:#f0f9ff;padding:0.75rem;border-radius:8px;font-family:monospace;font-size:0.9rem;">z = (x − μ) / σ</p>
+            <p>z値は「平均から何標準偏差分離れているか」を表します。</p>
+            <ul>
+              <li>z = 0：平均値ちょうど</li>
+              <li>z = 1：平均より標準偏差1つ分高い（上位約15.9%）</li>
+              <li>z = -1：平均より標準偏差1つ分低い（下位約15.9%）</li>
+              <li>z = 1.96：上位約2.5%（両側5%検定の境界値）</li>
+            </ul>
+            <p>累積分布関数（CDF）はerf（誤差関数）を使って計算します: P(X≤x) = 0.5 × (1 + erf(z/√2))</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>実務での活用例（品質管理・偏差値・検定）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt><i class="bi bi-gear-fill"></i> 品質管理（製造業）</dt>
+              <dd>製品の寸法・重量が正規分布に従うと仮定し、規格範囲内に収まる確率を計算します。例：平均100mm・標準偏差0.3mmの部品で99.5〜100.5mmに収まる確率を区間確率で計算します。</dd>
+              <dt><i class="bi bi-mortarboard-fill"></i> 偏差値換算</dt>
+              <dd>μ=50・σ=10に設定すると偏差値の計算に使えます。例えば偏差値65（境界値a=65）の下側確率は約93.3%で、上位約6.7%に相当します。</dd>
+              <dt><i class="bi bi-bar-chart-fill"></i> 統計的仮説検定</dt>
+              <dd>片側検定（有意水準5%）の棄却域はz≥1.645、両側検定（有意水準5%）はz≥1.960です。このツールのz値モードで確認できます。</dd>
+              <dt><i class="bi bi-graph-up"></i> 金融・リスク管理</dt>
+              <dd>資産収益率が正規分布に従うと仮定したVaR（バリュー・アット・リスク）計算に活用します。99%VaR はz=-2.326の下側確率に相当します。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>偏差値との関係は？</dt>
+              <dd>偏差値 = z値 × 10 + 50 で変換できます。μ=50・σ=10に設定すると偏差値計算として使えます。偏差値70はz=2.0に相当し、上位約2.3%です。</dd>
+              <dt>上側確率と片側検定p値の関係は？</dt>
+              <dd>片側検定（右側検定）のp値はz値の上側確率です。z=1.645のとき上側確率≈5%、z=1.960のとき上側確率≈2.5%（両側検定5%有意水準の境界値）です。</dd>
+              <dt>計算精度はどのくらいですか？</dt>
+              <dd>Abramowitz &amp; Stegun（1964）の近似式（最大誤差 ≤ 1.5×10⁻⁷）を使用しています。統計実務で必要な精度（小数点以下6桁）は十分に確保されています。</dd>
+              <dt>z値が3以上の場合も計算できますか？</dt>
+              <dd>計算は可能ですが、z=4のとき確率は約0.0032%と非常に小さくなります。グラフの視認性が下がるため、z値の絶対値が4を超える場合は参考値としてご利用ください。</dd>
+              <dt>区間確率でa＞bを入力するとどうなりますか？</dt>
+              <dd>a＞bの場合は自動的にa・bを入れ替えて計算します（エラーにはなりません）。</dd>
+              <dt>標準偏差σに負の値や0を入力するとどうなりますか？</dt>
+              <dd>σは正の値である必要があるため、0以下の値を入力するとエラーメッセージが表示され計算は実行されません。</dd>
+              <dt>このツールはオフラインでも使えますか？</dt>
+              <dd>一度ページを読み込めばグラフ表示（Chart.js）以外はオフラインでも動作します。計算ロジックはすべてブラウザ内で実行されます。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li>Abramowitz, M. &amp; Stegun, I.A. (1964). <em>Handbook of Mathematical Functions</em>. — erf近似式 (7.1.26) の出典</li>
+              <li>正規分布の累積分布関数はerfc近似（最大誤差 ≤ 1.5×10⁻⁷）で計算しています</li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は参考値です。学術研究・金融業務・医療判断などの重要な用途では専門ソフトウェアや専門家にご確認ください。計算結果の正確性について当サイトは一切の責任を負いません。</p>
+          </div>
+        </details>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
