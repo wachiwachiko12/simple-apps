@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="毎月の積立金額・年利・運用年数を入力するだけで将来の資産額を計算。NISA・iDeCoの複利効果をグラフで可視化。無料・登録不要。">
+  <title>複利計算・資産運用シミュレーター｜毎月積立・NISA対応 | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/compound-interest/">
+  <!-- OGP -->
+  <meta property="og:title" content="複利計算・資産運用シミュレーター｜毎月積立・NISA対応">
+  <meta property="og:description" content="毎月の積立金額・年利・運用年数を入力するだけで将来の資産額を計算。NISA・iDeCoの複利効果をグラフで可視化。無料・登録不要。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/compound-interest/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-compound-interest.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="複利計算・資産運用シミュレーター｜毎月積立・NISA対応">
+  <meta name="twitter:description" content="毎月の積立金額・年利・運用年数を入力するだけで将来の資産額を計算。NISA・iDeCoの複利効果をグラフで可視化。無料・登録不要。">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "複利計算とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "複利計算とは、元本だけでなく利息にも利息がつく計算方法です。たとえば100万円を年利5%で運用すると、1年後に5万円の利息が生まれ、2年目は105万円が元本となって計算されます。長期運用ほど「複利の雪だるま効果」が大きくなります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "単利と複利の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "単利は常に元本だけに利息がつく方式です。複利は元本＋利息の合計に利息がつく方式です。30年・年利5%で比較すると、単利では元本の2.5倍ですが、複利では約4.3倍になります。長期間ほど差が広がります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "NISAでも複利効果は得られますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。新NISA（つみたて投資枠）は最大20年間、成長投資枠と合わせて生涯投資枠1800万円まで非課税で運用できます。通常は運用益に約20%の税金がかかりますが、NISAでは非課税のため複利効果がそのまま積み上がります。長期・積立・分散投資との相性が抜群です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "iDeCoとNISAはどちらが有利ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "iDeCoは掛金全額が所得控除になる点で節税効果が高く、特に所得税率が高い方に向いています。一方NISAは受取時の非課税・引き出し自由という柔軟性があります。どちらも複利効果を非課税で享受できるため、可能であれば両方を活用するのが理想的です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "「72の法則」とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "72を年利（%）で割ると、資産が2倍になるおよその年数がわかる便利な法則です。例：年利4%なら72÷4=18年で2倍、年利6%なら72÷6=12年で2倍になります。複利運用の効果を直感的に把握するのに役立ちます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "毎月いくら積み立てれば老後2000万円を準備できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "年利5%・30年運用の場合、毎月約24,000円の積立で老後2000万円を準備できます。このシミュレーターで目標金額から逆算して最適な積立額を確認してみてください。早く始めるほど必要な毎月の積立額が少なくなります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "年利5%は現実的な数値ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "全世界株式インデックスファンド（オルカン等）の過去の平均リターンは年利5〜7%程度とされています。ただし将来の運用成績を保証するものではありません。楽観的シナリオとして7%、標準として5%、保守的シナリオとして3%で比較シミュレーションすることをおすすめします。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-badge"><i class="bi bi-graph-up-arrow"></i> 資産運用シミュレーター</div>
+      <h1>複利計算シミュレーター</h1>
+      <p class="subtitle">毎月積立・初期投資・年利・運用年数を入力して将来の資産を可視化</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">広告スペース</div>
+
+    <!-- プライバシー注記 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 入力フォーム -->
+    <section id="tool" class="tool-section">
+      <h2 class="section-title"><i class="bi bi-sliders"></i> シミュレーション設定</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label" for="initial">
+            初期投資額
+            <span class="field-unit">万円</span>
+          </label>
+          <input type="number" id="initial" min="0" max="1000" step="1" value="100" inputmode="numeric">
+          <span class="field-hint">0〜1,000万円</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="monthly">
+            毎月積立額
+            <span class="field-unit">円</span>
+          </label>
+          <input type="number" id="monthly" min="0" max="100000" step="1000" value="30000" inputmode="numeric">
+          <span class="field-hint">0〜100,000円</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="rate">
+            年利
+            <span class="field-unit">%</span>
+          </label>
+          <input type="number" id="rate" min="0.1" max="15" step="0.1" value="5" inputmode="decimal">
+          <span class="field-hint">0.1〜15%</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="years">
+            運用年数
+            <span class="field-unit">年</span>
+          </label>
+          <input type="number" id="years" min="1" max="50" step="1" value="30" inputmode="numeric">
+          <span class="field-hint">1〜50年</span>
+        </div>
+      </div>
+
+      <!-- 比較シナリオ -->
+      <div class="scenario-box">
+        <p class="scenario-title"><i class="bi bi-bar-chart-line"></i> 比較利回りシナリオ（同時表示）</p>
+        <div class="scenario-checks">
+          <label class="check-label">
+            <input type="checkbox" id="sc3" value="3">
+            <span class="check-text">3%（保守的）</span>
+          </label>
+          <label class="check-label">
+            <input type="checkbox" id="sc5" value="5" checked>
+            <span class="check-text">5%（標準）</span>
+          </label>
+          <label class="check-label">
+            <input type="checkbox" id="sc7" value="7">
+            <span class="check-text">7%（楽観的）</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="button" id="calcBtn" class="btn-primary">
+        <i class="bi bi-calculator"></i> シミュレーション実行
+      </button>
+    </section>
+
+    <!-- 結果エリア（初期非表示） -->
+    <section id="result" class="result-section" hidden>
+
+      <!-- ヒーロー表示 -->
+      <div class="result-hero">
+        <p class="result-hero-label"><span id="heroYears">30</span>年後の資産額</p>
+        <p class="result-hero-value"><span id="heroValue">-</span><span class="result-unit">万円</span></p>
+        <p class="result-hero-sub" id="heroSub"></p>
+      </div>
+
+      <!-- 3カラム概要カード -->
+      <div class="summary-cards">
+        <div class="summary-card">
+          <p class="summary-icon"><i class="bi bi-piggy-bank"></i></p>
+          <p class="summary-label">元本合計</p>
+          <p class="summary-value" id="totalPrincipal">-</p>
+          <p class="summary-unit">万円</p>
+        </div>
+        <div class="summary-card accent">
+          <p class="summary-icon"><i class="bi bi-graph-up-arrow"></i></p>
+          <p class="summary-label">運用益</p>
+          <p class="summary-value" id="totalGain">-</p>
+          <p class="summary-unit">万円</p>
+        </div>
+        <div class="summary-card">
+          <p class="summary-icon"><i class="bi bi-award"></i></p>
+          <p class="summary-label">運用倍率</p>
+          <p class="summary-value" id="multiplier">-</p>
+          <p class="summary-unit">倍</p>
+        </div>
+      </div>
+
+      <!-- グラフ -->
+      <div class="chart-wrapper card">
+        <h3 class="chart-title"><i class="bi bi-bar-chart"></i> 年次資産推移グラフ</h3>
+        <canvas id="assetChart"></canvas>
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">広告スペース</div>
+
+      <!-- 比較テーブル -->
+      <div class="table-wrapper card">
+        <h3 class="chart-title"><i class="bi bi-table"></i> 年数別資産推移</h3>
+        <div class="table-scroll">
+          <table id="summaryTable" class="summary-table">
+            <thead>
+              <tr id="tableHead"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 使い方・解説アコーディオン -->
+    <section id="howto" class="howto-section">
+      <h2 class="section-title"><i class="bi bi-book"></i> 使い方・解説</h2>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <span class="accordion-left"><i class="bi bi-question-circle"></i> 基本的な使い方</span>
+          <i class="bi bi-chevron-down accordion-arrow"></i>
+        </summary>
+        <div class="accordion-body">
+          <ol class="steps">
+            <li><strong>初期投資額</strong>を入力します（例: 100万円をすでに持っている場合）。積立のみの場合は0でOKです。</li>
+            <li><strong>毎月積立額</strong>を入力します（例: 毎月30,000円）。</li>
+            <li><strong>年利</strong>を入力します。全世界株式インデックスの長期平均は5〜7%程度です。</li>
+            <li><strong>運用年数</strong>を入力します（例: 30年間積み立てる場合は30）。</li>
+            <li><strong>比較シナリオ</strong>で複数の利回りを同時に確認できます。</li>
+            <li>「シミュレーション実行」ボタンを押すと結果が表示されます。</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <span class="accordion-left"><i class="bi bi-info-circle"></i> 複利とは？単利との違い</span>
+          <i class="bi bi-chevron-down accordion-arrow"></i>
+        </summary>
+        <div class="accordion-body">
+          <p><strong>単利</strong>は常に元本だけに利息がつく方式です。100万円を年利5%で運用すると、毎年5万円の利息が生まれますが、翌年も100万円が元本です。</p>
+          <p class="mt"><strong>複利</strong>は元本と利息の合計に利息がつく方式です。1年目の利息5万円が翌年から元本に加わり、2年目は105万円に対して5%がかかります。これを繰り返すことで「利息が利息を生む」雪だるま効果が生まれます。</p>
+          <p class="mt">30年間・年利5%で比較すると、単利は100万円が250万円（+150万円）ですが、複利は約432万円（+332万円）になります。差額は182万円以上です。</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <span class="accordion-left"><i class="bi bi-lightning"></i> 72の法則 — お金が2倍になる年数</span>
+          <i class="bi bi-chevron-down accordion-arrow"></i>
+        </summary>
+        <div class="accordion-body">
+          <p>「<strong>72 ÷ 年利（%） = 元本が2倍になるおよその年数</strong>」という便利な法則です。</p>
+          <table class="rule72-table">
+            <thead>
+              <tr><th>年利</th><th>2倍になる年数（72の法則）</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>3%</td><td>約24年</td></tr>
+              <tr><td>4%</td><td>約18年</td></tr>
+              <tr><td>5%</td><td>約14.4年</td></tr>
+              <tr><td>6%</td><td>約12年</td></tr>
+              <tr><td>7%</td><td>約10.3年</td></tr>
+            </tbody>
+          </table>
+          <p class="mt">複利計算の効果を直感的に把握するのに役立ちます。年利を少し上げるだけで2倍になるまでの期間が大幅に短縮されます。</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <span class="accordion-left"><i class="bi bi-bank"></i> NISAとiDeCoでの活用方法</span>
+          <i class="bi bi-chevron-down accordion-arrow"></i>
+        </summary>
+        <div class="accordion-body">
+          <p><strong>新NISA（2024年〜）</strong></p>
+          <ul class="steps-ul">
+            <li>つみたて投資枠：年120万円、成長投資枠：年240万円</li>
+            <li>生涯投資枠：1,800万円（非課税保有限度額）</li>
+            <li>運用益・配当金が<strong>ずっと非課税</strong>（期間撤廃）</li>
+            <li>引き出しは自由（いつでも売却可能）</li>
+          </ul>
+          <p class="mt"><strong>iDeCo（個人型確定拠出年金）</strong></p>
+          <ul class="steps-ul">
+            <li>掛金が全額<strong>所得控除</strong> → 毎年の節税効果</li>
+            <li>運用益は非課税</li>
+            <li>受取時も控除あり（退職所得控除・公的年金等控除）</li>
+            <li>原則60歳まで引き出し不可（老後資金専用）</li>
+          </ul>
+          <p class="mt">どちらも複利効果を非課税で積み上げられるため、長期運用との相性が抜群です。</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <span class="accordion-left"><i class="bi bi-chat-question"></i> よくある質問（FAQ）</span>
+          <i class="bi bi-chevron-down accordion-arrow"></i>
+        </summary>
+        <div class="accordion-body">
+          <div class="faq-list">
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 複利計算と単利計算の式を教えてください</p>
+              <p class="faq-a">複利の場合: FV = PV×(1+r)^n + PMT×((1+r)^n - 1)/r（r=月利、n=月数）。このシミュレーターは月次複利で計算しています。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 年利5%は現実的ですか？</p>
+              <p class="faq-a">全世界株式インデックス（オルカン等）の過去20〜30年の平均リターンは5〜7%程度です。ただし将来の運用成績を保証するものではありません。3%・5%・7%の比較シナリオで確認することをおすすめします。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 毎月3万円積み立てると30年後にいくらになりますか？</p>
+              <p class="faq-a">年利5%・初期投資なしの場合、30年後の資産額は約2,494万円になります。元本1,080万円に対して運用益が約1,414万円つく計算です。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 途中で積立を止めた場合はどうなりますか？</p>
+              <p class="faq-a">このシミュレーターは毎月一定額の積立を想定しています。途中で止めた場合は「積立をやめた時点の資産額」を初期投資額として、毎月積立額を0円にして再計算してください。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> インフレの影響は考慮されていますか？</p>
+              <p class="faq-a">このシミュレーターはインフレを考慮していません。実質利回り（名目利回り−インフレ率）で計算したい場合は、年利から1〜2%程度を差し引いた値を入力してください。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 税金は計算に含まれていますか？</p>
+              <p class="faq-a">含まれていません。NISA口座の場合は非課税なのでそのままお使いください。課税口座の場合は運用益に約20.315%の税金がかかるため、実際の手取り額は少なくなります。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 計算結果はどれくらい正確ですか？</p>
+              <p class="faq-a">月次複利（毎月末に運用益が加算）で計算しており、一般的な金融計算の方法に準じています。ただし実際の投資では手数料・税金・相場変動があるため、あくまでも参考値としてご活用ください。</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <span class="accordion-left"><i class="bi bi-exclamation-triangle"></i> 参照・出典・免責事項</span>
+          <i class="bi bi-chevron-down accordion-arrow"></i>
+        </summary>
+        <div class="accordion-body">
+          <p>本ツールの計算結果は情報提供を目的としたものであり、投資勧誘や将来の運用成果を約束するものではありません。</p>
+          <p class="mt">実際の資産運用にあたっては、各金融機関・ファイナンシャルプランナー等の専門家にご相談の上、ご自身の判断でお決めください。</p>
+          <ul class="steps-ul mt">
+            <li>計算式: 月次複利（FV = PV×(1+r/12)^(12n) + PMT×((1+r/12)^(12n)-1)/(r/12)）</li>
+            <li>新NISA制度: 金融庁「新しいNISA」</li>
+            <li>iDeCo制度: 国民年金基金連合会「iDeCo公式サイト」</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-logo">計算ラボ</p>
+      <nav class="footer-nav">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/about.html">サイトについて</a>
+        <a href="/">ツール一覧</a>
+      </nav>
+      <p class="footer-copy"><small>&copy; 2025 計算ラボ</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
