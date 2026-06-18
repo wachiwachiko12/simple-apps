@@ -100,7 +100,7 @@
   <header>
     <div class="header-inner">
       <h1><i class="bi bi-graph-up-arrow"></i> 相関係数計算ツール</h1>
-      <p class="subtitle">ピアソン相関係数・決定係数・有意性検定・散布図を一括計算</p>
+      <p class="subtitle">ExcelデータをコピペするだけでOK — 相関の強さ・散布図・有意性検定を一括表示</p>
     </div>
   </header>
 
@@ -174,6 +174,7 @@
             <div class="result-sub-card">
               <div class="sub-value" id="t-value">—</div>
               <div class="sub-label">t統計量</div>
+              <div class="sub-note">有意性検定の中間値（参考情報）</div>
             </div>
             <div class="result-sub-card">
               <div class="sub-value" id="p-value">—</div>
@@ -198,6 +199,13 @@
         <!-- 散布図 -->
         <div class="chart-wrap">
           <canvas id="scatter-chart" aria-label="散布図と回帰直線"></canvas>
+        </div>
+
+        <!-- グラフダウンロードボタン -->
+        <div class="chart-download-row">
+          <button id="download-chart" class="btn-secondary" type="button">
+            <i class="bi bi-download"></i> グラフをダウンロード
+          </button>
         </div>
       </div>
     </section>

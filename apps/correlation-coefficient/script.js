@@ -38,6 +38,16 @@ btnSample.addEventListener('click', loadSampleData);
 btnCalc.addEventListener('click', calculate);
 btnClear.addEventListener('click', clearAll);
 
+document.getElementById('download-chart').addEventListener('click', () => {
+  const canvas = document.getElementById('scatter-chart');
+  canvas.toBlob(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'correlation-chart.png';
+    a.click();
+  });
+});
+
 // ---- Load Sample Data ----
 function loadSampleData() {
   xLabelInput.value = SAMPLE_X_LABEL;

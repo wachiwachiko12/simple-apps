@@ -167,7 +167,7 @@ main {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.5rem 0.75rem;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-family: inherit;
   background: #fff;
   min-height: 44px;
@@ -204,7 +204,7 @@ textarea {
   border: 1.5px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.625rem 0.75rem;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-family: 'Outfit', 'BIZ UDPGothic', monospace;
   background: #fff;
   width: 100%;
@@ -244,6 +244,7 @@ textarea:focus {
   gap: 0.4rem;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
   box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.30);
+  touch-action: manipulation;
 }
 
 .btn-primary:hover {
@@ -272,6 +273,7 @@ textarea:focus {
   align-items: center;
   gap: 0.4rem;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  touch-action: manipulation;
 }
 
 .btn-secondary:hover {
@@ -424,6 +426,12 @@ textarea:focus {
   margin-top: 0.2rem;
 }
 
+.sub-note {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.2rem;
+}
+
 /* ---- Significance Badge ---- */
 .sig-badge {
   display: inline-flex;
@@ -483,6 +491,13 @@ textarea:focus {
 .chart-wrap canvas {
   max-height: 400px;
   width: 100% !important;
+}
+
+/* ---- Chart Download Row ---- */
+.chart-download-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
 }
 
 /* ---- How-to Section ---- */
