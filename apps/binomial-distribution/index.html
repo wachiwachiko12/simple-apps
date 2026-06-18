@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="試行回数nと成功確率pを入力して二項分布の確率を計算。ガチャの天井確率・ABテストの有意差・品質管理の不良品率に対応。グラフ付き。無料・スマホ対応。">
+  <title>二項分布 確率計算ツール｜ガチャ確率・ABテスト・品質管理に対応 | 計算ラボ</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- OGP -->
+  <meta property="og:title" content="二項分布 確率計算ツール｜ガチャ確率・ABテスト・品質管理に対応">
+  <meta property="og:description" content="試行回数nと成功確率pを入力して二項分布の確率を計算。ガチャの天井確率・ABテストの有意差・品質管理の不良品率に対応。グラフ付き。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/binomial-distribution/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-binomial-distribution.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="二項分布 確率計算ツール｜ガチャ確率・ABテスト・品質管理に対応">
+  <meta name="twitter:description" content="試行回数nと成功確率pを入力して二項分布の確率を計算。ガチャ確率・ABテスト・品質管理に。グラフ付き無料ツール。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-binomial-distribution.png">
+  <link rel="canonical" href="https://keisanlab.jp/apps/binomial-distribution/">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "二項分布とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "二項分布とは、成功確率pの試行をn回繰り返したとき、ちょうどk回成功する確率の分布です。コインを10回投げて表が3回出る確率など、「成功か失敗か」の二択試行に使われます。確率質量関数はP(X=k)=C(n,k)×p^k×(1-p)^(n-k)で計算されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ガチャで確率1%のアイテムを100連引いたとき、少なくとも1回出る確率は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "確率1%（p=0.01）で100回引いたとき、少なくとも1回出る確率はP(X≥1)=1-(1-0.01)^100≈63.4%です。直感では「100回引けば100%出そう」と思いがちですが、実際は約63%に留まります。99%を超えるには約459連が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ABテストで二項分布はどう使いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ABテストでは、A群とB群それぞれのコンバージョン数が二項分布に従います。このツールのABテストモードでは、2×2分割表のカイ二乗検定でp値を計算します。p値が0.05未満なら「統計的に有意な差あり」と判定し、どちらの施策が優れているかを判断できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "品質管理で二項分布はどう活用されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "製品の不良率管理に使われます。不良品発生確率p%の製品をn個検査したとき、k個以上の不良品が見つかる確率P(X≥k)を計算できます。例えば不良率1%の製品を200個検査して不良品が5個以上出る確率を求め、抜き取り検査基準の設計に役立てます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "n（試行回数）が大きいとき計算できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このツールは対数計算を使ってオーバーフローを防止しているため、n=1000まで計算できます。C(n,k)×p^k×(1-p)^(n-k)を直接計算するとnが大きい場合に数値が発散しますが、log計算に変換することで精度を保っています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "期待値と分散はどう計算されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "二項分布の期待値はE[X]=n×p、分散はV[X]=n×p×(1-p)、標準偏差はσ=√(n×p×(1-p))です。例えばn=100、p=0.3なら期待値30回、標準偏差≈4.58回となります。これにより「平均的な成功回数」と「ばらつきの大きさ」を把握できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "計算したデータはサーバーに送られますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "いいえ、一切送信されません。すべての計算はブラウザ内のJavaScriptで完結します。入力した試行回数・確率・成功回数などのデータはサーバーに送信されることなく、プライバシーが保護されます。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1><i class="bi bi-bar-chart-fill"></i> 二項分布 確率計算ツール</h1>
+      <p class="subtitle">ガチャ確率・ABテスト・品質管理の確率をグラフ付きで計算</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー注記 -->
+    <p class="privacy-note">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </p>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section" aria-label="二項分布計算フォーム">
+
+      <!-- モード切替タブ -->
+      <div class="tab-bar" role="tablist" aria-label="計算モード切替">
+        <button class="tab-btn active" id="tab-basic" role="tab" aria-selected="true" aria-controls="panel-basic" data-mode="basic">
+          <i class="bi bi-calculator"></i> 基本計算
+        </button>
+        <button class="tab-btn" id="tab-gacha" role="tab" aria-selected="false" aria-controls="panel-gacha" data-mode="gacha">
+          <i class="bi bi-stars"></i> ガチャ
+        </button>
+        <button class="tab-btn" id="tab-abtest" role="tab" aria-selected="false" aria-controls="panel-abtest" data-mode="abtest">
+          <i class="bi bi-layout-split"></i> ABテスト
+        </button>
+      </div>
+
+      <!-- パネル1: 基本計算 -->
+      <div id="panel-basic" class="tab-panel active" role="tabpanel" aria-labelledby="tab-basic">
+        <form id="form-basic" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="n-basic">試行回数 n</label>
+              <input type="number" id="n-basic" min="1" max="1000" value="10" placeholder="例: 10" required>
+              <span class="field-hint">1〜1000の整数</span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="p-basic">成功確率 p（%）</label>
+              <input type="number" id="p-basic" min="0.001" max="99.999" step="0.001" value="30" placeholder="例: 30">
+              <span class="field-hint">0.001〜99.999（%で入力）</span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="k-basic">成功回数 k</label>
+              <input type="number" id="k-basic" min="0" max="1000" value="3" placeholder="例: 3" required>
+              <span class="field-hint">0〜n の整数</span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="calc-type">計算タイプ</label>
+              <select id="calc-type">
+                <option value="exact">P(X = k) ちょうどk回</option>
+                <option value="lte">P(X ≤ k) k回以下（累積）</option>
+                <option value="gte">P(X ≥ k) k回以上（累積）</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="btn-basic">
+            <i class="bi bi-calculator"></i> 確率を計算する
+          </button>
+        </form>
+      </div>
+
+      <!-- パネル2: ガチャモード -->
+      <div id="panel-gacha" class="tab-panel" role="tabpanel" aria-labelledby="tab-gacha" hidden>
+        <form id="form-gacha" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="gacha-rate">レアリティ確率（%）</label>
+              <input type="number" id="gacha-rate" min="0.001" max="99.999" step="0.001" value="1" placeholder="例: 1">
+              <span class="field-hint">例: SSR 1%、SR 3%、R 10%</span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="gacha-ceiling">天井回数（上限）</label>
+              <input type="number" id="gacha-ceiling" min="1" max="1000" value="100" placeholder="例: 100">
+              <span class="field-hint">最大何連で確定排出されるか</span>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="btn-gacha">
+            <i class="bi bi-stars"></i> 天井確率を計算する
+          </button>
+        </form>
+      </div>
+
+      <!-- パネル3: ABテストモード -->
+      <div id="panel-abtest" class="tab-panel" role="tabpanel" aria-labelledby="tab-abtest" hidden>
+        <form id="form-abtest" novalidate>
+          <div class="ab-grid">
+            <div class="ab-group">
+              <h3 class="ab-label ab-a">A群（コントロール）</h3>
+              <div class="field">
+                <label class="field-label" for="a-visitors">訪問者数</label>
+                <input type="number" id="a-visitors" min="1" value="1000" placeholder="例: 1000">
+              </div>
+              <div class="field">
+                <label class="field-label" for="a-conversions">コンバージョン数</label>
+                <input type="number" id="a-conversions" min="0" value="50" placeholder="例: 50">
+              </div>
+            </div>
+            <div class="ab-group">
+              <h3 class="ab-label ab-b">B群（テスト）</h3>
+              <div class="field">
+                <label class="field-label" for="b-visitors">訪問者数</label>
+                <input type="number" id="b-visitors" min="1" value="1000" placeholder="例: 1000">
+              </div>
+              <div class="field">
+                <label class="field-label" for="b-conversions">コンバージョン数</label>
+                <input type="number" id="b-conversions" min="0" value="65" placeholder="例: 65">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="btn-abtest">
+            <i class="bi bi-layout-split"></i> 有意差を検定する
+          </button>
+        </form>
+      </div>
+
+      <!-- 結果エリア -->
+      <div id="result-area" class="result-area" hidden aria-live="polite">
+
+        <!-- 基本計算結果 -->
+        <div id="result-basic" class="result-panel" hidden>
+          <div class="result-main">
+            <div class="result-value-wrap">
+              <span class="result-value" id="prob-value">—</span>
+              <span class="result-unit">%</span>
+            </div>
+            <p class="result-desc" id="prob-label">確率</p>
+          </div>
+          <div class="result-stats">
+            <div class="stat-item">
+              <span class="stat-label">期待値 E[X]</span>
+              <span class="stat-value" id="stat-mean">—</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">分散 V[X]</span>
+              <span class="stat-value" id="stat-var">—</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">標準偏差 σ</span>
+              <span class="stat-value" id="stat-sd">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ガチャ結果 -->
+        <div id="result-gacha" class="result-panel gacha-panel" hidden>
+          <h3 class="result-section-title"><i class="bi bi-stars"></i> 天井分析</h3>
+          <div class="gacha-milestones">
+            <div class="milestone-item milestone-50">
+              <span class="milestone-pct">50%</span>
+              <span class="milestone-label">以上になる連数</span>
+              <span class="milestone-val" id="gacha-50">—連</span>
+            </div>
+            <div class="milestone-item milestone-90">
+              <span class="milestone-pct">90%</span>
+              <span class="milestone-label">以上になる連数</span>
+              <span class="milestone-val" id="gacha-90">—連</span>
+            </div>
+            <div class="milestone-item milestone-99">
+              <span class="milestone-pct">99%</span>
+              <span class="milestone-label">以上になる連数</span>
+              <span class="milestone-val" id="gacha-99">—連</span>
+            </div>
+          </div>
+          <div class="gacha-comment" id="gacha-comment"></div>
+          <div class="gacha-table-wrap">
+            <h4 class="table-title">n連で少なくとも1回出る確率</h4>
+            <table class="gacha-table" id="gacha-table">
+              <thead>
+                <tr><th>連数</th><th>確率（P(X≥1)）</th><th>評価</th></tr>
+              </thead>
+              <tbody id="gacha-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ABテスト結果 -->
+        <div id="result-abtest" class="result-panel" hidden>
+          <div class="ab-result-header">
+            <div class="ab-result-verdict" id="ab-verdict"></div>
+          </div>
+          <div class="ab-result-stats">
+            <div class="ab-stat">
+              <span class="ab-stat-label ab-a">A群 CVR</span>
+              <span class="ab-stat-val" id="ab-a-cvr">—</span>
+            </div>
+            <div class="ab-stat">
+              <span class="ab-stat-label ab-b">B群 CVR</span>
+              <span class="ab-stat-val" id="ab-b-cvr">—</span>
+            </div>
+            <div class="ab-stat">
+              <span class="ab-stat-label">p値（χ²検定）</span>
+              <span class="ab-stat-val" id="ab-pval">—</span>
+            </div>
+            <div class="ab-stat">
+              <span class="ab-stat-label">χ²統計量</span>
+              <span class="ab-stat-val" id="ab-chi2">—</span>
+            </div>
+            <div class="ab-stat">
+              <span class="ab-stat-label">相対改善率</span>
+              <span class="ab-stat-val" id="ab-lift">—</span>
+            </div>
+          </div>
+          <p class="ab-interpretation" id="ab-interpretation"></p>
+        </div>
+
+        <!-- グラフ -->
+        <div class="chart-wrap" id="chart-wrap" hidden>
+          <h3 class="chart-title">確率質量関数（PMF）</h3>
+          <canvas id="pmf-chart" role="img" aria-label="二項分布の確率質量関数グラフ"></canvas>
+          <p class="chart-note" id="chart-note"></p>
+        </div>
+
+      </div>
+      <!-- /result-area -->
+
+    </section>
+
+    <!-- 広告ユニット2（結果下部） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方・解説セクション（アコーディオン） -->
+    <section class="howto-section" aria-label="使い方・解説">
+
+      <details class="accordion" open>
+        <summary class="accordion-summary">
+          <i class="bi bi-book"></i> 使い方
+        </summary>
+        <div class="accordion-body">
+          <h2 class="section-title">このツールの使い方</h2>
+          <ol class="howto-list">
+            <li><strong>モードを選ぶ</strong>：「基本計算」「ガチャ」「ABテスト」の3つのモードから目的に合ったものを選択します。</li>
+            <li><strong>数値を入力する</strong>：試行回数・確率・成功回数などを入力フォームに入力します。</li>
+            <li><strong>計算ボタンを押す</strong>：ボタンを押すと確率が表示され、グラフで分布の形が確認できます。</li>
+            <li><strong>結果を読む</strong>：確率値のほか、期待値・分散・標準偏差も表示されます。グラフでは選択した範囲が強調表示されます。</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <i class="bi bi-info-circle"></i> 二項分布とは
+        </summary>
+        <div class="accordion-body">
+          <h2 class="section-title">二項分布とは</h2>
+          <p>二項分布（binomial distribution）とは、成功確率 p の試行を n 回繰り返したとき、成功がちょうど k 回起こる確率の分布です。</p>
+          <p style="margin-top:0.75rem;">最もシンプルな例はコイン投げです。表が出る確率50%のコインを10回投げたとき、ちょうど3回表が出る確率は約11.7%。この「n回試行してk回成功する確率」を求めるのが二項分布の計算です。</p>
+          <p style="margin-top:0.75rem;">確率質量関数（PMF）の公式：</p>
+          <div class="formula-box">
+            P(X = k) = C(n, k) × p<sup>k</sup> × (1−p)<sup>n−k</sup>
+          </div>
+          <p style="margin-top:0.75rem;">ここで C(n, k) = n! / (k! × (n−k)!) は「n個からk個を選ぶ組み合わせ数」です。このツールでは対数計算を使ってオーバーフローを防ぎ、n=1000まで安定して計算できます。</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <i class="bi bi-stars"></i> ガチャの天井設計と確率の仕組み
+        </summary>
+        <div class="accordion-body">
+          <h2 class="section-title">ガチャの天井設計と確率の仕組み</h2>
+          <p>スマートフォンゲームのガチャでは「天井」と呼ばれる上限回数が設定されていることがあります。例えば「100連引けばSSRが必ず1枚もらえる」という仕組みです。</p>
+          <p style="margin-top:0.75rem;">確率1%のSSRを引く試行を繰り返す場合、n連で少なくとも1枚出る確率は：</p>
+          <div class="formula-box">
+            P(X ≥ 1) = 1 − (1 − 0.01)<sup>n</sup>
+          </div>
+          <p style="margin-top:0.75rem;">50連で約39.5%、100連で約63.4%。「100連引けば出るだろう」と思いがちですが、実際は6割強に留まります。99%を超えるには約459連が必要です。ガチャ課金の前に、このツールで必要連数を把握することを推奨します。</p>
+          <p style="margin-top:0.75rem;"><strong>期待回数</strong>（平均何連目で当たるか）は 1/p 連です。確率1%なら期待値100連ですが、個人差（標準偏差）が大きく、実際は運に左右されます。</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <i class="bi bi-layout-split"></i> ABテストでの活用方法
+        </summary>
+        <div class="accordion-body">
+          <h2 class="section-title">ABテストでの活用方法</h2>
+          <p>Webサイトの改善施策を評価する際、「AとBのどちらが本当に優れているか」を統計的に判断するのがABテストです。</p>
+          <p style="margin-top:0.75rem;">例えばボタンの色を変えたとき、A群（元のデザイン）のコンバージョン率5%に対してB群（新デザイン）が6.5%だったとします。これは「本当の改善」なのか、「偶然の誤差」なのかを判定するためにカイ二乗検定を使います。</p>
+          <p style="margin-top:0.75rem;"><strong>判定基準</strong>：p値が0.05未満であれば「統計的に有意な差あり（95%の信頼度）」と判断します。p値が0.05以上の場合は「差が偶然である可能性が高い」ため、より多くのデータを集めることを推奨します。</p>
+          <p style="margin-top:0.75rem;">なお、ABテストは十分なサンプル数があって初めて有効です。一般的に各群100件以上、可能であれば1,000件以上のデータを集めることを推奨します。</p>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <i class="bi bi-patch-question"></i> よくある質問（FAQ）
+        </summary>
+        <div class="accordion-body">
+          <div class="faq-list">
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> 二項分布と正規分布の違いは？</h3>
+              <p class="faq-a">二項分布は「n回試行してk回成功」という離散的な確率分布です。一方、正規分布は連続値の分布です。n×p≥5かつn×(1-p)≥5のとき、二項分布は正規分布で近似できます（正規近似）。nが大きいほど二項分布はベル型の形状に近づきます。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> 確率が0に近い場合でも正確に計算できますか？</h3>
+              <p class="faq-a">はい、対数スケールで計算しているため、p=0.001（0.1%）程度の低確率でも精度を保って計算できます。ただしp=0またはp=1に非常に近い極端な値では数値誤差が生じる場合があります。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> 累積確率 P(X≤k) と P(X≥k) の使い分けは？</h3>
+              <p class="faq-a">P(X≤k)は「k回以下で収まる確率」で、品質管理の「不良品がk個以下で合格とする確率」などに使います。P(X≥k)は「k回以上起こる確率」で、「少なくともk回ガチャが当たる確率」などに使います。P(X=k)はちょうど特定回数を求めたいとき使います。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> ガチャの天井がない場合はどう計算しますか？</h3>
+              <p class="faq-a">天井がない場合は「基本計算」モードを使い、P(X≥1)（k=1、計算タイプ「k回以上」）で少なくとも1回出る確率を計算できます。試行回数nを変えながら計算することで、必要連数の目安が分かります。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> ABテストのサンプル数はどれくらい必要ですか？</h3>
+              <p class="faq-a">一般的に各群最低100件、有意差検出には各群500〜1,000件以上が推奨されます。サンプルが少ないと「有意差なし」の結果が実際には差がある場合でも出てしまう（第二種の誤り）リスクがあります。事前にサンプルサイズ計算を行うことを推奨します。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> グラフはどのように読めばよいですか？</h3>
+              <p class="faq-a">棒グラフは各成功回数k=0,1,...,nにおける確率P(X=k)を表します。赤く強調されたバーが選択した計算範囲（ちょうど/以下/以上）に対応します。グラフの形が左右対称に近いほど確率0.5に近く、n×pが小さいほど左に偏った形になります。</p>
+            </div>
+            <div class="faq-item">
+              <h3 class="faq-q"><i class="bi bi-question-circle"></i> 計算結果に免責事項はありますか？</h3>
+              <p class="faq-a">このツールは教育・参考目的のものです。ガチャへの課金判断や重要なビジネス意思決定にのみ依存することは推奨しません。ABテスト結果についても、専門的な統計知識を持つ方の判断と組み合わせてご活用ください。当ツールの利用により生じた損害について責任を負いかねます。</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="accordion">
+        <summary class="accordion-summary">
+          <i class="bi bi-exclamation-triangle"></i> 免責事項
+        </summary>
+        <div class="accordion-body">
+          <p>本ツールは情報提供・教育目的で提供しています。計算結果の正確性については万全を期していますが、ガチャへの課金、投資判断、医療・学術研究等への直接利用は推奨しません。本ツールの利用による損害について、開発者は責任を負いかねます。</p>
+        </div>
+      </details>
+
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      &nbsp;|&nbsp;
+      <a href="/index.html">トップに戻る</a>
+    </p>
+    <p><small>&copy; 2026 計算ラボ（keisanlab.jp）</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</body>
+</html>
