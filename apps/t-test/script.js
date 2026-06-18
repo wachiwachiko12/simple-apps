@@ -373,6 +373,7 @@ function runIndependent() {
 
     const r = welch(a, b);
 
+    const reportText_ind = `t(${fmt(r.df, 1)}) = ${r.t.toFixed(2)}, p = ${r.p < 0.001 ? '< .001' : r.p.toFixed(3)}, Cohen's d = ${r.cohensD.toFixed(2)}`;
     const html = `
       <div class="result-header">
         <h3>Welch t検定（対応なし）の結果</h3>
@@ -402,6 +403,7 @@ function runIndependent() {
         　（グループA − B = ${fmt(r.m1 - r.m2, 4)}）
       </div>
       ${cohensDBadge(r.cohensD)}
+      <div class="report-example"><div class="report-label">論文記載例</div><code class="report-code">${escHtml(reportText_ind)}</code><button class="copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(reportText_ind)})">コピー</button></div>
       <div class="chart-wrapper"><canvas id="result-chart"></canvas></div>
       <table class="summary-table">
         <thead>
@@ -444,6 +446,7 @@ function runPaired() {
     const mBefore = mean(before), mAfter = mean(after);
     const sdBefore = sd(before), sdAfter = sd(after);
 
+    const reportText_paired = `t(${r.df.toFixed(1)}) = ${r.t.toFixed(2)}, p = ${r.p < 0.001 ? '< .001' : r.p.toFixed(3)}, Cohen's d = ${r.cohensD.toFixed(2)}`;
     const html = `
       <div class="result-header">
         <h3>対応ありt検定（paired）の結果</h3>
@@ -473,6 +476,7 @@ function runPaired() {
         　（平均差 = ${fmt(r.dMean, 4)}）
       </div>
       ${cohensDBadge(r.cohensD)}
+      <div class="report-example"><div class="report-label">論文記載例</div><code class="report-code">${escHtml(reportText_paired)}</code><button class="copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(reportText_paired)})">コピー</button></div>
       <div class="chart-wrapper"><canvas id="result-chart"></canvas></div>
       <table class="summary-table">
         <thead>
@@ -510,6 +514,7 @@ function runOneSample() {
 
     const r = oneSample(data, mu0Val);
 
+    const reportText_one = `t(${r.df.toFixed(1)}) = ${r.t.toFixed(2)}, p = ${r.p < 0.001 ? '< .001' : r.p.toFixed(3)}, Cohen's d = ${r.cohensD.toFixed(2)}`;
     const html = `
       <div class="result-header">
         <h3>1標本t検定の結果　(H₀: μ = ${mu0Val})</h3>
@@ -539,6 +544,7 @@ function runOneSample() {
         　（x̄ = ${fmt(r.m, 4)}, μ₀ = ${mu0Val}）
       </div>
       ${cohensDBadge(r.cohensD)}
+      <div class="report-example"><div class="report-label">論文記載例</div><code class="report-code">${escHtml(reportText_one)}</code><button class="copy-btn" onclick="navigator.clipboard.writeText(${JSON.stringify(reportText_one)})">コピー</button></div>
       <div class="chart-wrapper"><canvas id="result-chart"></canvas></div>
       <table class="summary-table">
         <thead>
