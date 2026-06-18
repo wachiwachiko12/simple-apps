@@ -309,7 +309,7 @@ main {
   color: var(--text-muted);
   cursor: pointer;
   transition: all var(--transition);
-  min-height: 36px;
+  min-height: 44px;
 }
 .preset-btn:hover {
   background: var(--primary-pale);
@@ -440,6 +440,50 @@ main {
   margin-top: 0.25rem;
   font-family: 'Outfit', monospace;
 }
+
+/* z値モード: 3列確率カード */
+.z-result-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+}
+.z-result-card {
+  background: #f0fdff;
+  border: 1px solid #a5f3fc;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+}
+.z-result-card--upper {
+  background: #f5f3ff;
+  border-color: #c4b5fd;
+}
+.z-result-card--two {
+  background: #f0fdf4;
+  border-color: #86efac;
+}
+.z-result-card-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+  line-height: 1.35;
+}
+.z-result-card-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+.z-result-card-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.z-result-card--upper .z-result-card-value { color: var(--color-upper); }
+.z-result-card--two .z-result-card-value   { color: var(--color-interval); }
 
 /* Sub grid */
 .result-sub-grid {
@@ -691,8 +735,10 @@ footer small { font-size: 0.8rem; color: #64748b; }
     display: none;
   }
   .preset-btns { gap: 0.35rem; }
-  .preset-btn { font-size: 0.75rem; padding: 0.3rem 0.65rem; }
+  .preset-btn { font-size: 0.75rem; padding: 0.3rem 0.65rem; min-height: 44px; }
   .chart-wrapper { height: 210px; }
+  .z-result-cards { grid-template-columns: 1fr; }
+  .z-result-card-value { font-size: 1rem; }
   .card { padding: 1.125rem; }
   .howto-section { padding: 1.125rem; }
 }

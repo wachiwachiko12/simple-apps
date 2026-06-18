@@ -206,11 +206,11 @@
         <div class="z-presets">
           <span class="field-label" style="font-size:0.8rem;margin-bottom:0.25rem;display:block">よく使う値</span>
           <div class="preset-btns">
-            <button class="preset-btn" data-z="1.282" type="button">z=1.282 <small>(90%)</small></button>
-            <button class="preset-btn" data-z="1.645" type="button">z=1.645 <small>(95%)</small></button>
-            <button class="preset-btn" data-z="1.960" type="button">z=1.960 <small>(97.5%)</small></button>
-            <button class="preset-btn" data-z="2.326" type="button">z=2.326 <small>(99%)</small></button>
-            <button class="preset-btn" data-z="2.576" type="button">z=2.576 <small>(99.5%)</small></button>
+            <button class="preset-btn" data-z="1.282" type="button">z=1.282 <small>上側10%点</small></button>
+            <button class="preset-btn" data-z="1.645" type="button">z=1.645 <small>上側5%点</small></button>
+            <button class="preset-btn" data-z="1.960" type="button">z=1.960 <small>上側2.5%点</small></button>
+            <button class="preset-btn" data-z="2.326" type="button">z=2.326 <small>上側1%点</small></button>
+            <button class="preset-btn" data-z="2.576" type="button">z=2.576 <small>上側0.5%点</small></button>
           </div>
         </div>
       </div>
@@ -255,6 +255,25 @@
             <div class="result-label-top" id="result-label-top">下側確率 P(X ≤ a)</div>
             <div class="result-value" id="result-prob-pct">0.00%</div>
             <div class="result-value-sub" id="result-prob-dec">0.000000</div>
+          </div>
+        </div>
+
+        <!-- z値モード: 3列確率カード -->
+        <div class="z-result-cards" id="z-result-cards" hidden>
+          <div class="z-result-card">
+            <div class="z-result-card-label">下側確率 P(Z ≤ z)</div>
+            <div class="z-result-card-value" id="z-lower-pct">—</div>
+            <div class="z-result-card-hint">累積確率</div>
+          </div>
+          <div class="z-result-card z-result-card--upper">
+            <div class="z-result-card-label">上側確率 P(Z ≥ z)</div>
+            <div class="z-result-card-value" id="z-upper-pct">—</div>
+            <div class="z-result-card-hint">片側検定 p値</div>
+          </div>
+          <div class="z-result-card z-result-card--two">
+            <div class="z-result-card-label">両側確率 2×上側</div>
+            <div class="z-result-card-value" id="z-two-pct">—</div>
+            <div class="z-result-card-hint">両側検定 p値</div>
           </div>
         </div>
 
