@@ -118,14 +118,14 @@
   <main>
     <div class="container">
 
-      <!-- 広告ユニット1（ツール上部） -->
-      <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
-
       <!-- プライバシー注記 -->
       <div class="privacy-notice">
         <i class="bi bi-shield-check"></i>
         入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
       </div>
+
+      <!-- 広告ユニット1（ツール上部） -->
+      <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
 
       <!-- メインツールセクション -->
       <section id="tool" class="tool-section">
@@ -134,15 +134,15 @@
         <div class="tabs" role="tablist" aria-label="検定タイプを選択">
           <button class="tab-btn active" id="tab-independent" role="tab" aria-selected="true" aria-controls="panel-independent" onclick="switchTab('independent')">
             <i class="bi bi-bar-chart-steps"></i>
-            <span>対応なし</span>
+            <span>対応なし（異なるグループ）</span>
           </button>
           <button class="tab-btn" id="tab-paired" role="tab" aria-selected="false" aria-controls="panel-paired" onclick="switchTab('paired')">
             <i class="bi bi-arrows-collapse"></i>
-            <span>対応あり</span>
+            <span>対応あり（同じ人の前後）</span>
           </button>
           <button class="tab-btn" id="tab-onesample" role="tab" aria-selected="false" aria-controls="panel-onesample" onclick="switchTab('onesample')">
             <i class="bi bi-1-circle"></i>
-            <span>1標本</span>
+            <span>1標本（基準値と比較）</span>
           </button>
         </div>
 
@@ -155,13 +155,13 @@
           <div class="input-grid">
             <div class="field">
               <label class="field-label" for="data-a">グループ A のデータ</label>
-              <span class="field-hint">数値を改行区切りで貼り付け（Excelからコピペ可）</span>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
               <textarea id="data-a" class="data-input" placeholder="例：&#10;23.5&#10;24.1&#10;22.8&#10;25.0&#10;23.9" rows="8" aria-label="グループAのデータ（改行区切り）"></textarea>
               <span class="input-count" id="count-a">0 件</span>
             </div>
             <div class="field">
               <label class="field-label" for="data-b">グループ B のデータ</label>
-              <span class="field-hint">数値を改行区切りで貼り付け（Excelからコピペ可）</span>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
               <textarea id="data-b" class="data-input" placeholder="例：&#10;21.2&#10;20.8&#10;22.5&#10;21.0&#10;20.3" rows="8" aria-label="グループBのデータ（改行区切り）"></textarea>
               <span class="input-count" id="count-b">0 件</span>
             </div>
@@ -185,13 +185,13 @@
           <div class="input-grid">
             <div class="field">
               <label class="field-label" for="data-before">介入前（Before）</label>
-              <span class="field-hint">数値を改行区切りで入力（n行）</span>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
               <textarea id="data-before" class="data-input" placeholder="例：&#10;72&#10;68&#10;75&#10;80&#10;65" rows="8" aria-label="介入前のデータ（改行区切り）"></textarea>
               <span class="input-count" id="count-before">0 件</span>
             </div>
             <div class="field">
               <label class="field-label" for="data-after">介入後（After）</label>
-              <span class="field-hint">Beforeと同数の行を入力</span>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
               <textarea id="data-after" class="data-input" placeholder="例：&#10;68&#10;65&#10;70&#10;74&#10;62" rows="8" aria-label="介入後のデータ（改行区切り）"></textarea>
               <span class="input-count" id="count-after">0 件</span>
             </div>
@@ -215,14 +215,14 @@
           <div class="onesample-grid">
             <div class="field">
               <label class="field-label" for="data-one">データ</label>
-              <span class="field-hint">数値を改行区切りで入力</span>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
               <textarea id="data-one" class="data-input" placeholder="例：&#10;5.2&#10;4.8&#10;5.5&#10;5.1&#10;4.9" rows="8" aria-label="1標本データ（改行区切り）"></textarea>
               <span class="input-count" id="count-one">0 件</span>
             </div>
             <div class="field mu-field">
-              <label class="field-label" for="mu0">比較する母平均 μ₀</label>
-              <span class="field-hint">帰無仮説の母平均値を入力</span>
-              <input id="mu0" type="number" step="any" placeholder="例：5.0" value="0" aria-label="比較する母平均μ₀">
+              <label class="field-label" for="mu0">比較したい基準値（μ₀）</label>
+              <span class="field-hint">例: 血中濃度の基準値5.0mg/Lと比べたい場合は5.0を入力</span>
+              <input id="mu0" type="number" step="any" placeholder="例: 5.0" value="" aria-label="比較したい基準値μ₀">
             </div>
           </div>
           <div class="btn-row">
