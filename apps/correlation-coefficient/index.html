@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="XとYのデータを貼り付けるだけでピアソン相関係数・決定係数・有意性検定を計算。散布図と回帰直線をグラフ表示。無料・登録不要で今すぐ使える統計計算ツール。">
+  <title>相関係数計算ツール（散布図・有意性検定）｜ピアソン相関 | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/correlation-coefficient/">
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "相関係数とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "相関係数（ピアソン積率相関係数）は、2つの変数の線形的な関係の強さを-1から+1の範囲で表す統計量です。+1に近いほど強い正の相関、-1に近いほど強い負の相関、0に近いほど相関がないことを意味します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "相関係数の値の目安はどう読みますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的な目安として、|r|が0.7以上で強い相関、0.4〜0.7で中程度の相関、0.2〜0.4で弱い相関、0.2未満でほぼ相関なし、と解釈されます。ただし分野や文脈によって基準が異なります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "p値とは何ですか？有意水準の判断方法を教えてください。",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "p値は「相関が偶然生じる確率」を表します。p<0.05（5%未満）であれば「統計的に有意な相関あり」と判断するのが一般的です。ただし有意差があっても実用的な意味があるかどうかは別途判断が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "相関係数と因果関係の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "相関係数は2変数の関係の強さを示すだけで、因果関係（原因と結果）を証明するものではありません。「気温とアイスの売上」のように相関があっても、第三の変数（季節）が両方に影響しているケースもあります。因果関係の証明には実験や追加的な分析が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ピアソン相関とスピアマン相関の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ピアソン相関係数は連続変数間の線形関係を測り、正規分布を前提とします。スピアマン順位相関係数はデータを順位に変換してから計算するため、外れ値の影響を受けにくく、非線形の単調関係も検出できます。順序尺度のデータや外れ値が多いデータにはスピアマン相関が適しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "決定係数R²はどのように解釈しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "決定係数R²は相関係数rの二乗で、「Y変数の変動のうちX変数で説明できる割合」を表します。例えばR²=0.64であれば、Yの変動の64%がXによって説明できることを意味します。回帰分析の当てはまりの良さを示す指標として広く使われます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "何件のデータがあれば相関係数は信頼できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的にはデータ数n≥30以上が推奨されます。データ数が少ないと偶然に高い相関係数が出やすく、有意性検定の検出力も低下します。このツールではp値と有意差判定も表示されますので、データ数とp値を合わせてご確認ください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1><i class="bi bi-graph-up-arrow"></i> 相関係数計算ツール</h1>
+      <p class="subtitle">ピアソン相関係数・決定係数・有意性検定・散布図を一括計算</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+      <div class="privacy-note">
+        <i class="bi bi-shield-lock-fill"></i>
+        入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+      </div>
+
+      <div class="input-grid">
+        <!-- X変数列 -->
+        <div class="input-col">
+          <div class="col-header">
+            <label for="x-label" class="col-label">X変数名</label>
+            <input type="text" id="x-label" class="var-name-input" value="X変数" placeholder="例: 身長 (cm)" aria-label="X変数名">
+          </div>
+          <div class="field">
+            <label class="field-label" for="x-data">Xのデータ（1行1値）</label>
+            <textarea id="x-data" rows="10" placeholder="例:&#10;160&#10;165&#10;170&#10;175&#10;180&#10;&#10;Excelからのコピペ対応" aria-label="X変数のデータ入力"></textarea>
+            <span class="field-hint">数値を1行に1つずつ入力（最大200件）</span>
+          </div>
+        </div>
+
+        <!-- Y変数列 -->
+        <div class="input-col">
+          <div class="col-header">
+            <label for="y-label" class="col-label">Y変数名</label>
+            <input type="text" id="y-label" class="var-name-input" value="Y変数" placeholder="例: 体重 (kg)" aria-label="Y変数名">
+          </div>
+          <div class="field">
+            <label class="field-label" for="y-data">Yのデータ（1行1値）</label>
+            <textarea id="y-data" rows="10" placeholder="例:&#10;55&#10;60&#10;68&#10;72&#10;80&#10;&#10;Excelからのコピペ対応" aria-label="Y変数のデータ入力"></textarea>
+            <span class="field-hint">数値を1行に1つずつ入力（最大200件）</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button id="btn-sample" class="btn-secondary" type="button">
+          <i class="bi bi-table"></i> サンプルデータを入力
+        </button>
+        <button id="btn-calc" class="btn-primary" type="button">
+          <i class="bi bi-calculator-fill"></i> 相関係数を計算
+        </button>
+        <button id="btn-clear" class="btn-ghost" type="button">
+          <i class="bi bi-trash3"></i> クリア
+        </button>
+      </div>
+
+      <div id="error-msg" class="error-msg" role="alert" aria-live="polite" hidden></div>
+
+      <!-- 結果エリア -->
+      <div id="results" class="results-area" hidden>
+        <!-- メイン指標カード -->
+        <div class="result-headline">
+          <div class="result-main-card">
+            <div class="result-value" id="r-value">—</div>
+            <div class="result-label">ピアソン相関係数 r</div>
+            <div class="result-strength" id="r-strength">—</div>
+          </div>
+          <div class="result-sub-grid">
+            <div class="result-sub-card">
+              <div class="sub-value" id="r2-value">—</div>
+              <div class="sub-label">決定係数 R²</div>
+            </div>
+            <div class="result-sub-card">
+              <div class="sub-value" id="t-value">—</div>
+              <div class="sub-label">t統計量</div>
+            </div>
+            <div class="result-sub-card">
+              <div class="sub-value" id="p-value">—</div>
+              <div class="sub-label">p値（両側）</div>
+            </div>
+            <div class="result-sub-card">
+              <div class="sub-value" id="n-value">—</div>
+              <div class="sub-label">データ数 n</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 有意差判定 -->
+        <div id="sig-badge" class="sig-badge">—</div>
+
+        <!-- 回帰式 -->
+        <div class="regression-eq">
+          <span class="eq-label">回帰式:</span>
+          <span id="eq-text" class="eq-text">—</span>
+        </div>
+
+        <!-- 散布図 -->
+        <div class="chart-wrap">
+          <canvas id="scatter-chart" aria-label="散布図と回帰直線"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+    <!-- 使い方・解説セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方・解説</h2>
+
+      <details open>
+        <summary><i class="bi bi-play-circle-fill"></i> 基本的な使い方</summary>
+        <div class="details-body">
+          <ol class="steps">
+            <li>
+              <span class="step-num">1</span>
+              <div>
+                <strong>変数名を入力</strong><br>
+                X・Y それぞれの変数名（例: 身長・体重）を入力します。省略可能です。
+              </div>
+            </li>
+            <li>
+              <span class="step-num">2</span>
+              <div>
+                <strong>データを貼り付け</strong><br>
+                ExcelやスプレッドシートのX列・Y列をそれぞれのテキストエリアにコピペします。1行に1つの数値を入力してください（最大200件）。
+              </div>
+            </li>
+            <li>
+              <span class="step-num">3</span>
+              <div>
+                <strong>「相関係数を計算」をクリック</strong><br>
+                ピアソン相関係数・決定係数・t統計量・p値・回帰式・散布図が一括表示されます。
+              </div>
+            </li>
+          </ol>
+          <p class="note-box"><i class="bi bi-lightbulb-fill"></i> 初めての方は「サンプルデータを入力」ボタンで身長・体重の例データを確認できます。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><i class="bi bi-book-fill"></i> 相関係数の読み方と注意点</summary>
+        <div class="details-body">
+          <h3>相関係数の強度の目安</h3>
+          <table class="info-table">
+            <thead>
+              <tr><th>|r| の値</th><th>解釈</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>0.9 〜 1.0</td><td>非常に強い相関</td></tr>
+              <tr><td>0.7 〜 0.9</td><td>強い相関</td></tr>
+              <tr><td>0.4 〜 0.7</td><td>中程度の相関</td></tr>
+              <tr><td>0.2 〜 0.4</td><td>弱い相関</td></tr>
+              <tr><td>0.0 〜 0.2</td><td>ほぼ相関なし</td></tr>
+            </tbody>
+          </table>
+          <h3>相関と因果は別物</h3>
+          <p>相関係数が高くても、それは2変数が関係していることを示すだけで、「AがBの原因である」という因果関係を証明するものではありません。たとえば「アイスクリームの売上と溺死者数」には正の相関がありますが、原因は第三の変数（気温・夏）です。このような現象を<strong>見かけ上の相関（疑似相関）</strong>と呼びます。因果関係の特定には実験デザインや交絡因子の制御が必要です。</p>
+          <h3>外れ値の影響</h3>
+          <p>ピアソン相関係数は外れ値（外れたデータ点）の影響を強く受けます。散布図で外れ値を確認し、外れ値が多い場合はスピアマン順位相関係数の使用も検討してください。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><i class="bi bi-bar-chart-steps"></i> ピアソン相関とスピアマン相関の違い</summary>
+        <div class="details-body">
+          <table class="info-table">
+            <thead>
+              <tr><th>項目</th><th>ピアソン相関</th><th>スピアマン相関</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>対象データ</td><td>連続量・比率尺度</td><td>順序尺度・非正規分布</td></tr>
+              <tr><td>計算方法</td><td>元の数値で計算</td><td>順位に変換して計算</td></tr>
+              <tr><td>外れ値への耐性</td><td>低い</td><td>高い</td></tr>
+              <tr><td>検出できる関係</td><td>線形関係のみ</td><td>単調関係（非線形も）</td></tr>
+              <tr><td>前提条件</td><td>正規分布が望ましい</td><td>前提条件が緩い</td></tr>
+            </tbody>
+          </table>
+          <p>身長・体重など連続的で正規分布に近いデータにはピアソン相関が適しています。アンケートの5段階評価など順序尺度のデータや外れ値が多いデータにはスピアマン相関を検討してください。</p>
+        </div>
+      </details>
+
+      <details>
+        <summary><i class="bi bi-briefcase-fill"></i> ビジネスでの活用例</summary>
+        <div class="details-body">
+          <ul class="use-cases">
+            <li>
+              <strong>マーケティング</strong><br>
+              広告費と売上の相関を分析して、広告効果を定量化する。
+            </li>
+            <li>
+              <strong>品質管理</strong><br>
+              製造工程の温度・圧力と不良率の相関を把握して、品質改善の優先順位を決める。
+            </li>
+            <li>
+              <strong>人事・組織</strong><br>
+              研修時間と成果指標の相関を分析して、研修投資の有効性を評価する。
+            </li>
+            <li>
+              <strong>医療・ヘルスケア</strong><br>
+              生活習慣（運動量・食事）と健康指標の相関を調査して、予防医学の根拠とする。
+            </li>
+            <li>
+              <strong>金融・投資</strong><br>
+              2つの株式・資産クラスの価格変動の相関を求めて、ポートフォリオの分散効果を評価する。
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <details id="faq">
+        <summary><i class="bi bi-question-circle-fill"></i> よくある質問（FAQ）</summary>
+        <div class="details-body">
+          <div class="faq-list">
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> 相関係数とは何ですか？</p>
+              <p class="faq-a">相関係数（ピアソン積率相関係数）は、2つの変数の線形的な関係の強さを-1から+1の範囲で表す統計量です。+1に近いほど強い正の相関、-1に近いほど強い負の相関、0に近いほど相関がないことを意味します。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> 相関係数の値の目安はどう読みますか？</p>
+              <p class="faq-a">一般的な目安として、|r|が0.7以上で強い相関、0.4〜0.7で中程度の相関、0.2〜0.4で弱い相関、0.2未満でほぼ相関なし、と解釈されます。ただし分野や文脈によって基準が異なります。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> p値とは何ですか？有意水準の判断方法を教えてください。</p>
+              <p class="faq-a">p値は「相関が偶然生じる確率」を表します。p&lt;0.05（5%未満）であれば「統計的に有意な相関あり」と判断するのが一般的です。ただし有意差があっても実用的な意味があるかどうかは別途判断が必要です。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> 相関係数と因果関係の違いは何ですか？</p>
+              <p class="faq-a">相関係数は2変数の関係の強さを示すだけで、因果関係（原因と結果）を証明するものではありません。第三の変数が両方に影響しているケース（疑似相関）もあります。因果関係の証明には実験や追加的な分析が必要です。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> ピアソン相関とスピアマン相関の違いは何ですか？</p>
+              <p class="faq-a">ピアソン相関係数は連続変数間の線形関係を測り、正規分布を前提とします。スピアマン順位相関係数はデータを順位に変換してから計算するため、外れ値の影響を受けにくく、非線形の単調関係も検出できます。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> 決定係数R²はどのように解釈しますか？</p>
+              <p class="faq-a">決定係数R²はrの二乗で、「Y変数の変動のうちX変数で説明できる割合」を表します。例えばR²=0.64であれば、Yの変動の64%がXによって説明できることを意味します。</p>
+            </div>
+            <div class="faq-item">
+              <p class="faq-q"><i class="bi bi-question-lg"></i> 何件のデータがあれば相関係数は信頼できますか？</p>
+              <p class="faq-a">一般的にはデータ数n≥30以上が推奨されます。データ数が少ないと偶然に高い相関係数が出やすく、有意性検定の検出力も低下します。p値とデータ数を合わせて確認してください。</p>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary><i class="bi bi-info-circle-fill"></i> 参照・免責事項</summary>
+        <div class="details-body">
+          <ul class="disclaimer-list">
+            <li>本ツールはピアソン積率相関係数の計算に基づいています。</li>
+            <li>p値はt分布によるJavaScript実装の近似値です。厳密な統計解析にはRやPythonなどの統計専門ソフトの使用を推奨します。</li>
+            <li>計算結果の解釈・活用はご自身の責任でお願いします。医療・法律・投資等の重要な判断には専門家にご相談ください。</li>
+            <li>本ツールは無料でご利用いただけますが、計算結果の正確性を保証するものではありません。</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/about.html">サイトについて</a></p>
+      <p><small>&copy; 2026 計算ラボ</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
