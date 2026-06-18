@@ -159,16 +159,19 @@
               <label class="field-label" for="n-basic">試行回数 n</label>
               <input type="number" id="n-basic" min="1" max="1000" value="10" placeholder="例: 10" required>
               <span class="field-hint">1〜1000の整数</span>
+              <span class="field-error" id="err-n-basic"></span>
             </div>
             <div class="field">
               <label class="field-label" for="p-basic">成功確率 p（%）</label>
               <input type="number" id="p-basic" min="0.001" max="99.999" step="0.001" value="30" placeholder="例: 30">
               <span class="field-hint">0.001〜99.999（%で入力）</span>
+              <span class="field-error" id="err-p-basic"></span>
             </div>
             <div class="field">
               <label class="field-label" for="k-basic">成功回数 k</label>
               <input type="number" id="k-basic" min="0" max="1000" value="3" placeholder="例: 3" required>
               <span class="field-hint">0〜n の整数</span>
+              <span class="field-error" id="err-k-basic"></span>
             </div>
             <div class="field">
               <label class="field-label" for="calc-type">計算タイプ</label>
@@ -177,6 +180,7 @@
                 <option value="lte">P(X ≤ k) k回以下（累積）</option>
                 <option value="gte">P(X ≥ k) k回以上（累積）</option>
               </select>
+              <div class="field-hint">ガチャ: k回以上 ／ 品質管理: k回以下 ／ 理論値: ちょうどk回</div>
             </div>
           </div>
           <button type="submit" class="btn-primary" id="btn-basic">
@@ -193,11 +197,13 @@
               <label class="field-label" for="gacha-rate">レアリティ確率（%）</label>
               <input type="number" id="gacha-rate" min="0.001" max="99.999" step="0.001" value="1" placeholder="例: 1">
               <span class="field-hint">例: SSR 1%、SR 3%、R 10%</span>
+              <span class="field-error" id="err-gacha-rate"></span>
             </div>
             <div class="field">
               <label class="field-label" for="gacha-ceiling">天井回数（上限）</label>
               <input type="number" id="gacha-ceiling" min="1" max="1000" value="100" placeholder="例: 100">
               <span class="field-hint">最大何連で確定排出されるか</span>
+              <span class="field-error" id="err-gacha-ceiling"></span>
             </div>
           </div>
           <button type="submit" class="btn-primary" id="btn-gacha">
@@ -215,10 +221,12 @@
               <div class="field">
                 <label class="field-label" for="a-visitors">訪問者数</label>
                 <input type="number" id="a-visitors" min="1" value="1000" placeholder="例: 1000">
+                <span class="field-error" id="err-a-visitors"></span>
               </div>
               <div class="field">
                 <label class="field-label" for="a-conversions">コンバージョン数</label>
                 <input type="number" id="a-conversions" min="0" value="50" placeholder="例: 50">
+                <span class="field-error" id="err-a-conversions"></span>
               </div>
             </div>
             <div class="ab-group">
@@ -226,10 +234,12 @@
               <div class="field">
                 <label class="field-label" for="b-visitors">訪問者数</label>
                 <input type="number" id="b-visitors" min="1" value="1000" placeholder="例: 1000">
+                <span class="field-error" id="err-b-visitors"></span>
               </div>
               <div class="field">
                 <label class="field-label" for="b-conversions">コンバージョン数</label>
                 <input type="number" id="b-conversions" min="0" value="65" placeholder="例: 65">
+                <span class="field-error" id="err-b-conversions"></span>
               </div>
             </div>
           </div>
@@ -269,6 +279,10 @@
 
         <!-- ガチャ結果 -->
         <div id="result-gacha" class="result-panel gacha-panel" hidden>
+          <div class="gacha-hero-card">
+            <div class="gacha-hero-label">天井（<span id="gacha-n-display">N</span>連）で1回以上出る確率</div>
+            <div class="gacha-hero-value"><span id="gacha-ceiling-prob">--</span>%</div>
+          </div>
           <h3 class="result-section-title"><i class="bi bi-stars"></i> 天井分析</h3>
           <div class="gacha-milestones">
             <div class="milestone-item milestone-50">

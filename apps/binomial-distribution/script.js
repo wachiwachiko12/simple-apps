@@ -190,20 +190,52 @@ formBasic.addEventListener('submit', e => {
   drawPMFChart(n, p, k, calcType);
 });
 
+// ===== インラインバリデーション ヘルパー =====
+
+function setFieldError(inputId, errorId, message) {
+  const input = document.getElementById(inputId);
+  const errEl = document.getElementById(errorId);
+  if (!input || !errEl) return;
+  if (message) {
+    input.classList.add('is-invalid');
+    errEl.textContent = message;
+    errEl.style.display = 'block';
+  } else {
+    input.classList.remove('is-invalid');
+    errEl.textContent = '';
+    errEl.style.display = 'none';
+  }
+}
+
+function clearFieldError(inputId, errorId) {
+  setFieldError(inputId, errorId, '');
+}
+
 function validateBasic(n, pPct, k) {
+  let valid = true;
+
   if (!Number.isInteger(n) || n < 1 || n > 1000) {
-    alert('試行回数 n は 1〜1000 の整数で入力してください。');
-    return false;
+    setFieldError('n-basic', 'err-n-basic', '試行回数 n は 1〜1000 の整数で入力してください。');
+    valid = false;
+  } else {
+    clearFieldError('n-basic', 'err-n-basic');
   }
+
   if (isNaN(pPct) || pPct <= 0 || pPct >= 100) {
-    alert('成功確率 p は 0.001〜99.999 の範囲で入力してください。');
-    return false;
+    setFieldError('p-basic', 'err-p-basic', '成功確率 p は 0.001〜99.999 の範囲で入力してください。');
+    valid = false;
+  } else {
+    clearFieldError('p-basic', 'err-p-basic');
   }
+
   if (!Number.isInteger(k) || k < 0 || k > n) {
-    alert(`成功回数 k は 0〜${n} の整数で入力してください。`);
-    return false;
+    setFieldError('k-basic', 'err-k-basic', `成功回数 k は 0〜${n} の整数で入力してください。`);
+    valid = false;
+  } else {
+    clearFieldError('k-basic', 'err-k-basic');
   }
-  return true;
+
+  return valid;
 }
 
 // ===== グラフ描画 =====
@@ -319,14 +351,23 @@ formGacha.addEventListener('submit', e => {
   const ratePct  = parseFloat(document.getElementById('gacha-rate').value);
   const ceiling  = parseInt(document.getElementById('gacha-ceiling').value, 10);
 
+  let gachaValid = true;
+
   if (isNaN(ratePct) || ratePct <= 0 || ratePct >= 100) {
-    alert('レアリティ確率は 0.001〜99.999 の範囲で入力してください。');
-    return;
+    setFieldError('gacha-rate', 'err-gacha-rate', 'レアリティ確率は 0.001〜99.999 の範囲で入力してください。');
+    gachaValid = false;
+  } else {
+    clearFieldError('gacha-rate', 'err-gacha-rate');
   }
+
   if (!Number.isInteger(ceiling) || ceiling < 1 || ceiling > 1000) {
-    alert('天井回数は 1〜1000 の整数で入力してください。');
-    return;
+    setFieldError('gacha-ceiling', 'err-gacha-ceiling', '天井回数は 1〜1000 の整数で入力してください。');
+    gachaValid = false;
+  } else {
+    clearFieldError('gacha-ceiling', 'err-gacha-ceiling');
   }
+
+  if (!gachaValid) return;
 
   const p = ratePct / 100;
 
@@ -350,6 +391,11 @@ formGacha.addEventListener('submit', e => {
   document.getElementById('gacha-50').textContent = m50 !== null ? `${m50}連` : '10000連超';
   document.getElementById('gacha-90').textContent = m90 !== null ? `${m90}連` : '10000連超';
   document.getElementById('gacha-99').textContent = m99 !== null ? `${m99}連` : '10000連超';
+
+  // ヒーローカード: 天井での確率
+  const ceilingProbHero = atLeastOnce(ceiling) * 100;
+  document.getElementById('gacha-n-display').textContent = ceiling;
+  document.getElementById('gacha-ceiling-prob').textContent = ceilingProbHero.toPrecision(4);
 
   // 天井コメント
   const ceilingProb = atLeastOnce(ceiling) * 100;
@@ -406,18 +452,37 @@ formAbtest.addEventListener('submit', e => {
   const nB = parseInt(document.getElementById('b-visitors').value, 10);
   const cB = parseInt(document.getElementById('b-conversions').value, 10);
 
-  if (isNaN(nA) || nA < 1 || isNaN(nB) || nB < 1) {
-    alert('訪問者数は1以上の整数を入力してください。');
-    return;
+  let abtestValid = true;
+
+  if (isNaN(nA) || nA < 1) {
+    setFieldError('a-visitors', 'err-a-visitors', '訪問者数は1以上の整数を入力してください。');
+    abtestValid = false;
+  } else {
+    clearFieldError('a-visitors', 'err-a-visitors');
   }
-  if (isNaN(cA) || cA < 0 || cA > nA) {
-    alert(`A群のコンバージョン数は 0〜${nA} で入力してください。`);
-    return;
+
+  if (isNaN(nB) || nB < 1) {
+    setFieldError('b-visitors', 'err-b-visitors', '訪問者数は1以上の整数を入力してください。');
+    abtestValid = false;
+  } else {
+    clearFieldError('b-visitors', 'err-b-visitors');
   }
-  if (isNaN(cB) || cB < 0 || cB > nB) {
-    alert(`B群のコンバージョン数は 0〜${nB} で入力してください。`);
-    return;
+
+  if (!isNaN(nA) && nA >= 1 && (isNaN(cA) || cA < 0 || cA > nA)) {
+    setFieldError('a-conversions', 'err-a-conversions', `A群のコンバージョン数は 0〜${nA} で入力してください。`);
+    abtestValid = false;
+  } else {
+    clearFieldError('a-conversions', 'err-a-conversions');
   }
+
+  if (!isNaN(nB) && nB >= 1 && (isNaN(cB) || cB < 0 || cB > nB)) {
+    setFieldError('b-conversions', 'err-b-conversions', `B群のコンバージョン数は 0〜${nB} で入力してください。`);
+    abtestValid = false;
+  } else {
+    clearFieldError('b-conversions', 'err-b-conversions');
+  }
+
+  if (!abtestValid) return;
 
   const cvrA = cA / nA;
   const cvrB = cB / nB;
@@ -482,6 +547,19 @@ formAbtest.addEventListener('submit', e => {
     interp.textContent = `現時点では有意差が確認できません（p値: ${pValue.toFixed(4)}）。`
       + ` 各群のサンプル数を増やすか、より大きな効果量を持つ施策を検討してください。`
       + ` 一般的に各群1,000件以上のデータが推奨されます。`;
+  }
+
+  // 小サンプル警告バナー（I-3）
+  const abResultHeader = document.getElementById('ab-verdict').parentElement;
+  const existingWarning = document.getElementById('ab-sample-warning');
+  if (existingWarning) existingWarning.remove();
+
+  if (nA < 100 || nB < 100) {
+    const warningEl = document.createElement('div');
+    warningEl.id = 'ab-sample-warning';
+    warningEl.className = 'sample-warning';
+    warningEl.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> サンプル数が少ないため結果の信頼性が低い可能性があります（各群100件以上を推奨）';
+    resultAbtest.insertBefore(warningEl, resultAbtest.firstChild);
   }
 
   resultAbtest.hidden = false;
