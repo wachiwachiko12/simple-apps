@@ -106,13 +106,13 @@
     <div class="header-inner">
       <div class="header-badge"><i class="bi bi-graph-up-arrow"></i> 資産運用シミュレーター</div>
       <h1>複利計算シミュレーター</h1>
-      <p class="subtitle">毎月積立・初期投資・年利・運用年数を入力して将来の資産を可視化</p>
+      <p class="subtitle">毎月の積立でいくら貯まる？ NISA・iDeCoの複利効果を30秒でシミュレーション</p>
     </div>
   </header>
 
   <main>
     <!-- 広告ユニット1（ツール上部） -->
-    <div class="ad-unit" id="ad-top" aria-hidden="true">広告スペース</div>
+    <div class="ad-unit" id="ad-top">広告スペース</div>
 
     <!-- プライバシー注記 -->
     <div class="privacy-notice">
@@ -179,6 +179,8 @@
             <span class="check-text">7%（楽観的）</span>
           </label>
         </div>
+        <p class="scenario-note">※1つ以上選択してください</p>
+        <span id="scenario-error" class="field-error"></span>
       </div>
 
       <button type="button" id="calcBtn" class="btn-primary">
@@ -225,7 +227,7 @@
       </div>
 
       <!-- 広告ユニット2（結果下） -->
-      <div class="ad-unit" id="ad-result" aria-hidden="true">広告スペース</div>
+      <div class="ad-unit" id="ad-result">広告スペース</div>
 
       <!-- 比較テーブル -->
       <div class="table-wrapper card">
@@ -238,6 +240,13 @@
             <tbody id="tableBody"></tbody>
           </table>
         </div>
+      </div>
+
+      <!-- 次のステップ CTA -->
+      <div class="next-action-block">
+        <p class="next-action-title">📋 次のステップ</p>
+        <a href="/articles/nisa-withdrawal-guide.html" class="next-action-link">新NISAの取崩し方を解説</a>
+        <a href="/apps/nisa-withdrawal/" class="next-action-link">新NISA取崩しシミュレーターを使う</a>
       </div>
 
     </section>
@@ -257,9 +266,9 @@
             <li><strong>毎月積立額</strong>を入力します（例: 毎月30,000円）。</li>
             <li><strong>年利</strong>を入力します。全世界株式インデックスの長期平均は5〜7%程度です。</li>
             <li><strong>運用年数</strong>を入力します（例: 30年間積み立てる場合は30）。</li>
-            <li><strong>比較シナリオ</strong>で複数の利回りを同時に確認できます。</li>
             <li>「シミュレーション実行」ボタンを押すと結果が表示されます。</li>
           </ol>
+          <p class="mt"><strong>応用:</strong> 「比較利回りシナリオ」で3%・5%・7%を同時チェックすると、複数の利回りを1つのグラフで比較できます。</p>
         </div>
       </details>
 

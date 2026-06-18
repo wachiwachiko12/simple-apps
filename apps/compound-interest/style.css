@@ -281,6 +281,27 @@ main {
   font-weight: 500;
 }
 
+.scenario-note {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* ============================================================
+   Inline Validation
+   ============================================================ */
+.is-invalid {
+  border-color: #dc2626 !important;
+}
+
+.field-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  display: block;
+  min-height: 1em;
+}
+
 /* ============================================================
    Primary Button
    ============================================================ */
@@ -652,6 +673,33 @@ details[open] .accordion-arrow {
   color: var(--text-muted);
   font-size: 0.875rem;
   padding-left: 1.375rem;
+}
+
+/* ============================================================
+   Next Action CTA
+   ============================================================ */
+.next-action-block {
+  background: #f0fdf4;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.next-action-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.next-action-link {
+  display: block;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.next-action-link:hover {
+  text-decoration: underline;
 }
 
 /* ============================================================

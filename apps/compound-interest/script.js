@@ -203,27 +203,67 @@ function renderTable(pv, pmt, scenarios, maxYears) {
 }
 
 // ============================================================
+// バリデーションヘルパー
+// ============================================================
+function setFieldError(fieldId, message) {
+  const input = document.getElementById(fieldId);
+  if (!input) return;
+  input.classList.add('is-invalid');
+  let errEl = input.parentElement.querySelector('.field-error');
+  if (!errEl) {
+    errEl = document.createElement('span');
+    errEl.className = 'field-error';
+    input.parentElement.appendChild(errEl);
+  }
+  errEl.textContent = message;
+}
+
+function clearFieldError(fieldId) {
+  const input = document.getElementById(fieldId);
+  if (!input) return;
+  input.classList.remove('is-invalid');
+  const errEl = input.parentElement.querySelector('.field-error');
+  if (errEl) errEl.textContent = '';
+}
+
+function clearAllErrors() {
+  ['initial', 'monthly', 'rate', 'years'].forEach(clearFieldError);
+  const scenarioErr = document.getElementById('scenario-error');
+  if (scenarioErr) scenarioErr.textContent = '';
+}
+
+// ============================================================
 // メイン計算処理
 // ============================================================
 function runSimulation() {
+  clearAllErrors();
+
   // 入力値取得
-  const pv   = parseFloat(document.getElementById('initial').value) * 10000 || 0;
-  const pmt  = parseFloat(document.getElementById('monthly').value) || 0;
-  const rate = parseFloat(document.getElementById('rate').value);
-  const years = parseInt(document.getElementById('years').value, 10);
+  const pvRaw  = parseFloat(document.getElementById('initial').value);
+  const pmtRaw = parseFloat(document.getElementById('monthly').value);
+  const rate   = parseFloat(document.getElementById('rate').value);
+  const years  = parseInt(document.getElementById('years').value, 10);
+  const pv     = (isNaN(pvRaw) ? 0 : pvRaw) * 10000;
+  const pmt    = isNaN(pmtRaw) ? 0 : pmtRaw;
 
   // バリデーション
+  let hasError = false;
+
   if (isNaN(rate) || rate < 0.1 || rate > 15) {
-    alert('年利は0.1〜15%の範囲で入力してください。');
-    return;
+    setFieldError('rate', '0.1〜15%の範囲で入力してください。');
+    hasError = true;
   }
   if (isNaN(years) || years < 1 || years > 50) {
-    alert('運用年数は1〜50年の範囲で入力してください。');
-    return;
+    setFieldError('years', '1〜50年の範囲で入力してください。');
+    hasError = true;
   }
-  if (pv < 0 || pmt < 0) {
-    alert('金額は0以上の値を入力してください。');
-    return;
+  if (!isNaN(pvRaw) && pvRaw < 0) {
+    setFieldError('initial', '0以上の値を入力してください。');
+    hasError = true;
+  }
+  if (!isNaN(pmtRaw) && pmtRaw < 0) {
+    setFieldError('monthly', '0以上の値を入力してください。');
+    hasError = true;
   }
 
   // 比較シナリオ
@@ -233,9 +273,12 @@ function runSimulation() {
     if (cb && cb.checked) scenarios.push(r);
   });
   if (scenarios.length === 0) {
-    alert('比較利回りシナリオを1つ以上選択してください。');
-    return;
+    const scenarioErr = document.getElementById('scenario-error');
+    if (scenarioErr) scenarioErr.textContent = '1つ以上選択してください。';
+    hasError = true;
   }
+
+  if (hasError) return;
 
   // メインシナリオで計算（入力年利 or チェック済み最初のシナリオ）
   const mainRate = rate / 100;
