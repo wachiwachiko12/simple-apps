@@ -139,13 +139,28 @@ function switchMode(mode) {
     panelZ.hidden = false;
     panelProb.hidden = true;
   }
+  updateButtonLabel();
+}
+
+// I-1: モードに応じてボタンラベルを切り替える
+function updateButtonLabel() {
+  const btn = document.getElementById('calc-btn');
+  if (!btn) return;
+  if (currentMode === 'z') {
+    btn.innerHTML = '<i class="bi bi-arrow-left-right"></i> z値から確率を求める';
+  } else {
+    btn.innerHTML = '<i class="bi bi-calculator-fill"></i> 確率を計算する';
+  }
 }
 
 // ===========================
 // 計算タイプ切替（区間確率の場合はb入力を表示）
 // ===========================
 calcTypeRadios.forEach(radio => {
-  radio.addEventListener('change', updateBoundFields);
+  radio.addEventListener('change', () => {
+    updateBoundFields();
+    updatePlaceholders();
+  });
 });
 
 function updateBoundFields() {
@@ -153,6 +168,19 @@ function updateBoundFields() {
   const isInterval = type === 'interval';
   fieldSep.hidden = !isInterval;
   fieldB.hidden   = !isInterval;
+}
+
+// I-4: 計算タイプに応じてplaceholderをコンテキスト例に変更
+function updatePlaceholders() {
+  const type = getCalcType();
+  if (type === 'lower') {
+    xaInput.placeholder = '例: 1.645（上位5%点）';
+  } else if (type === 'upper') {
+    xaInput.placeholder = '例: 0（平均値）';
+  } else {
+    xaInput.placeholder = '例: -1.96';
+    xbInput.placeholder = '例: 1.96';
+  }
 }
 
 function getCalcType() {
@@ -261,15 +289,12 @@ function calcFromZ() {
 
   const lower = stdNormalCDF(z);
   const upper = 1 - lower;
-
-  const labelTop = `下側確率 P(Z ≤ ${z}) | 上側: ${fmtPct(upper)}`;
+  const twoSided = upper * 2;
 
   // z値モードは下側確率をメインで表示
-  const prob = lower;
-  const complement = upper;
   const complementHint = `上側確率 P(Z > ${z})`;
 
-  displayResultZ(prob, complement, z, complementHint);
+  displayResultZ(lower, upper, twoSided, z, complementHint);
   // グラフ: 標準正規分布で x=z に下側確率表示
   updateChart(0, 1, 'lower', z, null);
 }
@@ -290,27 +315,42 @@ function displayResult(prob, complement, zVal, labelTop, complementHint, mu, sig
   resultComplementHint.textContent = complementHint;
   resultZHint.textContent     = zHintText(zVal);
 
+  // z値モードカードは非表示（通常モード時）
+  const zResultCards = document.getElementById('z-result-cards');
+  if (zResultCards) zResultCards.hidden = true;
+
   interpretationText.textContent = buildInterpretation(prob, complement, type, mu, sigma, a, b);
 }
 
-function displayResultZ(prob, complement, z, complementHint) {
+function displayResultZ(lower, upper, twoSided, z, complementHint) {
   emptyState.hidden = true;
   errorMsg.hidden   = true;
   resultBody.hidden = false;
 
+  // メイン表示: 下側確率
   resultLabelTop.textContent  = `下側確率 P(Z ≤ ${z})`;
-  resultProbPct.textContent   = fmtPct(prob);
-  resultProbDec.textContent   = fmtDec(prob);
+  resultProbPct.textContent   = fmtPct(lower);
+  resultProbDec.textContent   = fmtDec(lower);
   resultZEl.textContent       = fmtZ(z);
-  resultComplement.textContent = fmtPct(complement);
+  resultComplement.textContent = fmtPct(upper);
   resultComplementHint.textContent = complementHint;
   resultZHint.textContent     = zHintText(z);
 
-  const pct = (prob * 100).toFixed(2);
-  const upperPct = (complement * 100).toFixed(2);
+  // I-3: 3列カードに下側・上側・両側確率を表示
+  const zResultCards = document.getElementById('z-result-cards');
+  if (zResultCards) {
+    zResultCards.hidden = false;
+    document.getElementById('z-lower-pct').textContent = fmtPct(lower);
+    document.getElementById('z-upper-pct').textContent = fmtPct(upper);
+    document.getElementById('z-two-pct').textContent   = fmtPct(Math.min(twoSided, 1));
+  }
+
+  const pct = (lower * 100).toFixed(2);
+  const upperPct = (upper * 100).toFixed(2);
+  const twoPct = (Math.min(twoSided, 1) * 100).toFixed(2);
   interpretationText.textContent
     = `z値 ${z} は標準正規分布において下側 ${pct}%（上位 ${upperPct}%）に相当します。`
-    + ` 統計検定では z=${z >= 0 ? z : -z} 以上の絶対値を持つ値が発生する確率は両側で ${(Math.min(prob, complement) * 200).toFixed(2)}% です。`;
+    + ` 片側検定のp値は ${upperPct}%、両側検定のp値は ${twoPct}% です。`;
 }
 
 function zHintText(z) {
@@ -537,4 +577,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 区間フィールドの初期状態
   updateBoundFields();
+
+  // I-1: 初期ボタンラベルを設定
+  updateButtonLabel();
+
+  // I-4: 初期placeholderを設定
+  updatePlaceholders();
 });
