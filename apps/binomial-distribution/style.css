@@ -802,12 +802,44 @@ footer a:hover {
 
 /* ===== Error State ===== */
 .field-error {
-  font-size: 0.8125rem;
-  color: var(--primary);
+  color: #dc2626;
+  font-size: 0.8rem;
   margin-top: 0.25rem;
+  display: none;
 }
 
-input.is-invalid {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.12);
+.is-invalid {
+  border-color: #dc2626 !important;
+}
+
+/* ===== Gacha Hero Card ===== */
+.gacha-hero-card {
+  background: var(--primary-light, #fee2e2);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.gacha-hero-label {
+  font-size: 0.9rem;
+  color: #7f1d1d;
+  margin-bottom: 0.5rem;
+}
+
+.gacha-hero-value {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  color: var(--primary, #dc2626);
+}
+
+/* ===== Sample Warning ===== */
+.sample-warning {
+  background: #fefce8;
+  border-left: 3px solid #eab308;
+  color: #713f12;
+  padding: 0.6rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
 }
