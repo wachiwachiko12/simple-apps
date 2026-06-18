@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="2群のデータを貼り付けるだけでt統計量・p値・有意差を自動計算。対応あり（paired）と対応なし（独立2標本）に対応。効果量Cohen's dや95%信頼区間も表示。研究・論文・品質管理に。">
+  <title>t検定 計算ツール｜対応あり・なし・p値・有意差を自動判定</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/t-test/">
+  <!-- OGP -->
+  <meta property="og:title" content="t検定 計算ツール｜対応あり・なし・p値・有意差を自動判定">
+  <meta property="og:description" content="2群のデータを貼り付けるだけでt統計量・p値・有意差を自動計算。対応あり（paired）と対応なし（独立2標本）に対応。研究・論文・品質管理に。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/t-test/">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "t検定とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "t検定は2つのグループの平均値に統計的に意味のある差があるかどうかを調べる仮説検定の手法です。「帰無仮説（差がない）」を棄却できるかどうかを、t統計量とp値を用いて判断します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "対応ありと対応なしt検定はどう使い分けますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "同一被験者・同一個体を2回測定したデータ（例：治療前後、左右差）には「対応あり（paired）t検定」を使います。異なるグループを比較する場合（例：男性群と女性群）は「対応なし（独立2標本）t検定」を使います。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "p値が0.05未満なら必ず有意差ありですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "慣習的にp < 0.05で「統計的に有意」とされますが、これは絶対的な基準ではありません。サンプルサイズが大きいほど小さな差でもp < 0.05になりえます。効果量（Cohen's d）も合わせて確認し、実質的な意味のある差かどうかを総合的に判断してください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "p = 0.06は有意ではないのですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "p = 0.06はα = 0.05の基準では「有意でない」とされますが、「差がない証明」ではありません。あくまで「現在のデータでは有意水準0.05での棄却には至らなかった」という意味です。サンプルサイズを増やすか、効果量を検討してください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "サンプルサイズはいくつ必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に各群30以上あれば中心極限定理が働き安定しますが、効果量が小さい場合はさらに多くの標本が必要です。Cohen's d = 0.5（中程度）でα = 0.05、検出力80%の場合、各群約64サンプルが目安です。事前にサンプルサイズ計算（検出力分析）を行うことを推奨します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Welch t検定とStudent t検定の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Student t検定は2群の分散が等しいと仮定しますが、Welch t検定は分散が異なっていても適用できます。現代の統計学ではWelch t検定がデフォルト推奨とされており、分散が等しい場合でも精度の劣化が少ないためです。このツールでは対応なしt検定にWelch法を採用しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Cohen's dの効果量はどう解釈しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cohen（1988）の基準では、d = 0.2は小さい効果量、d = 0.5は中程度の効果量、d = 0.8以上は大きい効果量とされています。p値が有意でも効果量が小さければ実用的意味は限定的です。逆にサンプル数が少ない場合、効果量は大きくてもp値が有意にならないこともあります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "入力データはどこかに送信されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "いいえ。入力したすべてのデータはブラウザ内のJavaScriptのみで計算されます。サーバーへの送信は一切行われないため、機密データも安心してご利用いただけます。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <h1>t検定 計算ツール</h1>
+      <p class="subtitle">対応あり・なし・1標本 対応。p値・有意差・効果量を自動判定</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- プライバシー注記 -->
+      <div class="privacy-notice">
+        <i class="bi bi-shield-check"></i>
+        入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+      </div>
+
+      <!-- 広告ユニット1（ツール上部） -->
+      <div class="ad-unit" id="ad-top" aria-hidden="true"></div>
+
+      <!-- メインツールセクション -->
+      <section id="tool" class="tool-section">
+
+        <!-- タブ切替 -->
+        <div class="tabs" role="tablist" aria-label="検定タイプを選択">
+          <button class="tab-btn active" id="tab-independent" role="tab" aria-selected="true" aria-controls="panel-independent" onclick="switchTab('independent')">
+            <i class="bi bi-bar-chart-steps"></i>
+            <span>対応なし（異なるグループ）</span>
+          </button>
+          <button class="tab-btn" id="tab-paired" role="tab" aria-selected="false" aria-controls="panel-paired" onclick="switchTab('paired')">
+            <i class="bi bi-arrows-collapse"></i>
+            <span>対応あり（同じ人の前後）</span>
+          </button>
+          <button class="tab-btn" id="tab-onesample" role="tab" aria-selected="false" aria-controls="panel-onesample" onclick="switchTab('onesample')">
+            <i class="bi bi-1-circle"></i>
+            <span>1標本（基準値と比較）</span>
+          </button>
+        </div>
+
+        <!-- タブ1: 対応なし -->
+        <div class="tab-panel active" id="panel-independent" role="tabpanel" aria-labelledby="tab-independent">
+          <div class="tab-description">
+            <i class="bi bi-info-circle"></i>
+            <strong>Welch t検定（独立2標本）</strong> — 異なるグループの平均値を比較します。分散が異なっていても適用できます。
+          </div>
+          <div class="input-grid">
+            <div class="field">
+              <label class="field-label" for="data-a">グループ A のデータ</label>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
+              <textarea id="data-a" class="data-input" placeholder="例：&#10;23.5&#10;24.1&#10;22.8&#10;25.0&#10;23.9" rows="8" aria-label="グループAのデータ（改行区切り）"></textarea>
+              <span class="input-count" id="count-a">0 件</span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="data-b">グループ B のデータ</label>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
+              <textarea id="data-b" class="data-input" placeholder="例：&#10;21.2&#10;20.8&#10;22.5&#10;21.0&#10;20.3" rows="8" aria-label="グループBのデータ（改行区切り）"></textarea>
+              <span class="input-count" id="count-b">0 件</span>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="loadSampleIndependent()">
+              <i class="bi bi-database"></i> サンプルデータ
+            </button>
+            <button class="btn-primary" onclick="runIndependent()">
+              <i class="bi bi-calculator"></i> 計算する
+            </button>
+          </div>
+        </div>
+
+        <!-- タブ2: 対応あり -->
+        <div class="tab-panel" id="panel-paired" role="tabpanel" aria-labelledby="tab-paired">
+          <div class="tab-description">
+            <i class="bi bi-info-circle"></i>
+            <strong>対応ありt検定（paired）</strong> — 同一被験者の介入前後など、ペアになったデータを比較します。
+          </div>
+          <div class="input-grid">
+            <div class="field">
+              <label class="field-label" for="data-before">介入前（Before）</label>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
+              <textarea id="data-before" class="data-input" placeholder="例：&#10;72&#10;68&#10;75&#10;80&#10;65" rows="8" aria-label="介入前のデータ（改行区切り）"></textarea>
+              <span class="input-count" id="count-before">0 件</span>
+            </div>
+            <div class="field">
+              <label class="field-label" for="data-after">介入後（After）</label>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
+              <textarea id="data-after" class="data-input" placeholder="例：&#10;68&#10;65&#10;70&#10;74&#10;62" rows="8" aria-label="介入後のデータ（改行区切り）"></textarea>
+              <span class="input-count" id="count-after">0 件</span>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="loadSamplePaired()">
+              <i class="bi bi-database"></i> サンプルデータ
+            </button>
+            <button class="btn-primary" onclick="runPaired()">
+              <i class="bi bi-calculator"></i> 計算する
+            </button>
+          </div>
+        </div>
+
+        <!-- タブ3: 1標本 -->
+        <div class="tab-panel" id="panel-onesample" role="tabpanel" aria-labelledby="tab-onesample">
+          <div class="tab-description">
+            <i class="bi bi-info-circle"></i>
+            <strong>1標本t検定</strong> — 1群のデータが特定の母平均μ₀と異なるかを検定します。H₀: μ = μ₀
+          </div>
+          <div class="onesample-grid">
+            <div class="field">
+              <label class="field-label" for="data-one">データ</label>
+              <span class="field-hint">ExcelでA列を選択→Ctrl+C→そのまま貼り付けOK。ヘッダー行（文字）は自動で無視されます。</span>
+              <textarea id="data-one" class="data-input" placeholder="例：&#10;5.2&#10;4.8&#10;5.5&#10;5.1&#10;4.9" rows="8" aria-label="1標本データ（改行区切り）"></textarea>
+              <span class="input-count" id="count-one">0 件</span>
+            </div>
+            <div class="field mu-field">
+              <label class="field-label" for="mu0">比較したい基準値（μ₀）</label>
+              <span class="field-hint">例: 血中濃度の基準値5.0mg/Lと比べたい場合は5.0を入力</span>
+              <input id="mu0" type="number" step="any" placeholder="例: 5.0" value="" aria-label="比較したい基準値μ₀">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-secondary" onclick="loadSampleOneSample()">
+              <i class="bi bi-database"></i> サンプルデータ
+            </button>
+            <button class="btn-primary" onclick="runOneSample()">
+              <i class="bi bi-calculator"></i> 計算する
+            </button>
+          </div>
+        </div>
+
+        <!-- 結果エリア -->
+        <div id="result-area" class="result-area" role="region" aria-live="polite" aria-label="計算結果">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-icon"><i class="bi bi-bar-chart"></i></div>
+            <p class="empty-title">データを入力して「計算する」を押してください</p>
+            <p class="empty-desc">t統計量・p値・有意差・効果量を自動で算出します</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true"></div>
+
+      <!-- 使い方・解説セクション -->
+      <section id="howto" class="howto-section">
+        <h2 class="section-title"><i class="bi bi-book"></i> 使い方・解説</h2>
+
+        <details class="accordion">
+          <summary class="accordion-header">
+            <span><i class="bi bi-play-circle"></i> 基本的な使い方</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <ol class="howto-steps">
+              <li><strong>検定タイプを選択</strong>：「対応なし」「対応あり」「1標本」の中から目的に合ったタブを選びます。</li>
+              <li><strong>データを入力</strong>：Excelなどから数値列をコピーして貼り付けるか、1行に1つずつ数値を入力します。</li>
+              <li><strong>「計算する」をクリック</strong>：t統計量・自由度・p値・有意差判定・効果量・95%信頼区間が表示されます。</li>
+              <li><strong>結果を確認</strong>：p値が0.05未満なら有意差ありと判定されます。効果量（Cohen's d）も合わせて解釈してください。</li>
+            </ol>
+            <p>サンプルデータボタンをクリックすると、デモ用のデータが自動で入力されます。</p>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-header">
+            <span><i class="bi bi-question-circle"></i> t検定とは（仮説検定の考え方）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>t検定は「2つのグループの母平均に差がない（帰無仮説 H₀）」という仮定のもとで、観測されたデータがどれくらい稀か（p値）を計算する統計的手法です。</p>
+            <p>t統計量は標本平均の差を標準誤差で割った値で、この値が大きいほど「差がない」という仮説が成り立ちにくいことを示します。</p>
+            <p>p値はそのt統計量以上の値が「偶然」起こる確率を表しており、一般的にp &lt; 0.05（5%）を有意水準として用います。ただしこれは慣習的な閾値であり、分野や研究目的によって異なります。</p>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-header">
+            <span><i class="bi bi-arrows-expand"></i> 対応あり・なしの選び方</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <table class="comparison-table">
+              <thead>
+                <tr><th>検定タイプ</th><th>使うシチュエーション</th><th>例</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>対応なし</strong><br>（独立2標本）</td>
+                  <td>2つの異なるグループを比較する</td>
+                  <td>男性群と女性群の血圧比較、処置群と対照群の比較</td>
+                </tr>
+                <tr>
+                  <td><strong>対応あり</strong><br>（paired）</td>
+                  <td>同一被験者・同一個体の2回測定</td>
+                  <td>薬投与前後の血圧、左手と右手の握力、同じ患者の治療前後</td>
+                </tr>
+                <tr>
+                  <td><strong>1標本</strong></td>
+                  <td>1つのグループを既知の値と比較</td>
+                  <td>工場ラインの製品重量が規格値と等しいか検証</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>対応ありt検定は個体差を除外できるため、対応なしより検出力が高い傾向があります。ただしペアの順番が対応していることが前提です。</p>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-header">
+            <span><i class="bi bi-exclamation-triangle"></i> p値と有意水準の誤解・注意点</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <ul>
+              <li><strong>p値は「差がある確率」ではありません。</strong>p値は「帰無仮説が正しいと仮定した場合に、観測されたデータと同等かそれ以上に極端なデータが得られる確率」です。</li>
+              <li><strong>p &lt; 0.05は「統計的有意」を意味するだけです。</strong>実際の差が大きいかどうか（実質的有意性）はp値だけでは分かりません。効果量（Cohen's d）を確認してください。</li>
+              <li><strong>サンプルサイズの影響。</strong>サンプルが大きいほどわずかな差でもp &lt; 0.05になります。逆にサンプルが小さいと大きな差でも有意にならないことがあります。</li>
+              <li><strong>多重比較の問題。</strong>同じデータに対して複数の検定を繰り返すと偽陽性率が上昇します（複数の検定を行う場合はボンフェローニ補正等を検討してください）。</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-header">
+            <span><i class="bi bi-rulers"></i> 効果量（Cohen's d）の読み方</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>効果量はグループ間の差の大きさを、標準偏差の倍数で表した値です。サンプルサイズに依存せず、差の実質的な大きさを示します。</p>
+            <table class="comparison-table">
+              <thead>
+                <tr><th>Cohen's d</th><th>効果量の大きさ</th><th>解釈の目安</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0.2 未満</td><td>非常に小さい</td><td>実践的にはほとんど差がないレベル</td></tr>
+                <tr><td>0.2 〜 0.5</td><td>小さい</td><td>注意深く見ると差が確認できる程度</td></tr>
+                <tr><td>0.5 〜 0.8</td><td>中程度</td><td>目視でも分かる程度の差</td></tr>
+                <tr><td>0.8 以上</td><td>大きい</td><td>明確に大きな差がある</td></tr>
+              </tbody>
+            </table>
+            <p>Cohen's d = 0.2のような小効果量では、p &lt; 0.05でも実用上意味のある差とは言えないことが多いです。論文ではp値と効果量の両方を報告することが推奨されています。</p>
+          </div>
+        </details>
+
+        <details class="accordion" id="faq">
+          <summary class="accordion-header">
+            <span><i class="bi bi-chat-dots"></i> よくある質問（FAQ）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <div class="faq-list">
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> p = 0.06は有意ではないのですか？</p>
+                <p class="faq-a">α = 0.05の基準では「有意でない」と判定されますが、それは「差がない証明」ではありません。「このデータでは5%水準での棄却には至らなかった」という意味です。サンプルサイズを増やすか、効果量を確認し総合的に判断してください。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> サンプルサイズはいくつ必要ですか？</p>
+                <p class="faq-a">Cohen's d = 0.5（中程度効果量）、α = 0.05、検出力80%の場合、各群約64サンプルが目安です。小さい効果量（d = 0.2）の場合は各群約200以上必要になります。事前にサンプルサイズ計算（検出力分析）を行うことを強く推奨します。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> Welch t検定と通常のStudentのt検定はどちらを使うべきですか？</p>
+                <p class="faq-a">現代の統計学ではWelch t検定がデフォルト推奨です。分散が等しい場合でもWelchの精度劣化は最小限で、分散が異なる場合はStudent法より正確です。このツールでは対応なし検定にWelch法を採用しています。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> データが正規分布に従っていない場合は？</p>
+                <p class="faq-a">t検定は正規分布を仮定していますが、各群n ≥ 30程度あれば中心極限定理により近似的に適用できます。サンプルが少なく正規性が疑われる場合は、Mann-Whitney U検定（対応なし）やWilcoxon符号順位検定（対応あり）などのノンパラメトリック手法を検討してください。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 95%信頼区間はどう解釈しますか？</p>
+                <p class="faq-a">「真の平均差が95%の確率でこの区間に入る」というものではありません。正しくは「同様の手続きを繰り返した場合、得られた信頼区間の95%が真の値を含む」という意味です。信頼区間が0を含まない場合は、α = 0.05での有意差ありに対応します。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 計算結果は論文に使えますか？</p>
+                <p class="faq-a">このツールはJavaScriptで標準的なWelch t検定・paired t検定の計算式を実装しており、一般的な統計ソフト（R, SPSS, Excel）と同等の結果が得られます。ただし重要な研究用途では、検証済みの統計ソフトウェアでの確認を推奨します。本ツールの利用によって生じた損害について責任を負いかねます。</p>
+              </div>
+              <div class="faq-item">
+                <p class="faq-q"><i class="bi bi-question-circle-fill"></i> 対応あり検定でペアの数が合わない場合はどうなりますか？</p>
+                <p class="faq-a">対応ありt検定では介入前と介入後のデータ数が一致している必要があります。数が合わない場合はエラーが表示されます。欠損値がある場合はそのペアを除外して再入力してください。</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion">
+          <summary class="accordion-header">
+            <span><i class="bi bi-shield-exclamation"></i> 免責事項・参照</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            <p>本ツールはブラウザ上のJavaScriptのみで計算を行い、入力データはサーバーに送信されません。計算結果は参考目的でのみ使用し、重要な意思決定（医療・法律・金融等）には専門家にご相談ください。</p>
+            <p><strong>参照文献：</strong></p>
+            <ul>
+              <li>Cohen, J. (1988). Statistical power analysis for the behavioral sciences (2nd ed.). Erlbaum.</li>
+              <li>Welch, B. L. (1947). The generalization of "Student's" problem when several different population variances are involved. Biometrika, 34(1-2), 28-35.</li>
+              <li>Abramowitz, M. &amp; Stegun, I. A. (1964). Handbook of mathematical functions.</li>
+            </ul>
+          </div>
+        </details>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-links">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <span class="footer-sep">|</span>
+        <a href="/">ツール一覧</a>
+      </p>
+      <p class="footer-copy"><small>&copy; 2026 計算ラボ（keisanlab.jp）</small></p>
+    </div>
+  </footer>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
