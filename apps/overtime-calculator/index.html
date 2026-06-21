@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="残業代（割増賃金）を自動計算。月給制・時給制に対応し、法定外残業(25%)・深夜残業(50%)・休日労働(35%)の割増賃金と未払い残業代の総額を即計算。完全無料。">
+  <title>残業代計算ツール｜月給・時給の割増賃金を自動計算【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/overtime-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="残業代計算ツール｜月給・時給の割増賃金を自動計算【無料】">
+  <meta property="og:description" content="残業代（割増賃金）を自動計算。月給制・時給制に対応し、法定外残業(25%)・深夜残業(50%)・休日労働(35%)の割増賃金と未払い残業代の総額を即計算。完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/overtime-calculator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-overtime-calculator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="残業代計算ツール｜月給・時給の割増賃金を自動計算【無料】">
+  <meta name="twitter:description" content="残業代（割増賃金）を自動計算。月給制・時給制に対応し、法定外残業(25%)・深夜残業(50%)・休日労働(35%)の割増賃金と未払い残業代の総額を即計算。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-overtime-calculator.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "残業代の割増率は何パーセントですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "労働基準法による割増率は次の通りです。法定外残業（月60時間以内）は25%増し、法定外残業（月60時間超）は50%増し、深夜労働（22時〜5時）は25%増し、休日労働は35%増しです。法定外残業と深夜労働が重なる場合は合算して50%増し（25%+25%）となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "月給制の場合、1時間あたりの賃金はどう計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "月給制の場合、1時間あたりの基本賃金は「月給 ÷ 月所定労働時間」で計算します。例えば月給30万円で月所定労働時間160時間の場合、時給換算は300,000÷160=1,875円となります。この時給をもとに各残業種類の割増賃金が計算されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "未払い残業代は何年さかのぼって請求できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2020年4月の法改正により、残業代（賃金）の時効は3年に延長されました（改正前は2年）。ただし実務上は証拠収集の観点から過去2〜3年分を請求するケースが多いです。本ツールでは参考として2年分（24か月）の合計額を表示しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "法定内残業と法定外残業の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "法定労働時間は1日8時間・1週40時間です。会社が定める所定労働時間（例:7時間）を超えても法定の8時間に達するまでの残業は「法定内残業」といい、割増賃金の支払い義務はありません（基本賃金のみ）。法定の8時間を超えた残業が「法定外残業」となり、25%以上の割増賃金が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "深夜残業の割増率はどう計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "深夜労働（22時〜翌5時）は25%の割増が義務付けられています。法定外残業（25%）と深夜労働（25%）が重なる場合は合算して50%増しとなります。また休日労働（35%）に深夜が重なる場合は60%増しとなります。本ツールでは各ケースを個別に入力して合計額を計算できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "36協定（さぶろく協定）とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "36協定とは、労働基準法第36条に基づく「時間外・休日労働に関する協定」のことです。使用者が従業員を法定労働時間を超えて働かせるには、労働者の過半数代表と書面による協定を締結し、労働基準監督署に届け出る必要があります。月45時間・年360時間が上限（特別条項は月100時間未満・年720時間以内）です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "残業代が支払われない場合どうすればいいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "未払い残業代が発生している場合、まず勤務先に内容証明郵便で請求する方法があります。解決しない場合は労働基準監督署への申告、労働局のあっせん制度の利用、または弁護士・社会保険労務士への相談が有効です。タイムカードや業務記録など、労働時間を証明できる証拠を保管しておくことが重要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "管理職は残業代が出ないのですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "労働基準法上の「管理監督者」は残業代（法定外・休日労働の割増賃金）の対象外ですが、深夜労働の割増賃金は支払われます。ただし肩書きが「課長」「部長」であっても、実態として労働時間の自由裁量がなく経営に参画していない場合は管理監督者に該当せず、残業代の請求が認められたケースも多数あります。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-briefcase-fill"></i></div>
+      <h1>残業代計算ツール — 法定・深夜・休日割増賃金を正確計算</h1>
+      <p class="header-sub">月給制・時給制に対応。割増賃金の種類別に入力するだけで自動計算</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <!-- AdSense: レスポンシブ横長バナー -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice" role="note">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 雇用形態タブ + 入力フォーム -->
+    <section class="card input-card" id="tool">
+      <h2 class="section-title"><i class="bi bi-calculator-fill"></i> 残業代を計算する</h2>
+
+      <div class="tab-bar" role="tablist" aria-label="雇用形態を選択">
+        <button class="tab-btn active" id="tab-monthly" role="tab" aria-selected="true" aria-controls="panel-monthly" data-tab="monthly">
+          <i class="bi bi-calendar3"></i> 月給制
+        </button>
+        <button class="tab-btn" id="tab-hourly" role="tab" aria-selected="false" aria-controls="panel-hourly" data-tab="hourly">
+          <i class="bi bi-clock"></i> 時給制
+        </button>
+      </div>
+
+      <!-- 月給制パネル -->
+      <div id="panel-monthly" class="tab-panel" role="tabpanel" aria-labelledby="tab-monthly">
+        <div class="form-row-2">
+          <div class="field">
+            <label class="field-label" for="monthly-salary">
+              <i class="bi bi-cash-stack"></i> 月給（円）
+            </label>
+            <div class="input-wrap">
+              <input type="number" id="monthly-salary" class="form-input" min="0" max="9999999" placeholder="例: 300000" aria-label="月給を円で入力">
+              <span class="input-suffix">円</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="monthly-hours">
+              <i class="bi bi-hourglass-split"></i> 月所定労働時間
+            </label>
+            <div class="input-wrap">
+              <input type="number" id="monthly-hours" class="form-input" min="1" max="400" placeholder="例: 160" aria-label="月所定労働時間を入力">
+              <span class="input-suffix">時間</span>
+            </div>
+          </div>
+        </div>
+        <div class="base-wage-display" id="base-wage-display" hidden>
+          <i class="bi bi-info-circle-fill"></i>
+          1時間あたりの基本賃金：<strong id="base-wage-value">—</strong> 円
+        </div>
+      </div>
+
+      <!-- 時給制パネル -->
+      <div id="panel-hourly" class="tab-panel" role="tabpanel" aria-labelledby="tab-hourly" hidden>
+        <div class="field">
+          <label class="field-label" for="hourly-wage">
+            <i class="bi bi-cash-coin"></i> 時給（円）
+          </label>
+          <div class="input-wrap" style="max-width: 260px;">
+            <input type="number" id="hourly-wage" class="form-input" min="0" max="99999" placeholder="例: 1500" aria-label="時給を円で入力">
+            <span class="input-suffix">円</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 残業時間入力グリッド -->
+      <div class="overtime-section">
+        <h3 class="subsection-title"><i class="bi bi-table"></i> 残業時間の内訳を入力</h3>
+
+        <div class="ot-grid">
+
+          <div class="ot-row ot-header" aria-hidden="true">
+            <span>残業の種類</span>
+            <span>割増率</span>
+            <span>時間数</span>
+          </div>
+
+          <div class="ot-row">
+            <div class="ot-info">
+              <span class="ot-name">法定内残業</span>
+              <span class="ot-desc">所定外・法定内（8時間まで）</span>
+            </div>
+            <span class="ot-rate"><span class="badge badge-gray">+0%</span></span>
+            <div class="ot-input-wrap">
+              <input type="number" id="ot-statutory" class="ot-input" min="0" max="100" value="0" aria-label="法定内残業時間">
+              <span class="ot-unit">時間</span>
+            </div>
+          </div>
+
+          <div class="ot-row">
+            <div class="ot-info">
+              <span class="ot-name">法定外残業 <small>月60h以内</small></span>
+              <span class="ot-desc">法定8時間超・月60時間まで</span>
+            </div>
+            <span class="ot-rate"><span class="badge badge-yellow">+25%</span></span>
+            <div class="ot-input-wrap">
+              <input type="number" id="ot-legal25" class="ot-input" min="0" max="100" value="0" aria-label="法定外残業（60時間以内）時間">
+              <span class="ot-unit">時間</span>
+            </div>
+          </div>
+
+          <div class="ot-row">
+            <div class="ot-info">
+              <span class="ot-name">法定外残業 <small>月60h超</small></span>
+              <span class="ot-desc">月60時間を超えた分</span>
+            </div>
+            <span class="ot-rate"><span class="badge badge-orange">+50%</span></span>
+            <div class="ot-input-wrap">
+              <input type="number" id="ot-legal50" class="ot-input" min="0" max="100" value="0" aria-label="法定外残業（60時間超）時間">
+              <span class="ot-unit">時間</span>
+            </div>
+          </div>
+
+          <div class="ot-row">
+            <div class="ot-info">
+              <span class="ot-name">深夜残業</span>
+              <span class="ot-desc">22時〜翌5時の法定外残業</span>
+            </div>
+            <span class="ot-rate"><span class="badge badge-red">+50%</span></span>
+            <div class="ot-input-wrap">
+              <input type="number" id="ot-night" class="ot-input" min="0" max="100" value="0" aria-label="深夜残業時間">
+              <span class="ot-unit">時間</span>
+            </div>
+          </div>
+
+          <div class="ot-row">
+            <div class="ot-info">
+              <span class="ot-name">休日労働</span>
+              <span class="ot-desc">法定休日（週1日）の労働</span>
+            </div>
+            <span class="ot-rate"><span class="badge badge-red">+35%</span></span>
+            <div class="ot-input-wrap">
+              <input type="number" id="ot-holiday" class="ot-input" min="0" max="100" value="0" aria-label="休日労働時間">
+              <span class="ot-unit">時間</span>
+            </div>
+          </div>
+
+          <div class="ot-row">
+            <div class="ot-info">
+              <span class="ot-name">深夜休日労働</span>
+              <span class="ot-desc">法定休日の22時〜翌5時</span>
+            </div>
+            <span class="ot-rate"><span class="badge badge-darkred">+60%</span></span>
+            <div class="ot-input-wrap">
+              <input type="number" id="ot-nightholiday" class="ot-input" min="0" max="100" value="0" aria-label="深夜休日労働時間">
+              <span class="ot-unit">時間</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="error-msg" id="error-msg" hidden>
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <span id="error-text"></span>
+      </div>
+
+      <button class="btn-calc" id="calc-btn" type="button">
+        <i class="bi bi-calculator-fill"></i> 残業代を計算する
+      </button>
+    </section>
+
+    <!-- 計算結果 -->
+    <div id="results" class="results-area" hidden>
+
+      <!-- 合計ハイライト -->
+      <div class="total-highlight-card">
+        <div class="total-main">
+          <div class="total-label"><i class="bi bi-receipt"></i> 今月の残業代合計</div>
+          <div class="total-amount" id="total-amount">¥0</div>
+          <div class="total-sub">基本賃金分 <span id="total-base">¥0</span> ＋ 割増分 <span id="total-premium">¥0</span></div>
+        </div>
+        <div class="unpaid-section">
+          <div class="unpaid-label"><i class="bi bi-exclamation-circle-fill"></i> 未払いの場合の2年分総額（参考）</div>
+          <div class="unpaid-amount" id="unpaid-amount">¥0</div>
+          <div class="unpaid-note">月額合計 × 24か月で算出</div>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（結果の下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <!-- AdSense: インフィード広告 -->
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- 内訳テーブル -->
+      <div class="card breakdown-card">
+        <h3 class="subsection-title"><i class="bi bi-list-ul"></i> 残業代の内訳</h3>
+        <div class="table-wrap">
+          <table class="breakdown-table">
+            <thead>
+              <tr>
+                <th>種類</th>
+                <th>時間</th>
+                <th>割増率</th>
+                <th>残業代</th>
+              </tr>
+            </thead>
+            <tbody id="breakdown-tbody"></tbody>
+            <tfoot>
+              <tr class="total-row">
+                <td colspan="3">合計</td>
+                <td id="breakdown-total">¥0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- グラフカード -->
+      <div class="card chart-card">
+        <h3 class="subsection-title"><i class="bi bi-bar-chart-fill"></i> 残業種類別 金額グラフ</h3>
+        <div class="chart-wrap">
+          <canvas id="ot-chart" role="img" aria-label="残業種類別の残業代グラフ"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 使い方・SEOセクション -->
+    <section class="howto-section" id="howto">
+
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>「月給制」または「時給制」タブを選択します</li>
+        <li>月給制の場合は月給（円）と月所定労働時間（時間）を入力します。1時間あたりの基本賃金が自動表示されます</li>
+        <li>時給制の場合は時給（円）を直接入力します</li>
+        <li>残業の種類ごとに該当する時間数を入力します（0のままでも計算できます）</li>
+        <li>「残業代を計算する」ボタンを押すと、内訳・合計・未払い参考額が表示されます</li>
+        <li>棒グラフで残業種類別の金額を視覚的に比較できます</li>
+      </ol>
+
+      <h2>残業代（割増賃金）とは</h2>
+      <p>残業代とは、法律で定められた時間を超えて働かせる場合に会社が支払わなければならない割増賃金のことです。労働基準法第37条により、使用者は法定時間外労働・深夜労働・休日労働に対して割増賃金を支払う義務があります。基本となる1時間あたりの賃金に割増率を乗じた金額が残業代となります。月給制の場合、1時間あたりの賃金は「月給 ÷ 月所定労働時間」で算出します。割増率は残業の種類によって異なり、法定外残業は25%（月60時間超は50%）、深夜労働（22〜5時）は25%、法定休日労働は35%です。これらが重複する場合は合算して計算します。</p>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>割増率の早見表・計算ルール詳細</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr><th>残業の種類</th><th>割増率</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>法定内残業（所定外・法定内）</td><td>+0%（基本賃金のみ）</td><td>所定時間超〜法定8時間まで</td></tr>
+                <tr><td>法定外残業（月60時間以内）</td><td>+25%</td><td>法定8時間超・月60時間まで</td></tr>
+                <tr><td>法定外残業（月60時間超）</td><td>+50%</td><td>中小企業は2023年4月〜適用</td></tr>
+                <tr><td>深夜労働（22〜5時）のみ</td><td>+25%</td><td>所定内・法定内の深夜</td></tr>
+                <tr><td>深夜残業（法定外＋深夜）</td><td>+50%（25%+25%）</td><td>本ツールの「深夜残業」欄</td></tr>
+                <tr><td>法定休日労働</td><td>+35%</td><td>週1回の法定休日</td></tr>
+                <tr><td>法定休日の深夜労働</td><td>+60%（35%+25%）</td><td>本ツールの「深夜休日労働」欄</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>残業代は1円単位で受け取れますか？</dt>
+              <dd>労働基準法上は1円単位で支払う義務がありますが、就業規則で端数処理を定めることがあります。給与計算期間全体で端数処理を行う場合に限り、30分未満を切り捨て・30分以上を1時間に切り上げることは認められています。</dd>
+              <dt>固定残業代（みなし残業）が設定されている場合は？</dt>
+              <dd>固定残業代を設定している場合、実際の残業代がその固定額を上回った場合は差額を支払う義務があります。本ツールの計算結果から固定残業代を差し引いた額が追加請求できる金額の目安となります。</dd>
+              <dt>裁量労働制・フレックスタイム制でも残業代は発生しますか？</dt>
+              <dd>裁量労働制ではみなし労働時間が法定時間内であれば残業代は発生しませんが、深夜・休日労働には割増賃金が必要です。フレックスタイム制では清算期間の法定労働時間の総枠を超えた時間に対して残業代が発生します。</dd>
+              <dt>計算結果はどう活用しますか？</dt>
+              <dd>本ツールの計算結果は、未払い残業代の概算確認・請求交渉の下準備・給与明細の確認などに活用できます。正確な請求額を確定するには、タイムカード等の実労働記録に基づいた計算が必要です。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照法令・出典・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/roudouzikan/" target="_blank" rel="noopener">厚生労働省：労働時間・休日に関するルール</a></li>
+              <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000108713.html" target="_blank" rel="noopener">厚生労働省：時間外・休日・深夜の割増賃金の計算方法</a></li>
+              <li><a href="https://www.nta.go.jp/" target="_blank" rel="noopener">国税庁：給与所得に関する情報</a></li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は労働基準法等に基づく参考値です。実際の残業代は就業規則・雇用契約・固定残業代の有無・適用除外規定などによって異なります。正確な金額の確定や請求は弁護士・社会保険労務士にご相談ください。本ツールの計算結果について、当サイトは一切の責任を負いません。</p>
+          </div>
+        </details>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
