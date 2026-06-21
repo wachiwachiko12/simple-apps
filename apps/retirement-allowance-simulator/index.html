@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="退職金の相場を勤続年数・学歴・業種・会社規模から試算。退職所得控除の計算と手取り金額の目安も表示。厚生労働省「就労条件総合調査」データ準拠。完全無料。">
+  <title>退職金相場シミュレーター｜勤続年数・業種別の平均額と手取り計算【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/retirement-allowance-simulator/">
+  <!-- OGP -->
+  <meta property="og:title" content="退職金相場シミュレーター｜勤続年数・業種別の平均額と手取り計算【無料】">
+  <meta property="og:description" content="退職金の相場を勤続年数・学歴・業種・会社規模から試算。退職所得控除の計算と手取り金額の目安も表示。完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/retirement-allowance-simulator/">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "退職金の相場はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "厚生労働省「令和4年就労条件総合調査」によると、大学卒・管理事務技術職で勤続35年以上の場合の平均退職金は約2,173万円です。勤続20〜24年では約1,054万円、勤続10〜14年では約336万円となっています。業種や会社規模によっても大きく異なります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職所得控除とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "退職所得控除とは、退職金に対する税金の負担を軽減するための控除制度です。勤続年数20年以下の場合は「40万円×勤続年数」（最低80万円）、20年超の場合は「800万円＋70万円×（勤続年数－20年）」が控除されます。例えば勤続30年の場合は800万円＋70万円×10年＝1,500万円が控除されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職金の手取りはどう計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "退職金の手取りは「退職金 − 所得税 − 住民税」で計算します。まず退職所得＝（退職金−退職所得控除）÷2 を求め、その退職所得に対して所得税・住民税（10%）を課税します。退職所得に対する課税は他の所得と分離課税されるため、税負担は比較的少ない仕組みになっています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職金に税金はかかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、退職金には所得税と住民税がかかります。ただし退職所得控除と1/2課税（退職所得＝（退職金−控除額）÷2）の優遇措置があるため、通常の給与所得より大幅に税負担が軽くなります。退職所得控除の範囲内に収まれば税金は0円です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "業種によって退職金の相場は変わりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、業種によって退職金の相場は大きく異なります。金融業・保険業や情報通信業は平均より高く、卸売・小売業やサービス業は平均より低い傾向があります。また会社規模（従業員数）も大きく影響し、1,000人以上の大企業は100人未満の中小企業に比べて退職金が20〜30%程度高い傾向があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "高校卒と大学卒では退職金の差はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "厚生労働省データによると、勤続35年以上の場合、大学卒（管理事務技術職）の平均退職金は約2,173万円、高校卒（現業職）は約1,819万円と、約354万円の差があります。ただし職種・役職によっても大きく変わるため、これはあくまで参考値です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "転職した場合、退職金はどうなりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "転職した場合、原則として前職の退職金は在職期間に応じて受け取れます。ただし企業によっては自己都合退職の場合に減額されるケースもあります。また確定拠出年金（DC）の場合は転職先に持ち運び（ポータビリティ）が可能です。退職所得控除は各回の退職ごとに計算されますが、同一年内に複数回退職する場合は注意が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職金がない会社もありますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、法律上退職金の支払い義務はなく、退職金制度がない会社も多くあります。厚生労働省の調査では、退職給付制度がある企業は全体の約75%です。特に中小企業（30〜99人）では退職金制度がない場合もあります。就職・転職時に退職金制度の有無と条件を確認することが重要です。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-bank2"></i></div>
+      <h1>退職金相場シミュレーター — 勤続年数・業種別の平均と退職所得控除</h1>
+      <p class="header-sub">厚生労働省「就労条件総合調査」データ準拠 ｜ 手取り額まで無料で試算</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <!-- AdSense: レスポンシブ横長バナー（計算結果の上） -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice" role="note">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 入力フォームカード -->
+    <section class="card input-card" id="tool">
+      <h2 class="section-title"><i class="bi bi-sliders"></i> 条件を入力してシミュレーション</h2>
+
+      <!-- 勤続年数 -->
+      <div class="field">
+        <label class="field-label" for="years">
+          <i class="bi bi-hourglass-split"></i> 勤続年数
+        </label>
+        <div class="slider-row">
+          <input type="range" id="years-slider" min="1" max="45" value="20" class="slider" aria-label="勤続年数スライダー">
+          <div class="slider-value-wrap">
+            <input type="number" id="years" min="1" max="45" value="20" class="years-input" aria-label="勤続年数（数値入力）">
+            <span class="unit-label">年</span>
+          </div>
+        </div>
+        <span class="field-hint">1〜45年の範囲で入力してください</span>
+      </div>
+
+      <!-- 最終学歴 -->
+      <div class="field">
+        <label class="field-label" for="education">
+          <i class="bi bi-mortarboard-fill"></i> 最終学歴
+        </label>
+        <select id="education" class="form-select" aria-label="最終学歴を選択">
+          <option value="university">大学・大学院卒（管理事務技術職）</option>
+          <option value="highschool">高校・専門卒（現業職）</option>
+        </select>
+      </div>
+
+      <!-- 業種 -->
+      <div class="field">
+        <label class="field-label" for="industry">
+          <i class="bi bi-building"></i> 業種
+        </label>
+        <select id="industry" class="form-select" aria-label="業種を選択">
+          <option value="manufacturing">製造業</option>
+          <option value="construction">建設業</option>
+          <option value="it">情報通信業</option>
+          <option value="finance">金融業・保険業</option>
+          <option value="retail">卸売・小売業</option>
+          <option value="medical">医療・福祉</option>
+          <option value="service">その他・サービス業</option>
+        </select>
+      </div>
+
+      <!-- 会社規模 -->
+      <div class="field">
+        <label class="field-label" for="company-size">
+          <i class="bi bi-people-fill"></i> 会社規模（従業員数）
+        </label>
+        <select id="company-size" class="form-select" aria-label="会社規模を選択">
+          <option value="large">1,000人以上</option>
+          <option value="medium-large">300〜999人</option>
+          <option value="medium">100〜299人</option>
+          <option value="small">30〜99人</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" id="calc-btn" type="button">
+        <i class="bi bi-calculator-fill"></i> 退職金を試算する
+      </button>
+    </section>
+
+    <!-- 計算結果エリア -->
+    <div id="results" class="results-area" hidden>
+
+      <!-- メイン結果カード -->
+      <div class="card result-main-card">
+        <div class="result-main-header">
+          <div class="result-main-icon"><i class="bi bi-currency-yen"></i></div>
+          <div>
+            <h3>退職金相場の目安（平均）</h3>
+            <p class="result-condition-label" id="result-condition-label"></p>
+          </div>
+        </div>
+        <div class="result-amount-wrap">
+          <span class="result-amount" id="result-amount">0</span>
+          <span class="result-unit">万円</span>
+        </div>
+        <p class="result-range-note" id="result-range-note"></p>
+      </div>
+
+      <!-- 税金・控除 内訳カード -->
+      <div class="card breakdown-card">
+        <h3 class="section-title"><i class="bi bi-receipt-cutoff"></i> 退職所得控除・税金の内訳</h3>
+        <div class="breakdown-grid">
+          <div class="breakdown-item">
+            <span class="breakdown-label">退職所得控除額</span>
+            <span class="breakdown-value deduction" id="deduction-amount">0万円</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-label">課税退職所得</span>
+            <span class="breakdown-value taxable" id="taxable-income">0万円</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-label">所得税（復興特別所得税含む）</span>
+            <span class="breakdown-value tax" id="income-tax">0万円</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-label">住民税（10%）</span>
+            <span class="breakdown-value tax" id="residence-tax">0万円</span>
+          </div>
+          <div class="breakdown-item highlight-item">
+            <span class="breakdown-label">手取り退職金の目安</span>
+            <span class="breakdown-value take-home" id="take-home-amount">0万円</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- グラフカード（内訳） -->
+      <div class="card chart-card">
+        <h3 class="section-title"><i class="bi bi-bar-chart-fill"></i> 退職金内訳グラフ</h3>
+        <div class="chart-wrapper">
+          <canvas id="breakdown-chart" aria-label="退職金内訳グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（FAQ下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <!-- AdSense: 記事内広告（FAQ下） -->
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- 勤続年数別推移グラフ -->
+      <div class="card trend-card">
+        <h3 class="section-title"><i class="bi bi-graph-up-arrow"></i> 勤続年数別の退職金相場推移</h3>
+        <div class="chart-wrapper">
+          <canvas id="trend-chart" aria-label="勤続年数別退職金推移グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 使い方・SEOセクション -->
+    <section class="howto-section" id="howto">
+
+      <h2>使い方</h2>
+      <ol class="howto-steps">
+        <li>「勤続年数」をスライダーまたは数値入力で設定します（1〜45年）</li>
+        <li>「最終学歴」で大学・大学院卒か高校・専門卒かを選択します</li>
+        <li>「業種」と「会社規模（従業員数）」をそれぞれ選択します</li>
+        <li>「退職金を試算する」ボタンを押すと、相場の目安・控除額・税金・手取り額が表示されます</li>
+        <li>グラフで手取り額・税金・控除の内訳と、勤続年数別の推移を視覚的に確認できます</li>
+      </ol>
+
+      <h2>退職金相場シミュレーターについて</h2>
+      <p>本ツールは厚生労働省「令和4年（2022年）就労条件総合調査」のデータをもとに、勤続年数・学歴・業種・会社規模から退職金の相場を試算します。退職所得控除（勤続20年以下: 40万円×勤続年数、20年超: 800万円＋70万円×（勤続年数−20年））を適用した課税退職所得と、所得税・住民税を差し引いた手取り金額の目安も算出します。転職・定年退職の計画を立てる際の参考としてご活用ください。</p>
+      <p>退職金の額は業種・会社規模・職種・退職理由（自己都合か定年か）によって大きく異なります。本シミュレーターは統計データに基づく概算であり、実際の退職金額は勤務先の退職金規程によって決まります。正確な金額は勤務先の人事部門にご確認ください。</p>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>退職所得控除の計算方法</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table class="info-table">
+              <thead>
+                <tr><th>勤続年数</th><th>退職所得控除額の計算式</th><th>計算例</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>20年以下</td>
+                  <td>40万円 × 勤続年数（最低80万円）</td>
+                  <td>10年 → 400万円</td>
+                </tr>
+                <tr>
+                  <td>20年超</td>
+                  <td>800万円 + 70万円 × (勤続年数 − 20年)</td>
+                  <td>30年 → 1,500万円</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--text-muted);">障害者になったことが直接の原因で退職した場合は、上記金額に100万円が加算されます。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>退職金にかかる税金の計算方法</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ol class="howto-steps" style="margin-top:0;">
+              <li>退職所得 ＝ （退職金 − 退職所得控除額） ÷ 2</li>
+              <li>退職所得に対して所得税率（総合課税と同じ速算表）を適用</li>
+              <li>復興特別所得税 ＝ 所得税 × 2.1%</li>
+              <li>住民税 ＝ 退職所得 × 10%</li>
+              <li>手取り ＝ 退職金 − 所得税 − 復興特別所得税 − 住民税</li>
+            </ol>
+            <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--text-muted);">退職所得は分離課税のため、他の所得（給与・年金等）とは合算されません。</p>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>業種・会社規模による補正係数について</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p style="margin-bottom:0.5rem;font-size:0.875rem;">本ツールでは基準データ（大学卒・管理事務技術職の平均値）に対して以下の補正係数を適用しています。</p>
+            <table class="info-table">
+              <thead><tr><th>業種</th><th>補正係数</th></tr></thead>
+              <tbody>
+                <tr><td>金融業・保険業</td><td>+20%</td></tr>
+                <tr><td>情報通信業</td><td>+15%</td></tr>
+                <tr><td>製造業</td><td>基準値</td></tr>
+                <tr><td>建設業</td><td>−5%</td></tr>
+                <tr><td>医療・福祉</td><td>−10%</td></tr>
+                <tr><td>卸売・小売業</td><td>−15%</td></tr>
+                <tr><td>その他・サービス業</td><td>−20%</td></tr>
+              </tbody>
+            </table>
+            <table class="info-table" style="margin-top:0.75rem;">
+              <thead><tr><th>会社規模</th><th>補正係数</th></tr></thead>
+              <tbody>
+                <tr><td>1,000人以上</td><td>+15%</td></tr>
+                <tr><td>300〜999人</td><td>+5%</td></tr>
+                <tr><td>100〜299人</td><td>基準値</td></tr>
+                <tr><td>30〜99人</td><td>−15%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl class="faq-dl">
+              <dt>自己都合退職と定年退職で退職金は変わりますか？</dt>
+              <dd>一般的に、自己都合退職は定年退職に比べて退職金が少なくなります。就業規則によって差が設けられており、自己都合の場合は7〜8割程度になるケースが多いです。本ツールは定年・会社都合退職を想定した平均値をベースにしています。</dd>
+              <dt>確定拠出年金（DC/iDeCo）は退職金に含まれますか？</dt>
+              <dd>確定拠出年金の給付も退職所得として取り扱われ、退職所得控除の対象になります。ただし一時金で受け取る場合と年金形式で受け取る場合で課税方法が異なります。</dd>
+              <dt>中小企業退職金共済（中退共）とは何ですか？</dt>
+              <dd>中小企業退職金共済（中退共）は独立行政法人勤労者退職金共済機構が運営する退職金共済制度です。会社が毎月掛け金を拠出し、退職時に退職金として給付されます。中退共からの退職金も退職所得控除の対象です。</dd>
+              <dt>このシミュレーターの数値はどこから来ていますか？</dt>
+              <dd>厚生労働省「令和4年（2022年）就労条件総合調査」の退職給付（一時金・年金）制度における勤続年数別の平均退職給付額をベースにしています。業種・規模補正は同調査の傾向をもとに概算値を適用しています。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照データ・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www.mhlw.go.jp/toukei/itiran/roudou/jikan/syurou/22/index.html" target="_blank" rel="noopener">厚生労働省：令和4年就労条件総合調査結果の概況</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1420.htm" target="_blank" rel="noopener">国税庁：退職所得の源泉徴収・特別徴収の取扱い</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1415.htm" target="_blank" rel="noopener">国税庁：退職所得控除額の計算方法</a></li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は統計データに基づく参考値です。実際の退職金額は勤務先の退職金規程・退職理由・評価等によって異なります。税金の計算は概算であり、実際の納税額は個人の状況によって異なります。正確な情報は勤務先の人事担当・税理士・社会保険労務士にご確認ください。</p>
+          </div>
+        </details>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
