@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="1日に必要な水分摂取量を自動計算。体重・運動量・気温・発汗量を考慮した推奨量を表示。飲み物別の摂取量換算や時間別補給スケジュールも確認できます。完全無料。">
+  <title>水分摂取量計算ツール｜体重・運動・気温から1日の適正量を計算【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/hydration-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="水分摂取量計算ツール｜体重・運動・気温から1日の適正量を計算【無料】">
+  <meta property="og:description" content="1日に必要な水分摂取量を自動計算。体重・運動量・気温・発汗量を考慮した推奨量を表示。飲み物別の摂取量換算や時間別補給スケジュールも確認できます。完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/hydration-calculator/">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "1日に必要な水分摂取量はどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "成人の場合、体重1kgあたり約35mlが目安です。体重60kgなら約2,100mlが基本量です。ただし運動量・気温・年齢・妊娠授乳状態によって大きく変わります。このツールで自分に合った量を計算できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "水を飲みすぎると体に悪いですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "短時間に大量（数リットル以上）の水を飲むと「水中毒（低ナトリウム血症）」を起こす可能性があります。通常の生活では1時間あたり1リットルを超えないよう、こまめに少量ずつ飲むことが推奨されています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "コーヒーや緑茶は水分補給になりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "カフェインには利尿作用がありますが、コーヒーや緑茶も水分補給に貢献します。ただしカフェインの多い飲み物（コーヒー・エナジードリンク）は1日2〜3杯程度に留め、水・麦茶・スポーツドリンクを中心に水分を摂ることが理想的です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "運動時はどのくらい水分を補給すればいいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "軽い運動（30分のウォーキングなど）では約300ml、1時間程度の中程度の運動では約600ml、2時間以上のハードな運動では約1,000ml以上の追加補給が目安です。運動前・中・後にこまめに飲むことが大切です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "脱水症状の初期サインは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "口の渇き・尿の色が濃い黄色・頭痛・倦怠感・集中力の低下が初期サインです。これらを感じたら早めに水分補給を行ってください。喉が渇く前にこまめに飲むことが脱水予防の基本です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "高齢者が水分不足になりやすいのはなぜですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "高齢になると体内の水分量が減少し、口渇感が弱くなるため気づかずに脱水になりやすいです。また、利尿剤などの薬を服用している場合も水分が失われやすくなります。意識的にこまめな水分補給が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "妊娠中・授乳中は水分摂取量を増やす必要がありますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。妊娠中は羊水の維持や血液量増加のため約350mlの追加補給が推奨されます。授乳中は母乳生成のために約700mlの追加補給が必要です。このツールでは妊娠中・授乳中のチェックボックスで自動的に計算に反映されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "子どもの水分摂取量はどう計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "子ども（7〜12歳）は代謝が活発なため、体重1kgあたりの必要水分量が成人より多く、本ツールでは成人の基本量に1.1倍の補正をかけています。スポーツ活動の多い子どもは運動量の補正も加算してください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-droplet-fill"></i></div>
+      <h1>水分摂取量計算 — 体重・運動量・気温から1日の推奨摂取量を算出</h1>
+      <p class="subtitle">厚生労働省・WHO基準に基づき、あなたに最適な1日の水分補給量を無料で計算します</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+      <h2 class="section-title"><i class="bi bi-sliders"></i> 条件を入力</h2>
+
+      <form id="tool-form" novalidate>
+        <!-- 体重 -->
+        <div class="field">
+          <label class="field-label" for="weight">
+            <i class="bi bi-person-fill"></i> 体重（kg）
+          </label>
+          <div class="slider-row">
+            <input type="range" id="weight-slider" min="20" max="150" value="60"
+                   aria-label="体重スライダー" class="range-input">
+            <div class="number-input-wrap">
+              <input type="number" id="weight" min="20" max="150" value="60"
+                     aria-label="体重（kg）" placeholder="60">
+              <span class="unit-label">kg</span>
+            </div>
+          </div>
+          <span class="field-hint">20〜150kgの範囲で入力してください</span>
+        </div>
+
+        <!-- 年齢層 -->
+        <div class="field">
+          <label class="field-label">
+            <i class="bi bi-calendar3"></i> 年齢層
+          </label>
+          <div class="radio-group" role="radiogroup" aria-label="年齢層">
+            <label class="radio-card">
+              <input type="radio" name="age-group" value="child">
+              <span class="radio-label">
+                <span class="radio-title">子ども</span>
+                <span class="radio-desc">7〜12歳</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="age-group" value="teen">
+              <span class="radio-label">
+                <span class="radio-title">十代</span>
+                <span class="radio-desc">13〜19歳</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="age-group" value="adult" checked>
+              <span class="radio-label">
+                <span class="radio-title">成人</span>
+                <span class="radio-desc">20〜64歳</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="age-group" value="senior">
+              <span class="radio-label">
+                <span class="radio-title">高齢者</span>
+                <span class="radio-desc">65歳以上</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 運動量 -->
+        <div class="field">
+          <label class="field-label">
+            <i class="bi bi-lightning-fill"></i> 運動量
+          </label>
+          <div class="radio-group" role="radiogroup" aria-label="運動量">
+            <label class="radio-card">
+              <input type="radio" name="exercise" value="none" checked>
+              <span class="radio-label">
+                <span class="radio-title">なし</span>
+                <span class="radio-desc">+0 mL</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="exercise" value="light">
+              <span class="radio-label">
+                <span class="radio-title">軽い</span>
+                <span class="radio-desc">ウォーキング30分 / +300 mL</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="exercise" value="moderate">
+              <span class="radio-label">
+                <span class="radio-title">中程度</span>
+                <span class="radio-desc">1時間運動 / +600 mL</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="exercise" value="hard">
+              <span class="radio-label">
+                <span class="radio-title">ハード</span>
+                <span class="radio-desc">2時間以上 / +1,000 mL</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 気温 -->
+        <div class="field">
+          <label class="field-label">
+            <i class="bi bi-thermometer-sun"></i> 気温・環境
+          </label>
+          <div class="radio-group" role="radiogroup" aria-label="気温">
+            <label class="radio-card">
+              <input type="radio" name="temperature" value="comfortable" checked>
+              <span class="radio-label">
+                <span class="radio-title">快適</span>
+                <span class="radio-desc">25℃未満 / +0 mL</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="temperature" value="hot">
+              <span class="radio-label">
+                <span class="radio-title">暑い</span>
+                <span class="radio-desc">25〜35℃ / +300 mL</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="temperature" value="very-hot">
+              <span class="radio-label">
+                <span class="radio-title">非常に暑い</span>
+                <span class="radio-desc">35℃超 / +600 mL</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 特殊条件 -->
+        <div class="field">
+          <label class="field-label">
+            <i class="bi bi-heart-fill"></i> 特殊条件（該当する場合）
+          </label>
+          <div class="checkbox-group">
+            <label class="checkbox-card">
+              <input type="checkbox" id="pregnant" value="pregnant">
+              <span class="checkbox-label">
+                <i class="bi bi-emoji-smile"></i>
+                <span>
+                  <span class="checkbox-title">妊娠中</span>
+                  <span class="checkbox-desc">+350 mL</span>
+                </span>
+              </span>
+            </label>
+            <label class="checkbox-card">
+              <input type="checkbox" id="breastfeeding" value="breastfeeding">
+              <span class="checkbox-label">
+                <i class="bi bi-heart"></i>
+                <span>
+                  <span class="checkbox-title">授乳中</span>
+                  <span class="checkbox-desc">+700 mL</span>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="calc-btn">
+          <i class="bi bi-droplet-fill"></i> 水分摂取量を計算する
+        </button>
+      </form>
+    </section>
+
+    <!-- 結果表示 -->
+    <section id="result-section" class="result-section" aria-live="polite" hidden>
+      <!-- 推奨摂取量 -->
+      <div class="result-main">
+        <div class="result-header">
+          <i class="bi bi-droplet-fill result-icon"></i>
+          <div>
+            <div class="result-label">1日の推奨水分摂取量</div>
+            <div class="result-value" id="result-ml">— mL</div>
+            <div class="result-sub" id="result-l">— L</div>
+          </div>
+        </div>
+        <div class="result-breakdown" id="result-breakdown"></div>
+      </div>
+
+      <!-- 広告ユニット2（結果表示後） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- 飲み物別換算表 -->
+      <div class="card">
+        <h3 class="card-title"><i class="bi bi-cup-straw"></i> 飲み物別 換算コップ数</h3>
+        <div class="drink-grid" id="drink-grid"></div>
+      </div>
+
+      <!-- 時間別補給スケジュール -->
+      <div class="card">
+        <h3 class="card-title"><i class="bi bi-clock-fill"></i> 時間別 補給スケジュール</h3>
+        <div class="schedule-table-wrap">
+          <table class="schedule-table" id="schedule-table">
+            <thead>
+              <tr>
+                <th>タイミング</th>
+                <th>目安量</th>
+                <th>ポイント</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2 class="section-title"><i class="bi bi-info-circle-fill"></i> 使い方</h2>
+      <details open>
+        <summary>5ステップで水分摂取量を計算する</summary>
+        <ol class="howto-steps">
+          <li>
+            <span class="step-num">1</span>
+            <span><strong>体重を入力</strong>します。スライダーを動かすか、数値を直接入力してください（20〜150kg）。</span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span><strong>年齢層を選択</strong>します。子ども・十代・成人・高齢者から該当するものを選んでください。</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span><strong>運動量を選択</strong>します。当日の予定する運動強度に合わせて選んでください。</span>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <span><strong>気温・環境を選択</strong>し、妊娠中・授乳中の方は該当するチェックボックスにチェックを入れてください。</span>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <span>「<strong>水分摂取量を計算する</strong>」ボタンを押すと、推奨量・飲み物換算・時間別スケジュールが表示されます。</span>
+          </li>
+        </ol>
+      </details>
+    </section>
+
+    <!-- 水分不足の症状セクション -->
+    <section class="info-section">
+      <h2 class="section-title"><i class="bi bi-exclamation-triangle-fill"></i> 水分不足のサインと脱水症状</h2>
+      <div class="info-grid">
+        <div class="info-card warning">
+          <h3><i class="bi bi-circle-fill"></i> 初期症状</h3>
+          <ul>
+            <li>口・のどの渇き</li>
+            <li>尿の色が濃い黄色</li>
+            <li>頭痛・倦怠感</li>
+            <li>集中力の低下</li>
+            <li>めまい・ふらつき</li>
+          </ul>
+        </div>
+        <div class="info-card danger">
+          <h3><i class="bi bi-exclamation-circle-fill"></i> 熱中症に注意</h3>
+          <ul>
+            <li>気温が高い日は特に注意</li>
+            <li>屋外作業・スポーツ時はこまめに補給</li>
+            <li>エアコンのない室内も危険</li>
+            <li>高齢者・子どもは特にリスクが高い</li>
+            <li>意識がおかしい場合は即119番</li>
+          </ul>
+        </div>
+        <div class="info-card tip">
+          <h3><i class="bi bi-lightbulb-fill"></i> 水分補給のコツ</h3>
+          <ul>
+            <li>喉が渇く前にこまめに飲む</li>
+            <li>一度に大量に飲まない</li>
+            <li>起床直後に1杯の水を飲む習慣</li>
+            <li>アルコール後は必ず水分補給</li>
+            <li>食事からも水分が摂れる</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="external-link-box">
+        <i class="bi bi-box-arrow-up-right"></i>
+        <a href="https://www.mhlw.go.jp/content/10906000/000614800.pdf" target="_blank" rel="noopener noreferrer">
+          厚生労働省「健康のための水分補給」ガイドライン（PDF）
+        </a>
+      </div>
+    </section>
+
+    <!-- FAQセクション -->
+    <section class="faq-section">
+      <h2 class="section-title"><i class="bi bi-chat-dots-fill"></i> よくある質問</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>1日に必要な水分摂取量はどのくらいですか？</summary>
+          <p>成人の場合、体重1kgあたり約35mlが目安です。体重60kgなら約2,100mlが基本量です。ただし運動量・気温・年齢・妊娠授乳状態によって大きく変わります。このツールで自分に合った量を計算できます。</p>
+        </details>
+        <details class="faq-item">
+          <summary>水を飲みすぎると体に悪いですか？</summary>
+          <p>短時間に大量（数リットル以上）の水を飲むと「水中毒（低ナトリウム血症）」を起こす可能性があります。通常の生活では1時間あたり1リットルを超えないよう、こまめに少量ずつ飲むことが推奨されています。</p>
+        </details>
+        <details class="faq-item">
+          <summary>コーヒーや緑茶は水分補給になりますか？</summary>
+          <p>カフェインには利尿作用がありますが、コーヒーや緑茶も水分補給に貢献します。ただしカフェインの多い飲み物は1日2〜3杯程度に留め、水・麦茶・スポーツドリンクを中心に水分を摂ることが理想的です。</p>
+        </details>
+        <details class="faq-item">
+          <summary>運動時はどのくらい水分を補給すればいいですか？</summary>
+          <p>軽い運動（30分のウォーキングなど）では約300ml、1時間程度の中程度の運動では約600ml、2時間以上のハードな運動では約1,000ml以上の追加補給が目安です。運動前・中・後にこまめに飲むことが大切です。</p>
+        </details>
+        <details class="faq-item">
+          <summary>脱水症状の初期サインは何ですか？</summary>
+          <p>口の渇き・尿の色が濃い黄色・頭痛・倦怠感・集中力の低下が初期サインです。これらを感じたら早めに水分補給を行ってください。喉が渇く前にこまめに飲むことが脱水予防の基本です。</p>
+        </details>
+        <details class="faq-item">
+          <summary>高齢者が水分不足になりやすいのはなぜですか？</summary>
+          <p>高齢になると体内の水分量が減少し、口渇感が弱くなるため気づかずに脱水になりやすいです。また利尿剤などの薬を服用している場合も水分が失われやすくなります。意識的にこまめな水分補給が必要です。</p>
+        </details>
+        <details class="faq-item">
+          <summary>妊娠中・授乳中は水分摂取量を増やす必要がありますか？</summary>
+          <p>はい。妊娠中は羊水の維持や血液量増加のため約350mlの追加補給が推奨されます。授乳中は母乳生成のために約700mlの追加補給が必要です。このツールでは妊娠中・授乳中のチェックボックスで自動的に計算に反映されます。</p>
+        </details>
+        <details class="faq-item">
+          <summary>子どもの水分摂取量はどう計算しますか？</summary>
+          <p>子ども（7〜12歳）は代謝が活発なため、体重1kgあたりの必要水分量が成人より多く、本ツールでは成人の基本量に1.1倍の補正をかけています。スポーツ活動の多い子どもは運動量の補正も加算してください。</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- 免責事項 -->
+    <div class="disclaimer">
+      <i class="bi bi-shield-exclamation"></i>
+      <p>
+        <strong>免責事項：</strong>本ツールの計算結果は厚生労働省・WHO基準に基づく目安です。腎臓病・心臓病・高血圧などの持病がある方は、水分摂取量について必ず医師にご相談ください。本ツールは医療的アドバイスの代替にはなりません。
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/about.html">このサイトについて</a>
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 KeisanLab — 無料計算ツール集</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
