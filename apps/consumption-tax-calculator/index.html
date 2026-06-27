@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="消費税を即計算。税抜→税込・税込→税抜の双方向変換、軽減税率8%/標準税率10%の切り替え、インボイス（適格請求書）の記載要件チェックに対応。登録不要・完全無料。">
+  <title>消費税計算ツール｜税抜・税込変換・軽減税率・インボイス対応【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/consumption-tax-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="消費税計算ツール｜税抜・税込変換・軽減税率・インボイス対応【無料】">
+  <meta property="og:description" content="消費税を即計算。税抜→税込・税込→税抜の双方向変換、軽減税率8%/標準税率10%の切り替え、インボイス（適格請求書）の記載要件チェックに対応。登録不要・完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/consumption-tax-calculator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-consumption-tax-calculator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="消費税計算ツール｜税抜・税込変換・軽減税率・インボイス対応【無料】">
+  <meta name="twitter:description" content="消費税を即計算。税抜→税込・税込→税抜の双方向変換、軽減税率8%/標準税率10%の切り替え、インボイス対応。登録不要・完全無料。">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "消費税の標準税率と軽減税率はどう違いますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "標準税率は10%で、ほとんどの商品・サービスに適用されます。軽減税率は8%で、飲食料品（外食・お酒を除く）と定期購読の新聞（週2回以上発行）に適用されます。同じお弁当でも、お店で食べる場合（外食）は10%、持ち帰りは8%となります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "税込価格から税抜価格を計算する方法は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "標準税率（10%）の場合：税抜価格 = 税込価格 ÷ 1.1。軽減税率（8%）の場合：税抜価格 = 税込価格 ÷ 1.08。ただし端数処理（切捨て・切上げ・四捨五入）によって結果が1円前後異なる場合があります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "インボイス（適格請求書）とは何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "インボイス（適格請求書）とは、2023年10月1日から始まった「適格請求書等保存方式」において、売り手が買い手に交付する請求書・領収書等のことです。買い手が消費税の仕入税額控除を受けるためには、適格請求書発行事業者から発行されたインボイスの保存が必要です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "インボイスの登録番号の形式は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "適格請求書発行事業者の登録番号は「T」で始まり、続けて13桁の数字が並ぶ形式です（例：T1234567890123）。法人の場合は法人番号と同じ13桁、個人事業主の場合は13桁の数字が割り当てられます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "消費税の端数処理はどうすればよいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "消費税の端数処理は、法律上は特定の方法が強制されているわけではありませんが、切り捨て・切り上げ・四捨五入のいずれも認められています。インボイス制度では、インボイス1枚ごとに端数処理が認められています（品目ごとの端数処理はNG）。" }
+      },
+      {
+        "@type": "Question",
+        "name": "外食と持ち帰りで税率が変わる具体例は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ハンバーガーショップでハンバーガーを注文した場合、イートイン（店内飲食）なら10%、テイクアウト（持ち帰り）なら8%が適用されます。コンビニのイートインスペースで食べる場合は10%となり、レジで「店内で食べます」と伝えた場合は10%での請求が正しい取り扱いです。" }
+      },
+      {
+        "@type": "Question",
+        "name": "免税事業者からの仕入れは消費税控除できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "インボイス制度（2023年10月以降）では、インボイス（適格請求書）を発行できない免税事業者からの仕入れは、原則として仕入税額控除の対象外となります。ただし経過措置として、2026年9月30日まで80%控除、2029年9月30日まで50%控除が認められています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "このツールの計算結果は公式なものですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "このツールは参考計算を目的としており、公式な税額を保証するものではありません。実際の申告・請求書作成には、国税庁の公式資料や税理士にご確認ください。" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-receipt-cutoff"></i></div>
+      <h1>消費税計算ツール — 税抜・税込・軽減税率・インボイス対応</h1>
+      <p class="header-sub">税抜↔税込の双方向変換・軽減税率8%/10%・インボイス要件チェックに対応</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <p class="privacy-notice">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </p>
+
+    <!-- タブナビゲーション -->
+    <div class="tab-nav" role="tablist" aria-label="計算モード">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-basic" id="tab-basic" data-tab="basic">
+        <i class="bi bi-calculator-fill"></i> 基本計算
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-multi" id="tab-multi" data-tab="multi">
+        <i class="bi bi-list-ul"></i> 複数品目
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-invoice" id="tab-invoice" data-tab="invoice">
+        <i class="bi bi-file-earmark-check-fill"></i> インボイスチェック
+      </button>
+    </div>
+
+    <!-- タブ1: 基本計算 -->
+    <div class="tab-panel active" id="panel-basic" role="tabpanel" aria-labelledby="tab-basic">
+      <section class="card">
+
+        <div class="form-row-3">
+          <div class="field">
+            <label class="field-label" for="amount-input">
+              <i class="bi bi-currency-yen"></i> 金額（円）
+            </label>
+            <input type="number" id="amount-input" class="form-input" placeholder="例: 10000" min="0" step="1" aria-label="計算する金額を入力">
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="rate-select">
+              <i class="bi bi-percent"></i> 税率
+            </label>
+            <select id="rate-select" class="form-input" aria-label="税率を選択">
+              <option value="10">10%（標準税率）</option>
+              <option value="8">8%（軽減税率：飲食料品・新聞）</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="direction-select">
+              <i class="bi bi-arrow-left-right"></i> 計算方向
+            </label>
+            <select id="direction-select" class="form-input" aria-label="計算方向を選択">
+              <option value="both">両方表示</option>
+              <option value="ex-to-inc">税抜 → 税込</option>
+              <option value="inc-to-ex">税込 → 税抜</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field rounding-field">
+          <label class="field-label"><i class="bi bi-scissors"></i> 端数処理</label>
+          <div class="radio-group" role="radiogroup" aria-label="端数処理方法">
+            <label class="radio-label">
+              <input type="radio" name="rounding" value="floor" checked> 切捨て
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rounding" value="ceil"> 切上げ
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="rounding" value="round"> 四捨五入
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="calc-basic-btn" type="button">
+          <i class="bi bi-calculator-fill"></i> 計算する
+        </button>
+
+        <!-- 基本計算結果 -->
+        <div id="basic-result" class="result-panel" hidden>
+          <div class="result-grid" id="basic-result-grid">
+            <!-- JS で生成 -->
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- タブ2: 複数品目計算 -->
+    <div class="tab-panel" id="panel-multi" role="tabpanel" aria-labelledby="tab-multi" hidden>
+      <section class="card">
+
+        <div class="multi-header">
+          <h2 class="section-title"><i class="bi bi-table"></i> 品目一覧</h2>
+          <button class="btn-secondary" id="add-row-btn" type="button">
+            <i class="bi bi-plus-lg"></i> 行を追加
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="items-table" id="items-table">
+            <thead>
+              <tr>
+                <th>品目名</th>
+                <th>金額（税抜）</th>
+                <th>税率</th>
+                <th>消費税</th>
+                <th>税込</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="items-tbody">
+              <!-- JS で生成 -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 合計 -->
+        <div class="multi-total-area" id="multi-total" hidden>
+          <div class="total-row">
+            <span class="total-label">税抜合計</span>
+            <span class="total-value" id="total-ex">¥0</span>
+          </div>
+          <div class="total-row">
+            <span class="total-label">消費税合計</span>
+            <span class="total-value" id="total-tax">¥0</span>
+          </div>
+          <div class="total-row total-row--grand">
+            <span class="total-label">税込合計</span>
+            <span class="total-value grand" id="total-inc">¥0</span>
+          </div>
+        </div>
+
+        <div class="multi-actions">
+          <button class="btn-primary" id="calc-multi-btn" type="button">
+            <i class="bi bi-calculator-fill"></i> 合計を計算
+          </button>
+          <button class="btn-secondary" id="copy-multi-btn" type="button">
+            <i class="bi bi-clipboard-fill"></i> クリップボードにコピー
+          </button>
+        </div>
+        <div id="copy-multi-msg" class="copy-msg" hidden>
+          <i class="bi bi-check-circle-fill"></i> コピーしました
+        </div>
+
+      </section>
+    </div>
+
+    <!-- タブ3: インボイスチェック -->
+    <div class="tab-panel" id="panel-invoice" role="tabpanel" aria-labelledby="tab-invoice" hidden>
+      <section class="card">
+
+        <h2 class="section-title"><i class="bi bi-file-earmark-check-fill"></i> 適格請求書（インボイス）要件チェック</h2>
+        <p class="invoice-desc">インボイス制度（2023年10月〜）の記載要件を確認します。全項目にチェックを入れると判定結果が表示されます。</p>
+
+        <div class="field" style="margin-bottom:1.25rem;">
+          <label class="field-label" for="reg-number-input">
+            <i class="bi bi-upc-scan"></i> 登録番号（T + 13桁）
+          </label>
+          <div class="reg-input-wrap">
+            <input type="text" id="reg-number-input" class="form-input" placeholder="例: T1234567890123" maxlength="14" aria-label="適格請求書発行事業者の登録番号を入力">
+            <span id="reg-valid-badge" class="reg-badge" hidden></span>
+          </div>
+          <span class="field-hint">「T」で始まる14文字（T + 数字13桁）</span>
+        </div>
+
+        <div class="checklist" id="invoice-checklist" role="group" aria-label="インボイス要件チェックリスト">
+
+          <label class="check-item" id="chk-wrap-1">
+            <input type="checkbox" class="chk-box" id="chk-1" aria-describedby="chk-desc-1">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">1. 適格請求書発行事業者の登録番号</span>
+              <span class="chk-desc" id="chk-desc-1">「T」で始まる13桁の登録番号（国税庁に登録済みの番号）</span>
+            </div>
+          </label>
+
+          <label class="check-item" id="chk-wrap-2">
+            <input type="checkbox" class="chk-box" id="chk-2" aria-describedby="chk-desc-2">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">2. 取引年月日</span>
+              <span class="chk-desc" id="chk-desc-2">課税資産の譲渡等を行った年月日</span>
+            </div>
+          </label>
+
+          <label class="check-item" id="chk-wrap-3">
+            <input type="checkbox" class="chk-box" id="chk-3" aria-describedby="chk-desc-3">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">3. 取引内容（軽減税率対象品目の明示）</span>
+              <span class="chk-desc" id="chk-desc-3">軽減税率（8%）の対象品目は「※」等の記号で明示する</span>
+            </div>
+          </label>
+
+          <label class="check-item" id="chk-wrap-4">
+            <input type="checkbox" class="chk-box" id="chk-4" aria-describedby="chk-desc-4">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">4. 税率ごとに区分した合計額（税抜または税込）</span>
+              <span class="chk-desc" id="chk-desc-4">8%と10%それぞれの合計金額（税抜または税込のどちらかで記載）</span>
+            </div>
+          </label>
+
+          <label class="check-item" id="chk-wrap-5">
+            <input type="checkbox" class="chk-box" id="chk-5" aria-describedby="chk-desc-5">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">5. 税率ごとに区分した消費税額</span>
+              <span class="chk-desc" id="chk-desc-5">8%と10%それぞれの消費税額を明記。インボイス1枚ごとに端数処理</span>
+            </div>
+          </label>
+
+          <label class="check-item" id="chk-wrap-6">
+            <input type="checkbox" class="chk-box" id="chk-6" aria-describedby="chk-desc-6">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">6. 書類の交付を受ける事業者の氏名・名称</span>
+              <span class="chk-desc" id="chk-desc-6">請求書の宛先となる取引先の氏名または名称</span>
+            </div>
+          </label>
+
+          <label class="check-item" id="chk-wrap-7">
+            <input type="checkbox" class="chk-box" id="chk-7" aria-describedby="chk-desc-7">
+            <span class="chk-indicator"></span>
+            <div class="chk-content">
+              <span class="chk-title">7. 適格請求書発行事業者の氏名・名称</span>
+              <span class="chk-desc" id="chk-desc-7">請求書を発行する側の事業者名（登録番号と紐付ける）</span>
+            </div>
+          </label>
+
+        </div>
+
+        <!-- 進捗バー -->
+        <div class="progress-wrap">
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="invoice-progress" style="width:0%"></div>
+          </div>
+          <span class="progress-label" id="invoice-progress-label">0 / 7 項目</span>
+        </div>
+
+        <!-- 判定結果 -->
+        <div id="invoice-result" class="invoice-result" hidden></div>
+
+      </section>
+    </div>
+
+    <!-- 広告ユニット2（FAQ下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+
+      <details class="howto-details" open>
+        <summary class="howto-summary">
+          <i class="bi bi-book-fill"></i> 使い方
+        </summary>
+        <ol class="howto-steps">
+          <li><strong>基本計算タブ</strong>：金額・税率・計算方向・端数処理を選び「計算する」を押すと、税抜・消費税額・税込の3段表示で結果が出ます。</li>
+          <li><strong>複数品目タブ</strong>：「行を追加」で品目を最大10行まで入力し「合計を計算」を押すと、税抜合計・消費税合計・税込合計が表示されます。「クリップボードにコピー」で一覧をテキストとして取得できます。</li>
+          <li><strong>インボイスチェックタブ</strong>：適格請求書（インボイス）に必要な7つの記載要件をチェックし、登録番号を入力すると形式が検証されます。全項目を満たすと判定結果が表示されます。</li>
+          <li>計算はすべてブラウザ内で完結し、入力データは外部へ送信されません。</li>
+          <li>実際の申告・請求書作成には国税庁の公式資料または税理士にご確認ください。</li>
+        </ol>
+      </details>
+
+      <h2>消費税の基礎知識</h2>
+      <p>消費税は商品の販売やサービスの提供に対して課される税金で、現在は<strong>標準税率10%</strong>と<strong>軽減税率8%</strong>の複数税率が適用されています。軽減税率の対象は、飲食料品（外食・酒類を除く）と週2回以上発行される定期購読の新聞です。同じ飲食物でも、レストランで食べる外食は10%、スーパーで購入する食品は8%と税率が異なります。</p>
+      <p>2023年10月からはインボイス制度（適格請求書等保存方式）が開始されました。売り手は適格請求書発行事業者として登録し、買い手から求められた場合にインボイスを交付する義務があります。買い手は仕入税額控除を受けるために、適格請求書の保存が必要です。</p>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>軽減税率の対象・対象外の具体例</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr><th>品目</th><th>税率</th><th>理由</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>スーパーの食品・飲料</td><td class="tax-8">8%</td><td>飲食料品（軽減税率）</td></tr>
+                <tr><td>レストランでの外食</td><td class="tax-10">10%</td><td>外食（標準税率）</td></tr>
+                <tr><td>コンビニのテイクアウト</td><td class="tax-8">8%</td><td>持ち帰り（軽減税率）</td></tr>
+                <tr><td>コンビニのイートイン</td><td class="tax-10">10%</td><td>店内飲食（標準税率）</td></tr>
+                <tr><td>週2回以上発行の定期購読新聞</td><td class="tax-8">8%</td><td>定期購読新聞（軽減税率）</td></tr>
+                <tr><td>電子版・週刊誌</td><td class="tax-10">10%</td><td>デジタル・書籍（標準税率）</td></tr>
+                <tr><td>ビール・ワイン等の酒類</td><td class="tax-10">10%</td><td>酒類（標準税率）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>インボイス制度の経過措置（免税事業者との取引）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>インボイスを発行できない免税事業者からの仕入れについては、段階的な経過措置が設けられています。</p>
+            <table>
+              <thead>
+                <tr><th>期間</th><th>仕入税額控除の割合</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>2023年10月1日〜2026年9月30日</td><td>80%控除可</td></tr>
+                <tr><td>2026年10月1日〜2029年9月30日</td><td>50%控除可</td></tr>
+                <tr><td>2029年10月1日以降</td><td>控除不可（原則）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>端数処理は切捨て・切上げ・四捨五入どれが正しいですか？</dt>
+              <dd>消費税の端数処理に法律上の義務はなく、切捨て・切上げ・四捨五入のいずれも認められています。ただしインボイス制度では、1枚のインボイスごとに端数処理することが求められており、品目ごとの端数処理は認められていません。</dd>
+              <dt>登録番号なしで取引先にインボイスを要求されたらどうする？</dt>
+              <dd>適格請求書発行事業者でない場合（免税事業者など）はインボイスを発行できません。取引先は経過措置の範囲で仕入税額控除の一部を受けることができます。登録を検討する場合は国税庁の「適格請求書発行事業者の登録申請」を行ってください。</dd>
+              <dt>税抜1,000円の商品の税込価格は？</dt>
+              <dd>標準税率（10%）の場合：1,000円 × 1.10 = 1,100円。軽減税率（8%）の場合：1,000円 × 1.08 = 1,080円。</dd>
+              <dt>税込1,100円の税抜価格は？</dt>
+              <dd>標準税率（10%）の場合：1,100円 ÷ 1.10 = 1,000円（消費税100円）。計算結果の端数は切捨て・四捨五入などで1円の差が生じることがあります。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>免責事項・参考リンク</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <ul class="ref-links">
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6498.htm" target="_blank" rel="noopener">国税庁：適格請求書等保存方式（インボイス制度）の概要</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shohi/6209.htm" target="_blank" rel="noopener">国税庁：軽減税率制度の概要</a></li>
+              <li><a href="https://www.invoice-kohyo.nta.go.jp/" target="_blank" rel="noopener">国税庁：インボイス制度適格請求書発行事業者公表サイト</a></li>
+            </ul>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は参考値であり、正確な税額・法的効力を保証するものではありません。実際の申告・請求書作成・税務判断については、<a href="https://www.nta.go.jp/" target="_blank" rel="noopener">国税庁公式サイト</a>または税理士にご確認ください。</p>
+          </div>
+        </details>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

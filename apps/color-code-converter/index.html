@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HEX・RGB・HSLのカラーコードをリアルタイムで相互変換。カラーピッカー・補色生成・WCAGコントラスト比チェック対応。CSS変数出力もワンクリック。Webデザイナーに必須の無料ツール。">
+  <title>カラーコード変換ツール｜HEX・RGB・HSL即変換+コントラストチェック【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/color-code-converter/">
+  <!-- OGP -->
+  <meta property="og:title" content="カラーコード変換ツール｜HEX・RGB・HSL即変換+コントラストチェック【無料】">
+  <meta property="og:description" content="HEX・RGB・HSLのカラーコードをリアルタイムで相互変換。カラーピッカー・補色生成・WCAGコントラスト比チェック対応。CSS変数出力もワンクリック。Webデザイナーに必須の無料ツール。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/color-code-converter/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-color-code-converter.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="カラーコード変換ツール｜HEX・RGB・HSL即変換+コントラストチェック">
+  <meta name="twitter:description" content="HEX・RGB・HSLのカラーコードをリアルタイムで相互変換。WCAGコントラスト比チェック・補色生成・CSS変数出力対応。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-color-code-converter.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "HEXカラーコードとは何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "HEX（16進数）カラーコードは、#RRGGBBの形式で色を表す方法です。RR（赤）・GG（緑）・BB（青）それぞれを00〜FFの16進数2桁で表現します。CSSやHTMLで最も広く使われる色指定形式です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "RGBとHEXの変換方法を教えてください。",
+        "acceptedAnswer": { "@type": "Answer", "text": "RGBの各値（0〜255）を16進数に変換してつなげるとHEXになります。例えばRGB(124, 58, 237)はR=7C、G=3A、B=EDなので#7C3AEDです。本ツールなら入力するだけで自動変換できます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "HSLとはどんな色空間ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "HSLはHue（色相）・Saturation（彩度）・Lightness（明度）の3要素で色を表す色空間です。H:0〜360度、S:0〜100%、L:0〜100%で指定します。直感的に色を調整しやすく、CSSアニメーションでの色変化にもよく使われます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "WCAGコントラスト比とは何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "WCAGはWeb Content Accessibility Guidelinesの略で、Webアクセシビリティの国際基準です。コントラスト比とは前景色（文字色）と背景色の明るさの差を示す比率です。AA基準では通常テキストに4.5:1以上、AAA基準では7:1以上が求められます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "補色とはどういう色ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "補色とは色相環で正反対（180度離れた）の色のことです。補色同士を組み合わせると色が強調し合い、鮮やかなコントラストが生まれます。デザインでアクセントカラーを選ぶ際に活用されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "CSS変数として出力するにはどうすればよいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "「CSS変数出力」セクションの「コピー」ボタンをクリックすると、選択中の色を--color-primary、--color-primary-rgb、--color-primary-hslのCSS変数としてクリップボードにコピーできます。そのままCSSファイルに貼り付けて使えます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入力したカラーデータはサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ、一切送信されません。すべての変換・計算処理はブラウザ内のJavaScriptで完結します。入力した色情報がサーバーや第三者に送信されることはありません。" }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>カラーコード変換 HEX / RGB / HSL 相互変換ツール</h1>
+      <p class="subtitle">カラーピッカー・補色生成・WCAGコントラスト比チェック対応。Webデザイナー必携の無料ツール。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice" role="note">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- セクション1: カラー入力・変換 -->
+    <section id="tool" class="card section-gap">
+      <h2 class="section-title"><i class="bi bi-palette"></i> カラー入力・変換</h2>
+
+      <div class="color-input-grid">
+        <!-- カラープレビュー + ピッカー -->
+        <div class="color-preview-area">
+          <div class="color-preview-box" id="colorPreview" style="background:#7c3aed;" role="img" aria-label="選択中のカラープレビュー"></div>
+          <label class="picker-label" for="colorPicker">
+            <i class="bi bi-eyedropper"></i> ピッカーで選択
+          </label>
+          <input type="color" id="colorPicker" value="#7c3aed" aria-label="カラーピッカー">
+        </div>
+
+        <!-- HEX / RGB / HSL 入力 -->
+        <div class="color-fields">
+          <!-- HEX -->
+          <div class="field-row">
+            <label class="field-label" for="hexInput">HEX</label>
+            <div class="input-copy-row">
+              <input type="text" id="hexInput" value="#7c3aed" placeholder="#000000" maxlength="7" class="mono-input" aria-label="HEXカラーコード">
+              <button class="copy-btn" data-target="hexInput" aria-label="HEXをコピー" title="コピー">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- RGB -->
+          <div class="field-row">
+            <label class="field-label">RGB</label>
+            <div class="rgb-inputs">
+              <div class="rgb-field">
+                <span class="rgb-label">R</span>
+                <input type="number" id="rInput" value="124" min="0" max="255" aria-label="赤 (0-255)">
+              </div>
+              <div class="rgb-field">
+                <span class="rgb-label">G</span>
+                <input type="number" id="gInput" value="58" min="0" max="255" aria-label="緑 (0-255)">
+              </div>
+              <div class="rgb-field">
+                <span class="rgb-label">B</span>
+                <input type="number" id="bInput" value="237" min="0" max="255" aria-label="青 (0-255)">
+              </div>
+              <button class="copy-btn" id="copyRgb" aria-label="RGBをコピー" title="コピー">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- HSL -->
+          <div class="field-row">
+            <label class="field-label">HSL</label>
+            <div class="rgb-inputs">
+              <div class="rgb-field">
+                <span class="rgb-label">H</span>
+                <input type="number" id="hInput" value="262" min="0" max="360" aria-label="色相 (0-360)">
+              </div>
+              <div class="rgb-field">
+                <span class="rgb-label">S</span>
+                <input type="number" id="sInput" value="83" min="0" max="100" aria-label="彩度 (0-100)">
+              </div>
+              <div class="rgb-field">
+                <span class="rgb-label">L</span>
+                <input type="number" id="lInput" value="58" min="0" max="100" aria-label="明度 (0-100)">
+              </div>
+              <button class="copy-btn" id="copyHsl" aria-label="HSLをコピー" title="コピー">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（コントラストセクションの上） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- セクション2: WCAGコントラスト比チェック -->
+    <section id="contrast" class="card section-gap">
+      <h2 class="section-title"><i class="bi bi-eye"></i> WCAGコントラスト比チェック</h2>
+
+      <div class="contrast-inputs">
+        <div class="contrast-color-pair">
+          <div class="contrast-field">
+            <label class="field-label" for="fgPicker">前景色（テキスト）</label>
+            <div class="contrast-color-row">
+              <input type="color" id="fgPicker" value="#ffffff" aria-label="前景色カラーピッカー">
+              <input type="text" id="fgHex" value="#ffffff" maxlength="7" class="mono-input" aria-label="前景色HEX">
+            </div>
+          </div>
+          <div class="contrast-field">
+            <label class="field-label" for="bgPicker">背景色</label>
+            <div class="contrast-color-row">
+              <input type="color" id="bgPicker" value="#7c3aed" aria-label="背景色カラーピッカー">
+              <input type="text" id="bgHex" value="#7c3aed" maxlength="7" class="mono-input" aria-label="背景色HEX">
+            </div>
+          </div>
+        </div>
+
+        <!-- コントラストプレビュー -->
+        <div class="contrast-preview" id="contrastPreview">
+          <span class="preview-text" id="previewText" style="color:#ffffff;">サンプルテキスト / Sample Text 123</span>
+        </div>
+      </div>
+
+      <!-- コントラスト結果 -->
+      <div class="contrast-result-area" id="contrastResult">
+        <div class="contrast-ratio-display">
+          <span class="ratio-value" id="ratioValue">14.26</span>
+          <span class="ratio-colon">: 1</span>
+        </div>
+        <div class="wcag-badges" id="wcagBadges">
+          <!-- JS で生成 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション3: 補色・類似色パレット -->
+    <section id="palette" class="card section-gap">
+      <h2 class="section-title"><i class="bi bi-grid-3x3-gap"></i> 補色・類似色パレット</h2>
+      <p class="section-desc">各色をクリックするとHEXコードをコピーします</p>
+      <div class="palette-grid" id="paletteGrid">
+        <!-- JS で生成 -->
+      </div>
+    </section>
+
+    <!-- セクション4: CSS変数出力 -->
+    <section id="css-vars" class="card section-gap">
+      <h2 class="section-title"><i class="bi bi-code-slash"></i> CSS変数出力</h2>
+      <p class="section-desc">選択中の色をCSS変数としてコピーします</p>
+      <div class="css-output-area">
+        <pre class="css-code" id="cssOutput" aria-label="CSS変数コード"></pre>
+        <button class="btn-primary" id="copyCssBtn" aria-label="CSS変数をコピー">
+          <i class="bi bi-clipboard"></i> コピー
+        </button>
+      </div>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="card section-gap">
+      <details>
+        <summary class="howto-summary"><i class="bi bi-info-circle"></i> 使い方（5ステップ）</summary>
+        <div class="howto-content">
+          <ol class="howto-steps">
+            <li><strong>カラーピッカーまたはHEX入力</strong>で色を選択します。ピッカーのカラーホイールをドラッグするか、#7c3aed のようなHEXコードを直接入力してください。</li>
+            <li><strong>RGB・HSL値が自動更新</strong>されます。各値の隣にあるコピーボタン（<i class="bi bi-clipboard"></i>）で値をクリップボードにコピーできます。</li>
+            <li><strong>WCAGコントラスト比チェック</strong>で前景色（文字色）と背景色を入力すると、コントラスト比と AA/AAA 合否が即座に表示されます。</li>
+            <li><strong>補色・類似色パレット</strong>で選択した色のカラーハーモニーを確認できます。各スウォッチをクリックするとHEXをコピーします。</li>
+            <li><strong>CSS変数出力</strong>の「コピー」ボタンで :root 変数をワンクリックでコピーし、CSSファイルに貼り付けて使えます。</li>
+          </ol>
+        </div>
+      </details>
+    </section>
+
+    <!-- カラーコード変換とは -->
+    <section id="about-tool" class="card section-gap">
+      <h2 class="section-title">カラーコード変換とは</h2>
+      <div class="about-content">
+        <p>カラーコードとは、色をデジタルデータとして表現するための記法です。WebデザインやCSS開発では主に <strong>HEX（16進数）</strong>・<strong>RGB（赤・緑・青）</strong>・<strong>HSL（色相・彩度・明度）</strong> の3形式が使われます。</p>
+        <p>HEXは最も広く使われる形式で、<code>#RRGGBB</code> の形式で6桁の16進数を使います。RGBは各チャンネルを0〜255の数値で指定でき、不透明度を扱うRGBA形式への応用もできます。HSLは人間の感覚に近い指定方法で、色相を変えるだけで色味を変えられるため、CSSアニメーションや動的な色変化に便利です。</p>
+        <p>WCAG（Web Content Accessibility Guidelines）のコントラスト比チェックは、視覚に障害のある方を含む多くのユーザーにとって読みやすいデザインを実現するために重要です。コントラスト比4.5:1以上（AA基準）を満たすことで、より多くのユーザーが文字を読みやすくなります。</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="card section-gap">
+      <h2 class="section-title">よくある質問</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-q">HEXカラーコードとは何ですか？</summary>
+          <p class="faq-a">HEX（16進数）カラーコードは、#RRGGBBの形式で色を表す方法です。RR（赤）・GG（緑）・BB（青）それぞれを00〜FFの16進数2桁で表現します。CSSやHTMLで最も広く使われる色指定形式です。</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">RGBとHEXの変換方法を教えてください。</summary>
+          <p class="faq-a">RGBの各値（0〜255）を16進数に変換してつなげるとHEXになります。例えばRGB(124, 58, 237)はR=7C、G=3A、B=EDなので#7C3AEDです。本ツールなら入力するだけで自動変換できます。</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">HSLとはどんな色空間ですか？</summary>
+          <p class="faq-a">HSLはHue（色相）・Saturation（彩度）・Lightness（明度）の3要素で色を表す色空間です。H:0〜360度、S:0〜100%、L:0〜100%で指定します。直感的に色を調整しやすく、CSSアニメーションでの色変化にも活用されます。</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">WCAGコントラスト比とは何ですか？</summary>
+          <p class="faq-a">WCAGはWeb Content Accessibility Guidelinesの略で、Webアクセシビリティの国際基準です。コントラスト比とは前景色（文字色）と背景色の明るさの差を示す比率です。AA基準では通常テキストに4.5:1以上、AAA基準では7:1以上が求められます。</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">補色とはどういう色ですか？</summary>
+          <p class="faq-a">補色とは色相環で正反対（180度離れた）の色のことです。補色同士を組み合わせると色が強調し合い、鮮やかなコントラストが生まれます。デザインでアクセントカラーを選ぶ際に活用されます。</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">CSS変数として出力するにはどうすればよいですか？</summary>
+          <p class="faq-a">「CSS変数出力」セクションの「コピー」ボタンをクリックすると、選択中の色を --color-primary などのCSS変数としてクリップボードにコピーできます。そのままCSSファイルに貼り付けて使えます。</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">入力したカラーデータはサーバーに送信されますか？</summary>
+          <p class="faq-a">いいえ、一切送信されません。すべての変換・計算処理はブラウザ内のJavaScriptで完結します。入力した色情報がサーバーや第三者に送信されることはありません。</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- 免責事項 -->
+    <section id="disclaimer" class="card section-gap disclaimer-section">
+      <h2 class="section-title">免責事項</h2>
+      <p>本ツールで提供するカラーコード変換・コントラスト比計算はWCAG 2.1の計算式に基づいていますが、その正確性・完全性を保証するものではありません。Webデザインやアクセシビリティ対応の最終判断は、専門家の確認をおすすめします。</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><a href="/about.html">このサイトについて</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+      <p><small>&copy; 2026 KeisanLab — カラーコード変換ツール</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
