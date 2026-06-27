@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="パスワードの強度をリアルタイムで診断。解読にかかる時間を表示し、安全なランダムパスワードも即生成。大文字・記号・文字数を自由に設定。登録不要・完全無料。">
+  <title>パスワード強度チェック・生成ツール｜安全性を即診断【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/password-checker/">
+  <!-- OGP -->
+  <meta property="og:title" content="パスワード強度チェック・生成ツール｜安全性を即診断【無料】">
+  <meta property="og:description" content="パスワードの強度をリアルタイムで診断。解読にかかる時間を表示し、安全なランダムパスワードも即生成。大文字・記号・文字数を自由に設定。登録不要・完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/password-checker/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="パスワード強度チェック・生成ツール｜安全性を即診断【無料】">
+  <meta name="twitter:description" content="パスワードの強度をリアルタイムで診断。解読にかかる時間を表示し、安全なランダムパスワードも即生成。">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <!-- zxcvbn -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "安全なパスワードの長さはどのくらいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に12文字以上が推奨されています。文字数が増えるほど解読に必要な時間が指数関数的に増加します。大文字・小文字・数字・記号をすべて組み合わせた16文字以上のパスワードは非常に高い安全性を持ちます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "入力したパスワードはサーバーに送信されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "いいえ、一切送信されません。このツールはすべての処理をブラウザ内で完結させており、入力したパスワードがインターネット経由で外部に送信されることはありません。安心してお使いください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "パスワードの強度スコアはどう計算されていますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "zxcvbn.jsというライブラリを使用しています。単純な文字数・種類の判定だけでなく、辞書攻撃・キーボードパターン・よく使われるパスワードのデータベースと照合して、より現実に近い強度を評価します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "生成されたパスワードをそのまま使っても大丈夫ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい。このツールはブラウザのCrypto APIを使った暗号学的に安全な乱数生成を行っており、予測不可能なランダムパスワードを生成します。生成したパスワードはパスワードマネージャーに保存することをおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "パスワードを使い回すのはなぜ危険なのですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1つのサービスから情報が漏洩した場合、同じパスワードを使用している他のサービスすべてに不正アクセスされるリスクがあります（パスワードリスト攻撃）。サービスごとに異なるパスワードを設定することが重要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "パスワードマネージャーは安全ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "信頼性の高いパスワードマネージャー（1Password、Bitwarden、LastPassなど）はゼロ知識暗号化を採用しており、サービス側でもパスワードを閲覧できない設計になっています。複雑なパスワードを管理する上で非常に有効な手段です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "二段階認証（2FA）とパスワードはどちらが重要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "どちらも重要で、組み合わせることが最も効果的です。強力なパスワードに加えて二段階認証を設定することで、パスワードが漏洩した場合でも不正アクセスを防ぐことができます。特に重要なアカウントには両方の設定を強くおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "定期的なパスワード変更は必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "漏洩の疑いがある場合や、使用中のサービスでセキュリティインシデントが発生した場合は直ちに変更が必要です。ただし、NISTのガイドラインでは定期的な変更義務よりも、強力で固有のパスワードを設定し続けることを推奨しています。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-shield-lock-fill"></i></div>
+      <h1>パスワード強度チェック &amp; 安全なパスワード生成ツール</h1>
+      <p class="header-sub">リアルタイム診断 &amp; ランダムパスワード即生成 — 完全無料・登録不要</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <!-- AdSense: 横長バナー（レスポンシブ） -->
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- セクション1: パスワード強度チェック -->
+    <section id="checker" class="card">
+      <h2><i class="bi bi-shield-check"></i> パスワード強度チェック</h2>
+
+      <div class="field">
+        <label class="field-label" for="password-input">パスワードを入力</label>
+        <div class="password-input-wrapper">
+          <input
+            type="password"
+            id="password-input"
+            placeholder="パスワードを入力してください"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="パスワード入力"
+          >
+          <button type="button" class="toggle-visibility" id="toggle-visibility" aria-label="パスワードを表示/非表示">
+            <i class="bi bi-eye" id="toggle-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 強度メーター -->
+      <div class="strength-meter-wrap">
+        <div class="strength-meter" id="strength-meter" aria-hidden="true">
+          <div class="strength-segment" data-index="0"></div>
+          <div class="strength-segment" data-index="1"></div>
+          <div class="strength-segment" data-index="2"></div>
+          <div class="strength-segment" data-index="3"></div>
+          <div class="strength-segment" data-index="4"></div>
+        </div>
+      </div>
+
+      <!-- 強度ラベル -->
+      <div class="strength-result" id="strength-result">
+        <span class="strength-badge" id="strength-badge">パスワードを入力してください</span>
+        <span class="strength-time" id="strength-time"></span>
+      </div>
+
+      <!-- 改善アドバイス -->
+      <div class="advice-list" id="advice-list" aria-live="polite"></div>
+
+      <!-- 強度スコア説明 -->
+      <details class="score-legend">
+        <summary>強度スコアの見方</summary>
+        <div class="score-legend-body">
+          <div class="score-item score-0"><span class="score-dot"></span><strong>非常に弱い</strong> — すぐ解読されます。今すぐ変更を。</div>
+          <div class="score-item score-1"><span class="score-dot"></span><strong>弱い</strong> — 辞書攻撃に脆弱です。</div>
+          <div class="score-item score-2"><span class="score-dot"></span><strong>普通</strong> — もう少し複雑にすると安心です。</div>
+          <div class="score-item score-3"><span class="score-dot"></span><strong>強い</strong> — 十分な強度があります。</div>
+          <div class="score-item score-4"><span class="score-dot"></span><strong>非常に強い</strong> — 優れたパスワードです。</div>
+        </div>
+      </details>
+    </section>
+
+    <!-- 広告ユニット2（生成セクション上） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <!-- AdSense: インフィード広告（生成セクション上） -->
+    </div>
+
+    <!-- セクション2: パスワード生成 -->
+    <section id="generator" class="card">
+      <h2><i class="bi bi-key-fill"></i> 安全なパスワード生成</h2>
+
+      <div class="field">
+        <label class="field-label" for="length-slider">
+          文字数: <strong id="length-display">16</strong>文字
+        </label>
+        <input
+          type="range"
+          id="length-slider"
+          min="8"
+          max="32"
+          value="16"
+          class="range-slider"
+          aria-label="パスワード文字数"
+        >
+        <div class="range-labels">
+          <span>8文字</span>
+          <span>32文字</span>
+        </div>
+      </div>
+
+      <div class="checkbox-grid">
+        <label class="checkbox-item">
+          <input type="checkbox" id="use-upper" checked>
+          <span class="checkbox-label"><i class="bi bi-fonts"></i> 大文字 (A-Z)</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="use-lower" checked>
+          <span class="checkbox-label"><i class="bi bi-type-italic"></i> 小文字 (a-z)</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="use-number" checked>
+          <span class="checkbox-label"><i class="bi bi-123"></i> 数字 (0-9)</span>
+        </label>
+        <label class="checkbox-item">
+          <input type="checkbox" id="use-symbol" checked>
+          <span class="checkbox-label"><i class="bi bi-asterisk"></i> 記号 (!@#$%^&amp;*)</span>
+        </label>
+      </div>
+
+      <button type="button" class="btn-primary btn-generate" id="btn-generate">
+        <i class="bi bi-arrow-clockwise"></i> パスワードを生成
+      </button>
+
+      <div class="generated-output" id="generated-output">
+        <code class="generated-password" id="generated-password" aria-live="polite">
+          ボタンを押して生成してください
+        </code>
+        <button type="button" class="btn-copy" id="btn-copy" aria-label="パスワードをコピー">
+          <i class="bi bi-clipboard" id="copy-icon"></i>
+          <span id="copy-text">コピー</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- セキュリティ説明 -->
+    <section class="card security-info">
+      <h2><i class="bi bi-info-circle"></i> このツールについて</h2>
+      <ul class="security-list">
+        <li><i class="bi bi-shield-check text-primary"></i> すべての処理はブラウザ内で完結。入力したパスワードはサーバーに送信されません。</li>
+        <li><i class="bi bi-cpu text-primary"></i> 強度評価には <strong>zxcvbn.js</strong>（Dropboxが開発したライブラリ）を使用。辞書攻撃・パターン攻撃を考慮した現実的な評価を行います。</li>
+        <li><i class="bi bi-shuffle text-primary"></i> パスワード生成には <strong>Web Crypto API</strong>（暗号学的に安全な乱数）を使用しています。</li>
+      </ul>
+    </section>
+
+    <!-- 使い方 -->
+    <section class="card howto-section">
+      <details open>
+        <summary><h2 class="inline-heading"><i class="bi bi-book"></i> 使い方</h2></summary>
+        <div class="howto-body">
+          <h3>パスワード強度チェックの使い方</h3>
+          <ol>
+            <li>「パスワードを入力」欄に確認したいパスワードを入力してください。</li>
+            <li>強度メーターがリアルタイムで更新されます（0〜4の5段階）。</li>
+            <li>解読にかかる推定時間と、改善アドバイスが表示されます。</li>
+            <li>目の形のボタンでパスワードの表示/非表示を切り替えられます。</li>
+          </ol>
+          <h3>パスワード生成の使い方</h3>
+          <ol>
+            <li>スライダーで文字数（8〜32文字）を選択します。</li>
+            <li>使用する文字の種類（大文字・小文字・数字・記号）をチェックします。</li>
+            <li>「パスワードを生成」ボタンを押すとランダムなパスワードが生成されます。</li>
+            <li>クリップボードアイコンで生成したパスワードをコピーできます。</li>
+            <li>生成されたパスワードは自動的に強度チェック欄に反映されます。</li>
+          </ol>
+          <h3>安全なパスワードを作るポイント</h3>
+          <p>
+            安全なパスワードの条件は「長さ」「複雑さ」「唯一性」の3つです。12文字以上・大文字小文字数字記号を混在・各サービスで異なるパスワードを使用することが基本です。
+            生年月日や名前・辞書に載っている単語は避けましょう。複数サービスのパスワード管理には、パスワードマネージャー（1Password・Bitwarden等）の活用をおすすめします。
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <!-- FAQ -->
+    <section class="card faq-section">
+      <h2><i class="bi bi-question-circle"></i> よくある質問</h2>
+
+      <details class="faq-item">
+        <summary>安全なパスワードの長さはどのくらいですか？</summary>
+        <p>一般的に12文字以上が推奨されています。大文字・小文字・数字・記号をすべて組み合わせた16文字以上のパスワードは非常に高い安全性を持ちます。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>入力したパスワードはサーバーに送信されますか？</summary>
+        <p>いいえ、一切送信されません。このツールはすべての処理をブラウザ内で完結させており、入力したパスワードがインターネット経由で外部に送信されることはありません。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>パスワードの強度スコアはどう計算されていますか？</summary>
+        <p>zxcvbn.jsというライブラリを使用しています。単純な文字数・種類の判定だけでなく、辞書攻撃・キーボードパターン・よく使われるパスワードのデータベースと照合して、より現実に近い強度を評価します。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>生成されたパスワードをそのまま使っても大丈夫ですか？</summary>
+        <p>はい。このツールはブラウザのCrypto APIを使った暗号学的に安全な乱数生成を行っており、予測不可能なランダムパスワードを生成します。生成したパスワードはパスワードマネージャーに保存することをおすすめします。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>パスワードを使い回すのはなぜ危険なのですか？</summary>
+        <p>1つのサービスから情報が漏洩した場合、同じパスワードを使用している他のサービスすべてに不正アクセスされるリスクがあります（パスワードリスト攻撃）。サービスごとに異なるパスワードを設定することが重要です。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>パスワードマネージャーは安全ですか？</summary>
+        <p>信頼性の高いパスワードマネージャー（1Password、Bitwarden、LastPassなど）はゼロ知識暗号化を採用しており、サービス側でもパスワードを閲覧できない設計になっています。複雑なパスワードを管理する上で非常に有効な手段です。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>二段階認証（2FA）とパスワードはどちらが重要ですか？</summary>
+        <p>どちらも重要で、組み合わせることが最も効果的です。強力なパスワードに加えて二段階認証を設定することで、パスワードが漏洩した場合でも不正アクセスを防ぐことができます。</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>定期的なパスワード変更は必要ですか？</summary>
+        <p>漏洩の疑いがある場合や、使用中のサービスでセキュリティインシデントが発生した場合は直ちに変更が必要です。ただし、NISTのガイドラインでは定期的な変更義務よりも、強力で固有のパスワードを設定し続けることを推奨しています。</p>
+      </details>
+    </section>
+
+    <!-- 免責事項 -->
+    <section class="card disclaimer-section">
+      <h2><i class="bi bi-exclamation-triangle"></i> 免責事項</h2>
+      <p>
+        本ツールはパスワードの強度を参考値として提供するものであり、絶対的な安全性を保証するものではありません。
+        セキュリティの判断は利用者ご自身の責任において行ってください。
+        本ツールの利用によって生じたいかなる損害についても、当サイトは責任を負いかねます。
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <nav class="footer-nav">
+      <a href="/about.html">このサイトについて</a>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      <a href="/index.html">ツール一覧</a>
+    </nav>
+    <p class="footer-copy"><small>&copy; 2026 KeisanLab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
