@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="最終月経日から妊娠週数と出産予定日を自動計算。現在の妊娠週数・日数・妊娠何ヶ月かを表示。安静時期・健診タイミングなど妊娠カレンダーも確認できます。完全無料。">
+  <title>妊娠週数・出産予定日計算ツール｜最終月経日から即計算【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/pregnancy-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="妊娠週数・出産予定日計算ツール｜最終月経日から即計算【無料】">
+  <meta property="og:description" content="最終月経日から妊娠週数と出産予定日を自動計算。現在の妊娠週数・日数・妊娠何ヶ月かを表示。安静時期・健診タイミングなど妊娠カレンダーも確認できます。完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/pregnancy-calculator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-pregnancy-calculator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="妊娠週数・出産予定日計算ツール｜最終月経日から即計算【無料】">
+  <meta name="twitter:description" content="最終月経日から妊娠週数と出産予定日を自動計算。妊娠カレンダーも確認できます。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-pregnancy-calculator.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "妊娠週数はどうやって計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "妊娠週数は最終月経開始日から数えます。最終月経開始日を0日目として、7日ごとに1週増えます。例えば最終月経から42日目は「妊娠6週0日」です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "出産予定日はどのように計算しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "出産予定日はネーゲレ概算法により、最終月経開始日に280日（40週）を加えた日です。月経周期が28日以外の場合は、排卵日のずれを考慮して（周期－14日）を調整します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "妊娠何ヶ月目かはどう数えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "妊娠月数は4週ごとに1ヶ月として数えます。妊娠1〜3週が1ヶ月目、4〜7週が2ヶ月目、8〜11週が3ヶ月目、12〜15週が4ヶ月目、16〜19週が5ヶ月目（安定期）、20〜23週が6ヶ月目、24〜27週が7ヶ月目、28〜31週が8ヶ月目、32〜35週が9ヶ月目、36〜39週が10ヶ月目です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "安定期はいつから始まりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に妊娠16週（妊娠5ヶ月）から安定期とされています。この時期は胎盤が完成し、流産リスクが大幅に低下します。ただし「安定期」は医学的な正式用語ではなく、個人差もあるため、担当の産婦人科医に確認することをおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "母子手帳はいつもらえますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "母子手帳は妊娠が確認されたら市区町村の役所・保健センターで交付されます。一般的に妊娠8〜11週頃に産婦人科で心拍が確認されてから手続きする方が多いです。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "正期産とはどの時期ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "妊娠37週0日〜41週6日の出産を「正期産」といいます。37週未満の出産は「早産」、42週以降は「過期産」となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "月経周期が28日ではない場合、計算結果は変わりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、変わります。月経周期が長いと排卵日が遅くなるため、出産予定日も後ろにずれます。本ツールでは月経周期を選択すると、自動的に排卵日を調整して出産予定日を計算します。ただし、より正確な週数・予定日は超音波検査で確認することをおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "このツールで計算した出産予定日は正確ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このツールはネーゲレ概算法を用いた目安の計算です。実際の出産予定日は超音波検査（エコー）による胎児の大きさから産婦人科医が決定します。実際の予定日と異なる場合もありますので、必ず担当医に確認してください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <h1>妊娠週数・出産予定日計算 — 最終月経日から週数・日数を即計算</h1>
+      <p class="subtitle">最終月経日を入力するだけで、現在の妊娠週数・出産予定日・妊娠カレンダーを自動表示</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice" role="note">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+      <h2 class="section-title"><i class="bi bi-calculator"></i> 計算フォーム</h2>
+
+      <form id="tool-form" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label class="field-label" for="lmp-date">
+              最終月経開始日 <span class="required">必須</span>
+            </label>
+            <input type="date" id="lmp-date" name="lmp-date" required aria-required="true">
+            <span class="field-hint">最後の生理が始まった日を入力してください</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="cycle">月経周期</label>
+            <select id="cycle" name="cycle" aria-label="月経周期を選択">
+              <option value="28" selected>28日（標準）</option>
+              <option value="25">25日</option>
+              <option value="26">26日</option>
+              <option value="27">27日</option>
+              <option value="29">29日</option>
+              <option value="30">30日</option>
+              <option value="31">31日</option>
+              <option value="32">32日</option>
+              <option value="33">33日</option>
+              <option value="34">34日</option>
+              <option value="35">35日</option>
+            </select>
+            <span class="field-hint">個人差がある場合は実際の周期を選択してください</span>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button type="submit" class="btn-primary" id="calc-btn">
+            <i class="bi bi-calculator-fill"></i> 妊娠週数を計算する
+          </button>
+          <button type="button" class="btn-secondary" id="today-btn">
+            <i class="bi bi-calendar-today"></i> 今日の日付で計算
+          </button>
+        </div>
+
+        <div class="error-msg" id="error-msg" role="alert" aria-live="polite"></div>
+      </form>
+
+      <!-- 結果表示エリア -->
+      <div id="result-area" class="result-area" hidden aria-live="polite">
+        <div class="result-grid">
+          <div class="result-card result-card--primary">
+            <div class="result-card__icon"><i class="bi bi-calendar-heart"></i></div>
+            <div class="result-card__label">出産予定日</div>
+            <div class="result-card__value" id="due-date-display">—</div>
+            <div class="result-card__sub" id="due-day-of-week"></div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-card__icon"><i class="bi bi-hourglass-split"></i></div>
+            <div class="result-card__label">現在の妊娠週数</div>
+            <div class="result-card__value" id="weeks-display">—</div>
+            <div class="result-card__sub" id="months-display"></div>
+          </div>
+
+          <div class="result-card">
+            <div class="result-card__icon"><i class="bi bi-clock-history"></i></div>
+            <div class="result-card__label">出産まで残り</div>
+            <div class="result-card__value" id="remaining-display">—</div>
+            <div class="result-card__sub" id="ovulation-display"></div>
+          </div>
+        </div>
+
+        <!-- 妊娠カレンダー -->
+        <div class="calendar-section">
+          <h3 class="calendar-title"><i class="bi bi-journal-medical"></i> 妊娠カレンダー</h3>
+          <p class="calendar-desc">重要なマイルストーンと推定時期を確認できます</p>
+          <ul class="milestone-list" id="milestone-list" role="list">
+            <!-- JavaScriptで生成 -->
+          </ul>
+        </div>
+
+        <p class="result-notice">
+          <i class="bi bi-info-circle"></i>
+          本ツールの計算結果は目安です。正確な妊娠週数・出産予定日は産婦人科でご確認ください。
+        </p>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2 class="section-title"><i class="bi bi-question-circle"></i> 使い方</h2>
+      <details open>
+        <summary>5ステップで妊娠週数を確認する方法</summary>
+        <ol class="howto-steps">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <strong>最終月経開始日を入力</strong><br>
+              <span>最後の生理が始まった日（1日目）を日付ピッカーで選択します。</span>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <strong>月経周期を選択</strong><br>
+              <span>標準は28日です。個人の周期に合わせて25〜35日から選択できます。</span>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <strong>「妊娠週数を計算する」をタップ</strong><br>
+              <span>ボタンを押すと計算が即座に完了します。</span>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <div>
+              <strong>結果を確認</strong><br>
+              <span>出産予定日・現在の妊娠週数・出産まで残り日数が表示されます。</span>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <div>
+              <strong>妊娠カレンダーで健診タイミングを把握</strong><br>
+              <span>心拍確認・安定期入り・正期産などのマイルストーンと推定日を確認できます。</span>
+            </div>
+          </li>
+        </ol>
+      </details>
+    </section>
+
+    <!-- 妊娠週数についての解説 -->
+    <section id="about" class="info-section">
+      <h2 class="section-title"><i class="bi bi-book"></i> 妊娠週数・出産予定日の計算方法</h2>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <h3><i class="bi bi-calendar3"></i> 妊娠週数の数え方</h3>
+          <p>妊娠週数は<strong>最終月経開始日を0日目</strong>として数えます。7日で1週が増え、「妊娠○週○日」と表現します。受精・着床のタイミングは個人差があるため、医学的には最終月経日基準が世界標準です。</p>
+        </div>
+
+        <div class="info-card">
+          <h3><i class="bi bi-heart-pulse"></i> 出産予定日の計算（ネーゲレ概算法）</h3>
+          <p>出産予定日は最終月経開始日に<strong>280日（40週）を加えた日</strong>です。月経周期が28日以外の場合、排卵日のずれ（周期－14日）を考慮して調整します。超音波検査で胎児の大きさが確認されると、より正確な予定日に修正されることがあります。</p>
+        </div>
+
+        <div class="info-card">
+          <h3><i class="bi bi-calendar-range"></i> 妊娠月数の数え方</h3>
+          <p>4週ごとに1ヶ月として数えます。<strong>妊娠16週（5ヶ月目）から安定期</strong>とされ、胎盤が完成して流産リスクが低下します。妊娠37週〜41週6日が正期産の範囲です。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+      <h2 class="section-title"><i class="bi bi-chat-dots"></i> よくある質問</h2>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>妊娠週数はどうやって計算しますか？</summary>
+          <p>妊娠週数は最終月経開始日から数えます。最終月経開始日を0日目として、7日ごとに1週増えます。例えば最終月経から42日目は「妊娠6週0日」です。</p>
+        </details>
+        <details class="faq-item">
+          <summary>出産予定日はどのように計算しますか？</summary>
+          <p>出産予定日はネーゲレ概算法により、最終月経開始日に280日（40週）を加えた日です。月経周期が28日以外の場合は排卵日のずれを調整します。</p>
+        </details>
+        <details class="faq-item">
+          <summary>安定期はいつから始まりますか？</summary>
+          <p>一般的に妊娠16週（妊娠5ヶ月）から安定期とされています。胎盤が完成し、流産リスクが大幅に低下します。ただし個人差があるため、担当医にご確認ください。</p>
+        </details>
+        <details class="faq-item">
+          <summary>母子手帳はいつもらえますか？</summary>
+          <p>妊娠が確認されたら市区町村の役所・保健センターで交付されます。一般的に妊娠8〜11週頃に心拍が確認されてから手続きする方が多いです。</p>
+        </details>
+        <details class="faq-item">
+          <summary>正期産とはどの時期ですか？</summary>
+          <p>妊娠37週0日〜41週6日の出産を「正期産」といいます。37週未満は「早産」、42週以降は「過期産」となります。</p>
+        </details>
+        <details class="faq-item">
+          <summary>月経周期が28日でない場合、計算結果は変わりますか？</summary>
+          <p>はい、変わります。月経周期が長いと排卵日が遅くなるため、出産予定日も後ろにずれます。本ツールでは周期を選択すると自動調整して計算します。</p>
+        </details>
+        <details class="faq-item">
+          <summary>このツールで計算した出産予定日は正確ですか？</summary>
+          <p>本ツールはネーゲレ概算法を用いた目安の計算です。実際の出産予定日は超音波検査による胎児の大きさから産婦人科医が決定します。必ず担当医に確認してください。</p>
+        </details>
+        <details class="faq-item">
+          <summary>データはサーバーに送信されますか？</summary>
+          <p>いいえ、入力データは完全にブラウザ内で処理されます。外部サーバーへの送信は一切行いません。</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- 免責事項 -->
+    <section class="disclaimer-section">
+      <h2 class="section-title"><i class="bi bi-exclamation-triangle"></i> 免責事項・参考情報</h2>
+      <div class="disclaimer-box">
+        <p>本ツールは医療行為を目的としたものではなく、あくまで参考情報の提供を目的としています。計算結果は目安であり、実際の妊娠週数・出産予定日は産婦人科医による診察・超音波検査で確認してください。</p>
+        <p class="mt-8">妊娠・出産に関する正確な情報については、以下をご参照ください：</p>
+        <ul class="ref-links">
+          <li><a href="https://www.jsog.or.jp/" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> 日本産科婦人科学会</a></li>
+          <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/kodomo/kodomo_kosodate/boshi-hoken/" target="_blank" rel="noopener noreferrer"><i class="bi bi-box-arrow-up-right"></i> 厚生労働省 母子保健</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-links">
+        <a href="/about.html">このサイトについて</a>
+        <span>|</span>
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+      </p>
+      <p class="footer-copy"><small>&copy; 2025 計算ラボ (keisanlab.jp)</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
