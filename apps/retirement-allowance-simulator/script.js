@@ -376,7 +376,7 @@ function updateResults() {
   resultsEl.hidden = false;
 
   // スムーズスクロール
-  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // -----------------------------------------------------------------------
