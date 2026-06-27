@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="損益分岐点（BEP）を自動計算。固定費・変動費・販売単価を入力すると、黒字化に必要な販売数量と売上高をグラフで可視化。中小企業経営者・フリーランスに役立つ無料ツール。">
+  <title>損益分岐点計算ツール｜固定費・変動費から黒字化目標を可視化【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/break-even-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="損益分岐点計算ツール｜固定費・変動費から黒字化目標を可視化【無料】">
+  <meta property="og:description" content="損益分岐点（BEP）を自動計算。固定費・変動費・販売単価を入力すると、黒字化に必要な販売数量と売上高をグラフで可視化。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/break-even-calculator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-break-even-calculator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="損益分岐点計算ツール｜固定費・変動費から黒字化目標を可視化【無料】">
+  <meta name="twitter:description" content="損益分岐点（BEP）を自動計算。固定費・変動費・販売単価を入力すると、黒字化に必要な販売数量と売上高をグラフで可視化。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-break-even-calculator.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "損益分岐点とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "損益分岐点（BEP: Break-Even Point）とは、売上高と総費用が等しくなる点のことです。この点を超えると利益が生まれ、下回ると損失が発生します。経営判断の基本指標として中小企業・フリーランスに広く活用されています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "固定費と変動費の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "固定費は売上に関わらず毎月一定額発生するコストです（家賃・人件費・リース料など）。変動費は売上に比例して増減するコストです（原材料費・外注費・販売手数料など）。損益分岐点の計算にはこの区別が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "限界利益率とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "限界利益率とは、売上高に占める限界利益（売上高から変動費を引いた額）の割合です。限界利益率 = （販売単価 - 単位あたり変動費）÷ 販売単価 × 100 で計算します。この割合が高いほど損益分岐点を低くできます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "損益分岐点売上高の計算式を教えてください",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "損益分岐点売上高 = 固定費 ÷ 限界利益率（小数）で計算します。例えば固定費が月50万円、限界利益率が50%（0.5）なら、損益分岐点売上高は100万円となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "安全余裕率とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "安全余裕率とは、現在の売上高が損益分岐点売上高をどれだけ上回っているかを示す指標です。安全余裕率 = （実際売上高 - 損益分岐点売上高）÷ 実際売上高 × 100 で計算します。20%以上あれば健全とされます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "損益分岐点を下げるにはどうすればよいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "損益分岐点を下げる方法は主に3つあります。①固定費の削減（家賃交渉・人員最適化など）、②変動費率の改善（原材料コスト削減・外注先見直しなど）、③販売単価の引き上げ（付加価値の向上・プレミアム化など）です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "変動費率モードと単位変動費モードの違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "変動費率モードは売上高に対する変動費の割合（%）を入力するモードです。サービス業など単価が変動する業種向けです。単位変動費モードは製品1個あたりの変動費（円）を直接入力するモードです。製造業や小売業向けです。どちらも損益分岐点の計算結果は同じ精度になります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "このツールで計算した結果は経営判断に使えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本ツールの計算結果は参考値です。実際の経営判断には、固定費・変動費の正確な分類、季節変動、税金の考慮が必要です。重要な意思決定には税理士・中小企業診断士にご相談ください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-graph-up-arrow"></i></div>
+      <h1>損益分岐点計算ツール — 固定費・変動費・売上単価から黒字化目標を計算</h1>
+      <p class="header-sub">BEP（Break-Even Point）を自動計算・グラフで可視化。無料でお使いいただけます。</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-lock-fill"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 入力カード -->
+    <section class="card input-card" id="tool">
+      <h2 class="section-title"><i class="bi bi-pencil-square"></i> 費用・売上データを入力</h2>
+
+      <!-- 変動費入力モード切替 -->
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="btn-mode-rate" type="button" data-mode="rate">
+          <i class="bi bi-percent"></i> 変動費率モード
+        </button>
+        <button class="mode-btn" id="btn-mode-unit" type="button" data-mode="unit">
+          <i class="bi bi-currency-yen"></i> 単位変動費モード
+        </button>
+      </div>
+
+      <div class="form-grid">
+        <!-- 固定費 -->
+        <div class="field">
+          <label class="field-label" for="fixed-cost">
+            <i class="bi bi-building"></i> 固定費（月額）
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="fixed-cost" class="form-input" placeholder="例: 500000" min="0" aria-label="月額固定費を円で入力">
+            <span class="input-suffix">円 / 月</span>
+          </div>
+          <span class="field-hint">家賃・人件費・リース料など売上に関わらず発生するコスト</span>
+        </div>
+
+        <!-- 変動費率モード -->
+        <div class="field" id="field-rate">
+          <label class="field-label" for="variable-rate">
+            <i class="bi bi-percent"></i> 変動費率
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="variable-rate" class="form-input" placeholder="例: 30" min="0" max="99" step="0.1" aria-label="変動費率をパーセントで入力">
+            <span class="input-suffix">%</span>
+          </div>
+          <span class="field-hint">売上高に対する変動費の割合（原材料費・外注費など）</span>
+        </div>
+
+        <!-- 販売単価（変動費率モード時） -->
+        <div class="field" id="field-price-rate">
+          <label class="field-label" for="unit-price-rate">
+            <i class="bi bi-tag"></i> 販売単価
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="unit-price-rate" class="form-input" placeholder="例: 10000" min="1" aria-label="販売単価を円で入力">
+            <span class="input-suffix">円 / 個</span>
+          </div>
+          <span class="field-hint">1個（1件）あたりの販売価格</span>
+        </div>
+
+        <!-- 単位変動費モード -->
+        <div class="field" id="field-unit" style="display:none">
+          <label class="field-label" for="variable-unit">
+            <i class="bi bi-box"></i> 単位あたり変動費
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="variable-unit" class="form-input" placeholder="例: 3000" min="0" aria-label="1個あたりの変動費を円で入力">
+            <span class="input-suffix">円 / 個</span>
+          </div>
+          <span class="field-hint">製品1個あたりの原材料費・製造コストなど</span>
+        </div>
+
+        <!-- 販売単価（単位変動費モード時） -->
+        <div class="field" id="field-price-unit" style="display:none">
+          <label class="field-label" for="unit-price-unit">
+            <i class="bi bi-tag"></i> 販売単価
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="unit-price-unit" class="form-input" placeholder="例: 10000" min="1" aria-label="販売単価を円で入力">
+            <span class="input-suffix">円 / 個</span>
+          </div>
+          <span class="field-hint">1個（1件）あたりの販売価格</span>
+        </div>
+
+        <!-- 現在の月間売上（任意） -->
+        <div class="field">
+          <label class="field-label" for="current-sales">
+            <i class="bi bi-cash-stack"></i> 現在の月間売上
+            <span class="optional-badge">任意</span>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="current-sales" class="form-input" placeholder="例: 800000" min="0" aria-label="現在の月間売上を円で入力（任意）">
+            <span class="input-suffix">円 / 月</span>
+          </div>
+          <span class="field-hint">入力すると安全余裕率を計算します</span>
+        </div>
+
+        <!-- 目標利益（任意） -->
+        <div class="field">
+          <label class="field-label" for="target-profit">
+            <i class="bi bi-bullseye"></i> 目標利益（月額）
+            <span class="optional-badge">任意</span>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="target-profit" class="form-input" placeholder="例: 200000" min="0" aria-label="目標利益を円で入力（任意）">
+            <span class="input-suffix">円 / 月</span>
+          </div>
+          <span class="field-hint">入力すると目標達成に必要な売上高も計算します</span>
+        </div>
+      </div>
+
+      <button class="btn-calc" id="calc-btn" type="button">
+        <i class="bi bi-calculator-fill"></i> 損益分岐点を計算
+      </button>
+    </section>
+
+    <!-- 計算結果 -->
+    <div id="results" class="results-area" hidden>
+
+      <!-- メインKPIカード -->
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-bep">
+          <div class="kpi-icon"><i class="bi bi-flag-fill"></i></div>
+          <div class="kpi-label">損益分岐点売上高</div>
+          <div class="kpi-value" id="bep-revenue">―</div>
+          <div class="kpi-unit">円 / 月</div>
+        </div>
+        <div class="kpi-card kpi-units">
+          <div class="kpi-icon"><i class="bi bi-box-seam-fill"></i></div>
+          <div class="kpi-label">損益分岐点販売数</div>
+          <div class="kpi-value" id="bep-units">―</div>
+          <div class="kpi-unit">個 / 月</div>
+        </div>
+        <div class="kpi-card kpi-margin">
+          <div class="kpi-icon"><i class="bi bi-pie-chart-fill"></i></div>
+          <div class="kpi-label">限界利益率</div>
+          <div class="kpi-value" id="contribution-margin">―</div>
+          <div class="kpi-unit">%</div>
+        </div>
+      </div>
+
+      <!-- 安全余裕率カード（現在売上入力時） -->
+      <div class="card safety-card" id="safety-section" hidden>
+        <div class="safety-header">
+          <div class="safety-icon"><i class="bi bi-shield-check"></i></div>
+          <div>
+            <h3>安全余裕率</h3>
+            <span class="safety-desc">現在売上が損益分岐点をどれだけ上回っているか</span>
+          </div>
+          <div class="safety-value-wrap">
+            <span class="safety-value" id="safety-ratio">0%</span>
+          </div>
+        </div>
+        <div class="safety-bar-wrap">
+          <div class="safety-bar-bg">
+            <div class="safety-bar-fill" id="safety-bar"></div>
+          </div>
+          <div class="safety-bar-labels">
+            <span>危険</span>
+            <span>注意 (10%)</span>
+            <span>健全 (20%)</span>
+            <span>優良 (30%+)</span>
+          </div>
+        </div>
+        <p class="safety-note" id="safety-note"></p>
+      </div>
+
+      <!-- 目標売上カード（目標利益入力時） -->
+      <div class="card target-card" id="target-section" hidden>
+        <div class="target-header">
+          <div class="target-icon"><i class="bi bi-trophy-fill"></i></div>
+          <div>
+            <h3>目標達成のために必要な売上</h3>
+            <span class="target-desc">設定した月間目標利益を達成するための数字</span>
+          </div>
+        </div>
+        <div class="target-kpi-row">
+          <div class="target-kpi">
+            <div class="target-kpi-label">目標売上高</div>
+            <div class="target-kpi-value" id="target-revenue">―</div>
+            <div class="target-kpi-unit">円 / 月</div>
+          </div>
+          <div class="target-kpi">
+            <div class="target-kpi-label">目標販売数</div>
+            <div class="target-kpi-value" id="target-units">―</div>
+            <div class="target-kpi-unit">個 / 月</div>
+          </div>
+          <div class="target-kpi">
+            <div class="target-kpi-label">BEPからの上乗せ</div>
+            <div class="target-kpi-value" id="target-diff">―</div>
+            <div class="target-kpi-unit">円</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- グラフカード -->
+      <div class="card chart-card">
+        <h3 class="chart-title"><i class="bi bi-bar-chart-line-fill"></i> 損益分岐点グラフ</h3>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot legend-revenue"></span>総売上高</span>
+          <span class="legend-item"><span class="legend-dot legend-cost"></span>総費用</span>
+          <span class="legend-item"><span class="legend-dot legend-fixed"></span>固定費</span>
+          <span class="legend-item legend-bep"><i class="bi bi-record-circle-fill"></i> 損益分岐点</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="bep-chart" aria-label="損益分岐点グラフ" role="img"></canvas>
+        </div>
+        <p class="chart-note"><i class="bi bi-info-circle"></i> X軸: 販売数量（個）、Y軸: 金額（円）。グラフは損益分岐点の2倍までの範囲を表示します。</p>
+      </div>
+
+      <!-- 計算根拠カード -->
+      <div class="card breakdown-card">
+        <h3 class="breakdown-title"><i class="bi bi-list-check"></i> 計算の根拠</h3>
+        <table class="breakdown-table">
+          <tbody id="breakdown-table-body">
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+
+      <h2>使い方</h2>
+      <details class="howto-details" open>
+        <summary class="howto-summary">
+          <i class="bi bi-play-circle-fill"></i> 5ステップで損益分岐点を計算する
+        </summary>
+        <ol class="howto-steps">
+          <li><strong>入力モードを選択</strong>：変動費率（%）または単位変動費（円/個）のいずれかのモードを選びます</li>
+          <li><strong>固定費を入力</strong>：家賃・人件費・リース料など月額の固定費合計を入力します</li>
+          <li><strong>変動費と販売単価を入力</strong>：原材料費や製造コストの割合（または金額）と1個あたりの販売価格を入力します</li>
+          <li>（任意）<strong>現在の売上・目標利益を入力</strong>：安全余裕率や目標達成のための売上数字も確認できます</li>
+          <li><strong>「損益分岐点を計算」を押す</strong>：黒字化に必要な売上高・販売数とグラフが表示されます</li>
+        </ol>
+      </details>
+
+      <h2>損益分岐点（BEP）とは</h2>
+      <p>損益分岐点（BEP：Break-Even Point）とは、売上高と総費用（固定費＋変動費）がちょうど等しくなる売上高・販売数量のことです。BEPを超えれば利益が生まれ、下回れば損失が発生します。中小企業の経営者・フリーランスが「月いくら売れば赤字を脱せるか」を把握するための基本的な経営指標です。</p>
+      <p>計算の核心となる「限界利益率」は、1円の売上を得たときに固定費の回収と利益に回せる割合を示します。限界利益率が高いほど損益分岐点が低くなり、少ない売上で黒字転換できます。費用構造の改善や価格戦略の立案に役立ててください。</p>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>計算式の詳細</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr><th>指標</th><th>計算式</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>限界利益率（変動費率モード）</td>
+                  <td>100% − 変動費率(%)</td>
+                </tr>
+                <tr>
+                  <td>限界利益率（単位変動費モード）</td>
+                  <td>（販売単価 − 単位変動費）÷ 販売単価 × 100</td>
+                </tr>
+                <tr>
+                  <td>損益分岐点売上高</td>
+                  <td>固定費 ÷ 限界利益率（小数）</td>
+                </tr>
+                <tr>
+                  <td>損益分岐点販売数</td>
+                  <td>損益分岐点売上高 ÷ 販売単価</td>
+                </tr>
+                <tr>
+                  <td>目標売上高</td>
+                  <td>（固定費 + 目標利益）÷ 限界利益率（小数）</td>
+                </tr>
+                <tr>
+                  <td>安全余裕率</td>
+                  <td>（実際売上 − 損益分岐点売上）÷ 実際売上 × 100</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>固定費・変動費の分類が難しい場合はどうすれば？</dt>
+              <dd>迷ったら「売上がゼロでも発生するか」で判断します。売上ゼロでも発生するものは固定費、売上に応じて増えるものは変動費です。実務では準固定費・準変動費もありますが、まずは大まかな分類で計算してみてください。</dd>
+              <dt>サービス業で「販売数」を使わない場合は？</dt>
+              <dd>変動費率モードを使えば、販売単価・販売数を必要とせず、売上高ベースで損益分岐点を計算できます。その場合、販売数の表示は参考値になります。</dd>
+              <dt>損益分岐点を下げる最も効果的な方法は？</dt>
+              <dd>固定費の削減が即効性があります。家賃の見直し・補助金活用・副業コスト削減などが代表的です。変動費率の改善は仕入れ先見直しや内製化、販売単価の引き上げは付加価値向上が有効です。</dd>
+              <dt>安全余裕率の目安を教えてください</dt>
+              <dd>一般的に20%以上が健全とされます。10〜20%は注意が必要で、10%未満は損益分岐点に近く経営リスクが高い状態です。景気悪化などで売上が10%落ちると赤字転落する可能性があります。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は入力値に基づく参考値です。実際の損益分岐点は固定費・変動費の正確な分類、税金・減価償却・季節変動などの要素によって異なります。重要な経営判断には税理士・中小企業診断士にご相談ください。</p>
+          </div>
+        </details>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
