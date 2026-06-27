@@ -96,23 +96,27 @@ function calculate() {
     const dayStart = totalDaysSoFar + 1;
     const dayEnd   = totalDaysSoFar + daysInMonth;
 
+    // 2025年改正フラグ（最初28日以内の月か）
+    const isReformMonth = isReform && dayStart <= REFORM_DAYS;
+    const reformDaysThisMonth = isReformMonth
+      ? Math.min(REFORM_DAYS - dayStart + 1, daysInMonth)
+      : 0;
+    const normalDaysThisMonth = daysInMonth - reformDaysThisMonth;
+
     // 給付率の計算（180日閾値で按分）
     const rate = computeMonthRate(dayStart, dayEnd, daysInMonth);
 
-    // 給付金基準額（日額 × 30日相当）
-    const benefit = Math.floor(dailyWage * daysInMonth * rate);
+    // 給付金基準額（改正適用日数は80%、残りは通常レート）
+    const benefit = Math.floor(
+      dailyWage * reformDaysThisMonth * 0.80 +
+      dailyWage * normalDaysThisMonth * rate
+    );
 
     // 社会保険料免除額（月収ベース）
     const exempt = Math.floor(salary * SOCIAL_INS_EXEMPT_RATE);
 
     // 合計手取り概算
     const totalTakehome = benefit + exempt;
-
-    // 2025年改正フラグ（最初28日以内の月か）
-    const isReformMonth = isReform && dayStart <= REFORM_DAYS;
-    const reformDaysThisMonth = isReformMonth
-      ? Math.min(REFORM_DAYS - dayStart + 1, daysInMonth)
-      : 0;
 
     monthlyData.push({
       month: m + 1,
