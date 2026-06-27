@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="年収・家族構成・各種控除を入力してふるさと納税の控除上限額を計算。ワンストップ特例と確定申告の比較、実質負担2,000円の仕組みもわかりやすく解説。完全無料。">
+  <title>ふるさと納税 控除上限額シミュレーター｜年収・家族構成別に正確計算【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/furusato-nozei-simulator/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ふるさと納税 控除上限額シミュレーター｜年収・家族構成別に正確計算">
+  <meta property="og:description" content="年収・家族構成・各種控除を入力してふるさと納税の控除上限額を計算。完全無料。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/furusato-nozei-simulator/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "ふるさと納税の控除上限額とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ふるさと納税の控除上限額とは、寄附した金額のうち自己負担額2,000円を除いた全額が所得税・住民税から控除される上限の金額です。この上限を超えて寄附した分は税額控除されず、自己負担となります。上限額は年収・家族構成・各種控除によって異なります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ワンストップ特例制度と確定申告の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ワンストップ特例制度は、確定申告不要な給与所得者が5自治体以内に寄附する場合に利用できる簡易手続きです。寄附先の自治体に申請書を提出するだけで住民税から全額控除されます。一方、確定申告では所得税の還付と翌年の住民税減額の両方が受けられます。6自治体以上に寄附する場合や医療費控除等を申告する場合は確定申告が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "実質負担2,000円とはどういう意味ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ふるさと納税では、寄附金額から2,000円を引いた金額が所得税・住民税から控除されます。例えば5万円寄附した場合、4万8,000円が税金から戻るため、実質的な自己負担は2,000円だけです。この仕組みを活用することで、実質2,000円でお礼品を受け取ることができます。ただし控除上限額を超えた分は自己負担となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "配偶者控除はどんな場合に適用されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "配偶者控除（38万円）は、配偶者の年収が103万円以下の場合に適用されます。配偶者の年収が103万円超150万円以下の場合は配偶者特別控除（38万円）が適用されます。本シミュレーターでは「配偶者の年収が150万円以下」の場合に38万円の控除を適用しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅ローン控除はふるさと納税上限額に影響しますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、影響します。住宅ローン控除（住宅借入金等特別控除）は住民税所得割額から直接差し引かれるため、住民税の実際の負担額が減少し、ふるさと納税の控除上限額も下がります。住宅ローン控除の金額が大きいほど、ふるさと納税の上限額は低くなる傾向があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "iDeCoを利用している場合、上限額はどう変わりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "iDeCo（個人型確定拠出年金）の掛金は全額所得控除されます。iDeCoの掛金分だけ課税所得が減るため、所得税・住民税が下がります。その結果、ふるさと納税の控除上限額も下がる傾向があります。ただし、節税効果という観点ではiDeCoの掛金控除の方が恩恵が大きいことが多いです。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "このシミュレーターの計算結果はどの程度正確ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本シミュレーターは簡易計算を行うものであり、実際の控除上限額とは異なる場合があります。実際の計算では社会保険料控除・生命保険料控除・地震保険料控除なども考慮されますが、本ツールでは主要な控除のみを対象としています。正確な上限額は各ふるさと納税サイトの公式シミュレーターや税務署にてご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "年収が同じでも上限額が変わることはありますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、変わります。同じ年収でも家族構成（扶養家族の人数・年齢）、住宅ローン控除の有無、医療費控除の金額、iDeCoの掛金額などによって課税所得が変わり、ふるさと納税の控除上限額も変わります。特に住宅ローン控除がある場合は上限額が大幅に下がることがあります。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon" aria-hidden="true">
+        <i class="bi bi-gift-fill"></i>
+      </div>
+      <h1>ふるさと納税 控除上限シミュレーター</h1>
+      <p class="subtitle">年収・家族構成・各種控除から控除上限額を無料計算</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <!-- AdSense広告: レスポンシブ横長バナー -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice" role="note">
+      <i class="bi bi-shield-lock-fill" aria-hidden="true"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 入力フォームセクション -->
+    <section id="tool" class="tool-section">
+      <h2 class="section-title">
+        <i class="bi bi-calculator" aria-hidden="true"></i>
+        控除上限額を計算する
+      </h2>
+
+      <form id="tool-form" novalidate>
+        <!-- 年収 -->
+        <div class="field">
+          <label class="field-label" for="income">
+            年収 <span class="required-badge">必須</span>
+          </label>
+          <div class="input-with-unit">
+            <input type="number" id="income" name="income" min="100" max="10000"
+                   placeholder="例: 500" aria-describedby="income-hint" required>
+            <span class="unit">万円</span>
+          </div>
+          <span class="field-hint" id="income-hint">給与収入の額面（税引前）を入力してください</span>
+        </div>
+
+        <!-- 家族構成 -->
+        <fieldset class="family-fieldset">
+          <legend class="field-label">家族構成</legend>
+
+          <div class="field checkbox-field">
+            <label class="checkbox-label" for="has-spouse">
+              <input type="checkbox" id="has-spouse" name="has-spouse">
+              <span class="checkbox-custom" aria-hidden="true"></span>
+              配偶者あり（年収150万円以下）
+            </label>
+            <span class="field-hint">配偶者控除または配偶者特別控除 38万円が適用されます</span>
+          </div>
+
+          <div class="field" style="margin-top: 0.75rem;">
+            <label class="field-label">扶養家族（子ども）</label>
+            <div id="children-list" class="children-list" aria-live="polite">
+              <!-- 動的に追加 -->
+            </div>
+            <button type="button" id="add-child-btn" class="btn-add-child">
+              <i class="bi bi-plus-circle" aria-hidden="true"></i> 子どもを追加
+            </button>
+          </div>
+        </fieldset>
+
+        <!-- 住宅ローン控除 -->
+        <div class="field">
+          <label class="field-label" for="loan-deduction">住宅ローン控除額</label>
+          <div class="input-with-unit">
+            <input type="number" id="loan-deduction" name="loan-deduction"
+                   min="0" max="100" step="0.1" placeholder="0" value="0">
+            <span class="unit">万円</span>
+          </div>
+          <span class="field-hint">住宅借入金等特別控除の年間控除額。なければ0のままで</span>
+        </div>
+
+        <!-- 医療費控除 -->
+        <div class="field">
+          <label class="field-label" for="medical-deduction">医療費控除額</label>
+          <div class="input-with-unit">
+            <input type="number" id="medical-deduction" name="medical-deduction"
+                   min="0" max="200" step="0.1" placeholder="0" value="0">
+            <span class="unit">万円</span>
+          </div>
+          <span class="field-hint">年間医療費から10万円（または所得の5%）を引いた額</span>
+        </div>
+
+        <!-- iDeCo -->
+        <div class="field">
+          <label class="field-label" for="ideco">iDeCo掛金（月額）</label>
+          <div class="input-with-unit">
+            <input type="number" id="ideco" name="ideco"
+                   min="0" max="6.8" step="0.1" placeholder="0" value="0">
+            <span class="unit">万円/月</span>
+          </div>
+          <span class="field-hint">月額掛金。会社員は最大2.3万円、自営業は最大6.8万円</span>
+        </div>
+
+        <button type="submit" class="btn-primary">
+          <i class="bi bi-calculator-fill" aria-hidden="true"></i>
+          控除上限額を計算する
+        </button>
+      </form>
+    </section>
+
+    <!-- 結果表示 -->
+    <section id="result-section" class="result-section" style="display:none;" aria-live="polite">
+      <div class="result-panel">
+        <div class="result-header">
+          <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+          <span>計算結果</span>
+        </div>
+
+        <div class="result-main">
+          <div class="result-label">ふるさと納税の控除上限額（目安）</div>
+          <div class="result-value" id="limit-value">—</div>
+          <div class="result-value-man" id="limit-value-man"></div>
+        </div>
+
+        <div class="result-gift">
+          <i class="bi bi-gift" aria-hidden="true"></i>
+          <span>実質負担2,000円で <strong id="gift-amount">—</strong> 分のお礼品が受け取れます</span>
+        </div>
+
+        <div class="result-details" id="result-details"></div>
+      </div>
+
+      <!-- 内訳グラフ -->
+      <div class="chart-card">
+        <h3 class="chart-title">
+          <i class="bi bi-pie-chart-fill" aria-hidden="true"></i>
+          収入の内訳（推計）
+        </h3>
+        <div class="chart-wrapper">
+          <canvas id="breakdown-chart" aria-label="収入内訳の円グラフ" role="img"></canvas>
+        </div>
+        <div id="chart-legend" class="chart-legend"></div>
+      </div>
+
+      <!-- ワンストップ vs 確定申告比較表 -->
+      <div class="comparison-card">
+        <h3 class="comparison-title">
+          <i class="bi bi-table" aria-hidden="true"></i>
+          ワンストップ特例 vs 確定申告の比較
+        </h3>
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>ワンストップ特例</th>
+                <th>確定申告</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>手続きの簡便さ</td>
+                <td class="good"><i class="bi bi-check-lg" aria-hidden="true"></i> 簡単</td>
+                <td>やや複雑</td>
+              </tr>
+              <tr>
+                <td>寄附先自治体数</td>
+                <td>5自治体以内</td>
+                <td class="good"><i class="bi bi-check-lg" aria-hidden="true"></i> 制限なし</td>
+              </tr>
+              <tr>
+                <td>所得税還付</td>
+                <td>なし（全額住民税から控除）</td>
+                <td class="good"><i class="bi bi-check-lg" aria-hidden="true"></i> あり</td>
+              </tr>
+              <tr>
+                <td>住民税の控除</td>
+                <td class="good"><i class="bi bi-check-lg" aria-hidden="true"></i> 全額控除</td>
+                <td class="good"><i class="bi bi-check-lg" aria-hidden="true"></i> 全額控除</td>
+              </tr>
+              <tr>
+                <td>申請期限</td>
+                <td>翌年1月10日まで</td>
+                <td>翌年3月15日まで</td>
+              </tr>
+              <tr>
+                <td>医療費控除との併用</td>
+                <td>不可（確定申告が必要）</td>
+                <td class="good"><i class="bi bi-check-lg" aria-hidden="true"></i> 可能</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="comparison-note">
+          <i class="bi bi-info-circle" aria-hidden="true"></i>
+          給与所得者で5自治体以内への寄附かつ他に確定申告が不要な場合はワンストップ特例が便利です。
+        </p>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（計算結果の下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <!-- AdSense広告: 記事内広告 -->
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2 class="section-title">
+        <i class="bi bi-book" aria-hidden="true"></i>
+        使い方
+      </h2>
+      <details open class="howto-details">
+        <summary>ステップバイステップガイド</summary>
+        <ol class="howto-steps">
+          <li>
+            <span class="step-num" aria-hidden="true">1</span>
+            <div>
+              <strong>年収を入力</strong>
+              <p>給与の年収（額面・税引前）を万円単位で入力します。会社から受け取る源泉徴収票の「支払金額」欄の金額が目安です。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num" aria-hidden="true">2</span>
+            <div>
+              <strong>家族構成を設定</strong>
+              <p>配偶者の有無と扶養家族（子ども）の年齢を入力します。子どもの年齢によって扶養控除額が異なります（16〜18歳: 33万円、19〜22歳: 63万円、23歳以上: 38万円）。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num" aria-hidden="true">3</span>
+            <div>
+              <strong>各種控除を入力</strong>
+              <p>住宅ローン控除やiDeCoを利用している場合は金額を入力します。これらは控除上限額に影響します。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num" aria-hidden="true">4</span>
+            <div>
+              <strong>計算ボタンを押す</strong>
+              <p>「控除上限額を計算する」ボタンを押すと、あなたの控除上限額の目安と収入内訳グラフが表示されます。</p>
+            </div>
+          </li>
+        </ol>
+      </details>
+
+      <details class="howto-details">
+        <summary>ふるさと納税の仕組みとは</summary>
+        <div class="howto-content">
+          <p>ふるさと納税とは、自分が選んだ地方自治体に寄附をすることで、寄附金額のうち2,000円を超える部分が所得税と翌年の住民税から控除される制度です。2008年に創設され、今では年間1兆円を超える寄附が行われる国民的な制度となっています。</p>
+          <p style="margin-top: 0.75rem;">最大のメリットは「実質2,000円の自己負担でお礼品（返礼品）が受け取れる」点です。例えば年収500万円の方（独身）の場合、約6万円が控除上限額の目安となります。6万円の寄附をすると実質負担は2,000円で、各自治体のお礼品を受け取ることができます。</p>
+          <p style="margin-top: 0.75rem;">控除の仕組みは2段階です。確定申告またはワンストップ特例制度を利用することで、①所得税の一部が還付され、②翌年の住民税が減額されます。合計すると寄附金額－2,000円がほぼ戻ってくる計算になります。</p>
+        </div>
+      </details>
+
+      <details class="howto-details">
+        <summary>計算式の詳細（税制の仕組み）</summary>
+        <div class="howto-content">
+          <p>ふるさと納税の控除上限額は以下の計算式で求めます：</p>
+          <div class="formula-box">
+            <code>上限額 ＝ (住民税所得割額 × 0.2) ÷ (1 − 所得税率 × 1.021 − 0.1) ＋ 2,000円</code>
+          </div>
+          <p style="margin-top: 0.75rem;">住民税所得割額は課税所得（年収から各種控除を引いた額）× 10%で計算されます。所得税率は課税所得の額に応じて5%〜45%の超過累進課税が適用されます。</p>
+          <p style="margin-top: 0.5rem;">本シミュレーターは主要な控除（給与所得控除・基礎控除・配偶者控除・扶養控除・医療費控除・iDeCo・住宅ローン控除）を考慮した簡易計算です。社会保険料控除・生命保険料控除等は考慮していないため、実際の上限額より高めに計算される場合があります。</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section id="faq" class="faq-section">
+      <h2 class="section-title">
+        <i class="bi bi-question-circle" aria-hidden="true"></i>
+        よくある質問
+      </h2>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>控除上限額を超えて寄附してもいいですか？</summary>
+          <div class="faq-answer">
+            <p>寄附自体は上限額を超えてもできますが、上限を超えた分は税金から控除されず、全額自己負担となります。税制優遇を最大限活用するには、上限額以内での寄附をおすすめします。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>年内いつでも寄附できますか？</summary>
+          <div class="faq-answer">
+            <p>はい、1月1日〜12月31日の間であればいつでも寄附できます。ただしワンストップ特例の申請書は翌年1月10日必着が期限です。年末ギリギリの寄附の場合は申請書の提出に余裕をもたせましょう。確定申告の場合は翌年3月15日までに申告します。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>楽天市場でのふるさと納税でも控除されますか？</summary>
+          <div class="faq-answer">
+            <p>はい、楽天ふるさと納税・ふるさとチョイス・さとふるなどのポータルサイト経由で寄附しても、同様に税控除が受けられます。ポータルサイトはあくまで仲介であり、寄附先は各自治体です。楽天市場経由の場合はポイント還元も受けられ、より実質的なメリットが大きくなります。</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>副業収入がある場合はどうなりますか？</summary>
+          <div class="faq-answer">
+            <p>副業収入（事業所得・雑所得）がある場合は確定申告が必要になります。その場合、ふるさと納税もワンストップ特例ではなく確定申告で控除を受けることになります。また収入が増える分、課税所得が上がり、ふるさと納税の控除上限額も増える可能性があります。</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 免責事項 -->
+    <section id="disclaimer" class="disclaimer-section">
+      <h2 class="section-title">
+        <i class="bi bi-exclamation-triangle" aria-hidden="true"></i>
+        免責事項
+      </h2>
+      <div class="disclaimer-content">
+        <p>本シミュレーターは、ふるさと納税の控除上限額の<strong>目安</strong>を計算するツールです。以下の点にご注意ください。</p>
+        <ul>
+          <li>本ツールの計算結果は簡易計算であり、正確な税額計算を保証するものではありません。</li>
+          <li>実際の控除額は、社会保険料控除・生命保険料控除・地震保険料控除など、本ツールで考慮していない控除によって変わります。</li>
+          <li>税制は毎年改正される可能性があります。最新情報は国税庁・総務省のウェブサイトでご確認ください。</li>
+          <li>具体的な税務相談は、税理士または税務署にお問い合わせください。</li>
+        </ul>
+        <div class="official-links">
+          <a href="https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/" target="_blank" rel="noopener noreferrer" class="official-link">
+            <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+            総務省 ふるさと納税ポータルサイト
+          </a>
+          <a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1155.htm" target="_blank" rel="noopener noreferrer" class="official-link">
+            <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i>
+            国税庁 ふるさと納税（寄附金控除）
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <a href="/about.html">このサイトについて</a>
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/">ツール一覧</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 KeisanLab. All rights reserved.</p>
+      <p class="footer-note">本シミュレーターは目安です。正確な上限額は各ふるさと納税サイトまたは税務署でご確認ください。</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
