@@ -181,6 +181,7 @@
             <div id="children-list" class="children-list" aria-live="polite">
               <!-- 動的に追加 -->
             </div>
+            <span class="field-hint">年齢によって扶養控除額が変わります（16〜18歳: 33万円、19〜22歳: 63万円、その他: 38万円）</span>
             <button type="button" id="add-child-btn" class="btn-add-child">
               <i class="bi bi-plus-circle" aria-hidden="true"></i> 子どもを追加
             </button>
@@ -195,7 +196,7 @@
                    min="0" max="100" step="0.1" placeholder="0" value="0">
             <span class="unit">万円</span>
           </div>
-          <span class="field-hint">住宅借入金等特別控除の年間控除額。なければ0のままで</span>
+          <span class="field-hint">年末調整後の源泉徴収票「住宅借入金等特別控除の額」欄の金額を万円単位で。不明な場合は0のままで</span>
         </div>
 
         <!-- 医療費控除 -->

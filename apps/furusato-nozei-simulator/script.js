@@ -5,6 +5,25 @@
    計算ロジック
 ====================================== */
 
+// --- インラインエラー表示ヘルパー ---
+function showFieldError(fieldId, message) {
+  const field = document.getElementById(fieldId);
+  if (!field) return;
+  field.classList.add('field-error-input');
+  let errEl = field.parentNode.querySelector('.field-error-msg');
+  if (!errEl) {
+    errEl = document.createElement('span');
+    errEl.className = 'field-error-msg';
+    errEl.setAttribute('role', 'alert');
+    field.parentNode.appendChild(errEl);
+  }
+  errEl.textContent = message;
+}
+function clearFieldErrors() {
+  document.querySelectorAll('.field-error-input').forEach(el => el.classList.remove('field-error-input'));
+  document.querySelectorAll('.field-error-msg').forEach(el => el.remove());
+}
+
 // --- 子ども追加 UI ---
 let childCount = 0;
 
@@ -317,7 +336,7 @@ function showResult(data) {
 function validate() {
   const income = parseFloat(document.getElementById('income').value);
   if (!income || income < 100 || income > 10000) {
-    alert('年収は100万円〜10,000万円の範囲で入力してください。');
+    showFieldError('income', '年収は100万円〜10,000万円の範囲で入力してください。');
     document.getElementById('income').focus();
     return false;
   }
@@ -327,6 +346,7 @@ function validate() {
 // --- フォーム送信 ---
 document.getElementById('tool-form').addEventListener('submit', function(e) {
   e.preventDefault();
+  clearFieldErrors();
   if (!validate()) return;
 
   const data = calculate();
