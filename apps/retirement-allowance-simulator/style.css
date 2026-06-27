@@ -404,6 +404,8 @@ main {
   color: var(--text-muted);
 }
 
+.result-note { font-size: 0.8rem; color: #6b7280; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid #e5e7eb; }
+
 /* 内訳カード */
 .breakdown-grid {
   display: flex;
