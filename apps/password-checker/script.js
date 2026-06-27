@@ -20,6 +20,22 @@ const CRACK_TIME_MAP = {
   'centuries':               '数百年以上',
 };
 
+const ZXCVBN_SUGGESTION_MAP = {
+  'Add another word or two. Uncommon words are better.':          'もう1〜2単語追加するか、一般的でない言葉を使いましょう。',
+  'Use a longer keyboard pattern with more turns':                 'キーボードのパターンをより複雑にしましょう。',
+  'Avoid repeated words and characters':                          '単語や文字の繰り返しを避けましょう。',
+  'Avoid sequences':                                              '連続した文字（abc、123など）を避けましょう。',
+  'Avoid recent years':                                           '最近の年号を使わないようにしましょう。',
+  'Avoid years that are associated with you':                     '自分に関係する年号を使わないようにしましょう。',
+  'Avoid dates and years that are associated with you':           '自分に関係する日付・年号を使わないようにしましょう。',
+  "Capitalization doesn't help very much":                        '先頭を大文字にするだけではあまり効果がありません。',
+  'All-uppercase is almost as easy to guess as all-lowercase':    '全大文字は全小文字とほぼ同じ強度です。',
+  "Reversed words aren't much harder to guess":                   '逆順にした単語はあまり強くなりません。',
+  "Predictable substitutions like '@' instead of 'a' don't help very much": '記号への予測可能な置き換え（@ → a など）はあまり効果がありません。',
+  'Use a few words, avoiding common phrases':                     '一般的なフレーズを避け、複数の単語を組み合わせましょう。',
+  'No need for symbols, digits, or uppercase letters':            '十分な長さがあれば、記号・数字・大文字がなくても強いパスワードになります。',
+};
+
 const CHAR_SETS = {
   upper:  'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   lower:  'abcdefghijklmnopqrstuvwxyz',
@@ -89,12 +105,12 @@ function buildAdvice(password, result) {
     suggestions.push('記号 (!@#$%^&* など) を追加してください');
   }
 
-  // zxcvbn からの suggestions
+  // zxcvbn からの suggestions（日本語に変換）
   if (result && result.feedback && result.feedback.suggestions) {
     for (const s of result.feedback.suggestions) {
-      // 英語のまま表示（zxcvbn の返す文字列）
-      if (s && !suggestions.includes(s)) {
-        suggestions.push(s);
+      const ja = ZXCVBN_SUGGESTION_MAP[s] || null;
+      if (ja && !suggestions.includes(ja)) {
+        suggestions.push(ja);
       }
     }
   }
