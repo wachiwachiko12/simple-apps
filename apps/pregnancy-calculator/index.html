@@ -118,6 +118,12 @@
   </header>
 
   <main>
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice" role="note">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
     <!-- 広告ユニット1（ツール上部） -->
     <div class="ad-unit" id="ad-top" aria-hidden="true">
       <ins class="adsbygoogle"
@@ -126,12 +132,6 @@
            data-ad-slot="auto"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-    </div>
-
-    <!-- プライバシー通知 -->
-    <div class="privacy-notice" role="note">
-      <i class="bi bi-shield-check"></i>
-      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
     </div>
 
     <!-- メインツールセクション -->
@@ -151,10 +151,14 @@
           <div class="field">
             <label class="field-label" for="cycle">月経周期</label>
             <select id="cycle" name="cycle" aria-label="月経周期を選択">
-              <option value="28" selected>28日（標準）</option>
+              <option value="21">21日</option>
+              <option value="22">22日</option>
+              <option value="23">23日</option>
+              <option value="24">24日</option>
               <option value="25">25日</option>
               <option value="26">26日</option>
               <option value="27">27日</option>
+              <option value="28" selected>28日（標準）</option>
               <option value="29">29日</option>
               <option value="30">30日</option>
               <option value="31">31日</option>
@@ -162,8 +166,18 @@
               <option value="33">33日</option>
               <option value="34">34日</option>
               <option value="35">35日</option>
+              <option value="36">36日</option>
+              <option value="37">37日</option>
+              <option value="38">38日</option>
+              <option value="39">39日</option>
+              <option value="40">40日</option>
+              <option value="41">41日</option>
+              <option value="42">42日</option>
+              <option value="43">43日</option>
+              <option value="44">44日</option>
+              <option value="45">45日</option>
             </select>
-            <span class="field-hint">個人差がある場合は実際の周期を選択してください</span>
+            <span class="field-hint">個人差がある場合は実際の周期を選択してください（21〜45日）</span>
           </div>
         </div>
 
@@ -172,7 +186,7 @@
             <i class="bi bi-calculator-fill"></i> 妊娠週数を計算する
           </button>
           <button type="button" class="btn-secondary" id="today-btn">
-            <i class="bi bi-calendar-today"></i> 今日の日付で計算
+            <i class="bi bi-calendar-today"></i> 今日の日付を入力
           </button>
         </div>
 
