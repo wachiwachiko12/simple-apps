@@ -110,7 +110,7 @@ main {
    ============================================================ */
 
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: #f0f4f8;
   border: 1px dashed #d1d5db;
   border-radius: var(--radius-sm);
@@ -465,7 +465,7 @@ select.form-input { cursor: pointer; }
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 0.4rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-family: 'BIZ UDPGothic', sans-serif;
   background: #fff;
   width: 100%;
@@ -501,7 +501,7 @@ select.form-input { cursor: pointer; }
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 0.4rem 0.35rem;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-family: 'BIZ UDPGothic', sans-serif;
   background: #fff;
   min-height: 38px;

@@ -219,6 +219,17 @@ function showResult(data) {
 // ===========================
 form.addEventListener('submit', e => {
   e.preventDefault();
+  const rawWeight = Number(weightInput.value);
+  if (!rawWeight || rawWeight < 20 || rawWeight > 150) {
+    weightInput.style.borderColor = '#ef4444';
+    weightInput.focus();
+    weightInput.setAttribute('aria-invalid', 'true');
+    setTimeout(() => {
+      weightInput.style.borderColor = '';
+      weightInput.removeAttribute('aria-invalid');
+    }, 2000);
+    return;
+  }
   const data = calculate();
   showResult(data);
 });

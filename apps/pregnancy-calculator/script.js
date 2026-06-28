@@ -231,18 +231,13 @@ function hideError() {
 }
 
 function setTodayAndCalculate() {
-  // 「今日の日付で計算」ボタン: 今日から逆算して入力欄を設定し、即計算
-  // 現在の日付を入力欄にセット（最終月経日は変えず、今日を基準に計算は常に今日）
   const lmpInput = document.getElementById('lmp-date');
-  if (!lmpInput.value) {
-    // 入力が空なら今日を最終月経日のデフォルトとして、自動計算は促すのみ
-    const today = new Date();
-    const y = today.getFullYear();
-    const m = String(today.getMonth() + 1).padStart(2, '0');
-    const d = String(today.getDate()).padStart(2, '0');
-    lmpInput.value = `${y}-${m}-${d}`;
-  }
-  calculate();
+  const today = new Date();
+  const y = today.getFullYear();
+  const m = String(today.getMonth() + 1).padStart(2, '0');
+  const d = String(today.getDate()).padStart(2, '0');
+  lmpInput.value = `${y}-${m}-${d}`;
+  lmpInput.focus();
 }
 
 // =============================================

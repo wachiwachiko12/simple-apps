@@ -136,7 +136,7 @@ main {
    Ad Unit
    ============================================================ */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: linear-gradient(135deg, #f8f5ff, #f0ebff);
   border: 1px dashed #c4b5fd;
   border-radius: var(--radius-sm);
