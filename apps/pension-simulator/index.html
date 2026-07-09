@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="年収・加入期間・受給開始年齢を入力するだけで、老後の年金受取額（月額・年額）を無料で即時試算。厚生年金と国民年金の両方に対応。繰上げ・繰下げ受給の影響も一目でわかる年金シミュレーターです。">
+  <title>年金いくらもらえる？老後の年金受取額シミュレーター | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/pension-simulator/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "年金はいくらもらえますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "受給額は加入期間・年収・受給開始年齢によって大きく異なります。会社員（厚生年金加入・平均年収500万円・40年加入・65歳受給）の場合、月額およそ15〜17万円が目安です。自営業・フリーランスの場合は国民年金のみで、満額支給でも月約6万8千円（年816,000円）となります。このシミュレーターで自分の条件を入力してみてください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "繰下げ受給のメリットは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "受給を65歳より遅らせることで、月あたり0.7%増額されます。70歳まで繰下げると42%増、75歳（2022年改正後）では84%増になります。長生きするほど生涯受取総額が増えるため、健康状態や資産状況を考慮して判断しましょう。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "繰上げ受給のデメリットは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "60歳から繰上げ受給すると月あたり0.4%（2022年改正後）減額され、最大24%の減額になります。一度繰上げ受給を選択すると元に戻すことはできません。また、障害基礎年金が受給できなくなる可能性もあるため、慎重に検討が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "フリーランスは厚生年金に入れますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "原則として、フリーランス・自営業者は厚生年金に加入できません。国民年金（第1号被保険者）への加入が義務付けられています。ただし、法人化して役員給与を受け取る場合は厚生年金加入の対象になります。また、フリーランスは国民年金基金やiDeCo（個人型確定拠出年金）で上乗せを検討することをお勧めします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ねんきん定期便の見方は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "毎年誕生月に届く「ねんきん定期便」には、これまでの加入実績と将来の見込み受給額が記載されています。50歳未満の方は「これまでの加入実績に応じた年金額」、50歳以上の方は「65歳から受け取る見込みの年金額」が記載されます。数字を確認してこのシミュレーターに入力することで、より正確な試算が可能です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "厚生年金の受給額はどう計算されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "厚生年金は「平均標準報酬月額 × 5.481 ÷ 1000 × 加入月数」で概算できます。標準報酬月額は給与月額をもとに決まり、上限は65万円です。これに国民年金（基礎年金）が上乗せされたものが総受給額になります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "老後の生活費はいくら必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "総務省の家計調査（2023年）によると、65歳以上夫婦世帯の平均支出は月約26万円です。年金受給額との差額が毎月の「赤字」となり、老後30年分では数百〜数千万円の貯蓄が必要になるケースもあります。このシミュレーターの収支グラフで確認してみてください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "iDeCoや企業年金との違いは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このシミュレーターが試算するのは「公的年金」（国民年金・厚生年金）のみです。iDeCo（個人型確定拠出年金）や企業年金（確定給付・確定拠出）は別途計算が必要です。公的年金に加えてこれらを活用することで、老後の収入を増やすことができます。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="site-logo">計算ラボ</a>
+      <h1><i class="bi bi-piggy-bank"></i> 年金いくらもらえる？<br>老後の年金受取額シミュレーター</h1>
+      <p class="subtitle">厚生年金・国民年金の受給額を無料で試算。繰上げ・繰下げ受給の影響も確認できます。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 入力フォーム -->
+    <section id="tool" class="tool-section">
+      <div class="card form-card">
+        <h2 class="section-title"><i class="bi bi-pencil-square"></i> 条件を入力</h2>
+
+        <!-- 職業種別 -->
+        <div class="field">
+          <label class="field-label">職業種別</label>
+          <div class="toggle-group" role="group" aria-label="職業種別">
+            <button class="toggle-btn active" id="btn-company" data-type="company" type="button">
+              <i class="bi bi-building"></i> 会社員・公務員
+            </button>
+            <button class="toggle-btn" id="btn-self" data-type="self" type="button">
+              <i class="bi bi-person-workspace"></i> 自営業・フリーランス
+            </button>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <!-- 平均年収 -->
+          <div class="field">
+            <label class="field-label" for="income">平均年収（万円）</label>
+            <div class="input-with-unit">
+              <input type="number" id="income" min="100" max="3000" value="500" step="10" aria-describedby="income-hint">
+              <span class="unit">万円</span>
+            </div>
+            <span class="field-hint" id="income-hint">100〜3,000万円の範囲で入力してください</span>
+          </div>
+
+          <!-- 厚生年金加入期間（会社員のみ） -->
+          <div class="field" id="field-kosei">
+            <label class="field-label" for="kosei-years">厚生年金加入期間（年）</label>
+            <div class="input-with-unit">
+              <input type="number" id="kosei-years" min="1" max="45" value="35" step="1" aria-describedby="kosei-hint">
+              <span class="unit">年</span>
+            </div>
+            <span class="field-hint" id="kosei-hint">会社員として勤務した合計年数（最大45年）</span>
+          </div>
+
+          <!-- 国民年金加入期間 -->
+          <div class="field">
+            <label class="field-label" for="kokumin-years">国民年金加入期間（年）</label>
+            <div class="input-with-unit">
+              <input type="number" id="kokumin-years" min="1" max="40" value="40" step="1" aria-describedby="kokumin-hint">
+              <span class="unit">年</span>
+            </div>
+            <span class="field-hint" id="kokumin-hint">20〜60歳の加入期間（満額は40年・480ヶ月）</span>
+          </div>
+
+          <!-- 老後の月間生活費 -->
+          <div class="field">
+            <label class="field-label" for="expenses">老後の月間生活費の目安（万円）</label>
+            <div class="input-with-unit">
+              <input type="number" id="expenses" min="5" max="100" value="25" step="1" aria-describedby="expenses-hint">
+              <span class="unit">万円</span>
+            </div>
+            <span class="field-hint" id="expenses-hint">総務省調査：65歳以上夫婦世帯の平均は約26万円</span>
+          </div>
+        </div>
+
+        <!-- 受給開始年齢スライダー -->
+        <div class="field slider-field">
+          <label class="field-label" for="start-age">
+            受給開始年齢：<span class="slider-value" id="age-display">65</span>歳
+            <span class="age-badge" id="age-badge">標準</span>
+          </label>
+          <div class="slider-wrapper">
+            <span class="slider-min">60歳</span>
+            <input type="range" id="start-age" min="60" max="75" value="65" step="1" aria-describedby="age-hint">
+            <span class="slider-max">75歳</span>
+          </div>
+          <div class="age-markers">
+            <span>60</span><span>62</span><span>64</span><span>65</span><span>67</span><span>69</span><span>71</span><span>73</span><span>75</span>
+          </div>
+          <span class="field-hint" id="age-hint">60歳：最大24%減額 / 65歳：標準 / 70歳：42%増額 / 75歳：84%増額</span>
+        </div>
+
+        <button class="btn-primary calc-btn" id="calc-btn" type="button" aria-label="年金受取額を計算する">
+          <i class="bi bi-calculator"></i> 年金受取額を計算する
+        </button>
+      </div>
+    </section>
+
+    <!-- 結果エリア（初期非表示） -->
+    <section id="result-section" class="result-section hidden" aria-live="polite">
+      <div class="result-headline">
+        <div class="result-main-card">
+          <div class="result-badge">月額受給予定額</div>
+          <div class="result-value" id="result-monthly">0</div>
+          <div class="result-unit">円 / 月</div>
+        </div>
+        <div class="result-sub-grid">
+          <div class="result-sub-card">
+            <div class="sub-label"><i class="bi bi-house"></i> 基礎年金（月額）</div>
+            <div class="sub-value" id="result-kokumin">0<span class="sub-unit">円</span></div>
+          </div>
+          <div class="result-sub-card" id="kosei-result-card">
+            <div class="sub-label"><i class="bi bi-building"></i> 厚生年金（月額）</div>
+            <div class="sub-value" id="result-kosei">0<span class="sub-unit">円</span></div>
+          </div>
+          <div class="result-sub-card">
+            <div class="sub-label"><i class="bi bi-calendar3"></i> 年額合計</div>
+            <div class="sub-value" id="result-annual">0<span class="sub-unit">万円</span></div>
+          </div>
+          <div class="result-sub-card">
+            <div class="sub-label"><i class="bi bi-percent"></i> 受給調整率</div>
+            <div class="sub-value" id="result-rate">0<span class="sub-unit">%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 収支サマリー -->
+      <div class="cashflow-card" id="cashflow-card">
+        <h3 class="cashflow-title"><i class="bi bi-bar-chart-line"></i> 老後の月間収支</h3>
+        <div class="cashflow-grid">
+          <div class="cashflow-item income">
+            <div class="cashflow-label">年金収入（月額）</div>
+            <div class="cashflow-amount" id="cf-income">—</div>
+          </div>
+          <div class="cashflow-separator"><i class="bi bi-dash-lg"></i></div>
+          <div class="cashflow-item expense">
+            <div class="cashflow-label">生活費（月額）</div>
+            <div class="cashflow-amount" id="cf-expense">—</div>
+          </div>
+          <div class="cashflow-separator"><i class="bi bi-equal"></i></div>
+          <div class="cashflow-item" id="cashflow-result-item">
+            <div class="cashflow-label">月間差額</div>
+            <div class="cashflow-amount" id="cf-diff">—</div>
+          </div>
+        </div>
+        <div class="shortage-info" id="shortage-info"></div>
+      </div>
+
+      <!-- Chart -->
+      <div class="chart-card">
+        <h3 class="chart-title"><i class="bi bi-graph-up"></i> 老後30年間の収支グラフ</h3>
+        <div class="chart-wrapper">
+          <canvas id="pension-chart" aria-label="老後収支グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 注記 -->
+      <div class="disclaimer">
+        <i class="bi bi-info-circle"></i>
+        この計算はあくまで概算です。正確な受給額は日本年金機構の「<a href="https://www.nenkin.go.jp/n_net/" target="_blank" rel="noopener noreferrer">ねんきんネット</a>」でご確認ください。
+      </div>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <div class="card">
+        <h2 class="section-title"><i class="bi bi-question-circle"></i> 使い方</h2>
+        <div class="accordion" id="howto-accordion">
+          <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="true" aria-controls="step1-content" type="button">
+              <span class="step-num">1</span> 職業種別を選ぶ
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </button>
+            <div class="accordion-content" id="step1-content">
+              <p>「会社員・公務員」か「自営業・フリーランス」を選択してください。会社員・公務員の方は国民年金（基礎年金）に加えて厚生年金も受け取れます。自営業・フリーランスの方は国民年金のみとなります。</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false" aria-controls="step2-content" type="button">
+              <span class="step-num">2</span> 年収・加入期間を入力する
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </button>
+            <div class="accordion-content hidden" id="step2-content">
+              <p>現役時代の平均年収（税込）と、厚生年金・国民年金の加入期間を入力してください。「ねんきん定期便」に記載された加入月数を参考にすると、より正確な試算ができます。国民年金の満額は40年（480ヶ月）加入が条件です。</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false" aria-controls="step3-content" type="button">
+              <span class="step-num">3</span> 受給開始年齢をスライダーで調整する
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </button>
+            <div class="accordion-content hidden" id="step3-content">
+              <p>スライダーを動かして受給開始年齢（60〜75歳）を選択してください。65歳が標準で、早く受け取ると減額、遅く受け取ると増額されます。70歳まで繰下げると+42%、75歳では+84%になります。</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false" aria-controls="step4-content" type="button">
+              <span class="step-num">4</span> 老後の生活費を入力する
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </button>
+            <div class="accordion-content hidden" id="step4-content">
+              <p>老後に必要と思われる月間生活費を入力してください。総務省の家計調査によると、65歳以上夫婦世帯の平均は約26万円です。年金収入との差額（不足額）と、老後30年分の必要貯蓄額が自動計算されます。</p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button class="accordion-btn" aria-expanded="false" aria-controls="step5-content" type="button">
+              <span class="step-num">5</span> 「計算する」ボタンを押して結果を確認する
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </button>
+            <div class="accordion-content hidden" id="step5-content">
+              <p>ボタンをタップすると、月額・年額の受給予定額と老後30年間の収支グラフが表示されます。グラフの青い棒が年金収入、オレンジの棒が生活費です。差額がプラスなら老後の収支は黒字、マイナスなら貯蓄の取り崩しが必要になります。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 年金制度の解説 -->
+      <div class="card info-card">
+        <h2 class="section-title"><i class="bi bi-book"></i> 年金制度について</h2>
+        <p>日本の公的年金制度は「2階建て」構造になっています。1階部分が全国民共通の<strong>国民年金（基礎年金）</strong>で、2階部分が会社員・公務員が加入する<strong>厚生年金</strong>です。国民年金は20歳から60歳までの40年間（480ヶ月）加入すると満額の年816,000円（月約68,000円）を65歳から受け取れます。厚生年金は現役時代の報酬と加入期間に応じて上乗せされるため、高収入・長期加入ほど受給額が増えます。</p>
+        <p>受給開始年齢は60〜75歳の間で選択できます（2022年改正）。65歳より早く受け取る「繰上げ受給」は最大24%の減額、遅く受け取る「繰下げ受給」は最大84%（75歳）の増額となります。自分の健康状態・資産状況・就労意欲を踏まえて検討しましょう。なお、正確な受給額はねんきんネットで確認することをお勧めします。</p>
+
+        <h3>よくある質問</h3>
+        <dl class="faq-list">
+          <dt><i class="bi bi-chat-right-question"></i> 年金はいくらもらえますか？</dt>
+          <dd>加入期間・年収・受給開始年齢によって異なります。会社員（平均年収500万円・40年加入・65歳受給）で月15〜17万円が目安です。上のシミュレーターで自分の条件を試算してみてください。</dd>
+
+          <dt><i class="bi bi-chat-right-question"></i> フリーランスは厚生年金に入れますか？</dt>
+          <dd>原則として加入できません。国民年金のみとなりますが、iDeCo・国民年金基金で上乗せが可能です。法人化した場合は厚生年金加入の対象になります。</dd>
+
+          <dt><i class="bi bi-chat-right-question"></i> ねんきん定期便はどこを見ればいいですか？</dt>
+          <dd>50歳未満の方は「これまでの加入実績に応じた年金額」、50歳以上の方は「65歳から受け取る見込みの年金額」を確認してください。加入月数も記載されているのでこのシミュレーターに入力できます。</dd>
+
+          <dt><i class="bi bi-chat-right-question"></i> iDeCoや企業年金はこのシミュレーターに含まれますか？</dt>
+          <dd>含まれません。このシミュレーターは国民年金・厚生年金の公的年金のみを試算します。iDeCoや企業年金は別途加算してご検討ください。</dd>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-logo">計算ラボ</p>
+      <nav class="footer-nav">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/about.html">このサイトについて</a>
+        <a href="/">トップページ</a>
+      </nav>
+      <p class="footer-copy"><small>&copy; 2025 計算ラボ</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
