@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="生命保険の必要保障額を無料で簡単計算。家族構成・年収・生活費・貯蓄額を入力するだけで、万が一のときに必要な死亡保険金額を円グラフで見える化。スマホ対応・入力データは送信されません。">
+  <title>生命保険 必要保障額計算ツール | 無料・スマホ対応 | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/life-insurance-calculator/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "遺族年金はどのように計算されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このツールでは、厚生労働省の公表データをもとに年収から概算の遺族厚生年金・遺族基礎年金を算出しています。実際の支給額は標準報酬月額や加入期間によって異なるため、正確な金額は年金事務所にお問い合わせください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "必要保障額から差し引く公的年金の目安はいくらですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "遺族基礎年金は子のある配偶者に年間約102万円（子1人の場合）支給されます。遺族厚生年金は報酬比例部分の4分の3相当で、年収500万円の場合は年間60〜80万円程度が目安です。このツールでは年収に応じた概算額を自動で控除しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "生命保険料の目安はいくらですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "定期死亡保険であれば、保障額1,000万円・保険期間20年の場合、30歳男性で月額1,500〜3,000円程度が一般的な目安です。必要保障額が決まったら、複数の保険会社で見積もりを取り比較することをおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "独身でも生命保険は必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "独身で扶養家族がいない場合、死亡保険の必要性は低いのが一般的です。ただし、ご両親を扶養している場合や将来の家族形成を見越した場合は、割安な若年期に加入しておくメリットがあります。まずはこのツールで自身の状況を確認してみてください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "子どもの教育費はなぜ1人700万円なのですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "文部科学省の調査によると、幼稚園から大学（私立大含む）までの教育費の総額は1人あたり700〜1,000万円程度となっています。このツールでは公私立の平均的な目安として700万円を採用していますが、実態に合わせて計算結果を調整してください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅ローンがある場合、団体信用生命保険（団信）で補われませんか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "住宅ローンに団信が付帯されている場合、被保険者が死亡するとローン残高が保険金で完済されます。そのため、このツールの「住宅ローン残高」欄には団信未加入分のみを入力してください。団信加入済みであれば0円と入力するのが適切です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "計算結果はどのくらいの頻度で見直すべきですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ライフステージの変化（結婚・出産・住宅購入・昇給）のたびに見直すことをおすすめします。特に子どもが生まれた直後は必要保障額が大きく増えるため、保険を新規に加入または増額するタイミングです。一般的には3〜5年に1度の定期見直しが推奨されています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "このツールの計算結果はどこまで正確ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "このツールは公的資料をもとにした概算値を提供するものです。実際の必要保障額はご家庭の詳細な支出・将来計画・既加入保険の内容によって異なります。正確な設計は保険代理店やFP（ファイナンシャルプランナー）への相談をおすすめします。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-shield-fill-check"></i></div>
+      <h1>生命保険 必要保障額計算ツール</h1>
+      <p class="subtitle">家族構成・年収・支出を入力して、万が一のときに必要な保険金額を無料で計算</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1: ツール上部 -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+      <form id="insurance-form" novalidate>
+
+        <!-- グループ1: 基本情報 -->
+        <div class="input-card">
+          <h2 class="card-title"><i class="bi bi-person-fill"></i> 基本情報</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label class="field-label" for="income">あなたの年収</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="income" min="0" max="9999" placeholder="500" aria-label="年収（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="age">現在の年齢</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="age" min="18" max="79" placeholder="35" aria-label="年齢（歳）">
+                <span class="input-suffix">歳</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- グループ2: 家族構成 -->
+        <div class="input-card">
+          <h2 class="card-title"><i class="bi bi-people-fill"></i> 家族構成</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label class="field-label" for="spouse">配偶者の有無</label>
+              <select id="spouse" aria-label="配偶者の有無">
+                <option value="no">なし</option>
+                <option value="yes">あり</option>
+              </select>
+            </div>
+            <div class="field" id="spouse-income-field" style="display:none;">
+              <label class="field-label" for="spouseIncome">配偶者の年収</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="spouseIncome" min="0" max="9999" placeholder="200" aria-label="配偶者の年収（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+            </div>
+          </div>
+          <div class="field-grid" style="margin-top:1rem;">
+            <div class="field">
+              <label class="field-label" for="children">子どもの人数</label>
+              <select id="children" aria-label="子どもの人数">
+                <option value="0">0人</option>
+                <option value="1">1人</option>
+                <option value="2">2人</option>
+                <option value="3">3人</option>
+                <option value="4">4人以上</option>
+              </select>
+            </div>
+            <div class="field" id="youngest-age-field" style="display:none;">
+              <label class="field-label" for="youngestAge">末子の現在の年齢</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="youngestAge" min="0" max="22" placeholder="3" aria-label="末子の年齢（歳）">
+                <span class="input-suffix">歳</span>
+              </div>
+              <span class="field-hint">22歳（独立）まで生活費を想定</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- グループ3: 生活費・住居 -->
+        <div class="input-card">
+          <h2 class="card-title"><i class="bi bi-house-fill"></i> 生活費・住居費</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label class="field-label" for="monthlyExpense">月々の生活費（家族全体）</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="monthlyExpense" min="0" max="999" placeholder="30" aria-label="月々の生活費（万円）">
+                <span class="input-suffix">万円/月</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label" for="housingType">住居形態</label>
+              <select id="housingType" aria-label="住居形態">
+                <option value="loan">住宅ローンあり</option>
+                <option value="rent">賃貸（家賃）</option>
+                <option value="owned">持ち家（ローンなし）</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-grid" style="margin-top:1rem;">
+            <div class="field" id="loan-field">
+              <label class="field-label" for="loanBalance">住宅ローン残高</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="loanBalance" min="0" max="99999" placeholder="2500" aria-label="住宅ローン残高（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+              <span class="field-hint">団信加入済みの場合は0と入力</span>
+            </div>
+            <div class="field" id="rent-field" style="display:none;">
+              <label class="field-label" for="monthlyRent">月々の家賃</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="monthlyRent" min="0" max="999" placeholder="8" aria-label="月々の家賃（万円）">
+                <span class="input-suffix">万円/月</span>
+              </div>
+              <span class="field-hint">末子独立までの家賃負担を試算</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- グループ4: 貯蓄 -->
+        <div class="input-card">
+          <h2 class="card-title"><i class="bi bi-piggy-bank-fill"></i> 貯蓄・資産</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label class="field-label" for="savings">現在の貯蓄額</label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="savings" min="0" max="99999" placeholder="300" aria-label="貯蓄額（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+              <span class="field-hint">預貯金・投資信託など換金可能な資産の合計</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="calc-btn">
+          <i class="bi bi-calculator-fill"></i> 必要保障額を計算する
+        </button>
+      </form>
+    </section>
+
+    <!-- 結果表示エリア -->
+    <section id="result-section" class="result-section" style="display:none;" aria-live="polite">
+      <div class="result-main">
+        <div class="result-label">あなたの推定 必要保障額</div>
+        <div class="result-value" id="result-total">-</div>
+        <div class="result-sub">万円</div>
+      </div>
+
+      <div class="result-note">
+        <i class="bi bi-info-circle"></i>
+        すでに加入している保険がある場合は、この金額から保険金額を差し引いた不足分が追加で必要な保障額の目安です。
+      </div>
+
+      <div class="breakdown-section">
+        <h3 class="breakdown-title">内訳</h3>
+        <div class="breakdown-grid">
+          <div class="breakdown-item">
+            <div class="bd-icon living"><i class="bi bi-house-heart-fill"></i></div>
+            <div class="bd-info">
+              <div class="bd-name">遺族の生活費</div>
+              <div class="bd-value" id="bd-living-val">-</div>
+            </div>
+          </div>
+          <div class="breakdown-item">
+            <div class="bd-icon housing"><i class="bi bi-building-fill"></i></div>
+            <div class="bd-info">
+              <div class="bd-name">住居費</div>
+              <div class="bd-value" id="bd-housing-val">-</div>
+            </div>
+          </div>
+          <div class="breakdown-item">
+            <div class="bd-icon education"><i class="bi bi-mortarboard-fill"></i></div>
+            <div class="bd-info">
+              <div class="bd-name">教育費</div>
+              <div class="bd-value" id="bd-education-val">-</div>
+            </div>
+          </div>
+          <div class="breakdown-item">
+            <div class="bd-icon emergency"><i class="bi bi-shield-fill-exclamation"></i></div>
+            <div class="bd-info">
+              <div class="bd-name">緊急予備費</div>
+              <div class="bd-value" id="bd-emergency-val">-</div>
+            </div>
+          </div>
+          <div class="breakdown-item deduction">
+            <div class="bd-icon deduction"><i class="bi bi-dash-circle-fill"></i></div>
+            <div class="bd-info">
+              <div class="bd-name">貯蓄 + 公的遺族年金（控除）</div>
+              <div class="bd-value" id="bd-deduction-val">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <canvas id="breakdown-chart" width="300" height="300"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- 広告ユニット2: 結果下部 -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2>使い方</h2>
+      <details class="howto-details" open>
+        <summary>5ステップで簡単計算</summary>
+        <ol class="howto-steps">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <strong>基本情報を入力</strong>
+              <p>年収と現在の年齢を入力します。年収は税込みの額面金額を入力してください。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <strong>家族構成を選択</strong>
+              <p>配偶者の有無・年収と、お子さんの人数・末子の年齢を入力します。末子が22歳（独立）になるまでの期間で生活費を試算します。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <strong>生活費・住居費を入力</strong>
+              <p>現在の月々の生活費と住居の状況（ローン残高または家賃）を入力します。住宅ローンに団信が付いている場合はローン残高を0にしてください。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">4</span>
+            <div>
+              <strong>貯蓄額を入力</strong>
+              <p>現在の預貯金・投資信託など換金可能な資産の合計額を入力します。この金額は必要保障額から控除されます。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">5</span>
+            <div>
+              <strong>計算結果を確認</strong>
+              <p>「必要保障額を計算する」ボタンを押すと、合計額と内訳が円グラフで表示されます。すでに加入している保険金額をここから差し引くと、追加で必要な保障額が分かります。</p>
+            </div>
+          </li>
+        </ol>
+      </details>
+
+      <div class="info-section">
+        <h2>生命保険の必要保障額とは</h2>
+        <p>必要保障額とは、万が一あなたが亡くなった場合に、残された家族が生活を維持するために必要な資金の総額です。主に「遺族の生活費」「住居費」「子どもの教育費」「緊急予備費」の4つで構成されます。ここから現在の貯蓄額と国から支給される遺族年金を差し引いた金額が、生命保険でカバーすべき金額の目安となります。ライフステージ（結婚・出産・住宅購入）のたびに見直すことが重要です。</p>
+
+        <h2>計算式について</h2>
+        <p>このツールの計算式は以下のとおりです：必要保障額 ＝ 遺族の生活費（月額×12×末子独立までの年数）＋ 住居費（ローン残高または家賃の想定額）＋ 教育費（子ども1人あたり700万円）＋ 緊急予備費（月収の6ヶ月分）－ 貯蓄額 － 公的遺族年金（年収に応じた概算）。遺族年金は公的年金の種類・加入期間によって異なるため、このツールでは年収をもとに概算値を算出しています。</p>
+      </div>
+
+      <!-- FAQ セクション -->
+      <div class="faq-section">
+        <h2>よくある質問</h2>
+        <details class="faq-item">
+          <summary>遺族年金はどう計算されますか？</summary>
+          <p>このツールでは、年収をもとに遺族基礎年金・遺族厚生年金の概算を算出しています。遺族基礎年金は子のある配偶者に年間約102万円（子1人の場合）、遺族厚生年金は報酬比例部分の4分の3相当です。実際の支給額は加入期間や報酬月額によって変わるため、正確な金額は年金事務所にお問い合わせください。</p>
+        </details>
+        <details class="faq-item">
+          <summary>保険料の目安はいくらですか？</summary>
+          <p>定期死亡保険の場合、保障額1,000万円・保険期間20年で30歳男性なら月額1,500〜3,000円程度が一般的な目安です。必要保障額が確定したら、複数の保険会社や代理店で比較することをおすすめします。</p>
+        </details>
+        <details class="faq-item">
+          <summary>独身でも生命保険は必要ですか？</summary>
+          <p>独身で扶養家族がいない場合、死亡保険の必要性は低い傾向があります。ただし、親を扶養している場合や将来の家族形成を見越している場合は、若い時期に割安な保険料で加入するメリットがあります。</p>
+        </details>
+        <details class="faq-item">
+          <summary>団体信用生命保険（団信）に加入していれば住宅ローンは不要ですか？</summary>
+          <p>はい、団信加入済みの住宅ローンは被保険者が死亡した際にローン残高が完済されます。「住宅ローン残高」欄は団信未加入分のみ入力し、団信加入済みであれば0と入力してください。</p>
+        </details>
+        <details class="faq-item">
+          <summary>子どもの教育費はなぜ1人700万円なのですか？</summary>
+          <p>文部科学省の調査によると、幼稚園から大学（私立大含む）までの教育費の総額は1人あたり700〜1,000万円程度です。このツールでは公私立の平均的な目安として700万円を採用しています。実態に合わせて調整してご参考ください。</p>
+        </details>
+        <details class="faq-item">
+          <summary>どのくらいの頻度で見直すべきですか？</summary>
+          <p>結婚・出産・住宅購入・昇給などライフステージが変わるたびに見直すことをおすすめします。特に子どもが生まれた直後は必要保障額が大きく増えます。一般的には3〜5年に1度の定期見直しが推奨されています。</p>
+        </details>
+        <details class="faq-item">
+          <summary>計算結果はどこまで正確ですか？</summary>
+          <p>このツールは公的資料をもとにした概算値を提供するものです。実際の必要保障額はご家庭の詳細な支出計画・既加入保険の内容によって異なります。正確な設計はFP（ファイナンシャルプランナー）や保険代理店への相談をおすすめします。</p>
+        </details>
+        <details class="faq-item">
+          <summary>入力データはどこかに保存されますか？</summary>
+          <p>いいえ、入力データはブラウザ内でのみ処理されます。サーバーへの送信や外部への保存は一切行いません。ページを閉じると入力内容は消去されます。</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/">ホームへ戻る</a></p>
+    <p class="footer-desc">当ツールの計算結果は概算であり、保険加入の最終判断はFP・保険代理店にご相談ください。</p>
+    <p><small>&copy; 2026 計算ラボ (keisanlab.jp)</small></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
