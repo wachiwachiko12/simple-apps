@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="相続税を無料で簡単に計算。遺産総額・法定相続人の人数を入力するだけで、基礎控除・課税遺産総額・各相続人の税額を国税庁の速算表に基づいて算出。スマホ対応。">
+  <title>相続税 簡易計算ツール — 無料で概算をシミュレーション | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/inheritance-tax-calculator/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "相続税がかかる遺産はどのくらいから？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "基礎控除額（3,000万円 + 600万円 × 法定相続人数）を超える場合に相続税が課税されます。たとえば法定相続人が2人なら基礎控除は4,200万円となり、遺産総額がこれを超えた部分に税金がかかります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "生命保険は相続税の対象ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "死亡保険金は相続税の対象となりますが、「500万円 × 法定相続人数」が非課税枠として認められています。受取人固有の財産であり遺産分割の対象外ですが、相続税の計算には算入されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "相続税の申告期限は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "相続税の申告・納付の期限は、被相続人が亡くなったことを知った日の翌日から10か月以内です。期限を過ぎると延滞税・加算税が課される場合があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "相続放棄とは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "相続放棄とは、相続人が相続する権利を放棄することです。借金などマイナスの財産が多い場合に選択されます。放棄した場合、プラスの財産も受け取れなくなります。家庭裁判所への申述が必要で、原則として相続開始を知った日から3か月以内に手続きを行います。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "配偶者控除（配偶者の税額軽減）とは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "配偶者が相続した財産のうち、1億6,000万円または法定相続分のいずれか多い金額までは相続税がかかりません。ただし申告が必要で、申告期限内に遺産分割が完了していることが条件です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "法定相続分とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "民法で定められた相続人ごとの遺産取得割合です。配偶者と子どもがいる場合、配偶者が1/2・子ども全員で1/2を均等分配します。子どもがいない場合は配偶者2/3・直系尊属（親など）1/3となります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "不動産の相続税評価額はどうなりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "不動産は時価ではなく「路線価（相続税評価額）」で評価されます。路線価は時価の概ね7〜8割程度です。小規模宅地等の特例を適用すると、一定の要件を満たした場合に評価額を最大80%減額できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "相続税の計算は自分でできますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "基本的な概算はこのツールで試算できます。ただし実際の相続税申告は、不動産評価・各種控除・特例適用など複雑な要素が絡みます。正式な申告は税理士にご相談されることをお勧めします。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-bank"></i></div>
+      <h1>相続税 簡易計算ツール</h1>
+      <p class="subtitle">遺産総額と相続人の情報を入力するだけで、相続税の概算額を無料でシミュレーション</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section card">
+      <h2><i class="bi bi-calculator"></i> 相続情報を入力</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label" for="estate-value">
+            遺産総額（万円）
+            <span class="field-required">必須</span>
+          </label>
+          <div class="input-with-unit">
+            <input type="number" id="estate-value" min="0" max="999999" step="1" placeholder="例: 8000" inputmode="numeric">
+            <span class="input-unit">万円</span>
+          </div>
+          <span class="field-hint">預貯金・不動産・有価証券などすべての財産の合計</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="has-spouse">配偶者の有無</label>
+          <select id="has-spouse">
+            <option value="yes">あり（配偶者が相続する）</option>
+            <option value="no">なし</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="children-count">子どもの人数（法定相続人）</label>
+          <select id="children-count">
+            <option value="0">0人（子なし）</option>
+            <option value="1">1人</option>
+            <option value="2" selected>2人</option>
+            <option value="3">3人</option>
+            <option value="4">4人</option>
+            <option value="5">5人以上</option>
+          </select>
+        </div>
+
+        <div class="field" id="parents-field">
+          <label class="field-label" for="parents-count">
+            親（存命）の人数
+            <span class="field-hint-inline">子なしの場合のみ</span>
+          </label>
+          <select id="parents-count">
+            <option value="0">0人</option>
+            <option value="1">1人</option>
+            <option value="2">2人</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="asset-type">主な遺産の種類</label>
+          <select id="asset-type">
+            <option value="mixed">混合（不動産＋金融資産）</option>
+            <option value="real-estate">主に不動産</option>
+            <option value="financial">主に金融資産（預貯金・株式）</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="calc-btn" type="button" onclick="calculate()">
+        <i class="bi bi-calculator-fill"></i> 相続税を計算する
+      </button>
+    </section>
+
+    <!-- 結果エリア -->
+    <section id="result-section" class="result-section" style="display:none;">
+      <h2 class="result-heading"><i class="bi bi-bar-chart-fill"></i> 計算結果</h2>
+
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="summary-label">基礎控除額</div>
+          <div class="summary-value" id="basic-deduction">—</div>
+          <div class="summary-unit">万円</div>
+        </div>
+        <div class="summary-card highlight">
+          <div class="summary-label">課税遺産総額</div>
+          <div class="summary-value" id="taxable-estate">—</div>
+          <div class="summary-unit">万円</div>
+        </div>
+        <div class="summary-card accent">
+          <div class="summary-label">合計相続税額</div>
+          <div class="summary-value" id="total-tax">—</div>
+          <div class="summary-unit">万円</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">実効税率</div>
+          <div class="summary-value" id="effective-rate">—</div>
+          <div class="summary-unit">%</div>
+        </div>
+      </div>
+
+      <!-- 各相続人の内訳テーブル -->
+      <div class="breakdown-card card">
+        <h3><i class="bi bi-people-fill"></i> 各相続人の相続税額</h3>
+        <div class="table-wrapper">
+          <table id="heir-table">
+            <thead>
+              <tr>
+                <th>相続人</th>
+                <th>法定相続分</th>
+                <th>取得額（万円）</th>
+                <th>相続税額（万円）</th>
+              </tr>
+            </thead>
+            <tbody id="heir-tbody"></tbody>
+          </table>
+        </div>
+        <div class="asset-note" id="asset-note"></div>
+      </div>
+
+      <!-- Chart.js グラフ -->
+      <div class="chart-card card">
+        <h3><i class="bi bi-bar-chart"></i> 取得額と税額の比較</h3>
+        <div class="chart-wrapper">
+          <canvas id="heirChart"></canvas>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <i class="bi bi-info-circle"></i>
+        この計算は概算です。実際の申告は税理士にご相談ください。配偶者控除（最大1億6,000万円まで非課税）・小規模宅地等の特例などは個別の状況により異なります。
+      </div>
+    </section>
+
+    <!-- 非課税メッセージ -->
+    <section id="no-tax-section" class="no-tax-section card" style="display:none;">
+      <div class="no-tax-icon"><i class="bi bi-patch-check-fill"></i></div>
+      <h2>相続税はかかりません</h2>
+      <p id="no-tax-detail"></p>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""></ins>
+    </div>
+
+    <!-- 使い方アコーディオン -->
+    <section class="howto-section card">
+      <h2><i class="bi bi-question-circle"></i> 使い方</h2>
+      <div class="accordion" id="howto-accordion">
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>STEP 1：遺産総額を入力する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>相続する財産の合計金額を万円単位で入力してください。不動産・預貯金・有価証券・生命保険金（非課税枠超過分）などすべてを含めた総額を入力します。不動産は路線価（時価の約7〜8割）で評価するのが一般的です。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>STEP 2：配偶者の有無を選択する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>配偶者が相続に参加する場合は「あり」を選択してください。配偶者には最大1億6,000万円までの非課税枠（配偶者の税額軽減）が適用されるため、税額に大きく影響します。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>STEP 3：子どもの人数を選択する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>法定相続人となる子どもの人数を選択してください。子どもの人数が増えると基礎控除額が増え、相続税が軽減されます。養子・代襲相続人も含めることができます（カウントに制限あり）。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>STEP 4：「相続税を計算する」ボタンを押す</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>入力が完了したら「相続税を計算する」ボタンを押してください。国税庁の速算表に基づいて、基礎控除・課税遺産総額・各相続人の税額・合計税額・実効税率を即座に表示します。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>STEP 5：結果を確認し専門家に相談する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>表示された結果はあくまで概算です。実際の申告では小規模宅地等の特例・生命保険の非課税枠・相次相続控除など様々な控除が適用される場合があります。正式な申告は税理士に相談することをお勧めします。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 相続税の基礎知識 -->
+    <section class="info-section card">
+      <h2><i class="bi bi-book"></i> 相続税とは</h2>
+      <p>相続税とは、被相続人（亡くなった方）の財産を受け継いだ際に課される税金です。日本では国税庁が定める基礎控除額を超えた部分に対して、累進税率（10〜55%）で課税されます。</p>
+      <p style="margin-top: 0.75rem;">相続税の計算は「①課税対象の遺産総額を算出」→「②基礎控除を差し引いて課税遺産総額を算出」→「③法定相続分で按分して各人の税額を計算」→「④配偶者控除等を適用して実際の納税額を確定」という手順で行われます。</p>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-shield-minus"></i></div>
+          <div class="info-title">基礎控除</div>
+          <div class="info-desc">3,000万円 + 600万円 × 法定相続人数。この金額以下なら申告不要。</div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-person-heart"></i></div>
+          <div class="info-title">配偶者控除</div>
+          <div class="info-desc">配偶者は1億6,000万円または法定相続分のどちらか多い額まで非課税。</div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-house-heart"></i></div>
+          <div class="info-title">小規模宅地等の特例</div>
+          <div class="info-desc">居住用・事業用宅地の評価額を最大80%減額できる特例（要件あり）。</div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="bi bi-clock-history"></i></div>
+          <div class="info-title">申告期限</div>
+          <div class="info-desc">相続開始を知った日の翌日から10か月以内に申告・納付が必要。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section card">
+      <h2><i class="bi bi-chat-dots"></i> よくある質問</h2>
+      <div class="accordion" id="faq-accordion">
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>相続税がかかる遺産はどのくらいから？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>基礎控除額（3,000万円 + 600万円 × 法定相続人数）を超える場合に課税されます。法定相続人が2人なら4,200万円が控除されます。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>生命保険は相続税の対象ですか？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>死亡保険金は「500万円 × 法定相続人数」を超える部分が相続税の対象になります。超過分は遺産総額に加算して計算します。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>相続税の申告期限はいつですか？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>被相続人が亡くなったことを知った日の翌日から10か月以内です。期限を過ぎると延滞税・加算税が発生します。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>配偶者控除（配偶者の税額軽減）とは？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>配偶者が取得した財産が「1億6,000万円」または「配偶者の法定相続分」のいずれか多い金額以下の場合、相続税は0円になります。ただし申告が必要です。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>相続放棄をすると相続税はどうなりますか？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>相続放棄した人は相続人ではなくなり、財産を受け取れません。相続税の基礎控除計算では放棄した人も法定相続人数にカウントされます（放棄がなかったものとみなす）。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>不動産の評価額はどう計算しますか？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>土地は路線価方式（路線価×面積）または倍率方式で評価します。路線価は時価の概ね7〜8割です。建物は固定資産税評価額で評価します。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>税理士に頼まないと申告できませんか？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>法律上は自分で申告することも可能です。ただし相続税申告は複雑なため、ミスや申告漏れのリスクがあります。特例適用を誤ると税額が大きく変わるため、税理士への相談をお勧めします。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" aria-expanded="false" onclick="toggleAccordion(this)">
+            <span>このツールの計算は正確ですか？</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>国税庁の速算表に基づいた概算です。実際の相続税額は遺産の種類・評価方法・各種特例の適用状況により大きく異なる場合があります。あくまでも参考値としてご利用ください。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-site"><a href="/">計算ラボ</a></p>
+      <nav class="footer-nav">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/">トップページ</a>
+      </nav>
+      <p class="footer-copy"><small>&copy; 2026 計算ラボ</small></p>
+    </div>
+  </footer>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</body>
+</html>
