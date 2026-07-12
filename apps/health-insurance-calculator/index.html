@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="国民健康保険料（国保）を年収・世帯構成から無料で試算。フリーランス・退職者・自営業者向け。医療分・支援分・介護分の内訳を円グラフで確認。協会けんぽ（任意継続）との比較も可能。">
+  <title>国民健康保険料 計算ツール【無料・スマホ対応】 | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/health-insurance-calculator/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "国民健康保険（国保）と社会保険（社保）の違いは？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "社会保険（健康保険）は会社員が加入し、保険料を会社と折半します。国民健康保険は自営業者・フリーランス・退職者などが加入し、保険料を全額自分で負担します。また社保には傷病手当金・出産手当金がありますが、国保にはありません。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "退職後は国保と任意継続どちらがお得？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "任意継続保険料は退職時の給与をもとに決まります。国保料は前年所得をもとに計算されます。一般に退職直後（前年所得が高い）は任意継続が安い場合が多く、収入が大幅に減った2年目以降は国保が安くなるケースが多いです。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "国民健康保険料はいつ支払いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "通常6月〜翌3月の10回に分けて支払います（自治体によって異なります）。口座振替・納付書払い・コンビニ払いが利用可能です。納期限を過ぎると延滞金が発生するため注意しましょう。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "フリーランス1年目の保険料はどうなる？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "国民健康保険料は「前年の所得」をもとに計算されるため、フリーランス1年目は前年の会社員時代の所得で計算されます。退職後すぐに加入した場合、非自発的失業者への軽減措置が適用される場合があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "国保の軽減制度とはどういう仕組みですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "世帯の所得が一定基準以下の場合、均等割額が7割・5割・2割に軽減されます。7割軽減は世帯所得43万円以下（加算あり）、5割軽減は43万円＋29万円×被保険者数以下、2割軽減は43万円＋53.5万円×被保険者数以下が目安です（2024年度）。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "国民健康保険料の上限（賦課限度額）はいくら？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2024年度の上限額は、医療分89万円、支援分32万円、介護分17万円で合計138万円です。高所得になるほど上限に達しやすくなります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "配偶者や子どもがいる場合、保険料はどう変わる？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "国保は世帯単位で加入し、加入者1人につき均等割が加算されます。扶養という概念がなく、全員が等しく均等割の対象になる点が社保と大きく異なります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "国保料の計算に使う「所得」とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "国保料の計算に使う所得は「総収入から必要経費を引いた純所得」です。給与所得者は給与収入から給与所得控除を引いた金額、自営業者・フリーランスは売上から経費を引いた事業所得が対象です。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-badge"><i class="bi bi-shield-plus"></i> 国保計算</div>
+      <h1>国民健康保険料<br>かんたん計算ツール</h1>
+      <p class="subtitle">年収・世帯構成を入力するだけで国保料を試算。フリーランス・退職者・自営業者向け。</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section card">
+      <h2><i class="bi bi-calculator"></i> 保険料を計算する</h2>
+
+      <div class="form-grid">
+        <div class="field">
+          <label class="field-label" for="income">前年の所得（万円）<span class="required">必須</span></label>
+          <div class="input-wrapper">
+            <input type="number" id="income" min="0" max="10000" step="1" placeholder="例: 400" inputmode="numeric">
+            <span class="input-suffix">万円</span>
+          </div>
+          <span class="field-hint">※ 必要経費・各種控除後の純所得。給与所得者は源泉徴収票の「給与所得控除後の金額」</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="members">世帯の被保険者数<span class="required">必須</span></label>
+          <select id="members">
+            <option value="1">1人（本人のみ）</option>
+            <option value="2">2人（例: 夫婦）</option>
+            <option value="3">3人（例: 夫婦＋子1人）</option>
+            <option value="4">4人（例: 夫婦＋子2人）</option>
+            <option value="5">5人以上</option>
+          </select>
+          <span class="field-hint">※ 国保加入者のみカウント。扶養家族も全員含む</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="care-members">40〜64歳の人数</label>
+          <select id="care-members">
+            <option value="0">0人</option>
+            <option value="1">1人</option>
+            <option value="2">2人</option>
+            <option value="3">3人</option>
+          </select>
+          <span class="field-hint">※ 介護保険第2号被保険者の対象者数（介護分保険料に影響）</span>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="region">地域（概算レート）</label>
+          <select id="region">
+            <option value="avg">全国平均</option>
+            <option value="tokyo">東京都23区</option>
+            <option value="osaka">大阪市</option>
+            <option value="yokohama">横浜市</option>
+            <option value="nagoya">名古屋市</option>
+            <option value="sapporo">札幌市</option>
+            <option value="fukuoka">福岡市</option>
+          </select>
+          <span class="field-hint">※ 正確な金額はお住まいの市区町村にご確認ください</span>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="calc-btn" onclick="calculate()">
+        <i class="bi bi-calculator-fill"></i> 保険料を計算する
+      </button>
+    </section>
+
+    <!-- 結果表示 -->
+    <section id="result-section" class="result-section" style="display:none" aria-live="polite">
+      <h2 class="result-heading"><i class="bi bi-graph-up-arrow"></i> 計算結果</h2>
+
+      <div class="result-main-grid">
+        <div class="result-main-card">
+          <div class="result-label">年間保険料（概算）</div>
+          <div class="result-value" id="annual-total">—</div>
+          <div class="result-unit">円/年</div>
+        </div>
+        <div class="result-main-card result-monthly">
+          <div class="result-label">月額換算</div>
+          <div class="result-value monthly" id="monthly-total">—</div>
+          <div class="result-unit">円/月</div>
+        </div>
+      </div>
+
+      <!-- 軽減制度バッジ -->
+      <div id="reduction-badge" class="reduction-badge" style="display:none">
+        <i class="bi bi-stars"></i>
+        <span id="reduction-text"></span>
+      </div>
+
+      <!-- 内訳 -->
+      <div class="breakdown-card card">
+        <h3><i class="bi bi-pie-chart-fill"></i> 保険料の内訳</h3>
+        <div class="breakdown-grid">
+          <div class="chart-wrapper">
+            <canvas id="breakdown-chart" aria-label="保険料内訳円グラフ" role="img"></canvas>
+          </div>
+          <div class="breakdown-table">
+            <div class="breakdown-row">
+              <div class="breakdown-label"><span class="dot dot-medical"></span>医療分</div>
+              <div class="breakdown-amount" id="amt-medical">—</div>
+            </div>
+            <div class="breakdown-row">
+              <div class="breakdown-label"><span class="dot dot-support"></span>支援分</div>
+              <div class="breakdown-amount" id="amt-support">—</div>
+            </div>
+            <div class="breakdown-row" id="row-care">
+              <div class="breakdown-label"><span class="dot dot-care"></span>介護分</div>
+              <div class="breakdown-amount" id="amt-care">—</div>
+            </div>
+            <div class="breakdown-row breakdown-total">
+              <div class="breakdown-label">合計（年額）</div>
+              <div class="breakdown-amount" id="amt-total">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot=""></ins>
+      </div>
+
+      <!-- 協会けんぽ比較 -->
+      <div class="comparison-card card">
+        <h3><i class="bi bi-arrow-left-right"></i> 協会けんぽ（任意継続）との比較</h3>
+        <p class="comparison-desc">退職後の選択肢として、協会けんぽ任意継続保険料と比較できます。</p>
+        <div class="field comparison-field">
+          <label class="field-label" for="kenpo-income">退職時の月収（総支給額・万円）</label>
+          <div class="input-wrapper">
+            <input type="number" id="kenpo-income" min="0" max="1000" step="1" placeholder="例: 35" inputmode="numeric" oninput="updateComparison()">
+            <span class="input-suffix">万円</span>
+          </div>
+        </div>
+        <div class="comparison-table" id="comparison-table" style="display:none">
+          <div class="comp-row comp-header">
+            <div></div>
+            <div>年額</div>
+            <div>月額</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label"><span class="dot dot-medical"></span>国民健康保険</div>
+            <div id="comp-kokuho-annual">—</div>
+            <div id="comp-kokuho-monthly">—</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label"><span class="dot dot-support"></span>協会けんぽ（任意継続）</div>
+            <div id="comp-kenpo-annual">—</div>
+            <div id="comp-kenpo-monthly">—</div>
+          </div>
+          <div class="comp-winner" id="comp-winner"></div>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        <i class="bi bi-info-circle"></i>
+        この試算は概算です。実際の保険料は自治体・所得の種類・各種控除によって異なります。正確な金額はお住まいの市区町村役場にご確認ください。
+      </p>
+    </section>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section card">
+      <h2><i class="bi bi-book-open"></i> 使い方（5ステップ）</h2>
+      <div class="accordion-list">
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span><span class="step-num">1</span> 前年の所得を入力する</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>給与所得者は源泉徴収票の「給与所得控除後の金額」を入力します。自営業・フリーランスは売上から経費を引いた事業所得を入力します。各種所得控除（医療費控除・生命保険料控除など）を引く前の金額です。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span><span class="step-num">2</span> 世帯の被保険者数を選ぶ</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>国民健康保険に加入する世帯全員の人数を選びます。会社員の配偶者（社会保険の扶養に入っている場合）は含めません。子どもも国保加入者であれば人数に含めます。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span><span class="step-num">3</span> 40〜64歳の人数を選ぶ</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>40〜64歳の加入者は介護保険の第2号被保険者として介護分保険料が加算されます。該当する人数を入力してください。65歳以上は別途介護保険料が徴収されるため対象外です。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span><span class="step-num">4</span> 地域を選んで計算する</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>保険料率は自治体ごとに異なります。お住まいに近い地域を選ぶか「全国平均」で概算を確認します。「計算する」ボタンを押すと、年間保険料・月額・内訳が表示されます。</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span><span class="step-num">5</span> 任意継続と比較して判断する</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>退職後の方は、退職時の月収を入力すると協会けんぽ任意継続保険料と自動比較できます。どちらが安いかを確認して、加入先を決める参考にしてください。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="bi bi-info-circle-fill"></i> 国民健康保険料について</h3>
+        <p>国民健康保険（国保）は、会社の社会保険に加入していない人が加入する公的医療保険です。フリーランス・自営業者・退職者・学生などが対象で、市区町村が運営しています。保険料は「所得割」と「均等割」で構成され、自治体によって料率が異なります。前年の所得をもとに毎年6月に保険料が決定され、世帯主が一括して納付義務を負います。世帯の所得が少ない場合は、均等割が最大7割軽減される制度があります。また、退職直後は「特例退職被保険者制度」や「協会けんぽ任意継続」との比較検討も重要です。正確な保険料はお住まいの市区町村の窓口で試算してもらうことをおすすめします。</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section card">
+      <h2><i class="bi bi-patch-question"></i> よくある質問</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>国保と社保（社会保険）の違いは？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>社会保険（健康保険）は会社員が加入し、保険料を会社と折半します。国保は自営業者・フリーランス・退職者などが加入し、保険料を全額自己負担します。また社保には傷病手当金・出産手当金がありますが、国保にはありません。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>退職後は国保と任意継続どちらがお得？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>退職直後（前年収入が高い時期）は任意継続が安い場合が多く、収入が大幅に減った翌年以降は国保が安くなるケースが多いです。本ツールの比較機能で確認してみてください。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>保険料はいつ支払いますか？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>通常、6月〜翌3月の10回払いです（自治体により異なります）。口座振替・納付書払い・コンビニ払いが利用可能です。納期を過ぎると延滞金が発生するため、早めの手続きをおすすめします。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>フリーランス1年目の保険料はどうなる？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>国保料は前年所得をもとに計算されるため、1年目は前職（会社員時代）の所得で計算されます。高収入だった場合は国保料が高くなることがあります。非自発的失業の場合は軽減措置がある場合も。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>軽減制度はどのような条件で適用される？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>世帯所得が一定基準以下の場合、均等割額が7割・5割・2割に軽減されます。7割軽減は43万円以下、5割軽減は43万円＋29万円×人数以下、2割軽減は43万円＋53.5万円×人数以下が目安（2024年度）。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>上限（賦課限度額）はいくら？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>2024年度の上限は、医療分89万円、支援分32万円、介護分17万円で合計138万円です。高所得の場合は上限が適用されるため、それ以上は増えません。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>配偶者や子どもがいると保険料は高くなる？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>国保には「扶養」という概念がなく、加入者全員に均等割が加算されます。例えば夫婦2人なら均等割が2倍です。ただし一部自治体では子どもの均等割が軽減・無料になる場合があります。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span>計算に使う「所得」はどう確認する？</span>
+            <i class="bi bi-chevron-down acc-icon"></i>
+          </button>
+          <div class="accordion-body">
+            <p>給与所得者は源泉徴収票の「給与所得控除後の金額」を使います。自営業・フリーランスは確定申告書の「所得金額」の合計を使います。医療費控除などの所得控除を引く前の金額です。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-logo">計算ラボ</p>
+      <nav class="footer-nav">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/apps/">ツール一覧</a>
+      </nav>
+      <p class="footer-copy"><small>&copy; 2026 計算ラボ (keisanlab.jp)</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
