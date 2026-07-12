@@ -41,7 +41,7 @@ main {
 
 /* ===== Ad unit ===== */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: #e2e8f0;
   margin: 1.25rem 0;
   display: flex;

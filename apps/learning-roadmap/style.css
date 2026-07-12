@@ -104,7 +104,7 @@ main {
   justify-content: center;
   gap: 0.25rem;
   padding: 1rem 0.5rem;
-  min-height: 90px;
+  min-height: 0;
   background: #f8f9ff;
   border: 2px solid #e0e4f0;
   border-radius: 10px;
