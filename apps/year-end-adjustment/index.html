@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="年末調整の還付金・追徴額を無料で簡単計算。給与収入・各種控除（生命保険・住宅ローン・iDeCo等）を入力するだけで、いくら戻ってくるか・追加徴収されるかがすぐわかります。控除内訳グラフ付き。">
+  <title>年末調整 還付・追徴額 かんたん計算ツール｜いくら戻ってくる？【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/year-end-adjustment/">
+  <!-- OGP -->
+  <meta property="og:title" content="年末調整 還付・追徴額 かんたん計算ツール｜いくら戻ってくる？【無料】">
+  <meta property="og:description" content="年末調整の還付金・追徴額を無料で簡単計算。各種控除を入力するだけで概算がわかります。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/year-end-adjustment/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-year-end-adjustment.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="年末調整 還付・追徴額 かんたん計算ツール｜いくら戻ってくる？【無料】">
+  <meta name="twitter:description" content="年末調整の還付金・追徴額を無料で簡単計算。各種控除を入力するだけで概算がわかります。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-year-end-adjustment.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "年末調整と確定申告の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "年末調整は会社員を対象に、勤務先が年間の所得税を精算する手続きです。確定申告は自分で税務署に申告する手続きで、主に個人事業主・フリーランスや副業収入がある方が対象です。会社員でも医療費控除や住宅ローン控除の初年度などは確定申告が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "年末調整でいくら還付されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "還付額は個人の控除状況によって異なります。一般的に、生命保険料控除・地震保険料控除・配偶者控除・扶養控除などが多いほど還付額が大きくなります。本ツールで各種控除を入力すると概算の還付額・追徴額が計算できます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅ローン控除は初年度どうすればよいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "住宅ローン控除（住宅借入金等特別控除）は初年度のみ確定申告が必要です。2年目以降は会社の年末調整で適用できます。控除額は年末ローン残高の0.7%（2022年改正後）で計算されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "生命保険料控除の対象となる保険は何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "生命保険料控除は「一般の生命保険料」「介護医療保険料」「個人年金保険料」の3つに区分されます。それぞれ最大4万円（旧制度は5万円）、合計最大12万円が控除されます。対象は所定の条件を満たす国内の生命保険契約です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "扶養控除の対象となる条件は何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "扶養控除の対象は、生計を一にする配偶者以外の親族で、年間合計所得が48万円以下（年収103万円以下の給与所得者）、かつ16歳以上の方です。19〜22歳の特定扶養親族は控除額が63万円に増額されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "iDeCoの掛金は年末調整で控除できますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、iDeCo（個人型確定拠出年金）の掛金は「小規模企業共済等掛金控除」として全額所得控除できます。年末調整では「小規模企業共済等掛金払込証明書」を勤務先に提出することで適用されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "配偶者控除と配偶者特別控除の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "配偶者控除は配偶者の年収が103万円以下（合計所得48万円以下）の場合に最大38万円が控除されます。配偶者特別控除は配偶者の年収が103〜201万円以下の場合に段階的に控除額が減っていく制度です。本ツールでは簡易的に配偶者の年収150万円以下を条件として計算しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "地震保険料控除の上限はいくらですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "地震保険料控除の上限は年間5万円です。実際に支払った地震保険料の全額（5万円が上限）が控除されます。旧長期損害保険契約は最大1.5万円の別枠があります。本ツールでは2006年以降の契約（上限5万円）で計算しています。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-calculator-fill"></i></div>
+      <h1>年末調整 還付・追徴額<br>かんたん計算ツール</h1>
+      <p class="subtitle">給与収入と各種控除を入力して、いくら戻ってくるか・追加徴収されるかを概算します</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section">
+
+      <!-- ステップ1: 基本情報 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge">STEP 1</span>
+          <h2 class="step-title"><i class="bi bi-person-circle"></i> 基本情報</h2>
+        </div>
+        <div class="fields-grid">
+          <div class="field">
+            <label class="field-label" for="income">年収（給与収入）
+              <span class="field-required">必須</span>
+            </label>
+            <div class="input-with-unit">
+              <input type="number" id="income" min="0" max="10000" step="1"
+                     placeholder="例: 500" aria-label="年収（万円）">
+              <span class="input-unit">万円</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="withheld-tax">源泉徴収済み税額
+              <span class="field-hint-inline">（源泉徴収票を参照）</span>
+            </label>
+            <div class="input-with-unit">
+              <input type="number" id="withheld-tax" min="0" step="1"
+                     placeholder="例: 120000" aria-label="源泉徴収済み税額（円）">
+              <span class="input-unit">円</span>
+            </div>
+            <span class="field-hint">源泉徴収票「源泉徴収税額」欄の金額。未入力の場合は年収から自動推計します。</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="spouse">配偶者</label>
+            <select id="spouse" aria-label="配偶者の有無">
+              <option value="none">なし</option>
+              <option value="yes">あり（年収150万円以下）</option>
+              <option value="no-deduction">あり（年収150万円超）</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label">扶養家族（16歳以上）</label>
+            <div class="dependent-row">
+              <div class="dependent-item">
+                <label class="field-hint-label" for="dep-general">一般扶養（16〜18歳・23歳以上）</label>
+                <div class="input-with-unit">
+                  <input type="number" id="dep-general" min="0" max="20" step="1"
+                         value="0" aria-label="一般扶養人数">
+                  <span class="input-unit">人</span>
+                </div>
+              </div>
+              <div class="dependent-item">
+                <label class="field-hint-label" for="dep-specific">特定扶養（19〜22歳）</label>
+                <div class="input-with-unit">
+                  <input type="number" id="dep-specific" min="0" max="20" step="1"
+                         value="0" aria-label="特定扶養人数">
+                  <span class="input-unit">人</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ステップ2: 各種控除 -->
+      <div class="step-card">
+        <div class="step-header">
+          <span class="step-badge">STEP 2</span>
+          <h2 class="step-title"><i class="bi bi-shield-fill-check"></i> 各種控除</h2>
+        </div>
+        <div class="fields-grid">
+
+          <!-- 社会保険料 -->
+          <div class="field full-width">
+            <label class="field-label">社会保険料控除</label>
+            <div class="toggle-group" role="group" aria-label="社会保険料の入力方法">
+              <button type="button" class="toggle-btn active" id="social-auto-btn"
+                      onclick="setSocialMode('auto')">年収から自動計算（約15%）</button>
+              <button type="button" class="toggle-btn" id="social-manual-btn"
+                      onclick="setSocialMode('manual')">実額を入力する</button>
+            </div>
+            <div id="social-manual-input" style="display:none; margin-top:0.75rem;">
+              <div class="input-with-unit">
+                <input type="number" id="social-insurance" min="0" step="1"
+                       placeholder="例: 700000" aria-label="社会保険料実額（円）">
+                <span class="input-unit">円</span>
+              </div>
+            </div>
+            <span class="field-hint" id="social-hint">年収の約15%を控除額として自動計算します。</span>
+          </div>
+
+          <!-- 生命保険料 -->
+          <div class="field">
+            <label class="field-label" for="life-insurance">生命保険料（年間支払額）</label>
+            <div class="input-with-unit">
+              <input type="number" id="life-insurance" min="0" step="1"
+                     placeholder="例: 120000" aria-label="生命保険料年間支払額（円）">
+              <span class="input-unit">円</span>
+            </div>
+            <span class="field-hint">一般・介護医療・個人年金の合計。控除上限は12万円。</span>
+          </div>
+
+          <!-- 地震保険料 -->
+          <div class="field">
+            <label class="field-label" for="earthquake-insurance">地震保険料（年間支払額）</label>
+            <div class="input-with-unit">
+              <input type="number" id="earthquake-insurance" min="0" step="1"
+                     placeholder="例: 30000" aria-label="地震保険料年間支払額（円）">
+              <span class="input-unit">円</span>
+            </div>
+            <span class="field-hint">控除上限は5万円。</span>
+          </div>
+
+          <!-- iDeCo -->
+          <div class="field">
+            <label class="field-label" for="ideco">iDeCo掛金（月額）</label>
+            <div class="input-with-unit">
+              <input type="number" id="ideco" min="0" max="68000" step="1000"
+                     placeholder="例: 23000" aria-label="iDeCo月額掛金（円）">
+              <span class="input-unit">円/月</span>
+            </div>
+            <span class="field-hint">会社員の上限は月1.2万〜2.3万円。全額控除されます。</span>
+          </div>
+
+          <!-- 住宅ローン残高 -->
+          <div class="field">
+            <label class="field-label" for="housing-loan">住宅ローン年末残高</label>
+            <div class="input-with-unit">
+              <input type="number" id="housing-loan" min="0" step="10"
+                     placeholder="例: 30000000" aria-label="住宅ローン年末残高（円）">
+              <span class="input-unit">円</span>
+            </div>
+            <span class="field-hint">残高×0.7%が税額控除されます（2022年改正後）。2年目以降の方向け。</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 計算ボタン -->
+      <button type="button" class="btn-calculate" id="calc-btn" onclick="calculate()">
+        <i class="bi bi-calculator"></i> 計算する
+      </button>
+
+    </section>
+
+    <!-- 結果エリア -->
+    <section id="result-section" class="result-section" style="display:none;" aria-live="polite">
+
+      <!-- メイン結果 -->
+      <div class="result-main" id="result-main">
+        <div class="result-label-top" id="result-label">計算結果</div>
+        <div class="result-value" id="result-value">---</div>
+        <div class="result-sub" id="result-sub"></div>
+      </div>
+
+      <!-- 詳細数値 -->
+      <div class="result-details">
+        <div class="detail-row">
+          <span class="detail-label"><i class="bi bi-cash-stack"></i> 給与所得</span>
+          <span class="detail-value" id="d-income">---</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="bi bi-arrow-down-circle"></i> 控除合計</span>
+          <span class="detail-value" id="d-deductions">---</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="bi bi-bullseye"></i> 課税所得</span>
+          <span class="detail-value" id="d-taxable">---</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="bi bi-percent"></i> 算出所得税額</span>
+          <span class="detail-value" id="d-income-tax">---</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="bi bi-house-fill"></i> 住宅ローン税額控除</span>
+          <span class="detail-value" id="d-housing-credit">---</span>
+        </div>
+        <div class="detail-row highlight">
+          <span class="detail-label"><i class="bi bi-receipt"></i> 最終納税額</span>
+          <span class="detail-value" id="d-final-tax">---</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label"><i class="bi bi-bank"></i> 源泉徴収済み税額</span>
+          <span class="detail-value" id="d-withheld">---</span>
+        </div>
+        <div class="detail-row ref-row">
+          <span class="detail-label"><i class="bi bi-building"></i> 住民税の目安（参考）</span>
+          <span class="detail-value" id="d-resident-tax">---</span>
+        </div>
+      </div>
+
+      <!-- 控除内訳グラフ -->
+      <div class="chart-card">
+        <h3 class="chart-title"><i class="bi bi-bar-chart-fill"></i> 控除内訳</h3>
+        <div class="chart-wrap">
+          <canvas id="deduction-chart" aria-label="控除内訳グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 注意書き -->
+      <p class="result-note">
+        <i class="bi bi-info-circle"></i>
+        この計算は概算です。実際の年末調整額は源泉徴収票の内容や各種特例により異なります。正確な金額は勤務先または税理士にご確認ください。
+      </p>
+    </section>
+
+    <!-- 広告ユニット2（結果下） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""></ins>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section">
+      <h2><i class="bi bi-question-circle"></i> 使い方</h2>
+      <div class="accordion-list">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="accordion-num">01</span>
+            <span>年収と源泉徴収済み税額を入力する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            勤務先から受け取る源泉徴収票の「支払金額」欄の数値を年収（万円単位）に入力してください。「源泉徴収税額」欄の金額もあわせて入力すると計算精度が上がります。未入力の場合は年収から自動推計します。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="accordion-num">02</span>
+            <span>配偶者・扶養家族の状況を選択する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            配偶者の有無と年収区分を選択してください。扶養家族がいる場合は、16〜18歳・23歳以上の一般扶養と、19〜22歳の特定扶養の人数をそれぞれ入力します。特定扶養は大学生の子どもが多く、控除額が38万円→63万円に増額されます。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="accordion-num">03</span>
+            <span>各種控除の金額を入力する</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            生命保険料・地震保険料・iDeCo掛金・住宅ローン年末残高を入力してください。社会保険料は年収の約15%を自動計算しますが、実際の金額がわかる場合は「実額を入力する」に切り替えてください。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="accordion-num">04</span>
+            <span>「計算する」ボタンをタップする</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            ボタンをタップすると、還付額または追徴額の概算が表示されます。控除内訳のグラフで、どの控除がどれだけ効いているかも確認できます。住民税の目安も参考として表示されます。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="accordion-num">05</span>
+            <span>結果を確認する（あくまで概算）</span>
+            <i class="bi bi-chevron-down accordion-icon"></i>
+          </summary>
+          <div class="accordion-body">
+            表示される金額は概算です。実際の年末調整は勤務先が詳細な計算を行います。還付の場合は12月または1月の給与に上乗せされ、追徴の場合は給与から差し引かれるのが一般的です。
+          </div>
+        </details>
+
+      </div>
+
+      <div class="about-section">
+        <h2><i class="bi bi-book"></i> 年末調整とは</h2>
+        <p>
+          年末調整とは、会社員（給与所得者）を対象に、1年間の給与から源泉徴収された所得税と、実際に支払うべき所得税の差額を精算する手続きです。毎月の給与から概算で天引きされた税金を、各種控除を適用した正確な金額で再計算し、払い過ぎた税金は還付、不足分は追加徴収されます。
+        </p>
+        <p>
+          控除には「給与所得控除」「基礎控除」「配偶者控除」「扶養控除」「社会保険料控除」「生命保険料控除」「地震保険料控除」「小規模企業共済等掛金控除（iDeCo）」などがあります。住宅ローン控除は2年目以降に年末調整で適用できます。これらを正確に申告することで、適切な還付を受けることができます。
+        </p>
+        <p>
+          会社員でも、医療費控除・雑損控除・寄付金控除（ふるさと納税等）は年末調整では適用できないため、これらを利用する場合は別途確定申告が必要です。また、副業収入が年間20万円を超える場合も確定申告が必要です。
+        </p>
+      </div>
+
+      <!-- FAQ -->
+      <div class="faq-section">
+        <h2><i class="bi bi-patch-question"></i> よくある質問</h2>
+        <div class="accordion-list">
+
+          <details class="accordion-item">
+            <summary class="accordion-summary">
+              <span>年末調整と確定申告の違いは？</span>
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </summary>
+            <div class="accordion-body">
+              年末調整は会社員向けに勤務先が行う税の精算手続きです。確定申告は自分で税務署に申告する手続きで、個人事業主・フリーランスや副業収入がある方が対象です。会社員でも医療費控除や住宅ローン控除の初年度は確定申告が必要です。
+            </div>
+          </details>
+
+          <details class="accordion-item">
+            <summary class="accordion-summary">
+              <span>住宅ローン控除は初年度どうすればよいですか？</span>
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </summary>
+            <div class="accordion-body">
+              初年度のみ確定申告が必要です。2年目以降は年末調整で適用できます。控除額は年末ローン残高×0.7%（2022年改正後、上限14万円）で計算されます。
+            </div>
+          </details>
+
+          <details class="accordion-item">
+            <summary class="accordion-summary">
+              <span>生命保険料控除の対象は？</span>
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </summary>
+            <div class="accordion-body">
+              一般の生命保険料・介護医療保険料・個人年金保険料の3区分で、それぞれ最大4万円（合計最大12万円）が控除されます。払込証明書を勤務先に提出します。
+            </div>
+          </details>
+
+          <details class="accordion-item">
+            <summary class="accordion-summary">
+              <span>扶養控除の条件は？</span>
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </summary>
+            <div class="accordion-body">
+              配偶者以外の親族で、16歳以上、年間合計所得48万円以下（年収103万円以下）、かつ生計を一にしていることが条件です。19〜22歳の特定扶養親族は控除額63万円に増額されます。
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p><a href="/privacy-policy.html">プライバシーポリシー</a> | <a href="/apps/">ツール一覧</a></p>
+    <p><small>&copy; 2026 keisanlab.jp</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</body>
+</html>
