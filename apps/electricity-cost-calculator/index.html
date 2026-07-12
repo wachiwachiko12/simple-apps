@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="家電の消費電力・使用時間を入力するだけで月の電気代を自動計算。エアコン・冷蔵庫・テレビなどプリセット家電付き。節電シミュレーションでどれだけ節約できるか確認できる無料ツール。">
+  <title>電気代・家電消費電力 計算ツール｜節電シミュレーション対応【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/electricity-cost-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="電気代・家電消費電力 計算ツール｜節電シミュレーション対応【無料】">
+  <meta property="og:description" content="家電の消費電力・使用時間を入力するだけで月の電気代を自動計算。節電シミュレーションでどれだけ節約できるか確認できる無料ツール。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/electricity-cost-calculator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-electricity-cost-calculator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="電気代・家電消費電力 計算ツール｜節電シミュレーション対応【無料】">
+  <meta name="twitter:description" content="家電の消費電力・使用時間を入力するだけで月の電気代を自動計算。節電シミュレーションでどれだけ節約できるか確認できる無料ツール。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-electricity-cost-calculator.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "電気料金の単価はどこで調べますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "電気料金の単価は、毎月届く電気料金の明細書（検針票）か、電力会社のWebサイトで確認できます。従量電灯プランの場合、使用量によって3段階に料金が変わります。全国平均は2024年時点で約31〜34円/kWhが目安です。正確な節電計算には実際の単価をご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "エアコンの電気代を安くするには？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "エアコンの電気代を節約する主な方法は5つあります。①設定温度を1度調整する（冷房は1度上げ、暖房は1度下げで約10%節電）、②フィルターを2週間に1回清掃する、③風量を自動設定にする、④カーテンで日差しや冷気を遮断する、⑤人感センサー付きモデルへの買い替えを検討する。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "待機電力はどのくらいかかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "家庭全体の待機電力は年間で約200〜300kWh（6,000〜9,000円相当）とされています（資源エネルギー庁調べ）。テレビ・録画機・エアコン・電子レンジが主な待機電力源です。使わない家電はコンセントを抜くか、節電タップを活用することで年間1,000〜3,000円の節約が可能です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "消費電力（W）と消費電力量（kWh）の違いは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "消費電力（W：ワット）は家電が「今この瞬間」使っている電力の大きさです。消費電力量（kWh：キロワット時）は時間をかけて実際に使った電気の量で、電気料金の計算に使います。計算式は「消費電力量(kWh) = 消費電力(W) × 使用時間(h) ÷ 1000」です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "冷蔵庫の電気代を節約する方法は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "冷蔵庫の節電ポイントは4つです。①庫内の設定温度を「中」か「弱」にする（夏以外）、②食品を詰め込みすぎない（冷気の循環を妨げない）、③熱いものは冷ましてから入れる、④ドアのパッキンが劣化していたら交換する。冷蔵庫は24時間365日稼働するため、設定温度を1段階下げるだけで年間で数百円の節約になります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "オール電化住宅と従来の住宅の電気代はどちらが安いですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "オール電化はガスを使わず電気のみで生活するため、夜間の割安な電力料金プランを活用すれば光熱費全体を抑えられる場合があります。ただし電力単価の高い時間帯の使用が多い家庭では逆効果になることも。ガス併用との比較は生活パターンや電力会社のプランによって異なります。本ツールは電気代部分の計算に特化しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "CO2排出量の計算方法を教えてください",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "電力使用によるCO2排出量は「電力使用量(kWh) × CO2排出係数」で計算します。本ツールでは資源エネルギー庁の参考値として0.453kg-CO2/kWhを使用しています。これは全国平均の目安であり、実際の排出係数は電力会社・年度によって異なります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "古い家電と新しい家電では電気代はどれくらい違いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "家電の省エネ性能は年々向上しており、10年前の製品と比べると30〜50%の消費電力削減が見込めるモデルもあります。特にエアコン・冷蔵庫・テレビは省エネ効果が大きい家電です。年間電気代の削減額と買い替えコストを比較して判断しましょう。本ツールの節電シミュレーションで消費電力を変えて試算できます。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+      <h1>電気代・家電消費電力 計算ツール</h1>
+      <p class="header-sub">家電の消費電力と使用時間を入力して月の電気代を計算。節電シミュレーションで節約効果も確認できます。</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 電気料金単価設定 -->
+    <section class="card rate-card" id="rate-setting">
+      <h2 class="section-title"><i class="bi bi-sliders"></i> 電気料金の設定</h2>
+      <div class="rate-row">
+        <div class="field">
+          <label class="field-label" for="unit-price">電気料金単価</label>
+          <div class="input-wrap">
+            <input type="number" id="unit-price" class="form-input" value="31" min="1" max="100" step="0.1" aria-label="電気料金単価を円/kWhで入力">
+            <span class="input-suffix">円 / kWh</span>
+          </div>
+          <span class="field-hint">全国平均の目安: 31円/kWh（検針票でご確認ください）</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="calc-days">月間日数</label>
+          <div class="input-wrap">
+            <input type="number" id="calc-days" class="form-input" value="30" min="1" max="31" aria-label="月間の日数を入力">
+            <span class="input-suffix">日 / 月</span>
+          </div>
+          <span class="field-hint">月の日数（通常は30〜31日）</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 家電リスト -->
+    <section class="card appliance-card" id="appliance-section">
+      <h2 class="section-title"><i class="bi bi-plug-fill"></i> 家電リスト</h2>
+      <p class="section-desc">各家電の消費電力・1日使用時間・月使用日数を確認・調整してください。</p>
+
+      <!-- プリセット追加ボタン -->
+      <div class="preset-group">
+        <span class="preset-label"><i class="bi bi-plus-circle"></i> プリセット家電を追加：</span>
+        <div class="preset-btns">
+          <button class="preset-btn" type="button" data-preset="aircon">エアコン</button>
+          <button class="preset-btn" type="button" data-preset="fridge">冷蔵庫</button>
+          <button class="preset-btn" type="button" data-preset="tv32">テレビ(32型)</button>
+          <button class="preset-btn" type="button" data-preset="tv50">テレビ(50型)</button>
+          <button class="preset-btn" type="button" data-preset="washer">洗濯機</button>
+          <button class="preset-btn" type="button" data-preset="microwave">電子レンジ</button>
+          <button class="preset-btn" type="button" data-preset="ih">IHクッキングヒーター</button>
+          <button class="preset-btn" type="button" data-preset="kettle">電気ケトル</button>
+          <button class="preset-btn" type="button" data-preset="led">LED照明</button>
+          <button class="preset-btn" type="button" data-preset="fluorescent">蛍光灯</button>
+          <button class="preset-btn" type="button" data-preset="desktop-pc">PC(デスクトップ)</button>
+          <button class="preset-btn" type="button" data-preset="laptop-pc">PC(ノート)</button>
+        </div>
+      </div>
+
+      <!-- 家電テーブル -->
+      <div class="appliance-table-wrap">
+        <table class="appliance-table" id="appliance-table">
+          <thead>
+            <tr>
+              <th class="col-name">家電名</th>
+              <th class="col-watt">消費電力<span class="th-unit">(W)</span></th>
+              <th class="col-hours">1日使用<span class="th-unit">(h)</span></th>
+              <th class="col-days">月使用<span class="th-unit">(日)</span></th>
+              <th class="col-cost">月間電気代</th>
+              <th class="col-del"></th>
+            </tr>
+          </thead>
+          <tbody id="appliance-tbody">
+          </tbody>
+        </table>
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon"><i class="bi bi-plug"></i></div>
+          <p class="empty-title">家電が追加されていません</p>
+          <p class="empty-desc">上のボタンからプリセット家電を追加するか、カスタム家電を登録してください</p>
+        </div>
+      </div>
+
+      <!-- カスタム家電追加 -->
+      <div class="custom-add-row">
+        <h3 class="custom-title"><i class="bi bi-tools"></i> カスタム家電を追加</h3>
+        <div class="custom-form">
+          <input type="text" id="custom-name" class="form-input custom-name-input" placeholder="家電名（例: 食洗機）" aria-label="カスタム家電の名前">
+          <div class="input-wrap">
+            <input type="number" id="custom-watt" class="form-input" placeholder="消費電力" min="1" aria-label="消費電力をWで入力">
+            <span class="input-suffix">W</span>
+          </div>
+          <div class="input-wrap">
+            <input type="number" id="custom-hours" class="form-input" placeholder="使用時間" min="0" max="24" step="0.5" aria-label="1日使用時間を入力">
+            <span class="input-suffix">h/日</span>
+          </div>
+          <div class="input-wrap">
+            <input type="number" id="custom-days" class="form-input" placeholder="月使用日数" min="1" max="31" aria-label="月使用日数を入力">
+            <span class="input-suffix">日/月</span>
+          </div>
+          <button class="btn-add" id="custom-add-btn" type="button">
+            <i class="bi bi-plus-lg"></i> 追加
+          </button>
+        </div>
+        <p id="custom-error" class="error-msg" hidden></p>
+      </div>
+    </section>
+
+    <!-- 計算ボタン -->
+    <button class="btn-calc" id="calc-btn" type="button">
+      <i class="bi bi-calculator-fill"></i> 電気代を計算する
+    </button>
+
+    <!-- 計算結果 -->
+    <div id="results" class="results-area" hidden>
+
+      <!-- メインKPIカード -->
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-monthly">
+          <div class="kpi-icon"><i class="bi bi-calendar-month-fill"></i></div>
+          <div class="kpi-label">月間合計電気代</div>
+          <div class="kpi-value" id="kpi-monthly">―</div>
+          <div class="kpi-unit">円 / 月</div>
+        </div>
+        <div class="kpi-card kpi-yearly">
+          <div class="kpi-icon"><i class="bi bi-calendar-fill"></i></div>
+          <div class="kpi-label">年間合計電気代</div>
+          <div class="kpi-value" id="kpi-yearly">―</div>
+          <div class="kpi-unit">円 / 年</div>
+        </div>
+        <div class="kpi-card kpi-co2">
+          <div class="kpi-icon"><i class="bi bi-tree-fill"></i></div>
+          <div class="kpi-label">月間CO2排出量</div>
+          <div class="kpi-value" id="kpi-co2">―</div>
+          <div class="kpi-unit">kg-CO2 / 月</div>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- グラフカード -->
+      <div class="card chart-card">
+        <h3 class="chart-title"><i class="bi bi-bar-chart-horizontal-fill"></i> 家電別 月間電気代</h3>
+        <div class="chart-wrap">
+          <canvas id="cost-chart" aria-label="家電別電気代グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 節電シミュレーション -->
+      <div class="card sim-card">
+        <h3 class="sim-title"><i class="bi bi-lightning-fill"></i> 節電シミュレーション</h3>
+        <p class="sim-desc">使用時間を変えたり、消費電力の高い家電を見直した場合の節約効果を試算します。</p>
+
+        <div class="sim-options">
+          <div class="sim-option">
+            <input type="checkbox" id="sim-aircon" class="sim-check">
+            <label for="sim-aircon" class="sim-label">
+              <i class="bi bi-thermometer-half"></i>
+              エアコンの設定温度を1度調整（消費電力を約10%削減）
+            </label>
+          </div>
+          <div class="sim-option">
+            <input type="checkbox" id="sim-standby" class="sim-check">
+            <label for="sim-standby" class="sim-label">
+              <i class="bi bi-power"></i>
+              待機電力を削減（全家電から月200円節約）
+            </label>
+          </div>
+          <div class="sim-option">
+            <input type="checkbox" id="sim-hours" class="sim-check">
+            <label for="sim-hours" class="sim-label">
+              <i class="bi bi-clock"></i>
+              各家電の使用時間を1時間短縮
+            </label>
+          </div>
+          <div class="sim-option">
+            <input type="checkbox" id="sim-led" class="sim-check">
+            <label for="sim-led" class="sim-label">
+              <i class="bi bi-lightbulb-fill"></i>
+              蛍光灯をLEDに交換（照明の消費電力を75%削減）
+            </label>
+          </div>
+        </div>
+
+        <div class="sim-result" id="sim-result">
+          <div class="sim-row">
+            <span class="sim-row-label">現在の月間電気代</span>
+            <span class="sim-row-value" id="sim-current">―</span>
+          </div>
+          <div class="sim-row sim-row-save">
+            <span class="sim-row-label"><i class="bi bi-arrow-down-circle-fill"></i> 節電シミュレーション後</span>
+            <span class="sim-row-value" id="sim-after">―</span>
+          </div>
+          <div class="sim-row sim-row-diff">
+            <span class="sim-row-label">月間節約額</span>
+            <span class="sim-row-value sim-saving" id="sim-diff">―</span>
+          </div>
+          <div class="sim-row">
+            <span class="sim-row-label">年間節約額</span>
+            <span class="sim-row-value sim-saving" id="sim-annual">―</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 節電アドバイス -->
+      <div class="card advice-card" id="advice-card">
+        <h3 class="advice-title"><i class="bi bi-lightbulb-fill"></i> 節電アドバイス</h3>
+        <ul class="advice-list" id="advice-list">
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+      <h2>使い方</h2>
+      <details class="howto-details" open>
+        <summary class="howto-summary">
+          <i class="bi bi-play-circle-fill"></i> 5ステップで月の電気代を計算する
+        </summary>
+        <ol class="howto-steps">
+          <li><strong>電気料金単価を確認</strong>：検針票またはご契約の電力会社で単価（円/kWh）を確認します。わからなければデフォルトの31円/kWhをそのままお使いください</li>
+          <li><strong>プリセット家電を追加</strong>：「エアコン」「冷蔵庫」「テレビ」などのボタンをクリックして、ご家庭で使っている家電を追加します</li>
+          <li><strong>消費電力・使用時間を調整</strong>：追加された家電の消費電力・1日使用時間・月使用日数を実際の状況に合わせて変更します</li>
+          <li><strong>「電気代を計算する」をクリック</strong>：月間・年間の電気代とグラフが表示されます</li>
+          <li><strong>節電シミュレーションで節約効果を確認</strong>：使用時間削減・LED化などの節電策を選択して、節約額を試算しましょう</li>
+        </ol>
+      </details>
+
+      <h2>電気代の計算方法</h2>
+      <p>家電の電気代は「消費電力量（kWh）× 電気料金単価（円/kWh）」で計算できます。消費電力量は「消費電力（W）× 使用時間（h）÷ 1000」で求められます。例えば、消費電力1000Wのエアコンを1日8時間・30日使用した場合、1000W × 8h × 30日 ÷ 1000 = 240kWhとなります。電気料金単価31円/kWhで計算すると、月間電気代は240 × 31 = 7,440円です。家電ごとにこの計算を行い、合計することで家庭全体の月間電気代を把握できます。エアコンや冷蔵庫は特に電力消費が大きく、節電の効果も大きい家電です。本ツールを使って、どの家電の電気代が高いかを把握し、効果的な節電計画を立ててみてください。</p>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>計算式の詳細</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr><th>計算項目</th><th>計算式</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>消費電力量（kWh）</td><td>消費電力(W) × 使用時間(h) × 月使用日数 ÷ 1000</td></tr>
+                <tr><td>月間電気代</td><td>消費電力量(kWh) × 電気料金単価(円/kWh)</td></tr>
+                <tr><td>年間電気代</td><td>月間電気代 × 12</td></tr>
+                <tr><td>月間CO2排出量</td><td>消費電力量(kWh) × 0.453 kg-CO2/kWh</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>プリセット家電の消費電力について</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr><th>家電</th><th>消費電力の目安</th><th>備考</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>エアコン（冷房）</td><td>600〜1,400W</td><td>6〜12畳・機種により異なる</td></tr>
+                <tr><td>冷蔵庫（400L以下）</td><td>約30W相当</td><td>24時間稼働・年間消費電力換算</td></tr>
+                <tr><td>テレビ（32型）</td><td>約100W</td><td>液晶テレビ・4Kは若干高め</td></tr>
+                <tr><td>テレビ（50型）</td><td>約180W</td><td>液晶テレビ</td></tr>
+                <tr><td>洗濯機</td><td>500W</td><td>乾燥機能使用時は1,000W超</td></tr>
+                <tr><td>電子レンジ</td><td>1,500W</td><td>600Wレンジ加熱時の消費電力</td></tr>
+                <tr><td>IHクッキングヒーター</td><td>3,000W</td><td>最大出力時</td></tr>
+                <tr><td>電気ケトル</td><td>1,300W</td><td>沸騰中の消費電力</td></tr>
+                <tr><td>LED照明</td><td>5〜10W</td><td>60W蛍光灯相当のLED</td></tr>
+                <tr><td>パソコン（デスクトップ）</td><td>200W</td><td>ディスプレイ込み目安</td></tr>
+                <tr><td>パソコン（ノート）</td><td>30W</td><td>使用中の目安</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>電気料金単価がわかりません</dt>
+              <dd>電力会社によって異なりますが、全国平均の目安として31円/kWhをデフォルト設定しています。正確な金額は毎月の検針票またはMyページでご確認ください。</dd>
+              <dt>エアコンの消費電力はどれくらいですか？</dt>
+              <dd>エアコンの消費電力は機種・部屋の広さ・外気温によって大きく変わります。定格冷房消費電力は機種のラベルや説明書に記載されています。平均的な6〜8畳用では冷房600W・暖房800W前後が目安です。</dd>
+              <dt>冷蔵庫の消費電力の入力方法は？</dt>
+              <dd>冷蔵庫は24時間365日稼働するため、月使用日数を30日、1日の使用時間を「年間消費電力量 ÷ 365 ÷ 単価」から求めた仮想時間で換算するか、本ツールのプリセット値（約30W・24時間）をご利用ください。</dd>
+              <dt>計算結果は正確ですか？</dt>
+              <dd>本ツールは入力値をもとにした目安計算です。実際の電気代は季節・外気温・機器の経年劣化・料金プランの加算料金（燃料費調整額など）によって変動します。参考値としてお使いください。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は入力値に基づく参考値です。実際の電気代は電力会社のプラン・燃料費調整額・再生可能エネルギー賦課金・季節変動などにより異なります。節電効果の数値は目安であり、実際の効果を保証するものではありません。</p>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
