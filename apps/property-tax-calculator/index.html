@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="固定資産税・都市計画税を無料でかんたん計算。土地・建物の評価額と用途を入力するだけで年税額・月割・4期分納額を自動算出。住宅用地の軽減特例・新築軽減にも対応。スマホでも使いやすい無料ツール。">
+  <title>固定資産税 計算ツール | 土地・建物の税額を無料シミュレーション</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/property-tax-calculator/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "固定資産税評価額はどこで調べられますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "固定資産税評価額は、毎年4〜6月頃に市区町村から届く「固定資産税・都市計画税納税通知書」に記載されています。また、市区町村の役所窓口で「固定資産評価証明書」を取得することでも確認できます。不動産取得時は売買契約書や登記書類にも記載されていることがあります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅用地の軽減特例は自動的に適用されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "住宅用地の課税標準の特例（1/6・1/3軽減）は、原則として自動的に適用されます。ただし、土地の用途変更（例：更地にした場合）や新築住宅の場合は市区町村への届出が必要になることがあります。新築住宅の税額軽減（1/2軽減）は新築後に市区町村から申告書が送付される場合があるため、届出が必要なケースもあります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "固定資産税はいつ払いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "固定資産税は通常、年4回に分けて納付します（4期分納）。第1期は4〜6月頃、第2期は7〜9月頃、第3期は11〜12月頃、第4期は翌年2月頃が一般的ですが、市区町村によって異なります。一括納付も可能で、その場合は第1期の期限内に全額を支払います。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "マンションと一戸建てで固定資産税は違いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "マンションと一戸建てでは税額の計算が異なります。マンションは土地を区分所有するため1戸あたりの土地評価額が低くなりやすい一方、建物の経年劣化による評価額の下がり方が一戸建てと異なります。また新築軽減期間がマンションは5年（一戸建ては3年）、長期優良住宅ではマンション7年（一戸建て5年）と長くなっています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "都市計画税が非課税の地域はありますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "都市計画税は市街化区域内の土地・建物にのみ課税されます。市街化調整区域や都市計画区域外の不動産には課税されません。また、市区町村によっては都市計画税を課さない場合もあります（例：一部の町村）。ご自身の物件が課税対象かどうかは市区町村の窓口またはホームページでご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "固定資産税評価額と不動産の市場価格は違いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "固定資産税評価額は市場価格（実勢価格）とは異なります。土地の評価額は公示地価の約70%を目安に設定され、建物は再建築費を基に経年劣化を考慮して算出されます。そのため、市場価格と大きく乖離することがあります。固定資産税評価額は3年ごとに見直し（評価替え）が行われます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "長期優良住宅の軽減を受けるにはどうすればいいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "長期優良住宅の固定資産税軽減を受けるには、長期優良住宅の認定を受けた住宅であることと、市区町村への申告が必要です。新築後3ヶ月以内に市区町村の窓口に申告書と長期優良住宅認定通知書などの書類を提出することで適用されます。期限を過ぎると軽減が受けられない場合があるため注意が必要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "固定資産税の計算結果と実際の税額が違う場合は？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本ツールは標準税率（固定資産税1.4%、都市計画税0.3%）と一般的な軽減特例を用いた概算計算です。実際の税額は市区町村の税率設定・負担調整措置・細かい特例適用状況によって異なります。正確な税額は毎年届く納税通知書または市区町村の税務課でご確認ください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="header-icon"><i class="bi bi-house-check"></i></div>
+      <h1>固定資産税・都市計画税 計算ツール</h1>
+      <p class="subtitle">評価額と用途を入力するだけで年税額・4期分納額を即計算（無料・スマホ対応）</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1: ツール上部 -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- メインツールセクション -->
+    <section id="tool" class="tool-section" aria-label="計算フォーム">
+
+      <!-- 土地セクション -->
+      <div class="form-card">
+        <h2 class="form-card__title"><i class="bi bi-map"></i> 土地の情報</h2>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="landValue">土地の固定資産税評価額</label>
+            <div class="input-with-unit">
+              <input type="number" id="landValue" min="0" step="0.1" placeholder="例: 2000" inputmode="decimal">
+              <span class="unit">万円</span>
+            </div>
+            <span class="field-hint">納税通知書または固定資産評価証明書に記載の評価額</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="landArea">土地面積</label>
+            <div class="input-with-unit">
+              <input type="number" id="landArea" min="0" step="0.1" placeholder="例: 150" inputmode="decimal">
+              <span class="unit">㎡</span>
+            </div>
+            <span class="field-hint">住宅用地軽減の判定に使用（小規模: 200㎡以下）</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="landUse">土地の用途</label>
+          <select id="landUse">
+            <option value="small">住宅用地（小規模: 200㎡以下の部分）</option>
+            <option value="general">住宅用地（一般: 200㎡超の部分）</option>
+            <option value="auto" selected>住宅用地（面積から自動判定）</option>
+            <option value="commercial">商業地・その他</option>
+            <option value="farmland">農地</option>
+          </select>
+          <span class="field-hint">「自動判定」を選ぶと面積をもとに小規模・一般を按分計算します</span>
+        </div>
+      </div>
+
+      <!-- 建物セクション -->
+      <div class="form-card">
+        <h2 class="form-card__title"><i class="bi bi-building"></i> 建物の情報</h2>
+
+        <div class="field">
+          <label class="field-label" for="buildingValue">建物の固定資産税評価額</label>
+          <div class="input-with-unit">
+            <input type="number" id="buildingValue" min="0" step="0.1" placeholder="例: 1200" inputmode="decimal">
+            <span class="unit">万円</span>
+          </div>
+          <span class="field-hint">建物がない場合は空欄のままにしてください</span>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="buildingType">建物種別</label>
+            <select id="buildingType">
+              <option value="house">一戸建て</option>
+              <option value="mansion">マンション（区分所有）</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="buildingAge">新築からの経過年数</label>
+            <div class="input-with-unit">
+              <input type="number" id="buildingAge" min="0" max="100" step="1" placeholder="例: 2" inputmode="numeric">
+              <span class="unit">年</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="isLongLife">
+            <span class="checkmark"></span>
+            長期優良住宅認定を受けている
+          </label>
+          <span class="field-hint">軽減期間が一戸建て5年・マンション7年に延長されます</span>
+        </div>
+      </div>
+
+      <!-- 都市計画税 -->
+      <div class="form-card">
+        <h2 class="form-card__title"><i class="bi bi-pin-map"></i> 都市計画税の設定</h2>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="applyUrbanTax" checked>
+            <span class="checkmark"></span>
+            市街化区域内（都市計画税の対象）
+          </label>
+          <span class="field-hint">市街化調整区域や一部の町村では都市計画税が非課税の場合があります</span>
+        </div>
+      </div>
+
+      <button type="button" id="calcBtn" class="btn-primary">
+        <i class="bi bi-calculator"></i> 税額を計算する
+      </button>
+
+      <div id="error-msg" class="error-msg" style="display:none" role="alert"></div>
+    </section>
+
+    <!-- 結果表示 -->
+    <section id="result" class="result-section" aria-live="polite" style="display:none">
+      <h2 class="result-title"><i class="bi bi-receipt"></i> 計算結果</h2>
+
+      <!-- 合計年税額 -->
+      <div class="result-hero">
+        <div class="result-hero__label">年間合計税額（概算）</div>
+        <div class="result-hero__value" id="totalAnnual">—</div>
+        <div class="result-hero__sub">
+          <span>月割: <strong id="monthly">—</strong></span>
+          <span>1期あたり: <strong id="quarterly">—</strong></span>
+        </div>
+      </div>
+
+      <!-- 内訳テーブル -->
+      <div class="result-breakdown">
+        <h3 class="breakdown-title">税目別内訳</h3>
+        <div class="table-wrapper">
+          <table class="breakdown-table" aria-label="税額内訳">
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th>課税標準額</th>
+                <th>固定資産税<br><small>(1.4%)</small></th>
+                <th>都市計画税<br><small>(0.3%)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>土地</td>
+                <td id="landTaxBase">—</td>
+                <td id="landFixedTax">—</td>
+                <td id="landUrbanTax">—</td>
+              </tr>
+              <tr>
+                <td>建物</td>
+                <td id="buildingTaxBase">—</td>
+                <td id="buildingFixedTax">—</td>
+                <td id="buildingUrbanTax">—</td>
+              </tr>
+              <tr class="total-row">
+                <td><strong>合計</strong></td>
+                <td>—</td>
+                <td id="totalFixed">—</td>
+                <td id="totalUrban">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 軽減情報バナー -->
+      <div id="reductionBanner" class="reduction-banner" style="display:none" role="status">
+        <i class="bi bi-info-circle"></i>
+        <span id="reductionText"></span>
+      </div>
+
+      <!-- グラフ -->
+      <div class="chart-container">
+        <h3 class="breakdown-title">内訳グラフ</h3>
+        <div class="chart-wrap">
+          <canvas id="taxChart" aria-label="税額内訳円グラフ" role="img"></canvas>
+        </div>
+      </div>
+
+      <!-- 注記 -->
+      <div class="result-note">
+        <i class="bi bi-exclamation-circle"></i>
+        実際の税額は市区町村の課税通知書でご確認ください。本ツールは標準税率による概算です。負担調整措置の適用により実際の税額と異なる場合があります。
+      </div>
+    </section>
+
+    <!-- 広告ユニット2: 結果下 -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方セクション -->
+    <section id="howto" class="howto-section" aria-label="使い方">
+      <h2 class="section-title"><i class="bi bi-question-circle"></i> 使い方</h2>
+
+      <div class="accordion">
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-badge">1</span>
+            土地の評価額と面積を入力する
+          </summary>
+          <div class="accordion-body">
+            固定資産税・都市計画税納税通知書に記載された「土地の固定資産税評価額」と「土地面積」を入力してください。評価額が不明な場合は市区町村窓口で「固定資産評価証明書」を取得できます。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-badge">2</span>
+            土地の用途を選ぶ
+          </summary>
+          <div class="accordion-body">
+            住宅の敷地として使用している土地は「住宅用地（自動判定）」を選ぶと、200㎡以下の小規模住宅用地と200㎡超の一般住宅用地に自動で按分計算されます。商業地やアパート敷地なども選択可能です。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-badge">3</span>
+            建物の情報を入力する
+          </summary>
+          <div class="accordion-body">
+            建物の固定資産税評価額と新築からの経過年数を入力します。新築3年以内（マンション5年以内）の場合、建物の固定資産税が1/2に軽減される特例が適用されます。長期優良住宅は軽減期間がさらに延長されます。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-badge">4</span>
+            都市計画税の適用を確認する
+          </summary>
+          <div class="accordion-body">
+            市街化区域内の不動産には都市計画税（税率0.3%）が課されます。市街化調整区域や一部の町村では課税されません。ご自身の物件が対象かどうかは市区町村の税務課またはホームページでご確認ください。
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-badge">5</span>
+            「税額を計算する」ボタンを押す
+          </summary>
+          <div class="accordion-body">
+            ボタンを押すと、年間合計税額・月割り換算額・4期分納の1回あたり金額と内訳グラフが表示されます。計算はすべてブラウザ内で完結し、入力データは外部に送信されません。
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 固定資産税とは -->
+    <section class="info-section">
+      <h2 class="section-title"><i class="bi bi-book"></i> 固定資産税・都市計画税とは</h2>
+      <div class="info-card">
+        <p>固定資産税は、毎年1月1日時点に土地・建物・償却資産を所有している人に対して、市区町村が課税する地方税です。標準税率は課税標準額の1.4%で、実際の税額は3年ごとに見直される固定資産税評価額を基に計算されます。</p>
+        <p>住宅用地には課税標準の特例が設けられており、200㎡以下の小規模住宅用地は課税標準が評価額の1/6に、200㎡超の一般住宅用地は1/3に軽減されます。この軽減措置により、自宅の土地は更地と比べて大幅に税負担が軽くなります。</p>
+        <p>都市計画税は、市街化区域内の土地・建物に課される税金で、上限税率は0.3%です。住宅用地は小規模が評価額の1/3、一般が2/3に軽減されます。固定資産税と合わせて納税通知書で請求されます。</p>
+      </div>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section class="faq-section">
+      <h2 class="section-title"><i class="bi bi-chat-left-text"></i> よくある質問</h2>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-question">固定資産税評価額はどこで調べられますか？</summary>
+          <div class="faq-answer">毎年4〜6月頃に届く「固定資産税・都市計画税納税通知書」に記載されています。また、市区町村の役所窓口で「固定資産評価証明書」を取得することでも確認できます。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">住宅用地の軽減特例は自動的に適用されますか？</summary>
+          <div class="faq-answer">住宅用地の課税標準特例（1/6・1/3軽減）は原則自動適用されます。ただし新築住宅の1/2軽減は市区町村への申告が必要なケースもあります。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">固定資産税はいつ払いますか？</summary>
+          <div class="faq-answer">通常は年4回（4・7・11月・翌2月頃）に分けて納付します。一括納付も可能です。納期は市区町村によって異なります。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">マンションと一戸建てで税額は違いますか？</summary>
+          <div class="faq-answer">マンションは土地を区分所有するため1戸あたりの土地評価額が低くなりやすく、新築軽減期間も一戸建て3年に対しマンションは5年と長くなっています。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">都市計画税が非課税の地域はありますか？</summary>
+          <div class="faq-answer">市街化調整区域や都市計画区域外の不動産には都市計画税が課されません。また一部の町村でも非課税の場合があります。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">固定資産税評価額と市場価格は違いますか？</summary>
+          <div class="faq-answer">固定資産税評価額は市場価格（実勢価格）とは異なります。土地は公示地価の約70%が目安で、建物は再建築費から経年劣化を差し引いて算出されます。3年ごとに見直されます。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">長期優良住宅の軽減はどう申請しますか？</summary>
+          <div class="faq-answer">新築後3ヶ月以内に市区町村窓口へ申告書と長期優良住宅認定通知書を提出します。期限を過ぎると軽減が受けられない場合があるため早めの手続きをお勧めします。</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">計算結果と実際の税額が異なる場合は？</summary>
+          <div class="faq-answer">本ツールは標準税率による概算計算です。実際の税額は負担調整措置・自治体独自の税率・細かい特例の適用状況によって異なります。正確な額は毎年届く納税通知書でご確認ください。</div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p class="footer-brand">計算ラボ (keisanlab.jp)</p>
+      <nav class="footer-nav" aria-label="フッターナビゲーション">
+        <a href="/privacy-policy.html">プライバシーポリシー</a>
+        <a href="/">ツール一覧</a>
+      </nav>
+      <p class="footer-copy"><small>&copy; 2026 計算ラボ. All rights reserved.</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</body>
+</html>
