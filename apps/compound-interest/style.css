@@ -98,7 +98,7 @@ main {
    Ad Unit
    ============================================================ */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: var(--border);
   margin: 1.5rem 0;
   display: flex;

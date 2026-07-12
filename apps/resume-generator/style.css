@@ -574,7 +574,7 @@ textarea { resize: vertical; }
 
 /* ===== AD UNIT ===== */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   margin: 1.5rem auto;
   max-width: 728px;
   text-align: center;

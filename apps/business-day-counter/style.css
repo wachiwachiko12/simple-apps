@@ -57,7 +57,7 @@ main {
 
 /* ===== 広告ユニット ===== */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: #e8ecf3;
   margin: 1.25rem 0;
   display: flex;

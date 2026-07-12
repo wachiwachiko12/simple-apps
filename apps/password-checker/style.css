@@ -88,7 +88,7 @@ main {
 
 /* ===== AD UNITS ===== */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: #eef2f7;
   border: 1px dashed #cbd5e1;
   border-radius: var(--radius-sm);

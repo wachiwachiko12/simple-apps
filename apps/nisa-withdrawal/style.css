@@ -143,7 +143,7 @@ main {
    広告ユニット
    ========================================= */
 .ad-unit {
-  min-height: 90px;
+  min-height: 0;
   background: #f0f4f8;
   border: 1.5px dashed #c8d5e0;
   border-radius: var(--radius-sm);
