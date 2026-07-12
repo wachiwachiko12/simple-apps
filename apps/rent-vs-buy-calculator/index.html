@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="賃貸と購入どちらがお得か35年間のトータルコストをグラフで比較。月額家賃・購入価格・金利・修繕費など詳細条件を入力すると損益分岐点と累積コスト推移を無料で試算。スマホ対応。">
+  <title>賃貸 vs 購入 トータルコスト比較シミュレーター｜35年間の累積コストをグラフ比較【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/rent-vs-buy-calculator/">
+  <!-- OGP -->
+  <meta property="og:title" content="賃貸 vs 購入 トータルコスト比較シミュレーター｜35年間の累積コスト比較【無料】">
+  <meta property="og:description" content="賃貸と購入どちらがお得か35年間のトータルコストをグラフで比較。損益分岐点と差額を無料試算。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/rent-vs-buy-calculator/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-rent-vs-buy-calculator.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="賃貸 vs 購入 トータルコスト比較シミュレーター｜35年間の累積コスト比較【無料】">
+  <meta name="twitter:description" content="賃貸と購入どちらがお得か35年間のトータルコストをグラフで比較。損益分岐点と差額を無料試算。">
+  <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-rent-vs-buy-calculator.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "損益分岐点とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "損益分岐点（Break-Even Point）とは、賃貸と購入の累積コストが等しくなる年数のことです。それ以降は購入の方が累積コストが低くなります。ただし売却益・インフレ・ライフスタイルの変化なども考慮することが重要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "物件の価値下落はどう計算されていますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本ツールでは35年後の物件残価を入力することで売却益を差し引いた実質コストを計算します。一般的にマンションは築25〜30年で価値が大幅に下がり、木造戸建ては築20〜25年で建物価値がほぼゼロになる傾向があります（土地は残ります）。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "賃貸と購入どちらを選ぶ人が多いですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "国土交通省の調査では持ち家率は約62%（2023年）です。ただし年齢・収入・家族構成・居住地域によって大きく異なります。30代以降は持ち家比率が上がりますが、都市部の若年層では賃貸を選ぶ割合も高い傾向にあります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅ローンの金利はどの程度で計算すべきですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2024年時点では変動金利が0.3〜0.6%、固定金利（35年）が1.5〜2.0%程度が目安です。変動金利は低いですが将来の金利上昇リスクがあります。本ツールでは契約金利を固定として35年間の返済額を計算しています。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "固定資産税はどのように計算されますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "固定資産税は「固定資産税評価額 × 税率1.4%」で計算されます。固定資産税評価額は一般的に購入価格の60〜70%程度です。本ツールでは購入価格の70%を評価額として自動計算します。また新築住宅は最初の3〜5年は軽減措置があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "マンションと一戸建てで何が違いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "マンションは管理費・修繕積立金（月2〜3万円程度）が毎月かかりますが、外壁や共用部の修繕は管理組合が行います。一戸建ては管理費は不要ですが、屋根・外壁・設備の修繕を自費で行う必要があり、10〜15年ごとに大規模修繕費（100〜200万円）が発生します。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "賃貸の更新料はどのくらいかかりますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "更新料は地域によって異なり、東京・神奈川・埼玉・千葉などの首都圏では家賃1〜2ヶ月分が相場です。大阪・名古屋など関西・中部圏では更新料なしの物件も多いです。2年ごとの更新が一般的で、35年で17〜18回の更新があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "このシミュレーターの計算結果を実際の購入判断に使えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本ツールは参考値の試算です。実際の購入判断には、家族構成の変化・転勤リスク・地域の地価動向・収入変動リスク・住宅ローン減税（最大455万円）・すまい給付金などの制度も考慮する必要があります。大きな決断には不動産の専門家にご相談ください。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-badge">
+        <span class="badge-rent"><i class="bi bi-house-door-fill"></i> 賃貸</span>
+        <span class="badge-vs">VS</span>
+        <span class="badge-buy"><i class="bi bi-building-fill"></i> 購入</span>
+      </div>
+      <h1>賃貸 vs 購入 トータルコスト比較シミュレーター</h1>
+      <p class="header-sub">35年間の累積コストをグラフで比較し、どちらがお得かを無料で試算します。</p>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 入力セクション: 2カラム -->
+    <section class="input-section" id="tool">
+      <div class="input-columns">
+
+        <!-- 左列: 賃貸 -->
+        <div class="input-col col-rent">
+          <div class="col-header col-header-rent">
+            <i class="bi bi-house-door-fill"></i>
+            <span>賃貸の条件</span>
+          </div>
+          <div class="fields-wrap">
+            <div class="field">
+              <label class="field-label" for="rent-monthly">月額家賃</label>
+              <div class="input-wrap">
+                <input type="number" id="rent-monthly" class="form-input" placeholder="例: 80000" min="0" aria-label="月額家賃を円で入力">
+                <span class="input-suffix">円 / 月</span>
+              </div>
+              <span class="field-hint">管理費・共益費を含む毎月の支払い</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="rent-renewal-months">更新料（家賃の何ヶ月分）</label>
+              <div class="input-wrap">
+                <input type="number" id="rent-renewal-months" class="form-input" placeholder="例: 1" min="0" max="3" step="0.5" value="1" aria-label="更新料を家賃の月数で入力">
+                <span class="input-suffix">ヶ月分</span>
+              </div>
+              <span class="field-hint">2年ごとに発生（更新料なしの場合は0）</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="rent-moving-count">35年間の引越し回数</label>
+              <div class="input-wrap">
+                <input type="number" id="rent-moving-count" class="form-input" placeholder="例: 3" min="0" max="10" value="3" aria-label="引越し回数を入力">
+                <span class="input-suffix">回</span>
+              </div>
+              <span class="field-hint">引越し費用は1回あたり20万円で計算</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="rent-inflation">
+                家賃上昇率
+                <span class="optional-badge">任意</span>
+              </label>
+              <div class="input-wrap">
+                <input type="number" id="rent-inflation" class="form-input" placeholder="例: 1" min="0" max="5" step="0.5" value="0" aria-label="年間家賃上昇率をパーセントで入力">
+                <span class="input-suffix">% / 年</span>
+              </div>
+              <span class="field-hint">インフレ調整（0%=上昇なし）</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右列: 持ち家 -->
+        <div class="input-col col-buy">
+          <div class="col-header col-header-buy">
+            <i class="bi bi-building-fill"></i>
+            <span>購入の条件</span>
+          </div>
+          <div class="fields-wrap">
+
+            <!-- 物件種別トグル -->
+            <div class="type-toggle-wrap">
+              <button class="type-btn active" id="btn-mansion" type="button" data-type="mansion">
+                <i class="bi bi-building"></i> マンション
+              </button>
+              <button class="type-btn" id="btn-house" type="button" data-type="house">
+                <i class="bi bi-house-fill"></i> 一戸建て
+              </button>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="buy-price">購入価格</label>
+              <div class="input-wrap">
+                <input type="number" id="buy-price" class="form-input" placeholder="例: 4500" min="0" aria-label="購入価格を万円で入力">
+                <span class="input-suffix">万円</span>
+              </div>
+              <span class="field-hint">物件価格（建物＋土地）</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="buy-downpayment">頭金</label>
+              <div class="input-wrap">
+                <input type="number" id="buy-downpayment" class="form-input" placeholder="例: 500" min="0" value="0" aria-label="頭金を万円で入力">
+                <span class="input-suffix">万円</span>
+              </div>
+              <span class="field-hint">購入時に現金で支払う金額</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="buy-rate">住宅ローン金利</label>
+              <div class="input-wrap">
+                <input type="number" id="buy-rate" class="form-input" placeholder="例: 0.5" min="0" max="10" step="0.01" value="0.5" aria-label="住宅ローン金利をパーセントで入力">
+                <span class="input-suffix">% / 年</span>
+              </div>
+              <span class="field-hint">変動: 0.3〜0.6% / 固定35年: 1.5〜2.0%</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="buy-term">返済期間</label>
+              <div class="input-wrap">
+                <input type="number" id="buy-term" class="form-input" placeholder="例: 35" min="1" max="50" value="35" aria-label="返済期間を年で入力">
+                <span class="input-suffix">年</span>
+              </div>
+              <span class="field-hint">元利均等返済で計算</span>
+            </div>
+
+            <div class="field" id="field-mansion-fee">
+              <label class="field-label" for="buy-mansion-fee">月額管理費・修繕積立金</label>
+              <div class="input-wrap">
+                <input type="number" id="buy-mansion-fee" class="form-input" placeholder="例: 25000" min="0" value="25000" aria-label="月額管理費・修繕積立金を円で入力">
+                <span class="input-suffix">円 / 月</span>
+              </div>
+              <span class="field-hint">マンションの場合のみ（一戸建ては0）</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="buy-residual">
+                35年後の物件残価
+                <span class="optional-badge">任意</span>
+              </label>
+              <div class="input-wrap">
+                <input type="number" id="buy-residual" class="form-input" placeholder="例: 1500" min="0" value="0" aria-label="35年後の物件残価を万円で入力">
+                <span class="input-suffix">万円</span>
+              </div>
+              <span class="field-hint">売却益として差し引き（0=考慮しない）</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-btn-wrap">
+        <button class="btn-calc" id="calc-btn" type="button">
+          <i class="bi bi-calculator-fill"></i> 35年コストを比較する
+        </button>
+      </div>
+    </section>
+
+    <!-- 計算結果 -->
+    <div id="results" class="results-area" hidden>
+
+      <!-- 判定バナー -->
+      <div class="verdict-banner" id="verdict-banner">
+        <div class="verdict-icon" id="verdict-icon"></div>
+        <div class="verdict-text">
+          <div class="verdict-title" id="verdict-title"></div>
+          <div class="verdict-desc" id="verdict-desc"></div>
+        </div>
+      </div>
+
+      <!-- KPIカード3枚 -->
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-rent">
+          <div class="kpi-icon"><i class="bi bi-house-door-fill"></i></div>
+          <div class="kpi-label">賃貸 35年総コスト</div>
+          <div class="kpi-value" id="kpi-rent-total">―</div>
+          <div class="kpi-unit">万円</div>
+        </div>
+        <div class="kpi-card kpi-buy">
+          <div class="kpi-icon"><i class="bi bi-building-fill"></i></div>
+          <div class="kpi-label">購入 35年総コスト</div>
+          <div class="kpi-value" id="kpi-buy-total">―</div>
+          <div class="kpi-unit">万円</div>
+        </div>
+        <div class="kpi-card kpi-diff">
+          <div class="kpi-icon"><i class="bi bi-arrow-left-right"></i></div>
+          <div class="kpi-label">差額</div>
+          <div class="kpi-value" id="kpi-diff">―</div>
+          <div class="kpi-unit">万円</div>
+        </div>
+      </div>
+
+      <!-- 損益分岐点カード -->
+      <div class="card breakeven-card" id="breakeven-card">
+        <div class="breakeven-inner">
+          <div class="breakeven-icon"><i class="bi bi-flag-fill"></i></div>
+          <div class="breakeven-body">
+            <div class="breakeven-label">損益分岐点</div>
+            <div class="breakeven-value" id="breakeven-year">―</div>
+            <div class="breakeven-note" id="breakeven-note"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 広告ユニット2（結果下） -->
+      <div class="ad-unit" id="ad-result" aria-hidden="true">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-6046047693794575"
+             data-ad-slot="auto"></ins>
+      </div>
+
+      <!-- グラフ -->
+      <div class="card chart-card">
+        <h3 class="chart-title"><i class="bi bi-graph-up"></i> 35年間の累積コスト推移</h3>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot legend-rent"></span>賃貸</span>
+          <span class="legend-item"><span class="legend-dot legend-buy"></span>購入</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="cost-chart" aria-label="35年間の累積コスト推移グラフ" role="img"></canvas>
+        </div>
+        <p class="chart-note"><i class="bi bi-info-circle"></i> X軸: 経過年数（年）、Y軸: 累積コスト（万円）</p>
+      </div>
+
+      <!-- コスト内訳 -->
+      <div class="breakdown-grid">
+        <div class="card breakdown-card">
+          <h3 class="breakdown-title"><i class="bi bi-house-door"></i> 賃貸コスト内訳</h3>
+          <table class="breakdown-table">
+            <tbody id="rent-breakdown"></tbody>
+          </table>
+        </div>
+        <div class="card breakdown-card">
+          <h3 class="breakdown-title"><i class="bi bi-building"></i> 購入コスト内訳</h3>
+          <table class="breakdown-table">
+            <tbody id="buy-breakdown"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 使い方セクション -->
+    <section class="howto-section" id="howto">
+
+      <h2>使い方</h2>
+      <details class="howto-details" open>
+        <summary class="howto-summary">
+          <i class="bi bi-play-circle-fill"></i> 4ステップで賃貸・購入コストを比較する
+        </summary>
+        <ol class="howto-steps">
+          <li><strong>賃貸の条件を入力</strong>：月額家賃・更新料（家賃の何ヶ月分）・引越し回数・家賃上昇率を入力します。</li>
+          <li><strong>購入の条件を入力</strong>：物件種別（マンション/一戸建て）・購入価格・頭金・ローン金利・返済期間を入力します。マンションの場合は管理費・修繕積立金も入力してください。</li>
+          <li>（任意）<strong>35年後の物件残価を入力</strong>：売却益を考慮した実質コスト比較ができます。</li>
+          <li><strong>「35年コストを比較する」を押す</strong>：累積コストグラフと損益分岐点が表示されます。</li>
+        </ol>
+      </details>
+
+      <h2>賃貸 vs 購入の判断ポイント</h2>
+      <p>「賃貸と購入のどちらがお得か」は、個人のライフスタイル・収入・居住エリアによって大きく異なります。一般的に長期間同じ場所に住み続けるなら購入が有利になるケースが多いですが、転勤リスクが高い・ライフスタイルが変わりやすい方には賃貸の柔軟性が重要なメリットになります。本シミュレーターは35年間の純粋なコスト面だけを比較します。住宅ローン減税（最大年35万円）・すまい給付金などの制度も実際の購入コストを下げる要因になります。資産形成・相続・リスク許容度など金銭的以外の要素も含めた総合的な判断が大切です。</p>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>計算に含まれるコスト一覧</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <table>
+              <thead>
+                <tr><th>項目</th><th>賃貸</th><th>購入</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>月々の支払い</td><td>家賃（インフレ調整あり）</td><td>ローン返済額</td></tr>
+                <tr><td>更新・手数料</td><td>更新料（2年ごと）</td><td>仲介手数料・諸費用（購入価格×3%+6万円）</td></tr>
+                <tr><td>引越し費用</td><td>設定回数×20万円</td><td>1回分（20万円）</td></tr>
+                <tr><td>保険料</td><td>火災保険（2年ごと1万円）</td><td>火災・地震保険（5年ごと5万円）</td></tr>
+                <tr><td>税金</td><td>なし</td><td>固定資産税（購入価格×70%×1.4%/年）</td></tr>
+                <tr><td>修繕費</td><td>なし</td><td>マンション：管理費・積立金 / 一戸建て：大規模修繕（15年・30年目に150万円）</td></tr>
+                <tr><td>売却益</td><td>なし</td><td>35年後残価を差し引き（入力した場合）</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>住宅ローン減税は考慮されていますか？</dt>
+              <dd>本シミュレーターでは住宅ローン減税（最大13年間、年間最大35万円）は計算に含まれていません。実際の購入コストはさらに低くなる可能性があります。</dd>
+              <dt>変動金利と固定金利どちらで計算すべきですか？</dt>
+              <dd>変動金利は現在低い（0.3〜0.6%程度）ですが将来上昇するリスクがあります。固定金利（1.5〜2.0%）で計算すると保守的な（高めの）試算になります。両方試して比較するのがおすすめです。</dd>
+              <dt>賃貸の火災保険は含まれますか？</dt>
+              <dd>はい。2年ごとに約1万円の賃貸用火災保険料を自動で加算しています。</dd>
+              <dt>頭金の機会費用（投資収益）は計算しますか？</dt>
+              <dd>本ツールでは頭金の機会費用（運用した場合の収益）は計算対象外です。頭金を投資に回した場合との比較は含まれません。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は参考値です。実際の費用は物件の種類・エリア・築年数・交渉条件などによって異なります。住宅購入は人生最大の決断のひとつです。重要な判断には不動産会社・ファイナンシャルプランナー・税理士にご相談ください。</p>
+          </div>
+        </details>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <a href="/"><i class="bi bi-house-fill"></i> トップに戻る</a>
+      ｜ <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜ <a href="/about.html">このサイトについて</a>
+    </p>
+    <p><small>&copy; 2026 Keisan Lab</small></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
