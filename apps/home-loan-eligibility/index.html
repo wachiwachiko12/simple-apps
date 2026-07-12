@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="年収・返済比率・金利から住宅ローンの借入可能額と月々の返済額を無料で計算。変動・固定金利切替、残高推移グラフ表示、返済比率の安全判定まで。スマホ対応・登録不要。">
+  <title>住宅ローン 借入可能額・返済額計算ツール | 計算ラボ</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/home-loan-eligibility/">
+
+  <!-- OGP -->
+  <meta property="og:title" content="住宅ローン 借入可能額・返済額計算ツール | 計算ラボ">
+  <meta property="og:description" content="年収・返済比率・金利から借入可能額と月々の返済額を無料計算。残高推移グラフ付き。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/home-loan-eligibility/">
+  <meta property="og:image" content="https://keisanlab.jp/images/ogp-home-loan-eligibility.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="住宅ローン 借入可能額・返済額計算ツール | 計算ラボ">
+  <meta name="twitter:description" content="年収・返済比率・金利から借入可能額と月々の返済額を無料計算。残高推移グラフ付き。">
+
+  <!-- FAQ 構造化データ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "住宅ローンの返済比率の目安は何%ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に返済比率は年収の25〜35%が目安とされています。金融機関の審査基準は多くが35%以下ですが、安全に返済を続けるには25%以下が理想です。子どもの教育費や老後資金も考慮すると、余裕を持った比率設定が重要です。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "変動金利と固定金利はどちらがいいですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "変動金利は低金利時代には有利ですが、将来の金利上昇リスクがあります。固定金利は返済額が確定するため計画が立てやすい反面、変動より高めに設定されています。返済期間が長い場合やリスク回避を優先する方は固定金利、金利動向を注視できる方は変動金利が選ばれる傾向があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "頭金はいくら必要ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "一般的に物件価格の10〜20%が目安とされています。頭金が多いほど借入額が減り、総利息が少なくなります。ただし諸費用（登記費用・仲介手数料・火災保険等）として物件価格の3〜7%程度が別途必要です。頭金ゼロのフルローンも可能ですが、金利が高くなる場合があります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅ローンの審査基準は何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "主な審査基準は「年収」「勤続年数（一般的に2年以上）」「返済比率（年収に対する年間返済額の割合）」「健康状態（団体信用生命保険の加入）」「物件の担保評価」などです。年収が低くても頭金を多く入れると審査が通りやすくなります。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "借入可能額と実際に無理なく返せる金額は違いますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "はい、大きく異なります。金融機関が提示する借入可能額の上限まで借りると返済が苦しくなるケースが多いです。教育費・老後資金・生活費の変動を考慮すると、借入可能額の70〜80%程度を実際の借入目安にすることをおすすめします。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "フラット35とは何ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "フラット35は住宅金融支援機構と民間金融機関が提供する最長35年の全期間固定金利住宅ローンです。金利が返済終了まで変わらないため、長期の返済計画を立てやすいのが特徴です。省エネ基準を満たした住宅ではフラット35Sとして金利が優遇されます。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "住宅ローン控除（減税）はいつまで使えますか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2024年以降に入居した場合、住宅ローン控除は最大13年間（新築の場合）適用されます。年末ローン残高の0.7%が所得税・住民税から控除されます。省エネ性能の高い住宅は借入限度額が高く設定されています。詳細は国税庁または税理士にご確認ください。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "計算結果の精度はどの程度ですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "本ツールは元利均等返済方式に基づく試算値です。実際の返済額は金融機関の端数処理・保証料・団体信用生命保険料などにより異なる場合があります。また変動金利のシミュレーションは現在の金利が継続した場合の試算です。最終的な判断は必ず金融機関または住宅ローンアドバイザーにご相談ください。"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/" class="site-logo">計算ラボ</a>
+      <h1>住宅ローン 借入可能額・返済額 計算ツール</h1>
+      <p class="subtitle">年収・返済比率・金利から借入可能額と月々の返済額をシミュレーション</p>
+    </div>
+  </header>
+
+  <main>
+    <!-- 広告ユニット1（ツール上部） -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- タブ切替 -->
+    <div class="container">
+      <div class="tab-group" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="panel-eligibility" id="tab-eligibility" onclick="switchTab('eligibility')">
+          <i class="bi bi-calculator"></i>
+          借入可能額を調べる
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-payment" id="tab-payment" onclick="switchTab('payment')">
+          <i class="bi bi-cash-coin"></i>
+          返済額を計算する
+        </button>
+      </div>
+
+      <!-- タブ1: 借入可能額 -->
+      <div id="panel-eligibility" class="tab-panel active" role="tabpanel" aria-labelledby="tab-eligibility">
+        <div class="card tool-card">
+          <div class="privacy-notice">
+            <i class="bi bi-shield-check"></i>
+            入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="annual-income">
+                <i class="bi bi-wallet2"></i> 年収
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="annual-income" min="100" max="10000" value="500" step="10" aria-label="年収（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="repayment-ratio-e">
+                <i class="bi bi-percent"></i> 返済比率（年収に占める年間返済額の割合）
+              </label>
+              <div class="slider-wrap">
+                <input type="range" id="repayment-ratio-e" min="10" max="50" value="35" step="1" oninput="syncSlider('repayment-ratio-e', 'repayment-ratio-e-num')" aria-label="返済比率">
+                <input type="number" id="repayment-ratio-e-num" min="10" max="50" value="35" step="1" oninput="syncNum('repayment-ratio-e-num', 'repayment-ratio-e')" aria-label="返済比率数値入力">
+                <span class="input-suffix">%</span>
+              </div>
+              <span class="field-hint">推奨: 25〜35%（金融機関審査基準は多くが35%以下）</span>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="interest-rate-e">
+                <i class="bi bi-graph-up-arrow"></i> 適用金利
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="interest-rate-e" min="0.1" max="10" value="1.5" step="0.1" aria-label="金利（%）">
+                <span class="input-suffix">%</span>
+              </div>
+              <div class="rate-type-toggle">
+                <button class="rate-btn active" onclick="setRateType(this, 'variable-e')" id="btn-variable-e">変動金利</button>
+                <button class="rate-btn" onclick="setRateType(this, 'fixed-e')" id="btn-fixed-e">固定金利</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="loan-period-e">
+                <i class="bi bi-calendar3"></i> 返済期間
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="loan-period-e" min="5" max="50" value="35" step="1" aria-label="返済期間（年）">
+                <span class="input-suffix">年</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="calcEligibility()" aria-label="借入可能額を計算する">
+            <i class="bi bi-calculator-fill"></i>
+            借入可能額を計算する
+          </button>
+        </div>
+
+        <!-- 結果表示: 借入可能額 -->
+        <div id="result-eligibility" class="result-panel" style="display:none">
+          <div class="result-header">
+            <h2 class="result-title">計算結果</h2>
+            <span id="ratio-badge" class="ratio-badge"></span>
+          </div>
+          <div class="result-grid">
+            <div class="result-item primary">
+              <span class="result-label">借入可能額（目安）</span>
+              <span class="result-value" id="max-loan-amount">—</span>
+              <span class="result-unit">万円</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">月々の返済可能額</span>
+              <span class="result-value sm" id="monthly-possible">—</span>
+              <span class="result-unit">円</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">総返済額</span>
+              <span class="result-value sm" id="total-repayment-e">—</span>
+              <span class="result-unit">万円</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">総利息額</span>
+              <span class="result-value sm" id="total-interest-e">—</span>
+              <span class="result-unit">万円</span>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart-eligibility" aria-label="残高推移グラフ" role="img"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- タブ2: 返済額 -->
+      <div id="panel-payment" class="tab-panel" role="tabpanel" aria-labelledby="tab-payment">
+        <div class="card tool-card">
+          <div class="privacy-notice">
+            <i class="bi bi-shield-check"></i>
+            入力データはブラウザ内のみで計算され、サーバーには一切送信されません。
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label class="field-label" for="loan-amount">
+                <i class="bi bi-house"></i> 借入金額
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="loan-amount" min="100" max="100000" value="3000" step="100" aria-label="借入金額（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="interest-rate-p">
+                <i class="bi bi-graph-up-arrow"></i> 適用金利
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="interest-rate-p" min="0.1" max="10" value="1.5" step="0.1" aria-label="金利（%）">
+                <span class="input-suffix">%</span>
+              </div>
+              <div class="rate-type-toggle">
+                <button class="rate-btn active" onclick="setRateType(this, 'variable-p')" id="btn-variable-p">変動金利</button>
+                <button class="rate-btn" onclick="setRateType(this, 'fixed-p')" id="btn-fixed-p">固定金利</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="loan-period-p">
+                <i class="bi bi-calendar3"></i> 返済期間
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="loan-period-p" min="5" max="50" value="35" step="1" aria-label="返済期間（年）">
+                <span class="input-suffix">年</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="annual-income-p">
+                <i class="bi bi-wallet2"></i> 年収（返済比率の判定に使用）
+              </label>
+              <div class="input-suffix-wrap">
+                <input type="number" id="annual-income-p" min="100" max="10000" value="500" step="10" aria-label="年収（万円）">
+                <span class="input-suffix">万円</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-primary" onclick="calcPayment()" aria-label="返済額を計算する">
+            <i class="bi bi-calculator-fill"></i>
+            返済額を計算する
+          </button>
+        </div>
+
+        <!-- 結果表示: 返済額 -->
+        <div id="result-payment" class="result-panel" style="display:none">
+          <div class="result-header">
+            <h2 class="result-title">計算結果</h2>
+            <span id="ratio-badge-p" class="ratio-badge"></span>
+          </div>
+          <div class="result-grid">
+            <div class="result-item primary">
+              <span class="result-label">月々の返済額</span>
+              <span class="result-value" id="monthly-payment">—</span>
+              <span class="result-unit">円</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">実質返済比率</span>
+              <span class="result-value sm" id="actual-ratio">—</span>
+              <span class="result-unit">%</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">総返済額</span>
+              <span class="result-value sm" id="total-repayment-p">—</span>
+              <span class="result-unit">万円</span>
+            </div>
+            <div class="result-item">
+              <span class="result-label">総利息額</span>
+              <span class="result-value sm" id="total-interest-p">—</span>
+              <span class="result-unit">万円</span>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="chart-payment" aria-label="残高推移グラフ" role="img"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 広告ユニット2（結果下部） -->
+    <div class="ad-unit" id="ad-result" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot="auto"></ins>
+    </div>
+
+    <!-- 使い方アコーディオン -->
+    <section id="howto" class="howto-section container">
+      <h2><i class="bi bi-info-circle"></i> 使い方</h2>
+      <div class="accordion">
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-num">1</span>
+            モードを選択する
+          </summary>
+          <div class="accordion-body">
+            「借入可能額を調べる」タブでは年収ベースで借りられる上限額を計算します。「返済額を計算する」タブでは希望の借入金額に対する月々の返済額を計算します。目的に合わせて切り替えてください。
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-num">2</span>
+            年収・返済比率を入力する
+          </summary>
+          <div class="accordion-body">
+            年収は税込みの額を入力してください。返済比率は年収に対して年間の返済額が占める割合です。スライダーで直感的に調整できます。金融機関の審査では多くが35%以下を基準にしています。
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-num">3</span>
+            金利タイプと金利を設定する
+          </summary>
+          <div class="accordion-body">
+            変動金利か固定金利かを選択し、現在の適用金利を入力してください。2024年現在の変動金利の目安は0.3〜1.0%程度、固定金利（フラット35）は1.8〜2.5%程度です。将来の金利上昇リスクも考慮して設定することをおすすめします。
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-num">4</span>
+            「計算する」ボタンを押す
+          </summary>
+          <div class="accordion-body">
+            ボタンを押すと、借入可能額・月々の返済額・総返済額・総利息額が即座に表示されます。返済比率が推奨範囲（25〜35%）かどうかの判定バッジも表示されます。
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span class="step-num">5</span>
+            残高推移グラフで確認する
+          </summary>
+          <div class="accordion-body">
+            計算結果の下部に、返済年数ごとの残高推移グラフ（折れ線グラフ）が表示されます。元金の減り方と総利息の関係を視覚的に把握できます。金利や期間を変えながら比較検討してみましょう。
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 基礎知識セクション -->
+    <section class="knowledge-section container">
+      <h2><i class="bi bi-book"></i> 住宅ローンの基礎知識</h2>
+      <div class="knowledge-grid">
+        <div class="knowledge-card">
+          <div class="knowledge-icon"><i class="bi bi-bar-chart-line"></i></div>
+          <h3>返済比率の目安</h3>
+          <p>年収に対する年間返済額の割合を「返済比率」と呼びます。金融機関の審査では35%以下が一般的な基準ですが、教育費・老後資金を考慮すると25%以下が生活に余裕をもたせる目安です。</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon"><i class="bi bi-arrow-left-right"></i></div>
+          <h3>変動金利 vs 固定金利</h3>
+          <p>変動金利は半年ごとに見直され、低金利時に有利ですが将来の金利上昇リスクがあります。固定金利は返済額が一定で計画を立てやすいですが、現在は変動より高めです。ライフプランに合わせて選びましょう。</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon"><i class="bi bi-piggy-bank"></i></div>
+          <h3>頭金と総費用</h3>
+          <p>頭金の目安は物件価格の10〜20%です。頭金を増やすほど借入額が減り、総利息の削減につながります。また登記費用・仲介手数料・火災保険料など諸費用として物件価格の3〜7%程度が別途必要です。</p>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-icon"><i class="bi bi-receipt"></i></div>
+          <h3>住宅ローン控除（減税）</h3>
+          <p>2024年以降に入居した場合、最大13年間（新築）、年末ローン残高の0.7%が所得税・住民税から控除されます。省エネ性能の高い住宅は控除限度額が高くなります。詳細は国税庁や税理士にご確認ください。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section class="faq-section container">
+      <h2><i class="bi bi-question-circle"></i> よくある質問</h2>
+      <div class="accordion">
+        <details class="accordion-item">
+          <summary class="accordion-summary">返済比率の目安は何%ですか？</summary>
+          <div class="accordion-body">一般的に返済比率は年収の25〜35%が目安とされています。金融機関の審査基準は多くが35%以下ですが、安全に返済を続けるには25%以下が理想です。子どもの教育費や老後資金も考慮すると、余裕を持った比率設定が重要です。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">変動金利と固定金利はどちらがいいですか？</summary>
+          <div class="accordion-body">変動金利は低金利時代には有利ですが、将来の金利上昇リスクがあります。固定金利は返済額が確定するため計画が立てやすい反面、変動より高めに設定されています。ライフプランや金利動向を見据えて選ぶことが大切です。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">頭金はいくら必要ですか？</summary>
+          <div class="accordion-body">一般的に物件価格の10〜20%が目安とされています。頭金が多いほど借入額が減り、総利息が少なくなります。ただし諸費用（登記費用・仲介手数料・火災保険等）として物件価格の3〜7%程度が別途必要です。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">住宅ローンの審査基準は何ですか？</summary>
+          <div class="accordion-body">主な審査基準は「年収」「勤続年数（一般的に2年以上）」「返済比率（年収に対する年間返済額の割合）」「健康状態（団体信用生命保険の加入）」「物件の担保評価」などです。年収が低くても頭金を多く入れると審査が通りやすくなります。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">借入可能額と実際に無理なく返せる金額は違いますか？</summary>
+          <div class="accordion-body">はい、大きく異なります。金融機関が提示する借入可能額の上限まで借りると返済が苦しくなるケースが多いです。教育費・老後資金・生活費の変動を考慮すると、借入可能額の70〜80%程度を実際の借入目安にすることをおすすめします。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">フラット35とは何ですか？</summary>
+          <div class="accordion-body">フラット35は住宅金融支援機構と民間金融機関が提供する最長35年の全期間固定金利住宅ローンです。金利が返済終了まで変わらないため、長期の返済計画を立てやすいのが特徴です。省エネ基準を満たした住宅ではフラット35Sとして金利が優遇されます。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">住宅ローン控除（減税）はいつまで使えますか？</summary>
+          <div class="accordion-body">2024年以降に入居した場合、住宅ローン控除は最大13年間（新築の場合）適用されます。年末ローン残高の0.7%が所得税・住民税から控除されます。詳細は国税庁または税理士にご確認ください。</div>
+        </details>
+        <details class="accordion-item">
+          <summary class="accordion-summary">計算結果の精度はどの程度ですか？</summary>
+          <div class="accordion-body">本ツールは元利均等返済方式に基づく試算値です。実際の返済額は金融機関の端数処理・保証料・団体信用生命保険料などにより異なる場合があります。最終的な判断は必ず金融機関または住宅ローンアドバイザーにご相談ください。</div>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><a href="/">トップページ</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
+      <p class="footer-disclaimer">本ツールの計算結果は目安です。実際のローン条件は金融機関にご確認ください。</p>
+      <p><small>&copy; 2025 計算ラボ (keisanlab.jp)</small></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
