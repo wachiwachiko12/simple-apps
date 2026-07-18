@@ -94,6 +94,7 @@
     <!-- チェックリスト -->
     <ul class="checklist" id="checklist" aria-label="保育園準備チェックリスト">
     </ul>
+    <p class="hidden-note" id="hidden-note" hidden></p>
 
     <!-- アイテム追加フォーム -->
     <div class="add-form card" id="add-form">
@@ -151,6 +152,41 @@
     </nav>
     <p>&copy; 2026 Keisanlab</p>
   </footer>
+
+  <!-- 編集モーダル -->
+  <div class="modal-overlay" id="edit-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <h3 class="modal-title" id="modal-title"><i class="bi bi-pencil-square"></i> 項目を編集</h3>
+
+      <div class="modal-field">
+        <label class="modal-label" for="edit-name">項目名</label>
+        <input type="text" id="edit-name" class="modal-input" maxlength="30" placeholder="例: 布団セット">
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label">表示する曜日
+          <span class="modal-hint">（未選択 = 毎日表示）</span>
+        </label>
+        <div class="day-picker" role="group" aria-label="表示曜日を選択">
+          <button class="day-btn" data-day="1" type="button" aria-pressed="false">月</button>
+          <button class="day-btn" data-day="2" type="button" aria-pressed="false">火</button>
+          <button class="day-btn" data-day="3" type="button" aria-pressed="false">水</button>
+          <button class="day-btn" data-day="4" type="button" aria-pressed="false">木</button>
+          <button class="day-btn" data-day="5" type="button" aria-pressed="false">金</button>
+          <button class="day-btn" data-day="6" type="button" aria-pressed="false">土</button>
+          <button class="day-btn" data-day="0" type="button" aria-pressed="false">日</button>
+        </div>
+        <p class="modal-day-note">例：布団セットは「月」のみ選択 → 月曜日だけ表示されます</p>
+      </div>
+
+      <div class="modal-btns">
+        <button class="btn-modal-cancel" id="edit-cancel" type="button">キャンセル</button>
+        <button class="btn-modal-save"   id="edit-save"   type="button">
+          <i class="bi bi-check-lg"></i> 保存
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
