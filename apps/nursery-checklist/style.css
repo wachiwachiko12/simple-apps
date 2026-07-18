@@ -215,6 +215,106 @@ main { max-width: 600px; margin: 0 auto; padding: 1rem 1rem 3rem; }
 }
 .info-box i { color: var(--primary); margin-top: 0.1rem; flex-shrink: 0; }
 
+/* ── Edit button ── */
+.edit-btn {
+  width: 36px; height: 56px; border: none; background: none;
+  color: #d1d5db; cursor: pointer; font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: color var(--transition);
+}
+.edit-btn:hover { color: var(--primary); background: var(--primary-light); }
+
+/* ── Day badges (on checklist items) ── */
+.day-badges { display: inline-flex; gap: 2px; margin-left: 0.4rem; vertical-align: middle; }
+.day-badge {
+  font-size: 0.65rem; font-weight: 700;
+  background: #dcfce7; color: var(--primary);
+  border: 1px solid #bbf7d0;
+  border-radius: 4px; padding: 0 4px; line-height: 1.6;
+}
+
+/* ── Hidden note ── */
+.hidden-note {
+  font-size: 0.78rem; color: var(--text-muted);
+  text-align: center; margin-bottom: 0.5rem;
+}
+
+/* ── Modal ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200; padding: 1rem;
+}
+.modal-overlay[hidden] { display: none; }
+
+.modal {
+  background: var(--surface); border-radius: var(--radius);
+  padding: 1.5rem; width: 100%; max-width: 380px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  animation: modalIn 0.2s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-title {
+  font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+  color: var(--primary); margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+
+.modal-field { margin-bottom: 1.1rem; }
+.modal-label {
+  display: block; font-size: 0.85rem; font-weight: 700;
+  color: var(--text); margin-bottom: 0.4rem;
+}
+.modal-hint { font-size: 0.75rem; font-weight: 400; color: var(--text-muted); margin-left: 0.25rem; }
+
+.modal-input {
+  width: 100%; border: 2px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0.6rem 0.75rem; font-size: 1rem; font-family: inherit; color: var(--text);
+  transition: border-color var(--transition);
+}
+.modal-input:focus { outline: none; border-color: var(--primary); }
+
+/* ── Day picker (in modal) ── */
+.day-picker {
+  display: flex; gap: 0.4rem; flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+.day-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 2px solid var(--border); background: #fff;
+  font-size: 0.9rem; font-weight: 700; cursor: pointer;
+  color: var(--text-muted); transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.day-btn:hover  { border-color: var(--primary); color: var(--primary); }
+.day-btn.selected {
+  background: var(--primary); border-color: var(--primary);
+  color: #fff;
+}
+.modal-day-note { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.5; }
+
+/* ── Modal buttons ── */
+.modal-btns { display: flex; gap: 0.5rem; margin-top: 1.25rem; }
+.btn-modal-cancel {
+  flex: 1; padding: 0.7rem; border: 2px solid var(--border);
+  border-radius: var(--radius-sm); background: #fff;
+  font-size: 0.95rem; font-weight: 700; cursor: pointer; color: var(--text-muted);
+  transition: all var(--transition);
+}
+.btn-modal-cancel:hover { border-color: var(--text-muted); color: var(--text); }
+.btn-modal-save {
+  flex: 2; padding: 0.7rem; border: none;
+  border-radius: var(--radius-sm); background: var(--primary);
+  font-size: 0.95rem; font-weight: 700; cursor: pointer; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+  transition: background var(--transition);
+}
+.btn-modal-save:hover { background: var(--primary-hover); }
+
 /* ── Footer ── */
 footer { background: #1e1e2e; color: #aaa; text-align: center; padding: 1.5rem 1rem; font-size: 0.8rem; }
 footer a { color: #4ade80; text-decoration: none; }
