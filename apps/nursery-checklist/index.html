@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="保育園の毎朝の持ち物準備をチェックリストで管理。項目は自由にカスタマイズでき、毎日0時に自動リセット。連絡帳・おむつ・お着替えなどの忘れ物を防げる無料ツール。">
+  <title>保育園 準備チェックリスト｜毎日自動リセット【無料】</title>
+  <link rel="canonical" href="https://keisanlab.jp/apps/nursery-checklist/">
+  <!-- OGP -->
+  <meta property="og:title" content="保育園 準備チェックリスト｜毎日自動リセット【無料】">
+  <meta property="og:description" content="保育園の毎朝の持ち物をチェックリストで管理。項目カスタマイズ自由・毎日0時に自動リセット。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://keisanlab.jp/apps/nursery-checklist/">
+  <meta name="twitter:card" content="summary">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
+       crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="/" class="back-link"><i class="bi bi-arrow-left"></i> ツール一覧</a>
+      <div class="header-title">
+        <div class="header-icon">🎒</div>
+        <div>
+          <h1>保育園 準備チェックリスト</h1>
+          <p class="header-sub">毎日0時に自動リセット・項目はカスタマイズ可能</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- 広告ユニット1 -->
+    <div class="ad-unit" id="ad-top" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- プライバシー通知 -->
+    <div class="privacy-notice">
+      <i class="bi bi-shield-check"></i>
+      入力データはブラウザ内のみで処理され、サーバーには一切送信されません。
+    </div>
+
+    <!-- 今日の日付 -->
+    <div class="date-bar" id="date-bar">
+      <i class="bi bi-calendar3"></i>
+      <span id="date-label">読み込み中...</span>
+    </div>
+
+    <!-- 完了バナー -->
+    <div class="complete-banner" id="complete-banner" hidden>
+      <div class="complete-inner">
+        <div class="complete-emoji">🎒</div>
+        <div class="complete-text">準備完了！</div>
+        <div class="complete-sub">今日も忘れ物なし！いってらっしゃい👋</div>
+      </div>
+    </div>
+
+    <!-- プログレスバー -->
+    <div class="progress-section" id="progress-section">
+      <div class="progress-label">
+        <span id="progress-text">0 / 0 個 チェック済み</span>
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- チェックリスト -->
+    <ul class="checklist" id="checklist" aria-label="保育園準備チェックリスト">
+    </ul>
+
+    <!-- アイテム追加フォーム -->
+    <div class="add-form card" id="add-form">
+      <h2 class="add-form-title"><i class="bi bi-plus-circle"></i> 項目を追加</h2>
+      <div class="add-row">
+        <input
+          type="text"
+          id="add-input"
+          class="add-input"
+          placeholder="例: 体温計・おやつ"
+          maxlength="30"
+          aria-label="追加する項目名"
+        >
+        <button class="btn-add" id="btn-add" type="button">
+          <i class="bi bi-plus-lg"></i> 追加
+        </button>
+      </div>
+      <p id="add-error" class="add-error" hidden>項目名を入力してください</p>
+    </div>
+
+    <!-- 広告ユニット2 -->
+    <div class="ad-unit" id="ad-bottom" aria-hidden="true">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-6046047693794575"
+           data-ad-slot=""
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+    <!-- 使い方 -->
+    <section class="howto-section card" id="howto">
+      <h2><i class="bi bi-book-open"></i> 使い方</h2>
+      <ol class="howto-list">
+        <li><strong>項目を確認</strong>：最初からよく使う10項目が入っています。不要なものは右端のゴミ箱で削除できます。</li>
+        <li><strong>項目を追加</strong>：下の「項目を追加」フォームから、お子さんに合った持ち物を自由に追加できます。</li>
+        <li><strong>毎朝チェック</strong>：準備できたらタップしてチェック。全部チェックすると完了バナーが表示されます。</li>
+        <li><strong>0時に自動リセット</strong>：毎日深夜0時にチェックは自動でリセット。項目リストはそのまま残ります。</li>
+      </ol>
+      <div class="info-box">
+        <i class="bi bi-lightbulb-fill"></i>
+        <div>
+          <strong>ヒント：</strong>項目の削除は、ゴミ箱ボタンをタップすると確認なしで即削除されます。誤って消した場合は、下のフォームから同じ名前を追加してください。
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <nav>
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      <a href="/about.html">Keisanlabについて</a>
+      <a href="/">ツール一覧</a>
+    </nav>
+    <p>&copy; 2026 Keisanlab</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
