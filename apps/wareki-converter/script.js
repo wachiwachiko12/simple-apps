@@ -40,10 +40,18 @@ function warekiToSeireki(eraKey, waYear) {
   return seireki;
 }
 
-function showResult(el, mainText, subText, isError) {
-  el.innerHTML = `<div class="main-result">${mainText}</div>${subText ? `<div class="sub-result">${subText}</div>` : ''}`;
+function showResult(el, mainText, subText, isError, hint) {
+  const hintHtml = (!isError && hint)
+    ? `<div class="result-hint"><button type="button" class="hint-link" data-goto-tab="${hint.tabKey}">${hint.text}</button></div>`
+    : '';
+  el.innerHTML = `<div class="main-result">${mainText}</div>${subText ? `<div class="sub-result">${subText}</div>` : ''}${hintHtml}`;
   el.style.display = 'block';
   el.classList.toggle('error', !!isError);
+}
+
+function gotoTab(tabKey) {
+  const tabBtn = document.querySelector(`.tab[data-tab="${tabKey}"]`);
+  if (tabBtn) tabBtn.click();
 }
 
 function buildQuickTable() {
@@ -147,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const main = results.map(r => r.gannen).join('　または　');
     const sub = results.length > 1 ? '※改元をまたいでいるため複数の和暦が存在します' : `西暦 ${val} 年 = ${main}`;
-    showResult(el, main, sub);
+    showResult(el, main, sub, false, { tabKey: 'age-calc', text: 'この年の年齢を知りたい方は年齢計算タブへ →' });
   });
 
   // 和暦 → 西暦
@@ -168,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     const waLabel = waYear === 1 ? `${era.name}元年` : `${era.name}${waYear}年`;
-    showResult(el, `西暦 ${seireki} 年`, `${waLabel} = 西暦 ${seireki} 年`);
+    showResult(el, `西暦 ${seireki} 年`, `${waLabel} = 西暦 ${seireki} 年`, false, { tabKey: 'age-calc', text: 'この年の年齢を知りたい方は年齢計算タブへ →' });
   });
 
   // 年齢計算
@@ -201,7 +209,9 @@ document.addEventListener('DOMContentLoaded', () => {
     showResult(
       el,
       `${age} 歳（または ${age + 1} 歳）`,
-      `西暦 ${birthSeireki} 年生まれ${waLabel ? `（${waLabel}）` : ''}。誕生日によって${age}歳または${age + 1}歳です。`
+      `西暦 ${birthSeireki} 年生まれ${waLabel ? `（${waLabel}）` : ''}。誕生日によって${age}歳または${age + 1}歳です。`,
+      false,
+      { tabKey: 'age-table', text: '他の年の年齢も年齢早見表タブでチェック →' }
     );
   });
 
@@ -214,4 +224,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // 結果内の「次アクション」誘導リンク（イベント委任）
+  document.addEventListener('click', e => {
+    const link = e.target.closest('.hint-link');
+    if (!link) return;
+    gotoTab(link.dataset.gotoTab);
+  });
+
+  // B-2: 初期表示時に当年のデフォルト値をセットし、変換を自動実行して結果を表示する
+  const reiwaYear = currentYear - ERAS.find(e => e.key === 'reiwa').start + 1;
+  document.getElementById('era-select').value = 'reiwa';
+  document.getElementById('wareki-input').value = reiwaYear;
+  document.getElementById('btn-w2s').click();
+
+  document.getElementById('seireki-input').value = currentYear;
+  document.getElementById('btn-s2w').click();
 });
