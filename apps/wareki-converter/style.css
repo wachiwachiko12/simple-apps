@@ -102,6 +102,19 @@ main {
   background: var(--primary-soft);
 }
 
+.privacy-note {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.75rem 0 0;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  background: #f3f4f6;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
 .tool-section {
   background: var(--surface);
   border-radius: 0 var(--radius) var(--radius) var(--radius);
@@ -219,6 +232,68 @@ button:active {
 .result.error .main-result {
   color: #dc2626;
   font-size: 1rem;
+}
+
+.result-hint {
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.hint-link {
+  display: inline-flex;
+  align-items: center;
+  width: auto;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.4rem 0.1rem;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color 0.15s;
+}
+
+.hint-link:hover {
+  color: var(--primary-hover);
+  transform: none;
+  box-shadow: none;
+}
+
+.hint-link:active {
+  transform: none;
+  box-shadow: none;
+}
+
+.related-mini {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: var(--shadow);
+  font-size: 0.875rem;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
 }
 
 .hidden {
@@ -350,9 +425,10 @@ footer a:hover { text-decoration: underline; }
 }
 
 .era-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   width: auto;
-  padding: 0.4rem 1rem;
+  padding: 0.55rem 1.1rem;
   font-size: 0.85rem;
   font-weight: 600;
   background: white;
@@ -360,7 +436,7 @@ footer a:hover { text-decoration: underline; }
   border: 1.5px solid var(--primary);
   border-radius: 100px;
   cursor: pointer;
-  min-height: 36px;
+  min-height: 44px;
   touch-action: manipulation;
   transition: background 0.15s, color 0.15s;
 }
@@ -394,31 +470,6 @@ footer a:hover { text-decoration: underline; }
 .related-links a {
   color: var(--primary);
   font-weight: 600;
-}
-
-/* ===== アフィリエイト ===== */
-.affiliate-block {
-  margin: 1rem 0 1.5rem;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: var(--radius-sm);
-  border: 1px solid #e5e7eb;
-  text-align: center;
-}
-.affiliate-label {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #fff;
-  background: #9ca3af;
-  padding: 1px 6px;
-  border-radius: 3px;
-  margin-bottom: 0.5rem;
-}
-.affiliate-desc {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-bottom: 0.75rem;
 }
 
 @media (max-width: 400px) {
