@@ -133,6 +133,34 @@ main {
 }
 
 /* ============================================================
+   Related Tools
+   ============================================================ */
+.related-mini {
+  margin: 0 0 var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: var(--shadow);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================================
    Ad Unit
    ============================================================ */
 .ad-unit {

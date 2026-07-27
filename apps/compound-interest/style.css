@@ -779,3 +779,28 @@ footer {
     padding: 2rem;
   }
 }
+
+/* ===== 関連ツール ===== */
+.related-mini {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: rgba(var(--primary-rgb), 0.06);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+.related-mini span { font-weight: 600; color: var(--text); }
+.related-mini a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.related-mini a:hover,
+.related-mini a:focus-visible {
+  text-decoration: underline;
+}

@@ -838,3 +838,29 @@ footer a:hover {
 .habit-item.drag-over {
   border-top: 2px solid #4CAF50;
 }
+
+/* 関連ツール（内部リンク） */
+.related-mini {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08);
+  font-size: 0.875rem;
+  color: #666;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: #1a1a2e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}

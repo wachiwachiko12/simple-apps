@@ -484,3 +484,28 @@ main {
     font-size: 0.9rem;
   }
 }
+
+/* ===== Related tools ===== */
+.related-mini {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  font-size: 0.875rem;
+  color: #666;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: #1a5276;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}

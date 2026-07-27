@@ -69,6 +69,32 @@ main {
   margin: 1.25rem 0;
 }
 
+/* ============ RELATED TOOLS ============ */
+.related-mini {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: #9ab8f0;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}
+
 /* ============ EDITOR SECTION ============ */
 .editor-section {
   background: var(--color-surface);

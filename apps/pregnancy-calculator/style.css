@@ -817,3 +817,31 @@ footer {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* =============================================
+   関連ツール（内部リンク）
+   ============================================= */
+.related-mini {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: var(--shadow);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}

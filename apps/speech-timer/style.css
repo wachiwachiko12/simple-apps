@@ -621,3 +621,29 @@ footer a:hover {
     flex-wrap: nowrap;
   }
 }
+
+/* ===== 関連ツール（内部リンク） ===== */
+.related-mini {
+  margin-top: 0.85rem;
+  padding: 0.7rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+  color: var(--color-text-sub);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}

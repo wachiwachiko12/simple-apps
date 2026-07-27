@@ -731,6 +731,23 @@ details[open] > .accordion-summary::after {
   font-size: 1.05rem;
 }
 
+/* ---- 参照情報・免責事項 ---- */
+.ref-links { list-style: none; padding: 0; margin: 0 0 0.6rem; font-size: 0.85rem; }
+.ref-links li { margin-bottom: 0.3rem; }
+.ref-links a { color: var(--primary); text-decoration: underline; }
+.ref-links a:hover { color: var(--primary-hover); }
+.disclaimer-note { font-size: 0.8rem; color: var(--text-muted); background: #f9fafb; border-left: 3px solid var(--border); padding: 0.625rem 0.875rem; border-radius: 0 6px 6px 0; line-height: 1.7; }
+.disclaimer-note strong { color: var(--text); }
+
+/* ---- 関連ツール ---- */
+.related-mini {
+  margin: 1rem 0; padding: 0.75rem 1rem; background: #fff; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); box-shadow: var(--shadow); font-size: 0.85rem; color: var(--text-muted);
+  display: flex; flex-wrap: wrap; gap: 0.4rem 0.75rem; align-items: center;
+}
+.related-mini a { color: var(--primary); font-weight: 600; text-decoration: none; }
+.related-mini a:hover { text-decoration: underline; }
+
 /* ---- Footer ---- */
 footer {
   text-align: center;

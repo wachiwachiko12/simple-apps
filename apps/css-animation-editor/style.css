@@ -60,6 +60,32 @@ main {
   margin: 1.25rem 0;
 }
 
+/* ===== Related Tools ===== */
+.related-mini {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  font-size: 0.85rem;
+  color: #888;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: #6366f1;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}
+
 /* ===== Tool Section (card) ===== */
 .tool-section {
   background: white;

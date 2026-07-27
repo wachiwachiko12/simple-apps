@@ -385,3 +385,29 @@ details[open] > .accordion-summary .accordion-icon::after { content: '−'; }
 .accordion-body dd { margin-left: 1rem; color: var(--text-muted); margin-bottom: 0.25rem; }
 .accordion-body ul { padding-left: 1.25rem; }
 .accordion-body li { margin-bottom: 0.3rem; }
+
+/* 関連ツール（内部リンク） */
+.related-mini {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: var(--shadow);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+}

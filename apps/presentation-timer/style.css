@@ -626,3 +626,30 @@ footer p + p {
     max-width: 180px;
   }
 }
+
+/* ===== 関連ツール（内部リンク） ===== */
+.related-mini {
+  margin-top: 0.85rem;
+  padding: 0.7rem 1rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.09);
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  align-items: center;
+}
+
+.related-mini a {
+  color: #1a1a2e;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.related-mini a:hover {
+  text-decoration: underline;
+  color: #e67e22;
+}
