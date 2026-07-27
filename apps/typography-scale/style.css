@@ -401,6 +401,40 @@ main {
   font-family: "SFMono-Regular", Consolas, monospace;
 }
 
+.howto-section a {
+  color: #2d6a9f;
+}
+
+/* ===== FAQ ===== */
+.faq-list dt {
+  font-weight: 700;
+  color: #1e3a5f;
+  font-size: 0.92rem;
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin: 0.35rem 0 0;
+}
+
+/* ===== Disclaimer ===== */
+.disclaimer-note {
+  font-size: 0.85rem;
+  color: #6b7280;
+  background: #f0f4fa;
+  border-left: 3px solid #2d6a9f;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-top: 0.75rem;
+}
+
 .guide-list {
   list-style: none;
   padding: 0;

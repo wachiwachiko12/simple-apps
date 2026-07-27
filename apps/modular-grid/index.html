@@ -29,6 +29,40 @@
   <meta name="twitter:description" content="Webサイトのカラムグリッド・ガター・ベースラインをブラウザで設計。CSS変数・Tailwind設定を自動生成。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-modular-grid.png">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "生成したCSS変数やTailwind設定はそのまま本番のコードに使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "出力されるCSS変数・Tailwind設定はそのまま貼り付けて使える形式です。ただし、実際のプロジェクトのブレークポイント設計に応じて数値を調整してください。col-1〜col-12のユーティリティクラスは12カラム想定のサンプルのため、カラム数を変更した場合は該当箇所の再計算が必要です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "設定した内容（カラム数・ガター等）は保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在の実装では設定はブラウザのメモリ上にのみ保持され、ページを再読み込みすると初期値（12カラム・ガター16px等）にリセットされます。CSS変数やTailwind設定をコピーするか、PNG画像を保存してから作業を進めてください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "「12カラム」「8ptグリッド」「黄金比」「Bootstrap」「Material」プリセットの違いは何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "12カラムは汎用のWebグリッド標準（ガター16px・マージン24px）、8ptグリッドはUIデザインで使われる8の倍数ベース（ガター8px）、黄金比は8カラムで余白を広めに取ったレイアウト（ガター20px）、BootstrapはBootstrapフレームワークの標準値（ガター30px・マージン15px）、MaterialはGoogle Material Designの基準（16pxガター・48px行高）を再現しています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "PNG出力したグリッド画像はどう使えばいいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "出力されるPNGはグリッドガイド画像で、背景は白、カラム・ベースラインが半透明で描画されます。FigmaやAdobe XD、Photoshopにレイヤーとして重ねてガイドとして使用したり、コーディング時に実装と見比べる用途に使えます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "スマホ・タブレット・PCのプレビューはそれぞれ何pxで表示されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "スマホは375×600px、タブレットは768×720px、PCは1440×900pxで表示します。デバイス幅の値はプレビュー用の代表値のため、実際のブレークポイントはプロジェクトの要件に合わせて調整してください。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -208,6 +242,27 @@
 
       <h2>ベースライングリッドとは</h2>
       <p>ベースライングリッドは、テキストの行の下端が揃う水平方向のガイドラインです。印刷物では昔から使われており、Webデザインでもタイポグラフィの一貫性を保つために活用されます。ベースライン間隔には8px・4px・行高の倍数が一般的に使われます。</p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>生成したCSS変数やTailwind設定はそのまま本番のコードに使えますか？</dt>
+        <dd>出力されるCSS変数・Tailwind設定はそのまま貼り付けて使える形式です。ただし、実際のプロジェクトのブレークポイント設計に応じて数値を調整してください。col-1〜col-12のユーティリティクラスは12カラム想定のサンプルのため、カラム数を変更した場合は該当箇所の再計算が必要です。</dd>
+        <dt>設定した内容（カラム数・ガター等）は保存されますか？</dt>
+        <dd>現在の実装では設定はブラウザのメモリ上にのみ保持され、ページを再読み込みすると初期値（12カラム・ガター16px等）にリセットされます。CSS変数やTailwind設定をコピーするか、PNG画像を保存してから作業を進めてください。</dd>
+        <dt>「12カラム」「8ptグリッド」「黄金比」「Bootstrap」「Material」プリセットの違いは何ですか？</dt>
+        <dd>12カラムは汎用のWebグリッド標準（ガター16px・マージン24px）、8ptグリッドはUIデザインで使われる8の倍数ベース（ガター8px）、黄金比は8カラムで余白を広めに取ったレイアウト（ガター20px）、BootstrapはBootstrapフレームワークの標準値（ガター30px・マージン15px）、MaterialはGoogle Material Designの基準（16pxガター・48px行高）を再現しています。</dd>
+        <dt>PNG出力したグリッド画像はどう使えばいいですか？</dt>
+        <dd>出力されるPNGはグリッドガイド画像で、背景は白、カラム・ベースラインが半透明で描画されます。FigmaやAdobe XD、Photoshopにレイヤーとして重ねてガイドとして使用したり、コーディング時に実装と見比べる用途に使えます。</dd>
+        <dt>スマホ・タブレット・PCのプレビューはそれぞれ何pxで表示されますか？</dt>
+        <dd>スマホは375×600px、タブレットは768×720px、PCは1440×900pxで表示します。デバイス幅の値はプレビュー用の代表値のため、実際のブレークポイントはプロジェクトの要件に合わせて調整してください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://getbootstrap.jp/docs/5.3/layout/grid/" target="_blank" rel="noopener">Bootstrap公式ドキュメント：グリッドシステム</a></li>
+        <li><a href="https://m3.material.io/foundations/layout/understanding-layout/spacing" target="_blank" rel="noopener">Material Design：レイアウト・スペーシングの考え方</a></li>
+      </ul>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールは入力された数値をもとにブラウザ内でグリッドを描画・コード生成するもので、サーバーへのデータ送信は一切行いません。生成されるCSS変数・Tailwind設定・PNG画像は設計の参考用です。実際のプロジェクトへ適用する際は、コーディング規約やブラウザ互換性を別途ご確認ください。</p>
     </section>
   </main>
 

@@ -624,6 +624,19 @@ main {
   line-height: 1.65;
 }
 
+/* ===== 参照情報・免責事項 ===== */
+.disclaimer-note {
+  font-size: 0.85rem;
+  color: #6b7280;
+  background: #f8f9fa;
+  border-left: 3px solid #d1d5db;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.75rem;
+}
+.disclaimer-note strong { color: #374151; }
+
 /* ===== フッター ===== */
 footer {
   text-align: center;

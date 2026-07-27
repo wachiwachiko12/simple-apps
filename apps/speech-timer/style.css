@@ -532,6 +532,38 @@ main {
 }
 
 /* =========================================
+   FAQ
+   ========================================= */
+.faq-list dt {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-header-bg);
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  font-size: 0.9rem;
+  color: #374151;
+  margin-top: 0.3rem;
+  line-height: 1.75;
+}
+
+/* =========================================
+   Reference / Disclaimer
+   ========================================= */
+.disclaimer-note {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.8125rem;
+  color: var(--color-text-sub);
+}
+
+/* =========================================
    Footer
    ========================================= */
 footer {

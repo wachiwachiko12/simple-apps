@@ -31,6 +31,36 @@
   <meta name="twitter:description" content="音声ファイルの波形をCanvas上で可視化してPNG保存。ポッドキャスト・音楽のSNS投稿用サムネイル作成に。完全ブラウザ処理・透かしなし・登録不要・無料。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-audio-visualizer.png">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "対応している音声ファイル形式は何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "MP3・WAV・OGGに対応しています。ブラウザのWeb Audio API（decodeAudioData）でデコードできる形式であれば概ね動作しますが、一部のコーデックはブラウザにより非対応の場合があります。ファイルサイズの上限は設けていませんが、大きすぎるファイルはブラウザのメモリ制限により読み込みに失敗することがあります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "アップロードした音声ファイルやマイクの音声はサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。音声ファイルはブラウザ内のWeb Audio API（decodeAudioData）でその場でデコードし、Canvas APIで波形を描画します。マイク入力もAnalyserNodeでリアルタイム解析するのみで、いずれの音声データもサーバーへアップロードされることはありません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "マイクで取得した波形は録音として保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。マイク入力はリアルタイムのプレビュー表示のみを行う機能で、音声そのものを録音・保存する機能はありません。「波形を描画」ボタンを押した瞬間の波形データを1枚のPNG画像としてスナップショット保存します。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ステレオ音源をアップロードした場合、波形はどう描画されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在の実装ではAudioBufferの1チャンネル目（モノラル、またはステレオの場合は左チャンネル相当）のデータのみを使用して波形を描画します。左右チャンネルを合成・比較する描画には対応していません。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
@@ -208,6 +238,22 @@
         すべてPNG形式で出力されるため、背景透過や高品質な画像品質が保たれます。
         ポッドキャスターや音楽制作者がSNSマーケティングで使える波形ビジュアル素材を、専用ソフト不要でブラウザから手軽に作成できます。
       </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>対応している音声ファイル形式は何ですか？</dt>
+        <dd>MP3・WAV・OGGに対応しています。ブラウザのWeb Audio API（decodeAudioData）でデコードできる形式であれば概ね動作しますが、一部のコーデックはブラウザにより非対応の場合があります。ファイルサイズの上限は設けていませんが、大きすぎるファイルはブラウザのメモリ制限により読み込みに失敗することがあります。</dd>
+        <dt>アップロードした音声ファイルやマイクの音声はサーバーに送信されますか？</dt>
+        <dd>いいえ。音声ファイルはブラウザ内のWeb Audio API（decodeAudioData）でその場でデコードし、Canvas APIで波形を描画します。マイク入力もAnalyserNodeでリアルタイム解析するのみで、いずれの音声データもサーバーへアップロードされることはありません。</dd>
+        <dt>マイクで取得した波形は録音として保存されますか？</dt>
+        <dd>いいえ。マイク入力はリアルタイムのプレビュー表示のみを行う機能で、音声そのものを録音・保存する機能はありません。「波形を描画」ボタンを押した瞬間の波形データを1枚のPNG画像としてスナップショット保存します。</dd>
+        <dt>ステレオ音源をアップロードした場合、波形はどう描画されますか？</dt>
+        <dd>現在の実装ではAudioBufferの1チャンネル目（モノラル、またはステレオの場合は左チャンネル相当）のデータのみを使用して波形を描画します。左右チャンネルを合成・比較する描画には対応していません。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>本ツールはWeb Audio API・Canvas APIを用いてブラウザ内で処理を完結しており、音声ファイル・マイク入力がサーバーに送信されることはありません。技術仕様の詳細は<a href="https://developer.mozilla.org/ja/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener">MDN: Web Audio API</a>をご参照ください。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>生成される波形画像は音声データの振幅を簡易的に可視化したものであり、正確な音響分析・周波数解析を目的としたものではありません。ダウンロードした画像の利用に伴う音源・著作権上の責任は、ご利用者様に帰属します。</p>
     </section>
 
     <!-- 広告ユニット3（コンテンツ下） -->

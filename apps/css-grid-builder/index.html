@@ -27,6 +27,40 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://keisanlab.jp/apps/css-grid-builder/">
   <title>CSS Grid・Flexboxジェネレーター【無料・日本語】Tailwind対応 | Keisanlab</title>
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "生成されたCSS・Tailwindコードはそのまま本番環境で使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。生成されるCSSは標準のCSS Grid/Flexbox構文、Tailwindクラスは公式のユーティリティクラス命名規則に準拠しているため、そのままコピーしてご利用いただけます。ただしIE11など古いブラウザはCSS Gridに対応していないため、対象ブラウザはご自身でご確認ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "設定内容は保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい、直前に編集した設定はブラウザのlocalStorageに自動保存され、次回アクセス時に復元されます。他の端末やブラウザとは同期されません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "Tailwind CSSのどのバージョンに対応していますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tailwind CSS v3系のユーティリティクラス命名規則（grid-cols-3、gap-4など）に基づいてクラス名を生成しています。tailwind.config.jsで値をカスタマイズしている場合は、生成されたクラス名が意図通りに機能するかご確認ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "Flexboxモードでもセルをクリックしてspan設定できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "column-span・row-spanの設定はCSS Gridモードのみの機能です。Flexboxモードでは「flex-item-basis」「flex-item-grow」の項目から各アイテムのサイズを調整してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入力したレイアウト設定はサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ、すべての処理はブラウザ内のJavaScriptで完結し、外部サーバーへの送信は一切行われません。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -362,6 +396,24 @@
       <p>
         生成されたCSSコードは、コンテナ要素に直接適用できます。Tailwind CSSクラスはHTMLの<code>class</code>属性にそのまま貼り付けてご利用ください。プリセットのレイアウトは実際のWebサイトでよく使われるパターンをまとめており、学習用途にも最適です。
       </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>生成されたCSS・Tailwindコードはそのまま本番環境で使えますか？</dt>
+        <dd>はい。生成されるCSSは標準のCSS Grid/Flexbox構文、Tailwindクラスは公式のユーティリティクラス命名規則に準拠しているため、そのままコピーしてご利用いただけます。ただしIE11など古いブラウザはCSS Gridに対応していないため、対象ブラウザはご自身でご確認ください。</dd>
+        <dt>設定内容は保存されますか？</dt>
+        <dd>はい、直前に編集した設定はブラウザのlocalStorageに自動保存され、次回アクセス時に復元されます。他の端末やブラウザとは同期されません。</dd>
+        <dt>Tailwind CSSのどのバージョンに対応していますか？</dt>
+        <dd>Tailwind CSS v3系のユーティリティクラス命名規則（grid-cols-3、gap-4など）に基づいてクラス名を生成しています。tailwind.config.jsで値をカスタマイズしている場合は、生成されたクラス名が意図通りに機能するかご確認ください。</dd>
+        <dt>Flexboxモードでもセルをクリックしてspan設定できますか？</dt>
+        <dd>column-span・row-spanの設定はCSS Gridモードのみの機能です。Flexboxモードでは「flex-item-basis」「flex-item-grow」の項目から各アイテムのサイズを調整してください。</dd>
+        <dt>入力したレイアウト設定はサーバーに送信されますか？</dt>
+        <dd>いいえ、すべての処理はブラウザ内のJavaScriptで完結し、外部サーバーへの送信は一切行われません。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>CSS Gridの詳細な仕様は<a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_grid_layout" target="_blank" rel="noopener">MDN Web Docs：CSS グリッドレイアウト</a>、Tailwind CSSのクラス一覧は<a href="https://tailwindcss.com/docs/grid-template-columns" target="_blank" rel="noopener">Tailwind CSS公式ドキュメント</a>をご参照ください。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールが生成するCSS・Tailwindコードは一般的な実装例であり、すべてのブラウザ・バージョンでの動作を保証するものではありません。実際のプロジェクトに組み込む際は、対象ブラウザおよびTailwindのバージョンで必ず動作確認を行ってください。</p>
     </section>
 
   </main>

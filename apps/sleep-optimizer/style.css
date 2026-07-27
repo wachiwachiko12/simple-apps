@@ -303,6 +303,54 @@ main {
   margin-bottom: 0;
 }
 
+/* ===== FAQ ===== */
+.faq-list dt {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a2a4a;
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-top: 0.3rem;
+  line-height: 1.7;
+}
+
+/* ===== Reference / Disclaimer ===== */
+.ref-links {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+.ref-links li {
+  margin-bottom: 0.3rem;
+}
+
+.ref-links a {
+  color: #2c4a7c;
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.ref-links a:hover {
+  text-decoration: underline;
+}
+
+.disclaimer-note {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
 /* ===== Affiliate block ===== */
 .affiliate-block {
   margin-top: 1.5rem;

@@ -607,6 +607,44 @@ input[type="range"] {
   line-height: 1.75;
 }
 
+.howto-section p a {
+  color: #6366f1;
+}
+
+/* ===== FAQ ===== */
+.faq-list {
+  font-size: 0.9rem;
+}
+
+.faq-list dt {
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 1rem;
+}
+
+.faq-list dd {
+  color: #475569;
+  margin-left: 0;
+  margin-top: 0.25rem;
+  line-height: 1.7;
+}
+
+.faq-list code {
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 0.8rem;
+  background: #f1f5f9;
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+}
+
+/* ===== 参照情報・免責事項 ===== */
+.disclaimer-note {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-top: 0.75rem;
+  line-height: 1.7;
+}
+
 .howto-section code {
   background: #f1f5f9;
   padding: 0.1em 0.35em;

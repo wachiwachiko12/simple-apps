@@ -319,3 +319,69 @@ main { max-width: 600px; margin: 0 auto; padding: 1rem 1rem 3rem; }
 footer { background: #1e1e2e; color: #aaa; text-align: center; padding: 1.5rem 1rem; font-size: 0.8rem; }
 footer a { color: #4ade80; text-decoration: none; }
 footer nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem; }
+
+/* ── 参照情報・免責事項 ── */
+.ref-note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+.disclaimer-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  background: var(--primary-light);
+  border-left: 3px solid var(--primary);
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.75rem;
+}
+.disclaimer-note strong { color: var(--text); }
+
+/* ── アコーディオン ── */
+.accordion-group {
+  margin-top: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.accordion-item { border-bottom: 1px solid var(--border); }
+.accordion-item:last-child { border-bottom: none; }
+.accordion-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.1rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  list-style: none;
+  background: var(--surface);
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  color: var(--text);
+}
+.accordion-summary::-webkit-details-marker { display: none; }
+.accordion-summary:hover { background: var(--primary-light); }
+.accordion-icon::after {
+  content: '+';
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+}
+details[open] > .accordion-summary .accordion-icon::after { content: '−'; }
+.accordion-body { padding: 0.25rem 1.1rem 1.1rem; background: var(--surface); }
+.accordion-body p,
+.accordion-body dl,
+.accordion-body ul,
+.accordion-body ol { font-size: 0.9rem; color: var(--text-muted); }
+.accordion-body dt { font-weight: 700; color: var(--text); margin-top: 0.75rem; }
+.accordion-body dd { margin-left: 1rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+.accordion-body ul { padding-left: 1.25rem; }
+.accordion-body li { margin-bottom: 0.3rem; }

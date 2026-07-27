@@ -453,6 +453,37 @@ main {
   margin-bottom: 0;
 }
 
+/* ===== FAQ ===== */
+.faq-list dt {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a2a4a;
+  margin-top: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+.faq-list dd {
+  font-size: 0.9rem;
+  color: #4b5563;
+  line-height: 1.7;
+  margin-left: 0;
+}
+
+/* ===== 参照情報・免責事項 ===== */
+.disclaimer-note {
+  font-size: 0.82rem;
+  color: #6b7280;
+  background: #f8fafc;
+  border-left: 3px solid #d1d5db;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.5rem;
+}
+.disclaimer-note strong { color: #1a2a4a; }
+
 /* ===== Affiliate block ===== */
 .affiliate-block {
   margin-top: 1.5rem;

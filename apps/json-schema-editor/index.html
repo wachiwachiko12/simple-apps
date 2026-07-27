@@ -27,6 +27,40 @@
   <!-- Canonical -->
   <link rel="canonical" href="https://keisanlab.jp/apps/json-schema-editor/">
   <title>JSONエディタ・スキーマジェネレーター【無料・日本語】 | Keisanlab</title>
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "入力したJSONはサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。すべての処理はブラウザ内（クライアントサイド）で完結しており、データは外部に送信されません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "JSON Schema draft-07とは何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "JSONデータの構造を記述するための仕様です。フィールドの型・必須項目・取りうる値の範囲などを定義でき、バリデーションや自動コード生成に使われます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "CSV変換は配列以外のJSONでも使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "CSV変換はJSONがオブジェクトの配列（例: [{\"a\":1},{\"a\":2}]）の場合に利用できます。ネストされたオブジェクトはJSON文字列化されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "バリデーション機能はJSON Schemaの全キーワードに対応していますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "type・required・properties・enum・const・minLength/maxLength・pattern・minimum/maximum・items・anyOf/oneOf/allOf/notなど主要なdraft-07キーワードに対応しています。ただし$refによる外部/内部参照、definitionsの解決、フォーマット検証（formatキーワード）には対応していません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ツリービューやスキーマ生成に扱えるJSONのサイズに上限はありますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "明確なサイズ上限は設けていませんが、すべての処理がブラウザ内（メインスレッド）で行われるため、数万行を超える非常に大きなJSONではツリー描画やスキーマ生成に時間がかかったり、ブラウザの動作が重くなる場合があります。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -228,7 +262,18 @@
         <dd>JSONデータの構造を記述するための仕様です。フィールドの型・必須項目・取りうる値の範囲などを定義でき、バリデーションや自動コード生成に使われます。</dd>
         <dt>CSV変換は配列以外のJSONでも使えますか？</dt>
         <dd>CSV変換はJSONがオブジェクトの配列（例: <code>[{"a":1},{"a":2}]</code>）の場合に利用できます。ネストされたオブジェクトはJSON文字列化されます。</dd>
+        <dt>バリデーション機能はJSON Schemaの全キーワードに対応していますか？</dt>
+        <dd>type・required・properties・enum・const・minLength/maxLength・pattern・minimum/maximum・items・anyOf/oneOf/allOf/notなど主要なdraft-07キーワードに対応しています。ただし<code>$ref</code>による外部/内部参照、<code>definitions</code>の解決、フォーマット検証（<code>format</code>キーワード）には対応していません。</dd>
+        <dt>ツリービューやスキーマ生成に扱えるJSONのサイズに上限はありますか？</dt>
+        <dd>明確なサイズ上限は設けていませんが、すべての処理がブラウザ内（メインスレッド）で行われるため、数万行を超える非常に大きなJSONではツリー描画やスキーマ生成に時間がかかったり、ブラウザの動作が重くなる場合があります。</dd>
       </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://json-schema.org/draft-07/json-schema-release-notes" target="_blank" rel="noopener">JSON Schema draft-07 公式リリースノート</a></li>
+      </ul>
+      <p class="ref-note" style="margin-top:0.5rem;">本ツールはブラウザ内で完結しており、入力したJSON・スキーマデータがサーバーに送信されることはありません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールが生成するJSON Schema・バリデーション結果は簡易実装による参考情報です。厳密な仕様準拠が必要な場合は、ajv等の実装や公式リファレンスと合わせてご確認ください。</p>
     </section>
 
     <!-- 広告ユニット3（使い方セクション下） -->

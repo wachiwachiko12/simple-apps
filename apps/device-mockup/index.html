@@ -24,6 +24,40 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-device-mockup.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/device-mockup/">
   <title>デバイスモックアップ作成ツール【無料】スクショをiPhone・PCフレームに合成 | Keisanlab</title>
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "アップロードした画像はサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。画像の読み込みから合成、PNG書き出しまですべてブラウザ内のCanvas APIで処理されます。画像データが外部サーバーへアップロードされることはありません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "iPhoneやMacBookのフレームは実機の画像を使用していますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。デバイスフレームはすべてCSSとCanvas APIによる描画で再現したイラスト表現であり、Appleなど実機メーカーの公式画像・素材は一切使用していません。外部ファイルを読み込まないため表示が高速です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ダウンロードしたPNGの画質はどのくらいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "プレビュー表示は端末のピクセル比に応じた解像度ですが、ダウンロード時は2倍解像度（2x）で再描画してから書き出すため、プレビューよりも高精細なPNGファイルが得られます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "背景を透明にしてダウンロードできますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。「背景タイプ」で「透明」を選択すると、背景が透過されたPNGファイルとしてダウンロードされます。ロゴやアイコンなど、他の資料に重ねて使いたい場合に便利です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "作成したモックアップ画像を商用利用できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "本ツールが生成する合成画像（フレーム部分）自体の利用に制限はありません。ただしアップロードするスクリーンショットに第三者の著作物（他社のUI、写真、ロゴ等）が含まれる場合は、その著作権・商標権にご自身でご注意ください。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -169,6 +203,24 @@
 
       <h2>対応デバイスフレームについて</h2>
       <p>iPhone フレームはノッチ（Dynamic Island 風のデザイン）を備えた縦型スマートフォン、iPad は横長タブレット、MacBook はキーボードと画面を持つノートPC、ブラウザウィンドウは Chrome 風のタブバー付きウィンドウをそれぞれ CSS と Canvas API で描画しています。外部 SVG ファイルや画像素材は使用していないため、読み込みが高速です。</p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>アップロードした画像はサーバーに送信されますか？</dt>
+        <dd>いいえ。画像の読み込みから合成、PNG書き出しまですべてブラウザ内のCanvas APIで処理されます。画像データが外部サーバーへアップロードされることはありません。</dd>
+        <dt>iPhoneやMacBookのフレームは実機の画像を使用していますか？</dt>
+        <dd>いいえ。デバイスフレームはすべてCSSとCanvas APIによる描画で再現したイラスト表現であり、Appleなど実機メーカーの公式画像・素材は一切使用していません。外部ファイルを読み込まないため表示が高速です。</dd>
+        <dt>ダウンロードしたPNGの画質はどのくらいですか？</dt>
+        <dd>プレビュー表示は端末のピクセル比に応じた解像度ですが、ダウンロード時は2倍解像度（2x）で再描画してから書き出すため、プレビューよりも高精細なPNGファイルが得られます。</dd>
+        <dt>背景を透明にしてダウンロードできますか？</dt>
+        <dd>はい。「背景タイプ」で「透明」を選択すると、背景が透過されたPNGファイルとしてダウンロードされます。ロゴやアイコンなど、他の資料に重ねて使いたい場合に便利です。</dd>
+        <dt>作成したモックアップ画像を商用利用できますか？</dt>
+        <dd>本ツールが生成する合成画像（フレーム部分）自体の利用に制限はありません。ただしアップロードするスクリーンショットに第三者の著作物（他社のUI、写真、ロゴ等）が含まれる場合は、その著作権・商標権にご自身でご注意ください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>本ツールはブラウザ内で完結しており、アップロードした画像はサーバーに送信・保存されません。デバイスフレームのデザインはCSS/Canvas APIによる独自描画であり、特定メーカーの公式アセットではありません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>生成された画像の見た目は実機の表示と完全に一致することを保証するものではなく、あくまで簡易的なモックアップ用途を想定しています。App Store等への申請に使用する場合は、各ストアの審査ガイドラインを別途ご確認ください。</p>
     </section>
 
     <!-- 広告ユニット3（フッター上） -->

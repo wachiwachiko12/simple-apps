@@ -591,6 +591,41 @@ input[type="color"] {
   margin-top: 0.875rem;
 }
 
+.howto-section a {
+  color: var(--color-primary);
+}
+.howto-section a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* ---- FAQ ---- */
+.faq-list dt {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+.faq-list dd {
+  font-size: 0.9375rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-left: 0;
+}
+
+/* ---- 参照情報・免責事項 ---- */
+.disclaimer-note {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  background: #f8fafc;
+  border-left: 3px solid var(--color-border);
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.5rem;
+}
+.disclaimer-note strong { color: var(--color-text); }
+
 /* ---- Footer ---- */
 .site-footer {
   text-align: center;

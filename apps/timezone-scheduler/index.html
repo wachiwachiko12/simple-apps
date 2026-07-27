@@ -24,6 +24,41 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-timezone-scheduler.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/timezone-scheduler/">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "夏時間（サマータイム）は自動的に反映されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。本ツールはブラウザ標準のIntl.DateTimeFormat APIを使用しており、選択した日付に応じてニューヨークやロンドンなど夏時間を採用する都市の時刻が自動的に補正されます。手動での切り替えは不要です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "業務時間はなぜ9:00〜18:00に固定されているのですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在のバージョンでは一般的な標準労働時間として9:00〜18:00を固定値として採用しています。フレックス勤務など異なる業務時間帯をお使いの場合は、表示されたグリッドを参考にしつつ手動で調整してご利用ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "都市は何都市まで追加できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "最大6都市まで同時に比較できます。7都市目以降は既存の都市を削除してから追加してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "「推奨時間帯がありません」と表示された場合はどうすればいいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "選択した都市の組み合わせによっては、全員の業務時間（9:00〜18:00）が1時間も重ならない場合があります。都市の組み合わせを見直すか、一部のメンバーに時間外対応をお願いするなどの調整が必要です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "選択した日付や入力した都市の情報はサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。日付・都市の選択情報はすべてブラウザ内のJavaScriptで処理されており、外部サーバーへの送信や保存は一切行いません。" }
+      }
+    ]
+  }
+  </script>
+
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
 
@@ -128,6 +163,24 @@
       <p>
         アメリカ・ヨーロッパの多くの都市では、毎年春から秋にかけて時計を1時間進める「夏時間（サマータイム）」を採用しています。このツールはブラウザ標準の <code>Intl.DateTimeFormat</code> APIを使用しているため、選択した日付に応じて夏時間が自動的に反映されます。手動での調整は不要です。
       </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>夏時間（サマータイム）は自動的に反映されますか？</dt>
+        <dd>はい。本ツールはブラウザ標準のIntl.DateTimeFormat APIを使用しており、選択した日付に応じてニューヨークやロンドンなど夏時間を採用する都市の時刻が自動的に補正されます。手動での切り替えは不要です。</dd>
+        <dt>業務時間はなぜ9:00〜18:00に固定されているのですか？</dt>
+        <dd>現在のバージョンでは一般的な標準労働時間として9:00〜18:00を固定値として採用しています。フレックス勤務など異なる業務時間帯をお使いの場合は、表示されたグリッドを参考にしつつ手動で調整してご利用ください。</dd>
+        <dt>都市は何都市まで追加できますか？</dt>
+        <dd>最大6都市まで同時に比較できます。7都市目以降は既存の都市を削除してから追加してください。</dd>
+        <dt>「推奨時間帯がありません」と表示された場合はどうすればいいですか？</dt>
+        <dd>選択した都市の組み合わせによっては、全員の業務時間（9:00〜18:00）が1時間も重ならない場合があります。都市の組み合わせを見直すか、一部のメンバーに時間外対応をお願いするなどの調整が必要です。</dd>
+        <dt>選択した日付や入力した都市の情報はサーバーに送信されますか？</dt>
+        <dd>いいえ。日付・都市の選択情報はすべてブラウザ内のJavaScriptで処理されており、外部サーバーへの送信や保存は一切行いません。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>本ツールのタイムゾーン・夏時間の計算は、ブラウザに組み込まれた <a href="https://www.iana.org/time-zones" target="_blank" rel="noopener">IANA タイムゾーンデータベース</a> に基づいています。入力した日付・都市の情報はブラウザ内でのみ処理され、サーバーに送信・保存されることはありません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>各国・地域の夏時間切替日は法改正等により変更される場合があり、ブラウザのタイムゾーンデータが更新されるまで正しく反映されないことがあります。重要な会議・国際的な予定の調整では、必ず参加者双方で最終的な時刻を確認してください。</p>
     </section>
   </main>
 

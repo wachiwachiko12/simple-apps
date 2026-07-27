@@ -521,6 +521,10 @@ textarea {
   line-height: 1.75;
 }
 
+.howto-section p a {
+  color: var(--color-accent-dark);
+}
+
 .howto-section code {
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.85em;
@@ -559,6 +563,36 @@ textarea {
 
 .type-guide-row dd {
   color: var(--color-hint);
+}
+
+/* ===== FAQ ===== */
+.faq-list {
+  font-size: 0.9rem;
+}
+
+.faq-list dt {
+  font-weight: 700;
+  color: var(--color-text);
+  margin-top: 1rem;
+}
+
+.faq-list dd {
+  color: var(--color-hint);
+  margin-left: 0;
+  margin-top: 0.25rem;
+  line-height: 1.7;
+}
+
+.faq-list a {
+  color: var(--color-accent-dark);
+}
+
+/* ===== 参照情報・免責事項 ===== */
+.disclaimer-note {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-top: 0.75rem;
+  line-height: 1.7;
 }
 
 /* ===== Footer ===== */

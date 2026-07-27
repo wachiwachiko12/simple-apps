@@ -23,6 +23,41 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-metronome.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/metronome/">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "音が出ない場合は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ブラウザのサイト設定で音声が許可されているか確認してください。iOSのサイレントモード（マナーモード）は解除してください。初回クリックで音声コンテキストが初期化されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "タップテンポの精度はどのくらいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "直近8回のタップ間隔の平均を取るため、3〜4回以上タップすると精度が上がります。誤タップが入った場合は「タップリセット」で初期化できます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "練習メモはどこに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ブラウザのlocalStorageに保存されるため、同じブラウザであれば次回アクセス時も引き継がれます。ブラウザのキャッシュを削除すると消える場合があります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "スマートフォンでも使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい、iPhone・Androidのスマートフォン・タブレット・PCすべてに対応しています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "拍のタイミングはどのくらい正確ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Web Audio APIのAudioContextを基準時刻として、次に鳴らす拍を100ミリ秒先読みしてスケジューリングする方式を採用しており、JavaScriptのタイマー精度に依存する単純な実装よりも高精度なタイミングを実現しています。ただし端末の処理負荷やブラウザの実装差により、ごくわずかなズレが生じる可能性はあります。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -221,7 +256,13 @@
         <dd>ブラウザのlocalStorageに保存されるため、同じブラウザであれば次回アクセス時も引き継がれます。ブラウザのキャッシュを削除すると消える場合があります。</dd>
         <dt>スマートフォンでも使えますか？</dt>
         <dd>はい、iPhone・Androidのスマートフォン・タブレット・PCすべてに対応しています。</dd>
+        <dt>拍のタイミングはどのくらい正確ですか？</dt>
+        <dd>Web Audio APIのAudioContextを基準時刻として、次に鳴らす拍を100ミリ秒先読みしてスケジューリングする方式を採用しており、JavaScriptのタイマー精度に依存する単純な実装よりも高精度なタイミングを実現しています。ただし端末の処理負荷やブラウザの実装差により、ごくわずかなズレが生じる可能性はあります。</dd>
       </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>本ツールはWeb Audio API（ブラウザ標準機能）でクリック音を生成しており、練習メモを含むすべてのデータはブラウザのlocalStorageにのみ保存されます。サーバーへの送信は一切行われません。テンポ記号（Largo〜Prestoなど）の呼称・BPM範囲は、一般的な音楽用語の慣用的な区分に基づいています。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールは楽器練習の補助を目的としたツールであり、正式な音楽教育・試験対策における唯一の基準ではありません。演奏環境やスピーカー・イヤホンの遅延により、体感的なタイミングと表示BPMにズレを感じる場合があります。</p>
     </section>
 
     <!-- 広告ユニット3（フッター直上） -->

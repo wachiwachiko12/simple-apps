@@ -381,6 +381,54 @@ main {
   background: #f8fafc;
 }
 
+/* ========== FAQ ========== */
+.faq-list dt {
+  font-size: 0.93rem;
+  font-weight: 700;
+  color: #1a5276;
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  font-size: 0.9rem;
+  color: #444;
+  margin-top: 0.3rem;
+  line-height: 1.75;
+}
+
+/* ========== Reference / Disclaimer ========== */
+.ref-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.ref-links li {
+  margin-bottom: 0.3rem;
+}
+
+.ref-links a {
+  color: #1a5276;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.ref-links a:hover {
+  text-decoration: underline;
+}
+
+.disclaimer-note {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #dde3ea;
+  font-size: 0.82rem;
+  color: #777;
+}
+
 /* ========== Footer ========== */
 .site-footer {
   text-align: center;

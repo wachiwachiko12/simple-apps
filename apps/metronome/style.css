@@ -572,6 +572,19 @@ input[type="range"] {
   margin-top: 0.2rem;
 }
 
+/* ===== 参照情報・免責事項 ===== */
+.disclaimer-note {
+  font-size: 0.82rem;
+  color: #6b7280;
+  background: #f8f9fa;
+  border-left: 3px solid #dde2ea;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.5rem;
+}
+.disclaimer-note strong { color: #1a1a2e; }
+
 /* ===== Footer ===== */
 footer {
   text-align: center;

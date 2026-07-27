@@ -24,6 +24,40 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-okr-planner.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/okr-planner/">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Objective（目標）はいくつまで作成できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "1つの四半期につき最大4つのObjectiveを作成できます。各Objectiveには最大5つのKey Result（成果指標）を設定可能です。上限に達すると「+ Objectiveを追加」ボタンが無効化されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "達成率はどのように計算されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "各Key Resultの達成率は「現在値 ÷ 目標値 × 100」で計算され（100%が上限）、Objectiveの達成率はそのObjective内の入力済みKey Resultの達成率の平均値です。名称未入力のKey Resultは計算対象から除外されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "データはどこに保存されますか？年をまたいでQ1のデータは分かれますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "データはブラウザのlocalStorageに自動保存されます。ただし現在の実装ではQ1〜Q4はタブ単位で保存されており、年ごとの区別はありません。翌年に同じQ1タブでデータを入力すると前年のデータは上書きされるため、年をまたいで記録を残したい場合は期末にスクリーンショット等で記録を残すことをおすすめします。" }
+      },
+      {
+        "@type": "Question",
+        "name": "目標値・現在値の単位（%・件・円など）は自由に設定できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。「単位」欄はテキスト入力のため、%・件・万円・本など任意の単位を入力できます。達成率の計算は現在値と目標値の比率のみで行われ、単位は表示用のラベルとして扱われます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "進捗バーの色（赤・黄・緑）の基準は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "達成率0〜40%は赤（未達・要注意）、41〜70%は黄（進行中）、71〜100%は緑（順調）で表示されます。この基準はOKRフレームワークで一般的に使われる目安を採用しています。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -107,6 +141,26 @@
         <li><strong>Objective: スキルアップを実現する</strong> — KR: 資格1つ取得 / 技術記事10本執筆</li>
         <li><strong>Objective: 案件獲得率を上げる</strong> — KR: 提案数20件 / 成約率30%達成</li>
       </ul>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>Objective（目標）はいくつまで作成できますか？</dt>
+        <dd>1つの四半期につき最大4つのObjectiveを作成できます。各Objectiveには最大5つのKey Result（成果指標）を設定可能です。上限に達すると「+ Objectiveを追加」ボタンが無効化されます。</dd>
+        <dt>達成率はどのように計算されますか？</dt>
+        <dd>各Key Resultの達成率は「現在値 ÷ 目標値 × 100」で計算され（100%が上限）、Objectiveの達成率はそのObjective内の入力済みKey Resultの達成率の平均値です。名称未入力のKey Resultは計算対象から除外されます。</dd>
+        <dt>データはどこに保存されますか？年をまたいでQ1のデータは分かれますか？</dt>
+        <dd>データはブラウザのlocalStorageに自動保存されます。ただし現在の実装ではQ1〜Q4はタブ単位で保存されており、年ごとの区別はありません。翌年に同じQ1タブでデータを入力すると前年のデータは上書きされるため、年をまたいで記録を残したい場合は期末にスクリーンショット等で記録を残すことをおすすめします。</dd>
+        <dt>目標値・現在値の単位（%・件・円など）は自由に設定できますか？</dt>
+        <dd>はい。「単位」欄はテキスト入力のため、%・件・万円・本など任意の単位を入力できます。達成率の計算は現在値と目標値の比率のみで行われ、単位は表示用のラベルとして扱われます。</dd>
+        <dt>進捗バーの色（赤・黄・緑）の基準は？</dt>
+        <dd>達成率0〜40%は赤（未達・要注意）、41〜70%は黄（進行中）、71〜100%は緑（順調）で表示されます。この基準はOKRフレームワークで一般的に使われる目安を採用しています。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://rework.withgoogle.com/guides/set-goals-with-okrs/steps/introduction/" target="_blank" rel="noopener">Google re:Work：OKRの設定ガイド</a></li>
+      </ul>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールは目標管理の記録・可視化を補助する私的なツールであり、達成率の計算は入力された数値に基づく簡易的な指標です。データはブラウザのlocalStorageにのみ保存され、サーバーには送信されません。ブラウザのデータ削除等によるデータ消失について、当サイトは責任を負いかねます。</p>
 
       <h2>関連ツール</h2>
       <ul>

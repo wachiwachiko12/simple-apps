@@ -376,6 +376,39 @@ input[type="color"] {
   line-height: 1.8;
 }
 
+.howto-section p a {
+  color: #4338ca;
+}
+
+.faq-list dt {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-top: 0.3rem;
+}
+
+.disclaimer-note {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #475569;
+  background: #f1f5f9;
+  border-left: 3px solid #4338ca;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
 /* ===== Footer ===== */
 footer {
   text-align: center;

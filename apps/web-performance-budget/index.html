@@ -26,6 +26,40 @@
   <meta name="twitter:title" content="Webパフォーマンス予算ツール【無料】Core Web Vitals目標設定">
   <meta name="twitter:description" content="JSバンドルサイズ・画像・フォントのパフォーマンス予算をリソース別に設定・可視化。LCP・CLS・INPのCore Web Vitals目標値も管理できる無料ツール。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-web-performance-budget.png">
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "プリセット（ECサイト・ブログ・SPA・LP）の数値の根拠は何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "HTTP Archive・Web Almanac・GoogleのCore Web Vitalsガイドラインを参考にした一般的な目安値です。ECサイトはカート機能・決済JSの重みを、SPAはJavaScriptバンドルが大きくなりやすい特性を考慮しています。実際のサイト構成によって最適な予算は異なるため、あくまで出発点としてご利用ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "「実際のサイズ」欄には何を入力すればいいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Chrome DevToolsのNetworkタブで表示される転送サイズ（Transferred）や、Lighthouseレポートのリソースサマリーに表示されるサイズをKB単位で入力してください。gzip/Brotli圧縮後のサイズを使うと実際のユーザー体験に近い数値になります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "Core Web VitalsのGood / Needs Improvement / Poorの基準値はどこから来ていますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Googleが公式に定めるしきい値をそのまま採用しています。LCPはGood 2.5秒以下・Needs Improvement 4.0秒以下、INPはGood 200ms以下・Needs Improvement 500ms以下、CLSはGood 0.1以下・Needs Improvement 0.25以下です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "設定した予算やCore Web Vitals目標値はどこに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "入力内容はブラウザのlocalStorageに自動保存され、再訪問時にも引き継がれます。別端末・別ブラウザには保存内容が共有されないため、チームで共有したい場合は「JSONでダウンロード」機能をご利用ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "このツールで良い判定が出ればGoogle検索の順位は上がりますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Core Web Vitalsは検索ランキングシグナルの一部として使われていますが、本ツールでの目標設定・自己申告の数値がそのままランキングに反映されるわけではありません。実際の評価はGoogleがフィールドデータ（実際のユーザー計測値）をもとに行うため、Lighthouse・PageSpeed Insights・Search Consoleでの実測確認もあわせて行ってください。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
@@ -321,8 +355,23 @@
         本ツールのプリセット値は、HTTP Archive・Web Almanac・GoogleのCWVガイドラインを参考に設定しています。ECサイトはカート機能・決済JSなどの重みを考慮し、ブログは軽量な構成を前提にしています。SPAはJavaScriptバンドルが大きくなりやすい特性を踏まえた値です。LPはコンバージョン重視のため、読み込み速度を最優先にしたやや厳しめの値を設定しています。プリセットはあくまで出発点として活用し、実際の計測値に合わせて調整してください。
       </p>
 
-      <h2>プライバシーについて</h2>
-      <p>入力したデータはすべてブラウザ内で処理されます。外部サーバーへのデータ送信は一切行いません。</p>
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>プリセット（ECサイト・ブログ・SPA・LP）の数値の根拠は何ですか？</dt>
+        <dd>HTTP Archive・Web Almanac・GoogleのCore Web Vitalsガイドラインを参考にした一般的な目安値です。ECサイトはカート機能・決済JSの重みを、SPAはJavaScriptバンドルが大きくなりやすい特性を考慮しています。実際のサイト構成によって最適な予算は異なるため、あくまで出発点としてご利用ください。</dd>
+        <dt>「実際のサイズ」欄には何を入力すればいいですか？</dt>
+        <dd>Chrome DevToolsのNetworkタブで表示される転送サイズ（Transferred）や、Lighthouseレポートのリソースサマリーに表示されるサイズをKB単位で入力してください。gzip/Brotli圧縮後のサイズを使うと実際のユーザー体験に近い数値になります。</dd>
+        <dt>Core Web VitalsのGood / Needs Improvement / Poorの基準値はどこから来ていますか？</dt>
+        <dd>Googleが公式に定めるしきい値をそのまま採用しています。LCPはGood 2.5秒以下・Needs Improvement 4.0秒以下、INPはGood 200ms以下・Needs Improvement 500ms以下、CLSはGood 0.1以下・Needs Improvement 0.25以下です。</dd>
+        <dt>設定した予算やCore Web Vitals目標値はどこに保存されますか？</dt>
+        <dd>入力内容はブラウザのlocalStorageに自動保存され、再訪問時にも引き継がれます。別端末・別ブラウザには保存内容が共有されないため、チームで共有したい場合は「JSONでダウンロード」機能をご利用ください。</dd>
+        <dt>このツールで良い判定が出ればGoogle検索の順位は上がりますか？</dt>
+        <dd>Core Web Vitalsは検索ランキングシグナルの一部として使われていますが、本ツールでの目標設定・自己申告の数値がそのままランキングに反映されるわけではありません。実際の評価はGoogleがフィールドデータ（実際のユーザー計測値）をもとに行うため、Lighthouse・PageSpeed Insights・Search Consoleでの実測確認もあわせて行ってください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>Core Web Vitalsの指標・基準値は <a href="https://web.dev/articles/vitals" target="_blank" rel="noopener">Google web.dev「Web Vitals」</a> の公式情報を参照しています。入力したデータはすべてブラウザ内で処理され、外部サーバーへのデータ送信は一切行いません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールのプリセット値・判定閾値は参考情報であり、実際のCore Web VitalsスコアやGoogle検索での評価を保証するものではありません。最終的なパフォーマンス評価は、Lighthouse・PageSpeed Insights等の公式ツールでの実測をあわせてご確認ください。</p>
     </section>
   </main>
 

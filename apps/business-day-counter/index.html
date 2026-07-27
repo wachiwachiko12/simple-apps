@@ -20,6 +20,37 @@
   <meta property="og:url" content="https://keisanlab.jp/apps/business-day-counter/">
   <meta property="og:image" content="https://keisanlab.jp/images/ogp-business-day-counter.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/business-day-counter/">
+
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "振替休日は考慮されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ、本ツールでは振替休日を考慮していません。祝日が日曜と重なった場合に翌月曜が振替休日となる制度がありますが、本ツールは国民の祝日本来の日付のみを祝日として扱います。" }
+      },
+      {
+        "@type": "Question",
+        "name": "2028年以降の日付でも正しく計算できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在のバージョンでは2026年・2027年の祝日データのみを組み込んでいます。2028年以降の日付を計算した場合、その年の祝日は考慮されず、土日のみを除外した営業日として計算されますのでご注意ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "会社独自の休業日（夏季休暇・年末年始など）は反映されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ、本ツールが除外するのは土曜・日曜・国民の祝日のみです。会社ごとの夏季休暇・年末年始休業・臨時休業日などは反映されないため、実際の会社の営業日と差が生じる場合があります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "締め日計算タブで支払日が土日祝と重なった場合はどうなりますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "算出した支払日が土曜・日曜・祝日と重なる場合は、その翌営業日に自動的に繰り越して計算します。結果画面に繰り越しの有無が表示されます。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -152,6 +183,22 @@
         2026年・2027年の国民の祝日（元日・成人の日・建国記念の日・天皇誕生日・春分の日・昭和の日・憲法記念日・みどりの日・こどもの日・海の日・山の日・敬老の日・秋分の日・スポーツの日・文化の日・勤労感謝の日）に対応しています。
         なお、振替休日は本ツールでは考慮していません。
       </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>振替休日は考慮されますか？</dt>
+        <dd>いいえ、本ツールでは振替休日を考慮していません。祝日が日曜と重なった場合に翌月曜が振替休日となる制度がありますが、本ツールは国民の祝日本来の日付のみを祝日として扱います。</dd>
+        <dt>2028年以降の日付でも正しく計算できますか？</dt>
+        <dd>現在のバージョンでは2026年・2027年の祝日データのみを組み込んでいます。2028年以降の日付を計算した場合、その年の祝日は考慮されず、土日のみを除外した営業日として計算されますのでご注意ください。</dd>
+        <dt>会社独自の休業日（夏季休暇・年末年始など）は反映されますか？</dt>
+        <dd>いいえ、本ツールが除外するのは土曜・日曜・国民の祝日のみです。会社ごとの夏季休暇・年末年始休業・臨時休業日などは反映されないため、実際の会社の営業日と差が生じる場合があります。</dd>
+        <dt>締め日計算タブで支払日が土日祝と重なった場合はどうなりますか？</dt>
+        <dd>算出した支払日が土曜・日曜・祝日と重なる場合は、その翌営業日に自動的に繰り越して計算します。結果画面に繰り越しの有無が表示されます。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>国民の祝日の詳細は<a href="https://www8.cao.go.jp/chosei/shukujitsu/gaiyou.html" target="_blank" rel="noopener">内閣府：国民の祝日について</a>をご参照ください。入力データはブラウザ内でのみ処理され、サーバーには送信されません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は参考値です。契約書・請求書など重要な書類の日付確定にあたっては、必ず最新の官報・カレンダーで祝日情報をご確認ください。振替休日や会社独自の休業日は考慮されていない点にご注意ください。</p>
 
       <h2>請求書・経理業務の効率化に</h2>
       <div class="affiliate-block">

@@ -24,6 +24,42 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-ruby-furigana.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/ruby-furigana/">
   <title>ふりがな自動付与ツール【無料】漢字にルビを一括変換 | Keisanlab</title>
+
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "変換に数秒かかることがあるのはなぜですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "初回変換時に、形態素解析ライブラリkuromoji.jsの辞書データ（数MB）をブラウザ上にダウンロード・構築するため、通信環境によっては数秒〜十数秒かかります。一度読み込めばページを開いている間はキャッシュされ、2回目以降の変換は高速に行われます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "人名や地名の読みが正しく表示されないことがあるのはなぜですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "本ツールはkuromoji.jsによる形態素解析で読みを自動推定しています。辞書にない固有名詞や当て字の人名・地名では、読みが実際と異なる場合があります。重要な文書に使う際はプレビューで必ず確認・修正してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "「学年別漢字レベル」はどの基準に基づいていますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "文部科学省の学習指導要領に定める学年別配当漢字（教育漢字）を参考にしています。例えば「小学3年生以上」を選ぶと、1・2年生で習う漢字にはルビが付かず、3年生以降に配当された漢字にのみルビが付与されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入力したテキストはサーバーに送信されますか？保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。入力テキストの解析・変換はすべてブラウザ内のJavaScript（kuromoji.js）で行われ、サーバーへの送信は一切ありません。ページを閉じると変換結果も破棄され、保存機能もありません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "1回あたり最大2000文字までしか変換できないのはなぜですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ブラウザ上で形態素解析を行う処理負荷とレスポンス速度を考慮し、1回あたりの上限を2000文字に設定しています。長文をまとめて変換したい場合は、章や段落単位で分割して変換してください。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -168,6 +204,27 @@
 
       <h2>学年別漢字レベルについて</h2>
       <p>文部科学省の学習指導要領に基づく配当漢字を参考に、指定した学年以上で習う漢字のみにルビを付ける機能です。例えば「小学3年生以上」を選ぶと、1・2年生の漢字（山・川・学など）にはルビが付かず、3年生以降で習う漢字にのみルビが付きます。子ども向け読み物の制作や日本語学習教材の作成に便利です。</p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>変換に数秒かかることがあるのはなぜですか？</dt>
+        <dd>初回変換時に、形態素解析ライブラリkuromoji.jsの辞書データ（数MB）をブラウザ上にダウンロード・構築するため、通信環境によっては数秒〜十数秒かかります。一度読み込めばページを開いている間はキャッシュされ、2回目以降の変換は高速に行われます。</dd>
+        <dt>人名や地名の読みが正しく表示されないことがあるのはなぜですか？</dt>
+        <dd>本ツールはkuromoji.jsによる形態素解析で読みを自動推定しています。辞書にない固有名詞や当て字の人名・地名では、読みが実際と異なる場合があります。重要な文書に使う際はプレビューで必ず確認・修正してください。</dd>
+        <dt>「学年別漢字レベル」はどの基準に基づいていますか？</dt>
+        <dd>文部科学省の学習指導要領に定める学年別配当漢字（教育漢字）を参考にしています。例えば「小学3年生以上」を選ぶと、1・2年生で習う漢字にはルビが付かず、3年生以降に配当された漢字にのみルビが付与されます。</dd>
+        <dt>入力したテキストはサーバーに送信されますか？保存されますか？</dt>
+        <dd>いいえ。入力テキストの解析・変換はすべてブラウザ内のJavaScript（kuromoji.js）で行われ、サーバーへの送信は一切ありません。ページを閉じると変換結果も破棄され、保存機能もありません。</dd>
+        <dt>1回あたり最大2000文字までしか変換できないのはなぜですか？</dt>
+        <dd>ブラウザ上で形態素解析を行う処理負荷とレスポンス速度を考慮し、1回あたりの上限を2000文字に設定しています。長文をまとめて変換したい場合は、章や段落単位で分割して変換してください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://www.mext.go.jp/a_menu/shotou/new-cs/youryou/syo/koku/index.htm" target="_blank" rel="noopener">文部科学省: 小学校学習指導要領（国語）</a></li>
+        <li><a href="https://github.com/takuyaa/kuromoji.js" target="_blank" rel="noopener">kuromoji.js（本ツールが使用する形態素解析ライブラリ）</a></li>
+      </ul>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールが自動生成するふりがなはkuromoji.jsによる形態素解析の推定結果であり、完全な正確性を保証するものではありません。出版物・教材など公開を前提としたコンテンツに利用する場合は、必ず内容を確認・校正してからご使用ください。</p>
     </section>
 
     <!-- 広告ユニット3（コンテンツ末尾） -->

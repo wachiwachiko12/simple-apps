@@ -26,6 +26,41 @@
   <meta name="twitter:title" content="睡眠時間計算ツール【無料】レム睡眠サイクルで最適な起床・就寝時刻を算出">
   <meta name="twitter:description" content="REM睡眠の90分サイクルから最適な起床・就寝時刻を無料で計算。登録不要・ブラウザだけで完結。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-sleep-optimizer.png">
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "なぜ90分サイクルで計算するのですか？誰にでも当てはまりますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "睡眠周期の長さには個人差があり、実際は80〜120分程度の幅があるとされています。90分は睡眠研究でよく報告される平均値であり、本ツールはこれを目安として計算しています。自分の体感と大きくずれる場合は参考程度にとどめてください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入眠所要時間の初期値「14分」はどこから来ていますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "一般的な睡眠研究で報告される入眠潜時（布団に入ってから眠りにつくまでの時間）の平均値を参考にした初期値です。個人差が大きいため、ご自身の実際の体感時間に書き換えて計算することをおすすめします。" }
+      },
+      {
+        "@type": "Question",
+        "name": "「おすすめ」バッジの5サイクル（7.5時間）はなぜ最適とされているのですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "米国睡眠財団（National Sleep Foundation）が推奨する成人の必要睡眠時間7〜9時間の範囲に収まりやすく、90分×5サイクル＝7.5時間がその中間的な値であるためデフォルトの「おすすめ」としています。必要な睡眠時間には個人差があるため、あくまで出発点としてご利用ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "4サイクル未満（6時間未満）や6サイクルを超える睡眠時間も計算できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在の実装では4〜6サイクル（6時間〜9時間）の範囲で候補を表示しています。この範囲外の極端に短い・長い睡眠は必要性の個人差が大きいため、候補には含めていません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入力した時刻データは記録・送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。入力した時刻・設定はブラウザのlocalStorageにのみ保存され、外部サーバーへの送信は一切行われません。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
@@ -120,10 +155,29 @@
         米国睡眠財団の推奨によると、成人（18〜64歳）の必要睡眠時間は7〜9時間です。このツールでは90分×5サイクル＝7.5時間を「おすすめ」として表示しています。ただし、睡眠の必要量には個人差があります。日中に強い眠気を感じない・集中力が維持できる・朝スッキリ目覚められる、という状態が「自分に合った睡眠時間」の目安です。
       </p>
 
-      <h2>プライバシーについて</h2>
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>なぜ90分サイクルで計算するのですか？誰にでも当てはまりますか？</dt>
+        <dd>睡眠周期の長さには個人差があり、実際は80〜120分程度の幅があるとされています。90分は睡眠研究でよく報告される平均値であり、本ツールはこれを目安として計算しています。自分の体感と大きくずれる場合は参考程度にとどめてください。</dd>
+        <dt>入眠所要時間の初期値「14分」はどこから来ていますか？</dt>
+        <dd>一般的な睡眠研究で報告される入眠潜時（布団に入ってから眠りにつくまでの時間）の平均値を参考にした初期値です。個人差が大きいため、ご自身の実際の体感時間に書き換えて計算することをおすすめします。</dd>
+        <dt>「おすすめ」バッジの5サイクル（7.5時間）はなぜ最適とされているのですか？</dt>
+        <dd>米国睡眠財団（National Sleep Foundation）が推奨する成人の必要睡眠時間7〜9時間の範囲に収まりやすく、90分×5サイクル＝7.5時間がその中間的な値であるためデフォルトの「おすすめ」としています。必要な睡眠時間には個人差があるため、あくまで出発点としてご利用ください。</dd>
+        <dt>4サイクル未満（6時間未満）や6サイクルを超える睡眠時間も計算できますか？</dt>
+        <dd>現在の実装では4〜6サイクル（6時間〜9時間）の範囲で候補を表示しています。この範囲外の極端に短い・長い睡眠は必要性の個人差が大きいため、候補には含めていません。</dd>
+        <dt>入力した時刻データは記録・送信されますか？</dt>
+        <dd>いいえ。入力した時刻・設定はブラウザのlocalStorageにのみ保存され、外部サーバーへの送信は一切行われません。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://www.sleepfoundation.org/how-sleep-works/sleep-cycle" target="_blank" rel="noopener">Sleep Foundation: Sleep Cycle（睡眠サイクルの解説・英語）</a></li>
+        <li><a href="https://www.sleepfoundation.org/how-sleep-works/how-much-sleep-do-we-really-need" target="_blank" rel="noopener">Sleep Foundation: 推奨睡眠時間（英語）</a></li>
+      </ul>
       <p>
         入力した時刻や設定はすべてお使いのブラウザ内（localStorage）にのみ保存されます。外部サーバーへの送信は一切行いません。
       </p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールが提示する就寝・起床時刻はREM睡眠の一般的な周期（約90分）を用いた計算上の目安であり、医学的な診断や治療を目的としたものではありません。睡眠に関する深刻な悩み（不眠症・睡眠時無呼吸症候群の疑いなど）がある場合は、医療機関を受診してください。</p>
 
       <div class="affiliate-block">
         <p class="affiliate-label">PR</p>

@@ -24,6 +24,41 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-typing-practice.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/typing-practice/">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "WPM（タイピング速度）はどのように計算されていますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "正しく入力できた文字数を5で割り（英語の1単語＝5文字とする国際標準の換算）、経過分数で割って算出しています。ローマ字・かなモードはキーストローク数が英語より多いため、同じ内容でもWPMは英語モードより低く出ます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ローマ字入力の判定はどのように行われていますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "入力したローマ字を内蔵の変換テーブルでかなに変換し、表示中の期待するかなと一致するか判定しています。「し」に対するshi/si、「ふ」に対するfu/huなど、複数のローマ字表記に対応しています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "かなモードで日本語入力（IME）は必要ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "かなモードは変換確定後のひらがなを直接入力する想定です。IMEで変換中の入力（isComposing状態）は判定に影響しないよう無視される仕組みになっています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ベストスコアはどこに保存されますか？別の端末でも引き継げますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ベストスコアはモード・テキストカテゴリの組み合わせごとにブラウザのlocalStorageへ保存されます。別端末・別ブラウザ・シークレットモードには引き継がれません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入力中にBackspaceでミスを消せないのはなぜですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "英語・ローマ字モードでは実際のタイピング速度と正確率を正しく計測するため、意図的にBackspaceキーを無効化しています（かなモードはIME確定操作のため対象外です）。ミスをした場合はそのまま先に進み、正確率に反映される仕組みです。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -190,6 +225,24 @@
         </tbody>
       </table>
       <p style="margin-top:0.75rem;font-size:0.85rem;color:#888;">※ ローマ字・かなモードはキーストローク数が多いため、WPMは英語モードより低くなります。</p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>WPM（タイピング速度）はどのように計算されていますか？</dt>
+        <dd>正しく入力できた文字数を5で割り（英語の1単語＝5文字とする国際標準の換算）、経過分数で割って算出しています。ローマ字・かなモードはキーストローク数が英語より多いため、同じ内容でもWPMは英語モードより低く出ます。</dd>
+        <dt>ローマ字入力の判定はどのように行われていますか？</dt>
+        <dd>入力したローマ字を内蔵の変換テーブルでかなに変換し、表示中の期待するかなと一致するか判定しています。「し」に対するshi/si、「ふ」に対するfu/huなど、複数のローマ字表記に対応しています。</dd>
+        <dt>かなモードで日本語入力（IME）は必要ですか？</dt>
+        <dd>かなモードは変換確定後のひらがなを直接入力する想定です。IMEで変換中の入力（isComposing状態）は判定に影響しないよう無視される仕組みになっています。</dd>
+        <dt>ベストスコアはどこに保存されますか？別の端末でも引き継げますか？</dt>
+        <dd>ベストスコアはモード・テキストカテゴリの組み合わせごとにブラウザのlocalStorageへ保存されます。別端末・別ブラウザ・シークレットモードには引き継がれません。</dd>
+        <dt>入力中にBackspaceでミスを消せないのはなぜですか？</dt>
+        <dd>英語・ローマ字モードでは実際のタイピング速度と正確率を正しく計測するため、意図的にBackspaceキーを無効化しています（かなモードはIME確定操作のため対象外です）。ミスをした場合はそのまま先に進み、正確率に反映される仕組みです。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>入力したテキスト・スコアはブラウザ内でのみ処理・保存され、外部サーバーへ送信されることはありません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールで計測されるWPM・正確率・ランクは簡易的な参考値であり、公的なタイピング検定・資格試験のスコアや基準と同一のものではありません。就職活動における技能証明や資格試験の代替とはなりませんのでご注意ください。</p>
     </section>
   </main>
 

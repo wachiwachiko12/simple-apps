@@ -23,6 +23,36 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-code-snapshot.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/code-snapshot/">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "入力したコードはサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。コードのハイライト表示にはHighlight.js、画像化にはhtml2canvasを使用しており、いずれもブラウザ内で完結する処理です。入力したコードが外部サーバーに送信されることはありません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ダウンロードされる画像の解像度はどのくらいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "html2canvasのscaleオプションを2倍（2x）に設定して生成しているため、Retinaディスプレイでもくっきり表示できる高解像度のPNG画像がダウンロードされます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "対応しているプログラミング言語は何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "JavaScript・TypeScript・Python・Go・Rust・Java・HTML・CSS・Shell/Bash・SQL・JSONの主要11言語と、その他汎用テキスト表示に対応しています。シンタックスハイライトはHighlight.jsのハイライトルールに基づいて表示されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "コードが長い場合、画像が見切れることはありますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "長いコード・長い行はコードカード内でそのままレイアウトされるため、非常に長いコードの場合は画像の縦横サイズが大きくなります。SNS投稿には数行〜数十行程度の短いコードスニペットでの利用がおすすめです。" }
+      }
+    ]
+  }
+  </script>
+
   <!-- Highlight.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -185,6 +215,22 @@
         <li><strong>One Dark</strong> — Atom/VS Code ユーザーにおなじみの落ち着いた暗色テーマ。</li>
         <li><strong>Solarized Dark</strong> — 目に優しい低コントラストの定番テーマ。</li>
       </ul>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>入力したコードはサーバーに送信されますか？</dt>
+        <dd>いいえ。コードのハイライト表示にはHighlight.js、画像化にはhtml2canvasを使用しており、いずれもブラウザ内で完結する処理です。入力したコードが外部サーバーに送信されることはありません。</dd>
+        <dt>ダウンロードされる画像の解像度はどのくらいですか？</dt>
+        <dd>html2canvasのscaleオプションを2倍（2x）に設定して生成しているため、Retinaディスプレイでもくっきり表示できる高解像度のPNG画像がダウンロードされます。</dd>
+        <dt>対応しているプログラミング言語は何ですか？</dt>
+        <dd>JavaScript・TypeScript・Python・Go・Rust・Java・HTML・CSS・Shell/Bash・SQL・JSONの主要11言語と、その他汎用テキスト表示に対応しています。シンタックスハイライトはHighlight.jsのハイライトルールに基づいて表示されます。</dd>
+        <dt>コードが長い場合、画像が見切れることはありますか？</dt>
+        <dd>長いコード・長い行はコードカード内でそのままレイアウトされるため、非常に長いコードの場合は画像の縦横サイズが大きくなります。SNS投稿には数行〜数十行程度の短いコードスニペットでの利用がおすすめです。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>シンタックスハイライトには<a href="https://highlightjs.org/" target="_blank" rel="noopener">Highlight.js</a>、画像生成には<a href="https://html2canvas.hertzen.com/" target="_blank" rel="noopener">html2canvas</a>を利用しています。入力したコードはブラウザ内で処理され、サーバーには送信されません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>入力するコードの著作権・機密情報の取り扱いはご利用者様の責任で管理してください。生成した画像をSNS等で公開する前に、APIキーやパスワードなど機密情報が含まれていないか必ずご確認ください。</p>
     </section>
   </main>
 

@@ -23,6 +23,41 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-pomodoro.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/pomodoro/">
 
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "タイマーを止めたらタスクはどうなりますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "タスクデータはブラウザに保存されます。タイマー状態はページを閉じるとリセットされますが、タスクは次回も引き継がれます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "スマートフォンでも使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい、スマホ・タブレット・PCすべてに対応しています。ブラウザを最小化してもタイマーは動作しますが、バックグラウンドタブでは動作が遅延する場合があります。" }
+      },
+      {
+        "@type": "Question",
+        "name": "音が鳴らない場合は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ブラウザの音量設定やサイト設定で音が許可されているか確認してください。iOSでは端末の音量ボタン（サイレントスイッチ）で調整できます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "集中時間・休憩時間の長さは変更できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "「集中時間」から15分・20分・25分・30分・45分を選べます。休憩時間は選んだ集中時間に応じて自動調整され、4セット後には長い休憩が入ります。デフォルトの25分+5分は、開発者Francesco Cirilloが提唱した最も一般的な組み合わせです。" }
+      },
+      {
+        "@type": "Question",
+        "name": "記録したポモドーロ数やタスクは消えることがありますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "データはブラウザのlocalStorageに保存されるため、ブラウザのキャッシュ・Cookieを削除したり、シークレット（プライベート）モードで利用した場合は保存されません。また別の端末・別のブラウザとはデータが共有されません。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -172,7 +207,15 @@
         <dd>はい、スマホ・タブレット・PCすべてに対応しています。ブラウザを最小化してもタイマーは動作します（バックグラウンドタブに注意）。</dd>
         <dt>音が鳴らない場合は？</dt>
         <dd>ブラウザの音量設定やサイト設定で音が許可されているか確認してください。iOSでは音量ボタンで調整できます。</dd>
+        <dt>集中時間・休憩時間の長さは変更できますか？</dt>
+        <dd>「集中時間」から15分・20分・25分・30分・45分を選べます。休憩時間は選んだ集中時間に応じて自動調整され、4セット後には長い休憩が入ります。デフォルトの25分+5分は、開発者Francesco Cirilloが提唱した最も一般的な組み合わせです。</dd>
+        <dt>記録したポモドーロ数やタスクは消えることがありますか？</dt>
+        <dd>データはブラウザのlocalStorageに保存されるため、ブラウザのキャッシュ・Cookieを削除したり、シークレット（プライベート）モードで利用した場合は保存されません。また別の端末・別のブラウザとはデータが共有されません。</dd>
       </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>本ツールはブラウザ内で完結しており、入力したタスク名やポモドーロ記録がサーバーへ送信されることはありません。ポモドーロテクニックの基本的な考え方（25分集中＋5分休憩を1サイクルとする時間管理術）は、考案者Francesco Cirilloの提唱内容を参考にしています。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールで計測・記録される時間やポモドーロ数はあくまで目安であり、正確な労働時間の証明や勤怠管理の代替としてのご利用は想定していません。業務時間の記録が必要な場合は、勤務先の指定するツールをご利用ください。</p>
     </section>
   </main>
 

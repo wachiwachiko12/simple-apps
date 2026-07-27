@@ -26,6 +26,40 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "画像サイズは1200×630px固定ですか？変更できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "出力サイズは1200×630px（Open Graph Protocol推奨比率1.91:1）に固定されています。Twitter/X・Facebook・LINEなど主要SNSでトリミングされずに表示される標準サイズのため、サイズ変更機能は設けていません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "作成した画像やテキストはサーバーに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。入力したタイトル・説明文・デザイン設定はすべてブラウザのCanvas API上でのみ処理され、外部サーバーへの送信や保存は一切行われません。ダウンロードボタンを押した時点でお使いの端末に直接PNGファイルが保存されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "絵文字が正しく表示されない・崩れることがあります",
+        "acceptedAnswer": { "@type": "Answer", "text": "絵文字の描画はブラウザ標準のフォントレンダリングに依存しており、Noto Sans JPフォントで表示を試みますが、一部の絵文字（複合絵文字や新しい絵文字）はご利用の端末・ブラウザによって表示が崩れる場合があります。表示が崩れる場合はシンプルな絵文字（📝🚀🎉など）への変更をお試しください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "タイトルや説明文が長すぎると画像からはみ出しますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "タイトルは最大40文字、説明文は最大80文字までの入力制限があり、自動で折り返し表示されるためレイアウトが崩れることはありません。ただし極端に長い文章は文字が小さく見える場合があるため、簡潔な文言を推奨します。" }
+      },
+      {
+        "@type": "Question",
+        "name": "ダウンロードボタンを押しても反応しない場合は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "タイトル未入力の状態でダウンロードしようとするとアラートが表示され、処理が中断されます。タイトルを入力してから再度お試しください。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
@@ -174,10 +208,29 @@
         個別投稿に設定する場合は「アイキャッチ画像」がそのままOGP画像になるテーマも多いため、アイキャッチに設定する方法も検討してください。
       </p>
 
-      <h2>プライバシーについて</h2>
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>画像サイズは1200×630px固定ですか？変更できますか？</dt>
+        <dd>出力サイズは1200×630px（Open Graph Protocol推奨比率1.91:1）に固定されています。Twitter/X・Facebook・LINEなど主要SNSでトリミングされずに表示される標準サイズのため、サイズ変更機能は設けていません。</dd>
+        <dt>作成した画像やテキストはサーバーに保存されますか？</dt>
+        <dd>いいえ。入力したタイトル・説明文・デザイン設定はすべてブラウザのCanvas API上でのみ処理され、外部サーバーへの送信や保存は一切行われません。ダウンロードボタンを押した時点でお使いの端末に直接PNGファイルが保存されます。</dd>
+        <dt>絵文字が正しく表示されない・崩れることがあります</dt>
+        <dd>絵文字の描画はブラウザ標準のフォントレンダリングに依存しており、Noto Sans JPフォントで表示を試みますが、一部の絵文字（複合絵文字や新しい絵文字）はご利用の端末・ブラウザによって表示が崩れる場合があります。表示が崩れる場合はシンプルな絵文字（📝🚀🎉など）への変更をお試しください。</dd>
+        <dt>タイトルや説明文が長すぎると画像からはみ出しますか？</dt>
+        <dd>タイトルは最大40文字、説明文は最大80文字までの入力制限があり、自動で折り返し表示されるためレイアウトが崩れることはありません。ただし極端に長い文章は文字が小さく見える場合があるため、簡潔な文言を推奨します。</dd>
+        <dt>ダウンロードボタンを押しても反応しない場合は？</dt>
+        <dd>タイトル未入力の状態でダウンロードしようとするとアラートが表示され、処理が中断されます。タイトルを入力してから再度お試しください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://ogp.me/" target="_blank" rel="noopener">Open Graph Protocol 公式仕様</a></li>
+        <li><a href="https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards" target="_blank" rel="noopener">X (Twitter) Cards 公式ドキュメント</a></li>
+      </ul>
       <p>
         入力したテキスト・選択したデザインはすべてお使いのブラウザ内でのみ処理されます。外部サーバーへのデータ送信は一切行いません。画像の生成・ダウンロードもブラウザのCanvas APIのみで完結します。
       </p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>各SNSのOGP画像の表示仕様・トリミング範囲は予告なく変更される場合があります。実際に投稿・シェアする前に、各SNSが提供するデバッグツール（Xカードバリデータ等）やシェアプレビュー機能で表示を確認することを推奨します。</p>
 
       <div class="affiliate-block">
         <p class="affiliate-label">PR</p>

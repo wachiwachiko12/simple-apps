@@ -409,6 +409,62 @@ textarea:focus {
   line-height: 1.7;
 }
 
+/* ===== FAQ ===== */
+.faq-list dt {
+  font-size: 0.925rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.3rem;
+  line-height: 1.7;
+}
+
+.faq-list code {
+  font-family: "Courier New", monospace;
+  background: #f0f1f6;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+/* ===== Reference / Disclaimer ===== */
+.ref-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 0.5rem;
+}
+
+.ref-links li {
+  margin-bottom: 0.3rem;
+}
+
+.ref-links a {
+  color: #16213e;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.ref-links a:hover {
+  text-decoration: underline;
+}
+
+.disclaimer-note {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e0e2ea;
+  font-size: 0.82rem;
+  color: #888;
+}
+
 /* ===== Hidden ===== */
 .hidden {
   display: none;

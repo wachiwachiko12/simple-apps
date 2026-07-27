@@ -24,6 +24,40 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-typography-scale.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/typography-scale/">
   <title>タイポグラフィスケール設計ツール【無料】CSS変数・Tailwind対応 | Keisanlab</title>
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "どのスケール比率（Ratio）を選べばいいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "迷った場合はバランスの取れたMinor Third（1.2）が汎用的でおすすめです。本文中心のブログやコンテンツサイトはMinor Second（1.067）やMajor Second（1.125）、見出しにメリハリを付けたいランディングページはPerfect Fourth（1.333）以上を検討してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "プレビューで大きいサイズが72pxに制限されているのはなぜですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "Golden Ratio（1.618）など大きな比率とベースサイズを組み合わせるとh1が非常に大きくなり、スマートフォン画面でプレビューが崩れてしまうため、表示上の上限として72pxでクリップしています。実際に生成されるCSS変数・Tailwind設定の値には影響しません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "生成されたCSS変数はどのプロジェクトでもそのまま使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "出力されるrem値は「1rem = 16px」を基準に計算しています。ページのルート要素（html）のフォントサイズを16pxから変更していない一般的なプロジェクトであればそのまま利用できます。ルートサイズを変更している場合は換算が必要です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "設定した内容は保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ベースサイズ・スケール比率・行間・字間の設定はブラウザのlocalStorageに自動保存され、次回このページを開いたときに復元されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "h1〜h6以外のステップを追加できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在のバージョンはh1〜h6・本文（p）・小さい文字（small）の8段階固定です。それ以外の中間ステップが必要な場合は、出力されたCSS変数を参考に、同じ比率計算式（ベースサイズ × 比率のべき乗）でご自身のプロジェクト側に追加してください。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -157,6 +191,24 @@
         <li><strong>Perfect Fifth (1.5)</strong> — 大胆なコントラスト。ポートフォリオ・プロモーション向き。</li>
         <li><strong>Golden Ratio (1.618)</strong> — 黄金比。最もドラマチックなスケール。大画面向け。</li>
       </ul>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>どのスケール比率（Ratio）を選べばいいですか？</dt>
+        <dd>迷った場合はバランスの取れたMinor Third（1.2）が汎用的でおすすめです。本文中心のブログやコンテンツサイトはMinor Second（1.067）やMajor Second（1.125）、見出しにメリハリを付けたいランディングページはPerfect Fourth（1.333）以上を検討してください。</dd>
+        <dt>プレビューで大きいサイズが72pxに制限されているのはなぜですか？</dt>
+        <dd>Golden Ratio（1.618）など大きな比率とベースサイズを組み合わせるとh1が非常に大きくなり、スマートフォン画面でプレビューが崩れてしまうため、表示上の上限として72pxでクリップしています。実際に生成されるCSS変数・Tailwind設定の値には影響しません。</dd>
+        <dt>生成されたCSS変数はどのプロジェクトでもそのまま使えますか？</dt>
+        <dd>出力されるrem値は「1rem = 16px」を基準に計算しています。ページのルート要素（html）のフォントサイズを16pxから変更していない一般的なプロジェクトであればそのまま利用できます。ルートサイズを変更している場合は換算が必要です。</dd>
+        <dt>設定した内容は保存されますか？</dt>
+        <dd>ベースサイズ・スケール比率・行間・字間の設定はブラウザのlocalStorageに自動保存され、次回このページを開いたときに復元されます。</dd>
+        <dt>h1〜h6以外のステップを追加できますか？</dt>
+        <dd>現在のバージョンはh1〜h6・本文（p）・小さい文字（small）の8段階固定です。それ以外の中間ステップが必要な場合は、出力されたCSS変数を参考に、同じ比率計算式（ベースサイズ × 比率のべき乗）でご自身のプロジェクト側に追加してください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>入力した設定値はブラウザのlocalStorageにのみ保存され、外部サーバーへ送信されることはありません。タイポグラフィスケールの考え方は、Web業界で広く参照されている <a href="https://type-scale.com/" target="_blank" rel="noopener">Type Scale</a> などのツールと同様の音楽的比率（Modular Scale）の理論に基づいています。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールが提案するフォントサイズはあくまで数学的な計算に基づく参考値です。実際のデザインでは、使用フォントの特性・言語（日本語は欧文よりやや大きめが好ましい場合があります）・可読性を踏まえて最終調整のうえご利用ください。</p>
     </section>
 
   </main>

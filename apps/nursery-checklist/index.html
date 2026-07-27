@@ -27,6 +27,40 @@
     gtag('js', new Date());
     gtag('config', 'G-DK2WQM49L6');
   </script>
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "チェックはいつリセットされますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "お使いの端末の時計で毎日0時（24:00）になった時点で、その日のチェック状態が自動的にリセットされます。追加した項目自体は削除されず、翌朝また同じリストからチェックを始められます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "追加した項目や曜日設定はどこに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "ブラウザのlocalStorageに保存されます。同じ端末・同じブラウザであれば次回アクセス時も設定が保持されますが、他の端末やブラウザには自動的に同期されません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "項目編集画面の「表示する曜日」は何ができますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "項目ごとに表示する曜日を選択できます。例えば体操着の日だけ「月」を選択しておくと、月曜日にだけその項目がリストに表示されます。未選択の場合は毎日表示されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "兄弟・姉妹の分を別々に管理できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在は1つのリストのみに対応しています。項目名に「（子どもの名前）の体操着」のように名前を含めることで、1つのリストの中で分けて管理いただけます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "データはサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。入力内容やチェック状態はすべてブラウザ内のlocalStorageに保存されるのみで、サーバーへの送信は一切行われません。" }
+      }
+    ]
+  }
+  </script>
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
        crossorigin="anonymous"></script>
@@ -139,6 +173,42 @@
         <div>
           <strong>ヒント：</strong>項目の削除は、ゴミ箱ボタンをタップすると確認なしで即削除されます。誤って消した場合は、下のフォームから同じ名前を追加してください。
         </div>
+      </div>
+
+      <div class="accordion-group">
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>よくある質問（FAQ）</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <dl>
+              <dt>チェックはいつリセットされますか？</dt>
+              <dd>お使いの端末の時計で毎日0時（24:00）になった時点で、その日のチェック状態が自動的にリセットされます。追加した項目自体は削除されず、翌朝また同じリストからチェックを始められます。</dd>
+              <dt>追加した項目や曜日設定はどこに保存されますか？</dt>
+              <dd>ブラウザのlocalStorageに保存されます。同じ端末・同じブラウザであれば次回アクセス時も設定が保持されますが、他の端末やブラウザには自動的に同期されません。</dd>
+              <dt>項目編集画面の「表示する曜日」は何ができますか？</dt>
+              <dd>項目ごとに表示する曜日を選択できます。例えば体操着の日だけ「月」を選択しておくと、月曜日にだけその項目がリストに表示されます。未選択の場合は毎日表示されます。</dd>
+              <dt>兄弟・姉妹の分を別々に管理できますか？</dt>
+              <dd>現在は1つのリストのみに対応しています。項目名に「（子どもの名前）の体操着」のように名前を含めることで、1つのリストの中で分けて管理いただけます。</dd>
+              <dt>データはサーバーに送信されますか？</dt>
+              <dd>いいえ。入力内容やチェック状態はすべてブラウザ内のlocalStorageに保存されるのみで、サーバーへの送信は一切行われません。</dd>
+            </dl>
+          </div>
+        </details>
+
+        <details class="accordion-item">
+          <summary class="accordion-summary">
+            <span>参照情報・免責事項</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p class="ref-note">本ツールの初期項目（連絡帳・おむつ・お着替えなど）は、一般的な保育園でよく求められる持ち物を参考にした目安であり、法令等の公的基準に基づくものではありません。実際に必要な持ち物・準備物は保育園・自治体によって異なりますので、通っている園の入園のしおりや重要事項説明書の指示を必ずご確認ください。</p>
+            <p class="disclaimer-note"><strong>免責事項：</strong>本ツールはご家庭での持ち物準備を補助する私的なチェックリストです。データはブラウザ内にのみ保存されるため、機種変更やブラウザデータの削除により消去される場合があります。本ツールの利用により生じた忘れ物等のトラブルについて、当サイトは責任を負いかねます。</p>
+          </div>
+        </details>
+
       </div>
     </section>
 

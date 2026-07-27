@@ -562,6 +562,35 @@ footer a:hover {
 }
 
 /* ===== アフィリエイト ===== */
+.faq-list dt {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.92rem;
+  margin-top: 1rem;
+}
+
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+
+.faq-list dd {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-top: 0.3rem;
+}
+
+.disclaimer-note {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: #f0f4f2;
+  border-left: 3px solid var(--accent);
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+
 .affiliate-block {
   margin: 1rem 0 1.5rem;
   padding: 1rem;

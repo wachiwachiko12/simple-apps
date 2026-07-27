@@ -24,6 +24,40 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-git-commit-formatter.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/git-commit-formatter/">
   <title>Gitコミットメッセージ生成ツール【無料】Conventional Commits対応 | Keisanlab</title>
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "生成したコミットメッセージや入力内容はサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。タイプ・スコープ・件名などの入力からメッセージ生成、クリップボードへのコピーまですべてブラウザ内で完結し、外部サーバーへの送信は行われません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "履歴は何件まで保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "直近5件までのコミットメッセージがブラウザのlocalStorageに保存されます。6件目を生成すると最も古い履歴から自動的に削除されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "BREAKING CHANGEはどのように記述されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "「BREAKING CHANGE」チェックボックスをオンにすると、コミットヘッダーの末尾に「!」が付与され（例: feat(api)!: ）、フッター部分に「BREAKING CHANGE: 変更内容の説明」が追記されます。Conventional Commits仕様に準拠した後方互換性のない変更を明示する記法です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "スコープは候補リスト以外を自由に入力できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。候補リストは入力補助のための提案であり、候補に無い任意の文字列を自由に入力できます。プロジェクト固有のモジュール名やディレクトリ名を入力してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "件名（説明）は日本語で書いてもよいですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "問題ありません。Conventional Commits仕様自体は使用言語を規定していないため、日本語での件名・本文でも規約に沿ったメッセージになります。ただし英語混在のプロジェクトではチームの慣習に合わせてください。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -196,6 +230,24 @@
         <div class="type-guide-row"><dt><code>ci</code></dt><dd>CI設定・スクリプトの変更</dd></div>
         <div class="type-guide-row"><dt><code>build</code></dt><dd>ビルドシステム・外部依存に影響する変更</dd></div>
       </dl>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>生成したコミットメッセージや入力内容はサーバーに送信されますか？</dt>
+        <dd>いいえ。タイプ・スコープ・件名などの入力からメッセージ生成、クリップボードへのコピーまですべてブラウザ内で完結し、外部サーバーへの送信は行われません。</dd>
+        <dt>履歴は何件まで保存されますか？</dt>
+        <dd>直近5件までのコミットメッセージがブラウザのlocalStorageに保存されます。6件目を生成すると最も古い履歴から自動的に削除されます。</dd>
+        <dt>BREAKING CHANGEはどのように記述されますか？</dt>
+        <dd>「BREAKING CHANGE」チェックボックスをオンにすると、コミットヘッダーの末尾に「!」が付与され（例: <code>feat(api)!:</code>）、フッター部分に「BREAKING CHANGE: 変更内容の説明」が追記されます。Conventional Commits仕様に準拠した後方互換性のない変更を明示する記法です。</dd>
+        <dt>スコープは候補リスト以外を自由に入力できますか？</dt>
+        <dd>はい。候補リストは入力補助のための提案であり、候補に無い任意の文字列を自由に入力できます。プロジェクト固有のモジュール名やディレクトリ名を入力してください。</dd>
+        <dt>件名（説明）は日本語で書いてもよいですか？</dt>
+        <dd>問題ありません。Conventional Commits仕様自体は使用言語を規定していないため、日本語での件名・本文でも規約に沿ったメッセージになります。ただし英語混在のプロジェクトではチームの慣習に合わせてください。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>Conventional Commits仕様の詳細は <a href="https://www.conventionalcommits.org/ja/v1.0.0/" target="_blank" rel="noopener">Conventional Commits公式サイト（日本語版）</a> をご参照ください。本ツールへの入力内容はブラウザ内で処理され、サーバーには送信されません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールが生成するメッセージはConventional Commits仕様に基づく一般的な形式です。commitlintなどプロジェクト固有のルール・カスタムタイプを採用している場合は、そのプロジェクトの規約を優先してご確認ください。</p>
     </section>
   </main>
 

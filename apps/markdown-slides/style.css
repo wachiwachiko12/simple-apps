@@ -604,6 +604,37 @@ main {
   color: #0f172a;
 }
 
+/* ===== FAQ ===== */
+.faq-list dt {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+.faq-list dt:first-child {
+  margin-top: 0;
+}
+.faq-list dd {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.7;
+  margin-left: 0;
+}
+
+/* ===== 参照情報・免責事項 ===== */
+.disclaimer-note {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  background: #f8fafc;
+  border-left: 3px solid var(--color-border);
+  padding: 0.625rem 0.875rem;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.7;
+  margin-top: 0.5rem;
+}
+.disclaimer-note strong { color: #0f172a; }
+
 /* ===== Footer ===== */
 .app-footer {
   text-align: center;

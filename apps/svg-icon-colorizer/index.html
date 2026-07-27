@@ -24,6 +24,42 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-svg-icon-colorizer.png">
   <link rel="canonical" href="https://keisanlab.jp/apps/svg-icon-colorizer/">
   <title>SVGアイコン色変更ツール【無料】カラーカスタマイザー | Keisanlab</title>
+
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "グラデーションやパターン塗りの色が検出・変更できないのはなぜですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "本ツールはfill/stroke属性やstyle属性内に直接記述された色（#rrggbb・rgb()・カラー名など）を検出対象としています。linearGradientやpatternで定義され url(#id) で参照される塗りは色情報として抽出できないため、変更対象外です。" }
+      },
+      {
+        "@type": "Question",
+        "name": "currentColorやCSS変数（var(--xxx)）で指定された色は変更できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。currentColorはテキストの色を継承する特殊キーワードで、CSS変数は外部スタイルシートに依存する値のため、本ツールでは色として認識せず意図的に変更対象外としています。" }
+      },
+      {
+        "@type": "Question",
+        "name": "アップロードしたSVGファイルはサーバーに送信されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。SVGの解析・色変更・プレビュー生成はすべてブラウザ内のJavaScriptで完結しており、ファイルの内容がサーバーへ送信されることは一切ありません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "出所不明のSVGファイルを読み込んでも安全ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "本ツールはDOMParserでSVGを解析し、プレビュー表示にはブラウザのレンダリングエンジンを利用します。信頼できない提供元のSVGには外部リソース参照などが埋め込まれている可能性もあるため、出所が不明なファイルを扱う際はご注意ください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "幅・高さを変更すると画質は劣化しますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "SVGはベクター形式のため、幅・高さの指定を変更しても画質の劣化（ジャギーなど）は発生しません。ラスター画像と異なり、拡大・縮小してもクリアな表示を維持します。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -133,6 +169,26 @@
         SVGのfill属性やstroke属性で指定された色を自動検出し、カラーピッカーで直感的に変更することができます。ブランドカラーへのアイコン変換、UIデザインの配色確認、アイコンセットの一括カラー変更などにご活用ください。
         PhotoshopやIllustratorなどの高価なソフトウェアは不要で、Webブラウザさえあれば無料でお使いいただけます。デザイナーはもちろん、プログラマーやWebサイト制作者にも便利なツールです。
       </p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>グラデーションやパターン塗りの色が検出・変更できないのはなぜですか？</dt>
+        <dd>本ツールはfill/stroke属性やstyle属性内に直接記述された色（#rrggbb・rgb()・カラー名など）を検出対象としています。linearGradientやpatternで定義され<code>url(#id)</code>で参照される塗りは色情報として抽出できないため、変更対象外です。</dd>
+        <dt>currentColorやCSS変数（var(--xxx)）で指定された色は変更できますか？</dt>
+        <dd>いいえ。currentColorはテキストの色を継承する特殊キーワードで、CSS変数は外部スタイルシートに依存する値のため、本ツールでは色として認識せず意図的に変更対象外としています。</dd>
+        <dt>アップロードしたSVGファイルはサーバーに送信されますか？</dt>
+        <dd>いいえ。SVGの解析・色変更・プレビュー生成はすべてブラウザ内のJavaScriptで完結しており、ファイルの内容がサーバーへ送信されることは一切ありません。</dd>
+        <dt>出所不明のSVGファイルを読み込んでも安全ですか？</dt>
+        <dd>本ツールはDOMParserでSVGを解析し、プレビュー表示にはブラウザのレンダリングエンジンを利用します。信頼できない提供元のSVGには外部リソース参照などが埋め込まれている可能性もあるため、出所が不明なファイルを扱う際はご注意ください。</dd>
+        <dt>幅・高さを変更すると画質は劣化しますか？</dt>
+        <dd>SVGはベクター形式のため、幅・高さの指定を変更しても画質の劣化（ジャギーなど）は発生しません。ラスター画像と異なり、拡大・縮小してもクリアな表示を維持します。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <ul class="ref-links">
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/SVG/Attribute/fill" target="_blank" rel="noopener">MDN: SVG fill属性</a></li>
+      </ul>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールはSVGの色情報を自動検出・変換する補助ツールであり、生成されたファイルの品質・表示崩れがないことを保証するものではありません。アイコン素材の著作権・利用ライセンスは各素材の提供元の規約に従い、ご自身の責任でご確認ください。</p>
     </section>
 
     <!-- 広告ユニット3（フッター上） -->

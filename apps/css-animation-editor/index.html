@@ -31,6 +31,37 @@
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-css-animation-editor.png">
 
   <link rel="canonical" href="https://keisanlab.jp/apps/css-animation-editor/">
+
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "生成されたCSSコードはそのまま自分のサイトに使えますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。「コピー」ボタンでクリップボードに@keyframesルールとanimationプロパティが一括コピーされます。コピーしたコードを対象要素のCSSにそのまま貼り付けるだけで動作します。" }
+      },
+      {
+        "@type": "Question",
+        "name": "iteration-countを「infinite」に設定するとどうなりますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "アニメーションが無限にループし続けます。Fade InやBounceなどの一部プリセットはデフォルトでinfiniteが設定されています。プレビューエリアでも同様に無限再生されるため、確認が終わったら「停止」ボタンで止めることができます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "cubic-bezierエディタで設定できる値の範囲は？",
+        "acceptedAnswer": { "@type": "Answer", "text": "P1x・P2x（制御点のX座標）は0〜1の範囲、P1y・P2y（Y座標）は-1〜2の範囲で設定できます。CSS仕様上、Y座標は1を超える値やマイナス値を指定することで、オーバーシュートやバウンドするような速度変化を表現できます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "入力したキーフレームやCSSコードはサーバーに保存されますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "いいえ。すべての処理はブラウザ内のJavaScriptで完結しており、キーフレーム設定やコード内容がサーバーに送信・保存されることはありません。ページを再読み込みすると設定はリセットされます。" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
@@ -215,6 +246,22 @@
 
       <h2>cubic-bezierとは</h2>
       <p>cubic-bezierはアニメーションの速度変化（イージング）をカスタムで定義する関数です。4つの値 <code>cubic-bezier(x1, y1, x2, y2)</code> で制御点を指定し、ease・ease-in・ease-outなどの既定値では表現できない独自の動きを作れます。当ツールのcanvasエディタでは制御点をドラッグして視覚的に曲線を確認できます。</p>
+
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>生成されたCSSコードはそのまま自分のサイトに使えますか？</dt>
+        <dd>はい。「コピー」ボタンでクリップボードに@keyframesルールとanimationプロパティが一括コピーされます。コピーしたコードを対象要素のCSSにそのまま貼り付けるだけで動作します。</dd>
+        <dt>iteration-countを「infinite」に設定するとどうなりますか？</dt>
+        <dd>アニメーションが無限にループし続けます。Fade InやBounceなどの一部プリセットはデフォルトでinfiniteが設定されています。プレビューエリアでも同様に無限再生されるため、確認が終わったら「停止」ボタンで止めることができます。</dd>
+        <dt>cubic-bezierエディタで設定できる値の範囲は？</dt>
+        <dd>P1x・P2x（制御点のX座標）は0〜1の範囲、P1y・P2y（Y座標）は-1〜2の範囲で設定できます。CSS仕様上、Y座標は1を超える値やマイナス値を指定することで、オーバーシュートやバウンドするような速度変化を表現できます。</dd>
+        <dt>入力したキーフレームやCSSコードはサーバーに保存されますか？</dt>
+        <dd>いいえ。すべての処理はブラウザ内のJavaScriptで完結しており、キーフレーム設定やコード内容がサーバーに送信・保存されることはありません。ページを再読み込みすると設定はリセットされます。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
+      <p>CSSアニメーションの仕様詳細は<a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_animations/Using_CSS_animations" target="_blank" rel="noopener">MDN: CSS アニメーションの使用</a>をご参照ください。入力内容はブラウザ内でのみ処理され、サーバーには送信されません。</p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>生成されたCSSコードの動作は主要な最新ブラウザ（Chrome・Edge・Firefox・Safari）で確認していますが、古いブラウザやバージョンによっては一部プロパティ（steps()関数など）が意図通りに表示されない場合があります。実際にサイトへ組み込む際は、ご利用の対象ブラウザでの動作確認をお願いいたします。</p>
     </section>
   </main>
 

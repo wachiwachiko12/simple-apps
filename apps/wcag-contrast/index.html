@@ -26,6 +26,40 @@
   <meta name="twitter:title" content="WCAGコントラスト比チェックツール【無料】アクセシビリティ対応配色を確認">
   <meta name="twitter:description" content="WCAG 2.1のコントラスト比をリアルタイムでチェック。前景色・背景色を入力するだけで合否判定。無料・登録不要。">
   <meta name="twitter:image" content="https://keisanlab.jp/images/ogp-wcag-contrast.png">
+  <!-- FAQ schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "このツールの計算方法は公式のWCAG基準と同じですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "はい。本ツールはWCAG 2.1仕様に定められた相対輝度（Relative Luminance）の計算式をそのまま実装しています。sRGBのガンマ補正を含めた正確な計算により、公式基準と同一のコントラスト比が算出されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "AA基準に合格すればアクセシビリティは万全ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "コントラスト比はWebアクセシビリティを構成する要素の一つに過ぎません。AA基準への合格に加えて、代替テキストの設定・キーボード操作対応・見出し構造の適切さなど、他の基準も満たす必要があります。本ツールの合格表示だけでアクセシビリティ全体の適合を保証するものではありません。" }
+      },
+      {
+        "@type": "Question",
+        "name": "半透明（アルファ値付き）の色は計算できますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "現在のバージョンは#rrggbb形式の不透明な色のみに対応しています。半透明色を使う場合は、背景色と合成した後の実際に見える色をHEX値として算出してから入力してください。" }
+      },
+      {
+        "@type": "Question",
+        "name": "「大きいテキスト」の基準（18pt以上・14pt以上Bold）とは何ですか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "WCAG 2.1では文字サイズによって求められるコントラスト比の基準が異なります。18pt（約24px）以上、または太字（Bold）で14pt（約18.5px）以上のテキストは「大きいテキスト」に分類され、通常テキストより緩やかなAA基準3:1・AAA基準4.5:1が適用されます。" }
+      },
+      {
+        "@type": "Question",
+        "name": "日本のJIS X 8341-3とはどう関係していますか？",
+        "acceptedAnswer": { "@type": "Answer", "text": "日本産業規格JIS X 8341-3はWCAGに準拠して策定されており、コントラスト比の基準値もWCAG 2.1と同一です。本ツールでAA基準の合否を確認することで、JIS X 8341-3のレベルAAへの適合状況もあわせて参考にできます。" }
+      }
+    ]
+  }
+  </script>
   <link rel="stylesheet" href="style.css">
   <!-- Google AdSense -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
@@ -201,10 +235,25 @@
         AA基準はWCAGの「適合レベルAA」で、多くの公共・企業サイトが目標とする標準的な基準です。AAA基準はより厳格な「適合レベルAAA」で、すべてのコンテンツでの達成は困難ですが、重要な情報や見出しで達成することが推奨されます。まずAA基準のクリアを目指し、余裕があればAAA基準を目標にしましょう。
       </p>
 
-      <h2>プライバシーについて</h2>
+      <h2>よくある質問</h2>
+      <dl class="faq-list">
+        <dt>このツールの計算方法は公式のWCAG基準と同じですか？</dt>
+        <dd>はい。本ツールはWCAG 2.1仕様に定められた相対輝度（Relative Luminance）の計算式をそのまま実装しています。sRGBのガンマ補正を含めた正確な計算により、公式基準と同一のコントラスト比が算出されます。</dd>
+        <dt>AA基準に合格すればアクセシビリティは万全ですか？</dt>
+        <dd>コントラスト比はWebアクセシビリティを構成する要素の一つに過ぎません。AA基準への合格に加えて、代替テキストの設定・キーボード操作対応・見出し構造の適切さなど、他の基準も満たす必要があります。本ツールの合格表示だけでアクセシビリティ全体の適合を保証するものではありません。</dd>
+        <dt>半透明（アルファ値付き）の色は計算できますか？</dt>
+        <dd>現在のバージョンは#rrggbb形式の不透明な色のみに対応しています。半透明色を使う場合は、背景色と合成した後の実際に見える色をHEX値として算出してから入力してください。</dd>
+        <dt>「大きいテキスト」の基準（18pt以上・14pt以上Bold）とは何ですか？</dt>
+        <dd>WCAG 2.1では文字サイズによって求められるコントラスト比の基準が異なります。18pt（約24px）以上、または太字（Bold）で14pt（約18.5px）以上のテキストは「大きいテキスト」に分類され、通常テキストより緩やかなAA基準3:1・AAA基準4.5:1が適用されます。</dd>
+        <dt>日本のJIS X 8341-3とはどう関係していますか？</dt>
+        <dd>日本産業規格JIS X 8341-3はWCAGに準拠して策定されており、コントラスト比の基準値もWCAG 2.1と同一です。本ツールでAA基準の合否を確認することで、JIS X 8341-3のレベルAAへの適合状況もあわせて参考にできます。</dd>
+      </dl>
+
+      <h2>参照情報・免責事項</h2>
       <p>
-        入力した色の情報はすべてお使いのブラウザ内のみで処理されます。外部サーバーへのデータ送信は一切行いません。
+        本ツールのコントラスト比計算式は <a href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html" target="_blank" rel="noopener">W3C WCAG 2.1 達成基準 1.4.3（Understanding SC 1.4.3: Contrast Minimum）</a> に基づいています。入力した色の情報はすべてお使いのブラウザ内のみで処理され、外部サーバーへのデータ送信は一切行いません。
       </p>
+      <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの判定結果はWCAG 2.1の計算式に基づく参考値です。実際のアクセシビリティ適合を保証するものではなく、法令・規格（障害者差別解消法、JIS X 8341-3等）への適合が必要な場合は、専門家による診断・監査を別途ご検討ください。</p>
 
       <div class="affiliate-block">
         <p class="affiliate-label">PR</p>
