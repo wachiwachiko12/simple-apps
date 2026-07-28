@@ -980,6 +980,58 @@ select.form-input { cursor: pointer; }
 .disclaimer-note a { color: var(--primary); }
 
 /* ============================================================
+   Affiliate Block
+   ============================================================ */
+
+.affiliate-block {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 0 0.35rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.affiliate-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
+  min-height: 44px;
+  line-height: 44px;
+}
+
+.affiliate-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.affiliate-links .affiliate-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  line-height: 1.4;
+}
+
+/* ============================================================
    Footer
    ============================================================ */
 

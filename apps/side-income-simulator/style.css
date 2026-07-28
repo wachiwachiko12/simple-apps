@@ -680,6 +680,55 @@ footer {
   }
 }
 
+/* ============ Affiliate Block ============ */
+.affiliate-block {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 0 0.35rem;
+  border-radius: 3px;
+  margin-bottom: var(--space-2);
+}
+
+.affiliate-desc {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: var(--space-2);
+}
+
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
+  min-height: 44px;
+  line-height: 44px;
+}
+
+.affiliate-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.affiliate-links .affiliate-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  line-height: 1.4;
+}
+
 /* 関連ツール内部リンク */
 .related-mini {
   margin-top: 1rem;

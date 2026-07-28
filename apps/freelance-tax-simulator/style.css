@@ -380,6 +380,16 @@ button#calc-btn:active {
   margin-bottom: 0.75rem;
 }
 
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
+  min-height: 44px;
+  line-height: 44px;
+}
+
 footer {
   text-align: center;
   padding: 2.5rem 1rem;

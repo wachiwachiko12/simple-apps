@@ -505,6 +505,16 @@ footer a:hover { text-decoration: underline; }
   margin-bottom: 0.75rem;
 }
 
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
+  min-height: 44px;
+  line-height: 44px;
+}
+
 /* ===== PRINT ===== */
 @media print {
   .no-print { display: none !important; }

@@ -687,6 +687,55 @@ details[open] .faq-question::after {
 .disclaimer-note { font-size: 0.8rem; color: var(--text-muted); background: #fffbeb; border-left: 3px solid var(--border-amber); padding: 0.625rem 0.875rem; border-radius: 0 6px 6px 0; line-height: 1.7; }
 .disclaimer-note strong { color: var(--text); }
 
+/* ===== Affiliate Block ===== */
+.affiliate-block {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 0 0.35rem;
+  border-radius: 3px;
+  margin-bottom: var(--space-2);
+}
+
+.affiliate-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: underline;
+  min-height: 44px;
+  line-height: 44px;
+}
+
+.affiliate-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.affiliate-links .affiliate-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  line-height: 1.4;
+}
+
 /* ===== 関連ツール ===== */
 .related-mini {
   margin: 1rem 0; padding: 0.75rem 1rem; background: #fff; border-radius: var(--radius-sm);
