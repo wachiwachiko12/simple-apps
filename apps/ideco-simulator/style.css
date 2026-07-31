@@ -822,3 +822,45 @@ footer p + p {
 input[type="range"] {
   --range-percent: 43%;
 }
+
+/* ---- Affiliate block (PR) ---- */
+.affiliate-block {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-weak);
+  border: 1px solid var(--border);
+  padding: 0 0.35rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.affiliate-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.affiliate-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: underline;
+  min-height: 44px;
+  transition: color var(--transition);
+}
+
+.affiliate-link:hover {
+  color: var(--primary-hover);
+}
