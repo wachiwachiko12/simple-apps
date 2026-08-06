@@ -29,28 +29,37 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # 内部向けの資料・未完成ページを公開対象から除外する。
-      # git 上には残すため履歴とバックアップは維持される。
-      - name: Strip internal docs and unfinished pages from the artifact
+      # 公開用ディレクトリを別に組み立てる。チェックアウトを直接書き換えず、
+      # .git や内部向け資料を含めない形で _site/ を作る。
+      - name: Build publishable site into _site/
         run: |
           set -euo pipefail
 
+          mkdir -p _site
+          tar -cf - \
+            --exclude='./_site' \
+            --exclude='./.git' \
+            --exclude='./.github' \
+            --exclude='./.gitignore' \
+            . | tar -xf - -C _site
+
           # 運営用ドキュメント（APP_INFO / SEO_REPORT / UX_REPORT / MONETIZE_REPORT / GA4週次レポート等）
-          # -delete は -depth を暗黙に有効化し -prune と併用できないため -not -path で除外する
-          find . -type f -name '*.md' -not -path './.git/*' -print -delete
-          rm -rf ./reports
-
+          find _site -type f -name '*.md' -delete
           # 未完成・開発用ページ
-          rm -rf ./apps/_template
-          rm -rf ./apps/mind-map/01.*
+          rm -rf _site/reports _site/apps/_template
+          rm -rf _site/apps/mind-map/01.*
 
-          echo "--- remaining .md files (should be none) ---"
-          find . -type f -name '*.md' -not -path './.git/*' -print
+          echo "--- .md files left in _site (should be none) ---"
+          find ./_site -type f -name '*.md' -print
+          echo "--- excluded dirs still present? (should be none) ---"
+          ls -d ./_site/reports ./_site/apps/_template ./_site/apps/mind-map/01.* 2>/dev/null || echo "  none"
+          echo "--- published page count ---"
+          find ./_site -name '*.html' | wc -l
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
