@@ -297,7 +297,7 @@
     <section id="howto" class="howto-section">
       <h2><i class="bi bi-question-circle"></i> 使い方</h2>
       <div class="accordion-list">
-        <details class="accordion-item">
+        <details open class="accordion-item">
           <summary class="accordion-summary">
             <span class="step-num">1</span>
             職業種別を選択する
@@ -306,7 +306,7 @@
             会社員・公務員・自営業など、あなたの職業種別を選択してください。職業によってiDeCoの掛金上限が異なります。自営業・フリーランスは最大月68,000円まで拠出できます。選択すると掛金スライダーの上限が自動更新されます。
           </div>
         </details>
-        <details class="accordion-item">
+        <details open class="accordion-item">
           <summary class="accordion-summary">
             <span class="step-num">2</span>
             年収と掛金を入力する
@@ -315,7 +315,7 @@
             税込年収を万円単位で入力してください。年収によって所得税率が異なり、節税効果が変わります。月々の掛金はスライダーまたは数値入力で設定できます。職種の上限額に応じて自動制限されます。
           </div>
         </details>
-        <details class="accordion-item">
+        <details open class="accordion-item">
           <summary class="accordion-summary">
             <span class="step-num">3</span>
             積立期間と運用利回りを設定する
@@ -324,7 +324,7 @@
             60歳まで何年積み立てるかを入力してください。運用利回りは年率（%）で入力します。全世界株式インデックスの過去実績は年5〜7%程度ですが、保守的に3%でシミュレーションすることをおすすめします。
           </div>
         </details>
-        <details class="accordion-item">
+        <details open class="accordion-item">
           <summary class="accordion-summary">
             <span class="step-num">4</span>
             「節税額を計算する」ボタンを押す
@@ -333,7 +333,7 @@
             ボタンを押すと年間節税額・合計節税額・積立総額がグラフとともに表示されます。入力値を変更すると自動的に再計算されます。
           </div>
         </details>
-        <details class="accordion-item">
+        <details open class="accordion-item">
           <summary class="accordion-summary">
             <span class="step-num">5</span>
             受取時の税制メリットを確認する
@@ -354,19 +354,19 @@
       <div class="faq-section">
         <h2>よくある質問</h2>
         <div class="accordion-list">
-          <details class="accordion-item">
+          <details open class="accordion-item">
             <summary class="accordion-summary faq-q">iDeCoとNISAはどちらを優先すべきですか？</summary>
             <div class="accordion-body">iDeCoは掛金が所得控除になるため、特に収入が高い方ほど節税効果が大きくなります。一方、NISAは60歳前でも引き出せる柔軟性があります。まずiDeCoで老後資金を確保しつつ、余剰資金をNISAで運用するのが一般的なおすすめの順序です。</div>
           </details>
-          <details class="accordion-item">
+          <details open class="accordion-item">
             <summary class="accordion-summary faq-q">iDeCoの運用で損失が出ることはありますか？</summary>
             <div class="accordion-body">元本保証のない投資信託を選んだ場合、運用状況によっては元本割れのリスクがあります。ただし、定期預金などの元本確保型商品を選ぶことも可能です。長期投資のため、株式インデックスファンドなど分散された商品を選ぶことでリスクを抑えられます。</div>
           </details>
-          <details class="accordion-item">
+          <details open class="accordion-item">
             <summary class="accordion-summary faq-q">会社員でも加入できますか？</summary>
             <div class="accordion-body">会社員も加入できます。企業年金のない会社員は月23,000円まで、DB型企業年金のある会社員は月12,000円まで、その他企業年金のある場合は月20,000円まで拠出できます。まず勤め先の人事部門に確認することをおすすめします。</div>
           </details>
-          <details class="accordion-item">
+          <details open class="accordion-item">
             <summary class="accordion-summary faq-q">参照情報・免責事項</summary>
             <div class="accordion-body">
               <ul class="ref-links">
@@ -389,13 +389,20 @@
   </main>
 
   <footer>
-    <p>
+    <p class="footer-nav">
+      <a href="/">ツール一覧</a>
+      ｜
+      <a href="/articles/">コラム</a>
+      ｜
+      <a href="/about.html">このサイトについて</a>
+      ｜
+      <a href="/contact.html">お問い合わせ</a>
+      ｜
       <a href="/privacy-policy.html">プライバシーポリシー</a>
-      <span class="footer-sep">|</span>
-      <a href="/apps/">ツール一覧</a>
+      ｜
+      <a href="/terms.html">利用規約</a>
     </p>
-    <p><small>本ツールの計算結果は概算です。実際の節税額は所得控除の状況等により異なります。正確な情報は税理士等の専門家にご相談ください。</small></p>
-    <p><small>&copy; 2026 Keisan Lab</small></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
   </footer>
 
   <script src="script.js"></script>

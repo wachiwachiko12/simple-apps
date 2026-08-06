@@ -48,6 +48,34 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.08);
     }
 
+    .intro-card { margin-bottom: 1.25rem; line-height: 1.8; }
+    .intro-card h2 {
+      font-size: 1.05rem;
+      color: #2c3e50;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .intro-card h3 {
+      font-size: 0.95rem;
+      color: #2c3e50;
+      margin: 1.5rem 0 0.6rem;
+    }
+    .intro-card p { font-size: 0.92rem; color: #555; margin-bottom: 0.6rem; }
+    .contact-faq dt {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #333;
+      margin-top: 1rem;
+    }
+    .contact-faq dd {
+      font-size: 0.9rem;
+      color: #666;
+      margin: 0.3rem 0 0 1rem;
+    }
+    .intro-card a { color: #2c4a7c; }
+    .intro-card a:hover { text-decoration: underline; }
+
     .field {
       margin-bottom: 1.25rem;
     }
@@ -180,6 +208,29 @@
 
   <main>
 
+    <section class="card intro-card">
+      <h2>お問い合わせについて</h2>
+      <p>Keisanlab は個人で運営しているサイトです。ツールの使い方でつまずいた点、計算結果がおかしいと感じた点、「こんなツールがほしい」というご要望など、お気軽にお寄せください。いただいたご指摘は、実際にツールの修正や解説の追記に反映しています。</p>
+
+      <h3>よくいただくお問い合わせ</h3>
+      <dl class="contact-faq">
+        <dt>計算結果が実際の金額と違うのですが？</dt>
+        <dd>各ツールの計算結果は、公開されている制度・計算式にもとづく概算値です。個別の控除や自治体ごとの差異までは反映できないため、実際の金額と差が出ることがあります。ただし計算式そのものの誤りや制度改正への未対応が疑われる場合は、ぜひご連絡ください。該当ツール名と入力した条件を書き添えていただけると助かります。</dd>
+
+        <dt>入力したデータは送信されますか？</dt>
+        <dd>いいえ。各ツールの計算はすべてブラウザ内で完結し、入力内容がサーバーへ送信されることはありません。このお問い合わせフォームに入力された内容のみ、返信のために送信されます。詳しくは<a href="/privacy-policy.html">プライバシーポリシー</a>をご覧ください。</dd>
+
+        <dt>保存したデータが消えてしまいました</dt>
+        <dd>データはブラウザのlocalStorageに保存しているため、ブラウザの履歴・サイトデータを削除した場合、シークレットモードで利用した場合、別の端末やブラウザで開いた場合には引き継がれません。恐れ入りますが、消えてしまったデータの復元はできません。</dd>
+
+        <dt>ツールを自分のサイトに埋め込めますか？</dt>
+        <dd>埋め込み用の提供は行っていません。リンクを貼っていただく形であれば、ご連絡なしでご自由にどうぞ。各ツールが生成した成果物（請求書・コード・画像など）の利用条件は<a href="/terms.html">利用規約</a>に記載しています。</dd>
+      </dl>
+
+      <h3>返信について</h3>
+      <p>個人運営のため、返信までに数日いただくことがあります。内容によっては返信を差し控える場合がありますので、あらかじめご了承ください。なお、広告掲載・SEO対策・記事寄稿などの営業目的のご連絡にはお返事しておりません。</p>
+    </section>
+
     <!-- フォーム本体 -->
     <div class="card" id="form-card">
       <form id="contact-form"
@@ -243,12 +294,18 @@
   </main>
 
   <footer>
-    <p>
-      <a href="/privacy-policy.html">プライバシーポリシー</a>
-      &nbsp;|&nbsp;
+    <p class="footer-nav">
       <a href="/">ツール一覧</a>
+      ｜
+      <a href="/articles/">コラム</a>
+      ｜
+      <a href="/about.html">このサイトについて</a>
+      ｜
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜
+      <a href="/terms.html">利用規約</a>
     </p>
-    <p><small>&copy; 2026 keisanlab.jp</small></p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
   </footer>
 
   <script>

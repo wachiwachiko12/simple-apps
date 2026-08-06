@@ -172,7 +172,7 @@
       <div class="advice-list" id="advice-list" aria-live="polite"></div>
 
       <!-- 強度スコア説明 -->
-      <details class="score-legend">
+      <details open class="score-legend">
         <summary>強度スコアの見方</summary>
         <div class="score-legend-body">
           <div class="score-item score-0"><span class="score-dot"></span><strong>非常に弱い</strong> — すぐ解読されます。今すぐ変更を。</div>
@@ -292,42 +292,42 @@
     <section class="card faq-section">
       <h2><i class="bi bi-question-circle"></i> よくある質問</h2>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>安全なパスワードの長さはどのくらいですか？</summary>
         <p>一般的に12文字以上が推奨されています。大文字・小文字・数字・記号をすべて組み合わせた16文字以上のパスワードは非常に高い安全性を持ちます。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>入力したパスワードはサーバーに送信されますか？</summary>
         <p>いいえ、一切送信されません。このツールはすべての処理をブラウザ内で完結させており、入力したパスワードがインターネット経由で外部に送信されることはありません。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>パスワードの強度スコアはどう計算されていますか？</summary>
         <p>zxcvbn.jsというライブラリを使用しています。単純な文字数・種類の判定だけでなく、辞書攻撃・キーボードパターン・よく使われるパスワードのデータベースと照合して、より現実に近い強度を評価します。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>生成されたパスワードをそのまま使っても大丈夫ですか？</summary>
         <p>はい。このツールはブラウザのCrypto APIを使った暗号学的に安全な乱数生成を行っており、予測不可能なランダムパスワードを生成します。生成したパスワードはパスワードマネージャーに保存することをおすすめします。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>パスワードを使い回すのはなぜ危険なのですか？</summary>
         <p>1つのサービスから情報が漏洩した場合、同じパスワードを使用している他のサービスすべてに不正アクセスされるリスクがあります（パスワードリスト攻撃）。サービスごとに異なるパスワードを設定することが重要です。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>パスワードマネージャーは安全ですか？</summary>
         <p>信頼性の高いパスワードマネージャー（1Password、Bitwarden、LastPassなど）はゼロ知識暗号化を採用しており、サービス側でもパスワードを閲覧できない設計になっています。複雑なパスワードを管理する上で非常に有効な手段です。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>二段階認証（2FA）とパスワードはどちらが重要ですか？</summary>
         <p>どちらも重要で、組み合わせることが最も効果的です。強力なパスワードに加えて二段階認証を設定することで、パスワードが漏洩した場合でも不正アクセスを防ぐことができます。</p>
       </details>
 
-      <details class="faq-item">
+      <details open class="faq-item">
         <summary>定期的なパスワード変更は必要ですか？</summary>
         <p>漏洩の疑いがある場合や、使用中のサービスでセキュリティインシデントが発生した場合は直ちに変更が必要です。ただし、NISTのガイドラインでは定期的な変更義務よりも、強力で固有のパスワードを設定し続けることを推奨しています。</p>
       </details>
@@ -346,12 +346,20 @@
   </main>
 
   <footer>
-    <nav class="footer-nav">
+    <p class="footer-nav">
+      <a href="/">ツール一覧</a>
+      ｜
+      <a href="/articles/">コラム</a>
+      ｜
       <a href="/about.html">このサイトについて</a>
+      ｜
+      <a href="/contact.html">お問い合わせ</a>
+      ｜
       <a href="/privacy-policy.html">プライバシーポリシー</a>
-      <a href="/index.html">ツール一覧</a>
-    </nav>
-    <p class="footer-copy"><small>&copy; 2026 KeisanLab</small></p>
+      ｜
+      <a href="/terms.html">利用規約</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
   </footer>
 
   <script src="script.js"></script>

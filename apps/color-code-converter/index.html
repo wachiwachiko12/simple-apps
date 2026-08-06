@@ -243,7 +243,7 @@
 
     <!-- 使い方セクション -->
     <section id="howto" class="card section-gap">
-      <details>
+      <details open>
         <summary class="howto-summary"><i class="bi bi-info-circle"></i> 使い方（5ステップ）</summary>
         <div class="howto-content">
           <ol class="howto-steps">
@@ -271,31 +271,31 @@
     <section id="faq" class="card section-gap">
       <h2 class="section-title">よくある質問</h2>
       <div class="faq-list">
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">HEXカラーコードとは何ですか？</summary>
           <p class="faq-a">HEX（16進数）カラーコードは、#RRGGBBの形式で色を表す方法です。RR（赤）・GG（緑）・BB（青）それぞれを00〜FFの16進数2桁で表現します。CSSやHTMLで最も広く使われる色指定形式です。</p>
         </details>
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">RGBとHEXの変換方法を教えてください。</summary>
           <p class="faq-a">RGBの各値（0〜255）を16進数に変換してつなげるとHEXになります。例えばRGB(124, 58, 237)はR=7C、G=3A、B=EDなので#7C3AEDです。本ツールなら入力するだけで自動変換できます。</p>
         </details>
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">HSLとはどんな色空間ですか？</summary>
           <p class="faq-a">HSLはHue（色相）・Saturation（彩度）・Lightness（明度）の3要素で色を表す色空間です。H:0〜360度、S:0〜100%、L:0〜100%で指定します。直感的に色を調整しやすく、CSSアニメーションでの色変化にも活用されます。</p>
         </details>
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">WCAGコントラスト比とは何ですか？</summary>
           <p class="faq-a">WCAGはWeb Content Accessibility Guidelinesの略で、Webアクセシビリティの国際基準です。コントラスト比とは前景色（文字色）と背景色の明るさの差を示す比率です。AA基準では通常テキストに4.5:1以上、AAA基準では7:1以上が求められます。</p>
         </details>
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">補色とはどういう色ですか？</summary>
           <p class="faq-a">補色とは色相環で正反対（180度離れた）の色のことです。補色同士を組み合わせると色が強調し合い、鮮やかなコントラストが生まれます。デザインでアクセントカラーを選ぶ際に活用されます。</p>
         </details>
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">CSS変数として出力するにはどうすればよいですか？</summary>
           <p class="faq-a">「CSS変数出力」セクションの「コピー」ボタンをクリックすると、選択中の色を --color-primary などのCSS変数としてクリップボードにコピーできます。そのままCSSファイルに貼り付けて使えます。</p>
         </details>
-        <details class="faq-item">
+        <details open class="faq-item">
           <summary class="faq-q">入力したカラーデータはサーバーに送信されますか？</summary>
           <p class="faq-a">いいえ、一切送信されません。すべての変換・計算処理はブラウザ内のJavaScriptで完結します。入力した色情報がサーバーや第三者に送信されることはありません。</p>
         </details>
@@ -310,10 +310,20 @@
   </main>
 
   <footer>
-    <div class="footer-inner">
-      <p><a href="/about.html">このサイトについて</a> | <a href="/privacy-policy.html">プライバシーポリシー</a></p>
-      <p><small>&copy; 2026 KeisanLab — カラーコード変換ツール</small></p>
-    </div>
+    <p class="footer-nav">
+      <a href="/">ツール一覧</a>
+      ｜
+      <a href="/articles/">コラム</a>
+      ｜
+      <a href="/about.html">このサイトについて</a>
+      ｜
+      <a href="/contact.html">お問い合わせ</a>
+      ｜
+      <a href="/privacy-policy.html">プライバシーポリシー</a>
+      ｜
+      <a href="/terms.html">利用規約</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
   </footer>
 
   <script src="script.js"></script>
