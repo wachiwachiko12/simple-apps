@@ -36,7 +36,8 @@ jobs:
           set -euo pipefail
 
           # 運営用ドキュメント（APP_INFO / SEO_REPORT / UX_REPORT / MONETIZE_REPORT / GA4週次レポート等）
-          find . -path ./.git -prune -o -name '*.md' -type f -print -delete
+          # -delete は -depth を暗黙に有効化し -prune と併用できないため -not -path で除外する
+          find . -type f -name '*.md' -not -path './.git/*' -print -delete
           rm -rf ./reports
 
           # 未完成・開発用ページ
@@ -44,7 +45,7 @@ jobs:
           rm -rf ./apps/mind-map/01.*
 
           echo "--- remaining .md files (should be none) ---"
-          find . -path ./.git -prune -o -name '*.md' -type f -print
+          find . -type f -name '*.md' -not -path './.git/*' -print
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
