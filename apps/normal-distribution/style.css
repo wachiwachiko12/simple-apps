@@ -99,21 +99,6 @@ main {
 }
 
 /* ===========================
-   Ad Unit
-   =========================== */
-.ad-unit {
-  min-height: 0;
-  background: #f1f5f9;
-  border-radius: var(--radius-sm);
-  border: 1px dashed #cbd5e1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-weak);
-  font-size: 0.8rem;
-}
-
-/* ===========================
    Privacy Note
    =========================== */
 .privacy-note {

@@ -609,14 +609,6 @@ textarea { resize: vertical; }
 }
 .disclaimer-note strong { color: #374151; }
 
-/* ===== AD UNIT ===== */
-.ad-unit {
-  min-height: 0;
-  margin: 1.5rem auto;
-  max-width: 728px;
-  text-align: center;
-}
-
 /* ===== AFFILIATE ===== */
 .affiliate-block {
   margin: 1rem 0 1.5rem;

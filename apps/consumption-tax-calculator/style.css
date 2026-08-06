@@ -106,23 +106,6 @@ main {
 }
 
 /* ============================================================
-   Ad units
-   ============================================================ */
-
-.ad-unit {
-  min-height: 0;
-  background: #f0f4f8;
-  border: 1px dashed #d1d5db;
-  border-radius: var(--radius-sm);
-  margin: 1.25rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-weak);
-  font-size: 0.75rem;
-}
-
-/* ============================================================
    Tab navigation
    ============================================================ */
 

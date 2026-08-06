@@ -485,18 +485,6 @@ select:focus {
 }
 
 /* =============================================
-   Ad Units
-   ============================================= */
-.ad-unit {
-  min-height: 0;
-  margin: 1.5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-}
-
-/* =============================================
    Howto Section
    ============================================= */
 .howto-section {

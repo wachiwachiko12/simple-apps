@@ -54,20 +54,6 @@ header h1 {
   margin-top: 0.3rem;
 }
 
-/* ===== Ad Unit ===== */
-.ad-unit {
-  min-height: 0;
-  background: #eaedf5;
-  margin: 1.25rem auto;
-  max-width: 1100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 0.75rem;
-  border-radius: var(--radius);
-}
-
 /* ===== Tab Nav (mobile) ===== */
 .tab-nav {
   display: flex;

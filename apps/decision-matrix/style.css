@@ -42,18 +42,6 @@ main {
   gap: 1rem;
 }
 
-/* ===== Ad unit ===== */
-.ad-unit {
-  min-height: 0;
-  background: #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #a0aec0;
-  font-size: 0.75rem;
-  border-radius: 6px;
-}
-
 /* ===== 関連ツール ===== */
 .related-mini {
   margin-top: 1rem;

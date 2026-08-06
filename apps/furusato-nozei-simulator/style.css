@@ -88,22 +88,6 @@ main {
 }
 
 /* ======================================
-   広告ユニット
-====================================== */
-.ad-unit {
-  min-height: 0;
-  background: #f3f4f6;
-  margin: 1.5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-sm);
-  border: 1px dashed #d1d5db;
-  color: var(--text-weak);
-  font-size: 0.75rem;
-}
-
-/* ======================================
    プライバシー通知
 ====================================== */
 .privacy-notice {

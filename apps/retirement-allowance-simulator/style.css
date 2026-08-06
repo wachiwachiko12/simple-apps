@@ -87,22 +87,6 @@ main {
 }
 
 /* ============================================================
-   広告ユニット
-   ============================================================ */
-.ad-unit {
-  min-height: 0;
-  background: #f0ebff;
-  margin: 1.5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #a78bfa;
-  font-size: 0.75rem;
-  border-radius: var(--radius-sm);
-  border: 1px dashed #c4b5fd;
-}
-
-/* ============================================================
    プライバシー通知
    ============================================================ */
 .privacy-notice {

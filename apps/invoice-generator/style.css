@@ -473,13 +473,6 @@ footer {
 footer a { color: #6b7280; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
-/* ===== 広告 ===== */
-.ad-unit {
-  margin: 1.5rem auto;
-  max-width: 728px;
-  text-align: center;
-}
-
 /* ===== アフィリエイト ===== */
 .affiliate-block {
   margin: 1rem 0 1.5rem;

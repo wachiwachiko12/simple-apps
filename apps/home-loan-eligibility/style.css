@@ -121,14 +121,6 @@ header .subtitle {
   margin: 0 auto;
 }
 
-/* ---- Ad Unit ---- */
-.ad-unit {
-  min-height: 0;
-  margin: var(--space-6) auto;
-  max-width: 860px;
-  padding: 0 var(--space-5);
-}
-
 /* ---- Tab Group ---- */
 .tab-group {
   display: flex;

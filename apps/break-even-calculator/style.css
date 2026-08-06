@@ -533,15 +533,6 @@ main {
   margin-top: 0.15rem;
 }
 
-/* ===== Ad unit ===== */
-.ad-unit {
-  background: #f3f4f6;
-  border-radius: 8px;
-  min-height: 0;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
 /* ===== Chart card ===== */
 .chart-card {
   overflow: hidden;

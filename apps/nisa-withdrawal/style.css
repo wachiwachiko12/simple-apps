@@ -140,23 +140,6 @@ main {
 }
 
 /* =========================================
-   広告ユニット
-   ========================================= */
-.ad-unit {
-  min-height: 0;
-  background: #f0f4f8;
-  border: 1.5px dashed #c8d5e0;
-  border-radius: var(--radius-sm);
-  margin: 1.25rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-weak);
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-}
-
-/* =========================================
    タブUI
    ========================================= */
 .tab-group {

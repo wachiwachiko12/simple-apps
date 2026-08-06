@@ -77,11 +77,6 @@ main {
   border-bottom: 2px solid #e8eaf0;
 }
 
-/* ===== Ad Units ===== */
-.ad-unit {
-  margin: 1.25rem 0;
-}
-
 /* ===== Sample Grid ===== */
 .sample-grid {
   display: grid;

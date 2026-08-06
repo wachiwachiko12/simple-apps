@@ -129,13 +129,6 @@ main {
   transition: box-shadow var(--transition), transform var(--transition);
 }
 
-/* ========== 広告ユニット ========== */
-
-.ad-unit {
-  min-height: 0;
-  margin: var(--space-5) 0;
-}
-
 /* ========== プライバシー通知 ========== */
 
 .privacy-notice {

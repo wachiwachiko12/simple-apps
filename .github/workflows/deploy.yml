@@ -29,6 +29,23 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # 内部向けの資料・未完成ページを公開対象から除外する。
+      # git 上には残すため履歴とバックアップは維持される。
+      - name: Strip internal docs and unfinished pages from the artifact
+        run: |
+          set -euo pipefail
+
+          # 運営用ドキュメント（APP_INFO / SEO_REPORT / UX_REPORT / MONETIZE_REPORT / GA4週次レポート等）
+          find . -path ./.git -prune -o -name '*.md' -type f -print -delete
+          rm -rf ./reports
+
+          # 未完成・開発用ページ
+          rm -rf ./apps/_template
+          rm -rf ./apps/mind-map/01.*
+
+          echo "--- remaining .md files (should be none) ---"
+          find . -path ./.git -prune -o -name '*.md' -type f -print
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

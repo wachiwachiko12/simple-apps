@@ -81,25 +81,6 @@ main {
   padding: 0 1.25rem 3rem;
 }
 
-/* ---- Ad Units ---- */
-.ad-unit {
-  min-height: 60px;
-  background: #f0edf8;
-  border: 1px dashed #c4b5fd;
-  border-radius: var(--radius-sm);
-  margin: 1.5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #a78bfa;
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
-}
-
-.ad-unit::after {
-  content: 'ADVERTISEMENT';
-}
-
 /* ---- Privacy Note ---- */
 .privacy-note {
   display: flex;

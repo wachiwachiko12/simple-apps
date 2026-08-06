@@ -102,22 +102,6 @@ main {
 }
 
 /* ============================================
-   広告ユニット
-   ============================================ */
-.ad-unit {
-  min-height: 0;
-  background: #f0ede8;
-  border: 1px dashed #d1cfc9;
-  border-radius: var(--radius-sm);
-  margin: 1.5rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-weak);
-  font-size: 0.75rem;
-}
-
-/* ============================================
    入力フォーム
    ============================================ */
 .tool-section {

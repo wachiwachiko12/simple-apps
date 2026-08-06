@@ -95,12 +95,6 @@ main {
   padding: var(--space-4) var(--space-4) var(--space-12);
 }
 
-/* ===================== AD UNIT ===================== */
-.ad-unit {
-  min-height: 0;
-  margin: var(--space-6) 0;
-}
-
 /* ===================== PRIVACY NOTICE ===================== */
 .privacy-notice {
   display: flex;

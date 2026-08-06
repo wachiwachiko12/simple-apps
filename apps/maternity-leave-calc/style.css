@@ -586,15 +586,6 @@ main {
   gap: 0.35rem;
 }
 
-/* ===== Ad unit ===== */
-.ad-unit {
-  background: #f3f4f6;
-  border-radius: 8px;
-  min-height: 0;
-  margin-bottom: 1rem;
-  overflow: hidden;
-}
-
 /* ===== How-to section ===== */
 .howto-section {
   background: var(--surface);

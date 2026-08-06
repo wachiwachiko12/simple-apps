@@ -58,9 +58,6 @@ h1 { font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; lin
 /* ── Main ── */
 main { max-width: 600px; margin: 0 auto; padding: 1rem 1rem 3rem; }
 
-/* ── Ad unit ── */
-.ad-unit { min-height: 0; margin: 0.75rem 0; }
-
 /* ── Card ── */
 .card {
   background: var(--surface); border-radius: var(--radius);

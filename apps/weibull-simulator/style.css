@@ -83,11 +83,6 @@ main {
   padding: 2rem 1.25rem 3.5rem;
 }
 
-/* ===== Ad units ===== */
-.ad-unit {
-  margin: 1.25rem 0;
-}
-
 /* ===== Params Section ===== */
 .params-section {
   background: var(--surface);
