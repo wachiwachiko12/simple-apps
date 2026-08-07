@@ -150,13 +150,6 @@ function calcTotalScore(metrics) {
   return Math.round(score);
 }
 
-function scoreComment(score) {
-  if (score >= 85) return '非常に読みやすい文章です。このクオリティを維持しましょう。';
-  if (score >= 70) return '読みやすい文章ですが、いくつかの指標を改善するとさらに良くなります。';
-  if (score >= 55) return '普通の読みやすさです。△マークの指標を重点的に改善しましょう。';
-  return '文章の読みやすさに改善の余地があります。平均文長・漢字密度を中心に見直してください。';
-}
-
 // ===== 指標カード定義 =====
 
 function buildMetricDefs(m) {

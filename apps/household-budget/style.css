@@ -686,3 +686,118 @@ details[open] > .accordion-summary .accordion-icon::after { content: '−'; }
 .related-mini a:hover {
   text-decoration: underline;
 }
+
+/* ===========================
+   詳細解説セクション（ケーススタディ）
+=========================== */
+.deepdive {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+
+.deepdive h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin-top: 1.75rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--accent-light);
+}
+
+.deepdive h2:first-child { margin-top: 0; }
+
+.deepdive h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.deepdive p {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: #444;
+  margin-bottom: 0.75rem;
+}
+
+.deepdive strong { color: var(--accent-dark); font-weight: 700; }
+
+.case-card {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 1rem 0 1.25rem;
+  background: #fcfdfc;
+}
+
+.case-cond {
+  font-size: 0.83rem !important;
+  background: var(--accent-light);
+  color: #14532d !important;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  line-height: 1.7 !important;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0.85rem;
+}
+
+.case-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  min-width: 320px;
+}
+
+.case-table th {
+  background: var(--accent-light);
+  color: #14532d;
+  font-weight: 700;
+  text-align: left;
+  padding: 0.5rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.case-table td {
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid var(--border);
+  color: #444;
+}
+
+.case-table tbody tr:nth-child(even) td { background: #fafbfa; }
+
+.case-table tr.case-total td {
+  font-weight: 700;
+  color: var(--text);
+  background: #f1f7f3 !important;
+  border-top: 2px solid var(--accent);
+}
+
+.point-list {
+  padding-left: 1.35rem;
+  margin-bottom: 1rem;
+}
+
+.point-list li {
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: #444;
+  margin-bottom: 0.7rem;
+}
+
+.point-list li strong { color: var(--accent-dark); }
+
+@media (max-width: 480px) {
+  .deepdive { padding: 1rem; }
+  .case-card { padding: 0.85rem; }
+  .case-table { font-size: 0.8rem; }
+}

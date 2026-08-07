@@ -452,6 +452,39 @@ main {
   line-height: 1.75;
 }
 
+/* ===== 解説内の表 ===== */
+.calc-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0.75rem 0 1rem;
+}
+
+.calc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  color: #555;
+}
+
+.calc-table th,
+.calc-table td {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.calc-table th {
+  background: #f3f4f6;
+  color: #1a1a2e;
+  font-weight: 700;
+}
+
+.calc-table tbody tr:nth-child(even) td {
+  background: #fafafa;
+}
+
 /* ===== FAQ・参照情報・免責事項 ===== */
 .faq-list dt {
   font-weight: 700;

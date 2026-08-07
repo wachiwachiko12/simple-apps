@@ -203,13 +203,19 @@ document.addEventListener('DOMContentLoaded', () => {
       showResult(el, `1868年〜${currentYear}年の範囲で入力してください`, '', true);
       return;
     }
-    const age = currentYear - birthSeireki;
+    // currentYear - birthSeireki は「年の差」。誕生日前は1歳引いた値が満年齢になる。
+    // 今年生まれの場合は誕生日前という状態が存在しないため 0 歳のみを示す。
+    const ageAfterBirthday = currentYear - birthSeireki;
+    const ageBeforeBirthday = ageAfterBirthday - 1;
+    const isBornThisYear = ageBeforeBirthday < 0;
     const warekiResults = seirekiToWareki(birthSeireki);
     const waLabel = warekiResults.length ? warekiResults.map(r => r.gannen).join('/') : '';
     showResult(
       el,
-      `${age} 歳（または ${age + 1} 歳）`,
-      `西暦 ${birthSeireki} 年生まれ${waLabel ? `（${waLabel}）` : ''}。誕生日によって${age}歳または${age + 1}歳です。`,
+      isBornThisYear ? '0 歳' : `${ageBeforeBirthday} 歳（または ${ageAfterBirthday} 歳）`,
+      isBornThisYear
+        ? `西暦 ${birthSeireki} 年生まれ${waLabel ? `（${waLabel}）` : ''}。今年生まれのため0歳です。`
+        : `西暦 ${birthSeireki} 年生まれ${waLabel ? `（${waLabel}）` : ''}。今年の誕生日を迎える前は${ageBeforeBirthday}歳、迎えた後は${ageAfterBirthday}歳です。`,
       false,
       { tabKey: 'age-table', text: '他の年の年齢も年齢早見表タブでチェック →' }
     );
