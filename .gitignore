@@ -29,3 +29,8 @@ _affiliate/
 
 # 内部制作用ツール（公開しない）
 create-ogp-image.html
+
+# 内部ドキュメント（公開禁止・リポジトリ外の simple-apps-internal-docs で管理）
+# 2026-08-07: publicリポジトリからGitHub経由で読める状態だったため履歴ごと削除
+*.md
+reports/
