@@ -26,6 +26,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # リリース前の静的検査。NG ならここで止まり、公開されない。
+      # 差し戻し内容はこのステップのログに出る。
+      # ローカルでも同じものを実行できる: node .github/scripts/validate-site.js
+      - name: Validate source
+        run: node .github/scripts/validate-site.js
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -49,12 +55,13 @@ jobs:
           rm -rf _site/reports _site/apps/_template
           rm -rf _site/apps/mind-map/01.*
 
-          echo "--- .md files left in _site (should be none) ---"
-          find ./_site -type f -name '*.md' -print
-          echo "--- excluded dirs still present? (should be none) ---"
-          ls -d ./_site/reports ./_site/apps/_template ./_site/apps/mind-map/01.* 2>/dev/null || echo "  none"
           echo "--- published page count ---"
           find ./_site -name '*.html' | wc -l
+
+      # 組み立てた公開物そのものを検査する。内部資料の混入はここで
+      # 必ずビルドを失敗させる（以前は echo するだけで素通りしていた）。
+      - name: Validate build output
+        run: node .github/scripts/validate-site.js --dir _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -69,3 +76,10 @@ jobs:
           # default, and a timeout cancels the deployment, which then blocks
           # the next run. Allow 30 min before giving up.
           timeout: 1800000
+
+      # 「デプロイ成功」は本番が正しいことを意味しない。実際に本番へ
+      # アクセスして確かめる。CDN反映を少し待ってから実行する。
+      - name: Smoke test production
+        run: |
+          sleep 30
+          node .github/scripts/smoke-test.js --base https://keisanlab.jp
