@@ -34,8 +34,9 @@ jobs:
 
       # 計算ロジックのテスト。税・給与・年金は誤った数字が実害になるため、
       # 見た目のレビューではなく計算そのものを検証する。
+      # ディレクトリ指定は Node 22 で解決に失敗するため、明示的に展開する。
       - name: Test calculations
-        run: node --test .github/scripts/test/
+        run: node --test .github/scripts/test/*.test.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
