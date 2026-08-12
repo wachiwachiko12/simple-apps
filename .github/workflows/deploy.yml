@@ -32,6 +32,11 @@ jobs:
       - name: Validate source
         run: node .github/scripts/validate-site.js
 
+      # 計算ロジックのテスト。税・給与・年金は誤った数字が実害になるため、
+      # 見た目のレビューではなく計算そのものを検証する。
+      - name: Test calculations
+        run: node --test .github/scripts/test/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
