@@ -162,7 +162,58 @@ if (IS_BUILD_OUTPUT) {
   }
 }
 
-// ----------------------------------------------------------- 7. details の展開
+// ------------------------------------------------------- 7. ズームの禁止（a11y）
+// maximum-scale や user-scalable=no は端末上での拡大を封じる。
+// 弱視の利用者が文字を大きくできなくなり、WCAG 1.4.4 に反する。
+// 10ページで指定されていた（税務・法務など読むことが前提のページを含む）。
+for (const f of htmlFiles) {
+  const h = fs.readFileSync(f, 'utf8');
+  const vp = h.match(/<meta[^>]+name=["']viewport["'][^>]*>/i);
+  if (!vp) continue;
+  if (/maximum-scale\s*=\s*[12](\.0)?\b/i.test(vp[0]) || /user-scalable\s*=\s*(no|0)/i.test(vp[0])) {
+    err('a11y-zoom', rel(f), 'viewport が拡大を禁止しています', 'maximum-scale / user-scalable=no を外してください。弱視の利用者が文字を拡大できなくなります（WCAG 1.4.4）。');
+  }
+}
+
+// ------------------------------------------------- 8. フォーム部品のラベル（a11y）
+// label / aria-label が無いと、スクリーンリーダーでは何の入力欄か分からない。
+// placeholder はラベルの代わりにならない（入力すると消えるため）。
+// 入れ子ラベル <label>…<input>…</label> は関連付け済みなので除外する。
+for (const f of htmlFiles) {
+  const h = fs.readFileSync(f, 'utf8')
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '');
+  const labelFor = new Set([...h.matchAll(/<label[^>]*\sfor=["']([^"']+)["']/gi)].map((m) => m[1]));
+  const labelRanges = [...h.matchAll(/<label\b[^>]*>[\s\S]*?<\/label>/gi)].map((m) => [m.index, m.index + m[0].length]);
+
+  let unlabeled = 0;
+  for (const m of h.matchAll(/<(input|select|textarea)\b[^>]*>/gi)) {
+    const tag = m[0];
+    if (/type=["'](hidden|submit|button|reset|image)["']/i.test(tag)) continue;
+    if (/\bhidden\b/i.test(tag)) continue; // JSから開くファイル選択など、利用者に見えない部品
+    if (/aria-label|aria-labelledby|title\s*=/i.test(tag)) continue;
+    const id = tag.match(/\sid=["']([^"']+)["']/);
+    if (id && labelFor.has(id[1])) continue;
+    if (labelRanges.some(([s, e]) => m.index >= s && m.index < e)) continue;
+    unlabeled++;
+  }
+  if (unlabeled > 0) {
+    warn('a11y-label', rel(f), `ラベルのない入力欄が ${unlabeled} 個あります`, 'label for / aria-label を付けてください。placeholder は入力すると消えるためラベルの代わりになりません。');
+  }
+}
+
+// --------------------------------------------------------- 9. ページ重量（性能）
+// 現状は最大54KBで健全。将来の肥大化を捕まえるための予防線として置く。
+const WEIGHT_WARN = 150 * 1024;
+for (const f of htmlFiles) {
+  const size = fs.statSync(f).size;
+  if (size > WEIGHT_WARN) {
+    warn('perf-weight', rel(f), `HTMLが ${(size / 1024).toFixed(0)}KB あります`, `${WEIGHT_WARN / 1024}KB を超えています。インラインCSS/JSの外出しや内容の分割を検討してください。`);
+  }
+}
+
+// ---------------------------------------------------------- 10. details の展開
 // 35アプリが本文の平均61%を初期非表示にしており、審査員には
 // ほぼ空のページに見えていた。
 for (const f of htmlFiles) {

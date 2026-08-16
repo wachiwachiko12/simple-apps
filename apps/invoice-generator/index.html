@@ -86,35 +86,35 @@
       <div class="tab-content active" id="tab-sender">
         <h2>発行者情報</h2>
         <p class="save-note">※ 入力内容はブラウザに自動保存されます</p>
-        <label>氏名 / 会社名</label>
+        <label for="s-name">氏名 / 会社名</label>
         <input type="text" id="s-name" placeholder="山田 太郎">
-        <label>郵便番号・住所</label>
+        <label for="s-zip">郵便番号・住所</label>
         <input type="text" id="s-zip" placeholder="〒000-0000">
-        <input type="text" id="s-addr" placeholder="東京都渋谷区〇〇 1-2-3">
-        <label>電話番号</label>
+        <input type="text" id="s-addr" placeholder="東京都渋谷区〇〇 1-2-3" aria-label="郵便番号・住所">
+        <label for="s-tel">電話番号</label>
         <input type="text" id="s-tel" placeholder="090-0000-0000">
-        <label>メールアドレス</label>
+        <label for="s-email">メールアドレス</label>
         <input type="text" id="s-email" placeholder="example@email.com">
-        <label>振込先銀行口座</label>
+        <label for="s-bank">振込先銀行口座</label>
         <input type="text" id="s-bank" placeholder="〇〇銀行 △△支店 普通 1234567">
-        <input type="text" id="s-bank-name" placeholder="口座名義: ヤマダタロウ">
+        <input type="text" id="s-bank-name" placeholder="口座名義: ヤマダタロウ" aria-label="振込先銀行口座">
       </div>
 
       <!-- 請求先 -->
       <div class="tab-content" id="tab-client">
         <h2>請求先情報</h2>
-        <label>会社名</label>
+        <label for="c-company">会社名</label>
         <input type="text" id="c-company" placeholder="〇〇株式会社">
-        <label>部署名（任意）</label>
+        <label for="c-dept">部署名（任意）</label>
         <input type="text" id="c-dept" placeholder="経理部">
-        <label>担当者名</label>
+        <label for="c-name">担当者名</label>
         <input type="text" id="c-name" placeholder="鈴木 一郎">
       </div>
 
       <!-- 明細 -->
       <div class="tab-content" id="tab-items">
         <h2>明細</h2>
-        <label>消費税</label>
+        <label for="tax-rate">消費税</label>
         <select id="tax-rate">
           <option value="0.10">10%（標準税率）</option>
           <option value="0.08">8%（軽減税率）</option>
@@ -127,13 +127,13 @@
       <!-- その他 -->
       <div class="tab-content" id="tab-meta">
         <h2>請求書情報</h2>
-        <label>請求書番号</label>
+        <label for="inv-number">請求書番号</label>
         <input type="text" id="inv-number" placeholder="2026-001">
-        <label>発行日</label>
+        <label for="inv-date">発行日</label>
         <input type="date" id="inv-date">
-        <label>支払期限</label>
+        <label for="inv-due">支払期限</label>
         <input type="date" id="inv-due">
-        <label>備考</label>
+        <label for="inv-note">備考</label>
         <textarea id="inv-note" rows="4" placeholder="お振込手数料はご負担をお願いいたします。"></textarea>
       </div>
 
