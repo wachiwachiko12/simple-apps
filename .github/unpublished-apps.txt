@@ -12,7 +12,7 @@
 # 戻すときは「そのまま戻す」のではなく、内容を厚くしてから1本ずつ戻すこと。
 # 薄いまま一括で復活させると、承認後の再審査で同じ理由に引っかかる。
 
-# --- 統合したもの（内容は統合先へ移すこと。移す作業は未実施）---
+# --- 統合したもの（機能の移植は 2026-08-22 に完了）---
 home-loan-eligibility             # → rent-vs-buy-calculator へ統合（1PV）
 mortgage-prepayment               # → rent-vs-buy-calculator へ統合（2PV）
 retirement-tax-optimizer          # → retirement-allowance-simulator へ統合（0PV）

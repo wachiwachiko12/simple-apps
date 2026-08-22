@@ -817,3 +817,67 @@ footer a:hover { color: #fff; }
 .related-mini a:hover {
   text-decoration: underline;
 }
+
+/* ===== 借入可能額・繰上返済 ===== */
+.section-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e4080;
+  margin-bottom: 0.5rem;
+}
+
+.section-lead {
+  font-size: 0.86rem;
+  line-height: 1.8;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.borrow-result,
+.prepay-result {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.borrow-result:empty,
+.prepay-result:empty {
+  display: none;
+}
+
+.borrow-main,
+.prepay-main {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e4080;
+  margin-bottom: 0.35rem;
+}
+
+.borrow-sub,
+.prepay-sub {
+  font-size: 0.88rem;
+  color: #475569;
+  margin-bottom: 0.6rem;
+}
+
+.borrow-badge {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: 100px;
+  margin-bottom: 0.6rem;
+}
+
+.borrow-safe    { background: #dcfce7; color: #166534; }
+.borrow-caution { background: #fef3c7; color: #92400e; }
+.borrow-danger  { background: #fee2e2; color: #991b1b; }
+
+.borrow-note,
+.prepay-note {
+  font-size: 0.8rem;
+  line-height: 1.75;
+  color: #64748b;
+}

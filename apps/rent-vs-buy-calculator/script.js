@@ -80,6 +80,86 @@ function calcMonthlyPayment(loanMan, annualRate, termYears) {
 }
 
 /* ============================================================
+   借入可能額の逆算（home-loan-eligibility から統合）
+
+   毎月返せる額から、借りられる元本を求める。
+   月返済額の式を元本について解いたもので、金利が上がるほど
+   同じ返済額で借りられる額は小さくなる。
+   ============================================================ */
+
+// 年収に対する年間返済額の割合。金融機関の審査で使われる指標。
+function calcRepaymentRatio(annualIncomeMan, monthlyPaymentMan) {
+  if (annualIncomeMan <= 0) return 0;
+  return (monthlyPaymentMan * 12) / annualIncomeMan * 100;
+}
+
+// 返済負担率から見た安全度。25%以下が目安、35%超は多くの金融機関で通らない。
+function judgeRepaymentRatio(ratio) {
+  if (ratio <= 25) return { level: 'safe',    label: '余裕あり（25%以下）' };
+  if (ratio <= 35) return { level: 'caution', label: '要注意（25〜35%）' };
+  return { level: 'danger', label: '負担が重い（35%超）' };
+}
+
+// 月返済額から借入可能額を逆算（万円）
+function calcMaxLoan(monthlyPaymentMan, annualRate, termYears) {
+  if (monthlyPaymentMan <= 0 || termYears <= 0) return 0;
+  const n = termYears * 12;
+  if (annualRate === 0) return monthlyPaymentMan * n;
+  const r = annualRate / 100 / 12;
+  const pow = Math.pow(1 + r, n);
+  return monthlyPaymentMan * (pow - 1) / (r * pow);
+}
+
+// 年収と返済負担率から借入可能額を求める（万円）
+function calcMaxLoanFromIncome(annualIncomeMan, ratioPercent, annualRate, termYears) {
+  const monthly = (annualIncomeMan * (ratioPercent / 100)) / 12;
+  return calcMaxLoan(monthly, annualRate, termYears);
+}
+
+/* ============================================================
+   繰上返済の効果（mortgage-prepayment から統合）
+
+   期間短縮型は、返済額を変えずに残高だけ減らすので、
+   完済までの月数が縮む。その分の利息が丸ごと浮く。
+   ============================================================ */
+
+// 残高・月返済額から完済までの月数を求める
+function calcRemainingMonths(balanceMan, annualRate, monthlyPaymentMan) {
+  if (balanceMan <= 0) return 0;
+  if (monthlyPaymentMan <= 0) return Infinity;
+  if (annualRate === 0) return balanceMan / monthlyPaymentMan;
+  const r = annualRate / 100 / 12;
+  const interestOnly = r * balanceMan;
+  // 月返済額が利息にも満たないと、残高が減らず完済しない
+  if (monthlyPaymentMan <= interestOnly) return Infinity;
+  return -Math.log(1 - interestOnly / monthlyPaymentMan) / Math.log(1 + r);
+}
+
+/**
+ * 期間短縮型の繰上返済の効果を求める。
+ * @returns {{beforeMonths, afterMonths, shortenedMonths, interestSaved}} 万円・月
+ */
+function calcPrepaymentEffect(balanceMan, annualRate, remainingYears, prepayMan) {
+  const monthly = calcMonthlyPayment(balanceMan, annualRate, remainingYears);
+  const beforeMonths = remainingYears * 12;
+  const beforeInterest = monthly * beforeMonths - balanceMan;
+
+  const newBalance = Math.max(0, balanceMan - prepayMan);
+  const afterMonths = calcRemainingMonths(newBalance, annualRate, monthly);
+  const afterInterest = Number.isFinite(afterMonths)
+    ? Math.max(0, monthly * afterMonths - newBalance)
+    : Infinity;
+
+  return {
+    monthlyPayment: monthly,
+    beforeMonths,
+    afterMonths,
+    shortenedMonths: Number.isFinite(afterMonths) ? beforeMonths - afterMonths : 0,
+    interestSaved: Number.isFinite(afterInterest) ? beforeInterest - afterInterest : 0,
+  };
+}
+
+/* ============================================================
    賃貸 年別累積コスト配列を生成（万円）
    ============================================================ */
 function calcRentCumulative(params) {
@@ -492,3 +572,101 @@ document.querySelectorAll('.form-input').forEach(input => {
     if (e.key === 'Enter') calculate();
   });
 });
+
+/* ============================================================
+   借入可能額の表示
+   ============================================================ */
+function renderBorrowResult() {
+  const box = document.getElementById('borrow-result');
+  if (!box) return;
+
+  const income = getNum('annual-income', 0);
+  const ratio  = getNum('repayment-ratio', 25);
+  const rate   = getNum('loan-rate', 1.5);
+  const years  = getNum('loan-term', 35);
+
+  box.textContent = '';
+  if (income <= 0) return;
+
+  const monthly = (income * (ratio / 100)) / 12;
+  const maxLoan = calcMaxLoanFromIncome(income, ratio, rate, years);
+  const judge = judgeRepaymentRatio(ratio);
+
+  const main = document.createElement('div');
+  main.className = 'borrow-main';
+  main.textContent = `借入可能額の目安 ${fmt(Math.round(maxLoan))} 万円`;
+
+  const sub = document.createElement('div');
+  sub.className = 'borrow-sub';
+  sub.textContent =
+    `毎月の返済額 ${fmt(Math.round(monthly * 10) / 10)} 万円（金利${rate}% / ${years}年）`;
+
+  const badge = document.createElement('span');
+  badge.className = `borrow-badge borrow-${judge.level}`;
+  badge.textContent = judge.label;
+
+  const note = document.createElement('p');
+  note.className = 'borrow-note';
+  note.textContent =
+    '返済負担率は金融機関が審査で見る指標です。借りられる額と無理なく返せる額は違うので、' +
+    '教育費や修繕費などの支出も見込んだうえで判断してください。';
+
+  box.append(main, sub, badge, note);
+}
+
+/* ============================================================
+   繰上返済の表示
+   ============================================================ */
+function renderPrepayResult() {
+  const box = document.getElementById('prepay-result');
+  if (!box) return;
+
+  const balance = getNum('prepay-balance', 0);
+  const years   = getNum('prepay-years', 0);
+  const rate    = getNum('prepay-rate', 0);
+  const prepay  = getNum('prepay-amount', 0);
+
+  box.textContent = '';
+  if (balance <= 0 || years <= 0) return;
+
+  const e = calcPrepaymentEffect(balance, rate, years, prepay);
+  if (!Number.isFinite(e.afterMonths)) return;
+
+  const shortenedYears = Math.floor(e.shortenedMonths / 12);
+  const shortenedMonths = Math.round(e.shortenedMonths % 12);
+
+  const main = document.createElement('div');
+  main.className = 'prepay-main';
+  main.textContent = `利息削減 ${fmt(Math.round(e.interestSaved * 10) / 10)} 万円`;
+
+  const sub = document.createElement('div');
+  sub.className = 'prepay-sub';
+  sub.textContent = shortenedYears > 0 || shortenedMonths > 0
+    ? `完済が ${shortenedYears > 0 ? shortenedYears + '年' : ''}${shortenedMonths}か月 早まります（毎月の返済額 ${fmt(Math.round(e.monthlyPayment * 10) / 10)} 万円は変わりません）`
+    : `毎月の返済額 ${fmt(Math.round(e.monthlyPayment * 10) / 10)} 万円`;
+
+  const note = document.createElement('p');
+  note.className = 'prepay-note';
+  note.textContent =
+    prepay > 0
+      ? '手数料は含めていません。繰上返済に回すお金は住宅ローン控除の残り期間や、手元に残す生活防衛資金と見比べて決めてください。'
+      : '繰上返済する額を入力すると効果が出ます。';
+
+  box.append(main, sub, note);
+}
+
+/* ============================================================
+   入力に応じて再計算
+   ============================================================ */
+['annual-income', 'repayment-ratio'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', renderBorrowResult);
+});
+
+['prepay-balance', 'prepay-years', 'prepay-rate', 'prepay-amount'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', renderPrepayResult);
+});
+
+renderBorrowResult();
+renderPrepayResult();

@@ -272,6 +272,76 @@
       </div>
     </section>
 
+    <!-- 借りられる額から考える -->
+    <section class="input-section" id="borrow">
+      <h2 class="section-heading"><i class="bi bi-bank"></i> 年収からいくら借りられるか</h2>
+      <p class="section-lead">
+        購入を検討する前に、無理なく返せる金額を先に決めておくと判断がぶれません。
+        金融機関は年収に対する年間返済額の割合（返済負担率）を見ます。
+      </p>
+
+      <div class="field-row">
+        <label for="annual-income">年収（税込）</label>
+        <div class="input-wrap">
+          <input type="number" id="annual-income" min="0" max="10000" step="50" value="600" inputmode="numeric">
+          <span class="unit">万円</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <label for="repayment-ratio">返済負担率</label>
+        <div class="input-wrap">
+          <input type="number" id="repayment-ratio" min="5" max="50" step="1" value="25" inputmode="numeric">
+          <span class="unit">%</span>
+        </div>
+      </div>
+
+      <div class="borrow-result" id="borrow-result" aria-live="polite"></div>
+    </section>
+
+    <!-- 繰上返済 -->
+    <section class="input-section" id="prepay">
+      <h2 class="section-heading"><i class="bi bi-graph-down-arrow"></i> 繰上返済でどれだけ利息が減るか</h2>
+      <p class="section-lead">
+        期間短縮型（毎月の返済額は変えずに完済を早める方式）で試算します。
+        返済の早い時期ほど利息の割合が大きいので、同じ金額でも効果が大きく出ます。
+      </p>
+
+      <div class="field-row">
+        <label for="prepay-balance">ローン残高</label>
+        <div class="input-wrap">
+          <input type="number" id="prepay-balance" min="0" max="20000" step="100" value="3000" inputmode="numeric">
+          <span class="unit">万円</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <label for="prepay-years">残りの返済期間</label>
+        <div class="input-wrap">
+          <input type="number" id="prepay-years" min="1" max="50" step="1" value="30" inputmode="numeric">
+          <span class="unit">年</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <label for="prepay-rate">金利</label>
+        <div class="input-wrap">
+          <input type="number" id="prepay-rate" min="0" max="10" step="0.05" value="1.5" inputmode="decimal">
+          <span class="unit">%</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <label for="prepay-amount">繰上返済する額</label>
+        <div class="input-wrap">
+          <input type="number" id="prepay-amount" min="0" max="20000" step="50" value="300" inputmode="numeric">
+          <span class="unit">万円</span>
+        </div>
+      </div>
+
+      <div class="prepay-result" id="prepay-result" aria-live="polite"></div>
+    </section>
+
     <!-- 計算結果 -->
     <div id="results" class="results-area" hidden>
 

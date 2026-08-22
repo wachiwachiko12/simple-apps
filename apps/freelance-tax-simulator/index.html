@@ -75,6 +75,18 @@
       <h2>基本情報の入力</h2>
 
       <div class="field-group">
+        <label for="salary-income">本業の給与収入（副業の方のみ・源泉徴収票の「支払金額」）</label>
+        <div class="input-wrap">
+          <input type="number" id="salary-income" placeholder="例: 4800000（専業の方は0）" min="0" inputmode="numeric" value="0">
+          <span class="unit">円</span>
+        </div>
+        <p class="hint">
+          会社員をしながら副業をしている場合に入力してください。給与所得控除を引いたうえで
+          事業所得と合算し、税率を判定します。専業の方は0のままで構いません。
+        </p>
+      </div>
+
+      <div class="field-group">
         <label for="revenue">年間売上（税込）</label>
         <div class="input-wrap">
           <input type="number" id="revenue" placeholder="例: 5000000" min="0" inputmode="numeric">
@@ -219,8 +231,14 @@
       </div>
 
       <div class="takeaway-box">
-        <div class="takeaway-label">手取り概算（売上 − 経費 − 社保 − 税金）</div>
+        <div class="takeaway-label" id="r-takeaway-label">手取り概算（売上 − 経費 − 社保 − 税金）</div>
         <div class="takeaway-amount" id="r-takeaway">—</div>
+      </div>
+
+      <!-- 給与収入を入力したときだけ出す（副業の方向け） -->
+      <div class="filing-box" id="r-filing-box" hidden>
+        <div class="filing-badge" id="r-filing-badge">—</div>
+        <p class="filing-reason" id="r-filing-reason"></p>
       </div>
 
       <p class="disclaimer">※ この計算は概算です。実際の納税額は個別の状況により異なります。正確な申告は税理士または国税庁の確定申告書等作成コーナーをご利用ください。</p>

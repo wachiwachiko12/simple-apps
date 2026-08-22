@@ -106,6 +106,82 @@ describe('retirement-allowance-simulator: 退職所得控除', () => {
 });
 
 // ---------------------------------------------------------------------------
+describe('rent-vs-buy-calculator: 住宅ローン（借入可能額・繰上返済）', () => {
+  const app = loadApp('rent-vs-buy-calculator');
+
+  test('借入可能額と月返済額は互いの逆算になっている', () => {
+    for (const [monthly, rate, years] of [[10, 1.5, 35], [15, 0.5, 30], [8, 2.0, 20], [12, 0, 35]]) {
+      const loan = app.calcMaxLoan(monthly, rate, years);
+      const back = app.calcMonthlyPayment(loan, rate, years);
+      assert.ok(Math.abs(back - monthly) < 1e-6, `月${monthly}万/${rate}%/${years}年 で逆算がずれる`);
+    }
+  });
+
+  test('金利が高いほど借りられる額は小さい', () => {
+    let prev = Infinity;
+    for (const rate of [0, 0.5, 1.0, 2.0, 3.0, 5.0]) {
+      const loan = app.calcMaxLoan(10, rate, 35);
+      assert.ok(loan < prev, `金利${rate}%で借入可能額が増えている`);
+      prev = loan;
+    }
+  });
+
+  test('返済期間が長いほど借りられる額は大きい', () => {
+    let prev = -1;
+    for (const years of [10, 20, 30, 35]) {
+      const loan = app.calcMaxLoan(10, 1.5, years);
+      assert.ok(loan > prev, `${years}年で借入可能額が減っている`);
+      prev = loan;
+    }
+  });
+
+  test('返済負担率の判定が境界どおり', () => {
+    assert.strictEqual(app.judgeRepaymentRatio(25).level, 'safe');
+    assert.strictEqual(app.judgeRepaymentRatio(25.1).level, 'caution');
+    assert.strictEqual(app.judgeRepaymentRatio(35).level, 'caution');
+    assert.strictEqual(app.judgeRepaymentRatio(35.1).level, 'danger');
+  });
+
+  test('返済負担率は年間返済額 ÷ 年収', () => {
+    // 年収600万・月12.5万 → 年150万 → 25%
+    assert.ok(Math.abs(app.calcRepaymentRatio(600, 12.5) - 25) < 1e-9);
+    assert.strictEqual(app.calcRepaymentRatio(0, 10), 0);
+  });
+
+  test('繰上返済しなければ期間も利息も変わらない', () => {
+    const e = app.calcPrepaymentEffect(3000, 1.5, 30, 0);
+    assert.ok(Math.abs(e.shortenedMonths) < 1e-6, '繰上0円で期間が変わっている');
+    assert.ok(Math.abs(e.interestSaved) < 1e-6, '繰上0円で利息が変わっている');
+  });
+
+  test('繰上返済額が多いほど利息削減も期間短縮も大きい', () => {
+    let prevSaved = -1, prevShort = -1;
+    for (const prepay of [0, 100, 300, 500, 1000]) {
+      const e = app.calcPrepaymentEffect(3000, 1.5, 30, prepay);
+      assert.ok(e.interestSaved >= prevSaved, `${prepay}万円で利息削減が減っている`);
+      assert.ok(e.shortenedMonths >= prevShort, `${prepay}万円で短縮が減っている`);
+      prevSaved = e.interestSaved;
+      prevShort = e.shortenedMonths;
+    }
+  });
+
+  test('残高を全額返せば完済する', () => {
+    const e = app.calcPrepaymentEffect(3000, 1.5, 30, 3000);
+    assert.strictEqual(e.afterMonths, 0);
+    assert.ok(Math.abs(e.shortenedMonths - e.beforeMonths) < 1e-6, '全額返済で期間が0にならない');
+  });
+
+  test('利息削減額が総利息を超えない', () => {
+    for (const prepay of [100, 500, 1500, 3000]) {
+      const e = app.calcPrepaymentEffect(3000, 1.5, 30, prepay);
+      const totalInterest = e.monthlyPayment * e.beforeMonths - 3000;
+      assert.ok(e.interestSaved <= totalInterest + 1e-6, `${prepay}万円で削減額が総利息を超えている`);
+      assert.ok(e.interestSaved >= 0, `${prepay}万円で削減額がマイナス`);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
 describe('wareki-converter: 和暦・年齢', () => {
   const app = loadApp('wareki-converter');
 
@@ -141,6 +217,60 @@ describe('wareki-converter: 和暦・年齢', () => {
     assert.strictEqual(app.getEto(2026), app.getEto(2014));
     assert.strictEqual(app.getEto(2026), app.getEto(2038));
     assert.notStrictEqual(app.getEto(2026), app.getEto(2027));
+  });
+});
+
+// ---------------------------------------------------------------------------
+describe('freelance-tax-simulator: 副業（給与との合算）', () => {
+  const app = loadApp('freelance-tax-simulator');
+
+  test('給与所得控除が国税庁の区分どおり', () => {
+    // 国税庁 No.1410 の表
+    assert.strictEqual(app.calcEmploymentDeduction(1_500_000), 550_000);   // 162.5万以下
+    assert.strictEqual(app.calcEmploymentDeduction(3_000_000), 980_000);   // 180万超360万以下
+    assert.strictEqual(app.calcEmploymentDeduction(5_000_000), 1_440_000); // 360万超660万以下
+    assert.strictEqual(app.calcEmploymentDeduction(8_000_000), 1_900_000); // 660万超850万以下
+    assert.strictEqual(app.calcEmploymentDeduction(10_000_000), 1_950_000); // 850万超は上限
+  });
+
+  test('給与所得控除は上限195万円を超えない', () => {
+    for (const inc of [8_500_000, 12_000_000, 50_000_000]) {
+      assert.ok(app.calcEmploymentDeduction(inc) <= 1_950_000, `${inc}円で上限超過`);
+    }
+  });
+
+  test('控除が収入を上回らない（所得がマイナスにならない）', () => {
+    for (const inc of [0, 100_000, 300_000, 550_000, 1_000_000]) {
+      assert.ok(app.calcSalaryIncome(inc) >= 0, `${inc}円で給与所得がマイナス`);
+      assert.ok(app.calcEmploymentDeduction(inc) <= inc || inc === 0, `${inc}円で控除が収入超過`);
+    }
+  });
+
+  test('給与所得は収入が増えれば増える（単調増加）', () => {
+    let prev = -1;
+    for (let inc = 0; inc <= 20_000_000; inc += 250_000) {
+      const v = app.calcSalaryIncome(inc);
+      assert.ok(v >= prev, `${inc}円で給与所得が減少`);
+      prev = v;
+    }
+  });
+
+  test('副業20万円以下なら所得税の申告を省略できる', () => {
+    // 給与所得者に限った取り扱い（国税庁 No.1900）
+    assert.strictEqual(app.judgeFilingRequirement(4_800_000, 190_000).required, false);
+    assert.strictEqual(app.judgeFilingRequirement(4_800_000, 200_000).required, false);
+    assert.strictEqual(app.judgeFilingRequirement(4_800_000, 200_001).required, true);
+  });
+
+  test('給与が無ければ金額にかかわらず申告が必要', () => {
+    assert.strictEqual(app.judgeFilingRequirement(0, 100_000).required, true);
+    assert.strictEqual(app.judgeFilingRequirement(0, 0).required, true);
+  });
+
+  test('省略できる場合も住民税の申告には触れている', () => {
+    const r = app.judgeFilingRequirement(4_800_000, 150_000);
+    assert.strictEqual(r.required, false);
+    assert.match(r.reason, /住民税/, '住民税申告の注意が抜けている');
   });
 });
 
