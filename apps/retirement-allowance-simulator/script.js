@@ -167,6 +167,56 @@ function calculate(years, education, industry, companySize) {
 }
 
 // -----------------------------------------------------------------------
+// iDeCo の受け取り方による税負担
+//
+// 2024年の改正で、退職金とiDeCoはそれぞれの加入期間にもとづく退職所得控除を
+// 使えるようになった。そのため一時金で受け取っても、iDeCo側で改めて控除が効く。
+// 年金で受け取ると雑所得になり、公的年金等控除の対象になる。
+// どちらが軽いかは金額と加入期間で入れ替わるので、3通り出して比べられるようにする。
+// -----------------------------------------------------------------------
+const ANNUITY_YEARS = 20;          // 年金受取の想定期間
+const PENSION_DEDUCTION = 60;      // 公的年金等控除（65歳未満・万円）
+
+// 一時金で受け取った場合の税額（万円）
+function calcIdecoLumpTax(balance, idecoYears) {
+  const deduction = calcDeduction(idecoYears);
+  const taxable = Math.max(0, (balance - deduction) / 2);
+  const incomeTax = calcIncomeTax(taxable);
+  const residenceTax = taxable * 0.1;
+  return incomeTax + residenceTax;
+}
+
+// 年金で受け取った場合の税額（万円・概算）
+function calcIdecoAnnuityTax(balance) {
+  const annual = balance / ANNUITY_YEARS;
+  const taxable = Math.max(0, annual - PENSION_DEDUCTION);
+  const perYear = calcIncomeTax(taxable) + taxable * 0.1;
+  return perYear * ANNUITY_YEARS;
+}
+
+// 半分ずつ受け取った場合の税額（万円）
+function calcIdecoMixedTax(balance, idecoYears) {
+  return calcIdecoLumpTax(balance / 2, idecoYears) + calcIdecoAnnuityTax(balance / 2);
+}
+
+// 3通りを計算し、税負担の軽い順に返す
+function compareIdecoOptions(balance, idecoYears) {
+  if (!(balance > 0)) return [];
+  const options = [
+    { key: 'lump',    label: '全額を一時金で受け取る', tax: calcIdecoLumpTax(balance, idecoYears) },
+    { key: 'annuity', label: '全額を年金で受け取る',   tax: calcIdecoAnnuityTax(balance) },
+    { key: 'mixed',   label: '半分ずつ受け取る',       tax: calcIdecoMixedTax(balance, idecoYears) },
+  ];
+  return options
+    .map((o) => ({
+      ...o,
+      tax: Math.round(o.tax * 10) / 10,
+      takeHome: Math.round((balance - o.tax) * 10) / 10,
+    }))
+    .sort((a, b) => a.tax - b.tax);
+}
+
+// -----------------------------------------------------------------------
 // 数値フォーマット（万円・カンマ区切り）
 // -----------------------------------------------------------------------
 function fmt(value) {
@@ -342,6 +392,57 @@ function renderTrendChart(education, industry, companySize) {
 // -----------------------------------------------------------------------
 // UI 更新
 // -----------------------------------------------------------------------
+// iDeCo残高が入力されているときだけ、受け取り方の比較を出す
+function renderIdecoComparison() {
+  const card = document.getElementById('ideco-result');
+  const box = document.getElementById('ideco-compare');
+  if (!card || !box) return;
+
+  const balance = parseFloat(document.getElementById('ideco-balance').value) || 0;
+  const idecoYears = parseInt(document.getElementById('ideco-years').value, 10) || 0;
+  const options = compareIdecoOptions(balance, idecoYears);
+
+  if (options.length === 0) {
+    card.hidden = true;
+    return;
+  }
+  card.hidden = false;
+
+  const best = options[0];
+  const worst = options[options.length - 1];
+  const gap = Math.round((worst.tax - best.tax) * 10) / 10;
+
+  let note;
+  if (gap <= 0) {
+    note = `残高${fmt(balance)}万円・加入${idecoYears}年なら、どの受け取り方でも税負担は変わりません（控除の範囲に収まっています）。`;
+  } else {
+    note = `残高${fmt(balance)}万円・加入${idecoYears}年の場合、「${best.label}」が最も軽く、最も重い受け取り方との差は約${fmt(gap)}万円です。`;
+    // 年金を含む案が勝つのは公的年金等控除が空いているからで、
+    // 公的年金を受け取っていればこの前提は崩れる。黙って出すと誤解を招く。
+    if (best.key !== 'lump') {
+      note += ' ただしこれは公的年金を受け取っていない前提です。公的年金があると控除枠が先に埋まり、年金で受け取る分にも税がかかるため、この差は縮むか逆転します。';
+    }
+  }
+  document.getElementById('ideco-result-note').textContent = note;
+
+  box.textContent = '';
+  options.forEach((o, i) => {
+    const row = document.createElement('div');
+    row.className = 'ideco-option' + (i === 0 ? ' ideco-best' : '');
+
+    const label = document.createElement('span');
+    label.className = 'ideco-option-label';
+    label.textContent = i === 0 ? `${o.label}（最も軽い）` : o.label;
+
+    const nums = document.createElement('span');
+    nums.className = 'ideco-option-nums';
+    nums.textContent = `税 ${fmt(o.tax)}万円 ／ 手取り ${fmt(o.takeHome)}万円`;
+
+    row.append(label, nums);
+    box.appendChild(row);
+  });
+}
+
 function updateResults() {
   const years = parseInt(document.getElementById('years').value, 10) || 20;
   const education = document.getElementById('education').value;
@@ -365,6 +466,8 @@ function updateResults() {
   document.getElementById('taxable-income').textContent = `${fmt(result.taxableIncome)}万円`;
   document.getElementById('income-tax').textContent = `${fmt(result.incomeTax)}万円`;
   document.getElementById('residence-tax').textContent = `${fmt(result.residenceTax)}万円`;
+
+  renderIdecoComparison();
   document.getElementById('take-home-amount').textContent = `${fmt(result.takeHome)}万円`;
 
   // グラフ

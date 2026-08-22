@@ -59,6 +59,15 @@ const dom = {
   tabBtns:     Array.from(document.querySelectorAll('.tab-btn')),
   panelSingle: document.getElementById('panel-single'),
   panelSession:document.getElementById('panel-session'),
+  panelScript: document.getElementById('panel-script'),
+
+  // script estimation
+  scriptInput:    document.getElementById('script-input'),
+  inputCpm:       document.getElementById('input-cpm'),
+  charCount:      document.getElementById('char-count'),
+  estimatedTime:  document.getElementById('estimated-time'),
+  scriptSections: document.getElementById('script-sections'),
+  btnScriptApply: document.getElementById('btn-script-apply'),
 
   // fullscreen overlay
   fsOverlay:   document.getElementById('fs-overlay'),
@@ -359,9 +368,121 @@ dom.tabBtns.forEach(btn => {
     });
     dom.panelSingle.classList.toggle('hidden', tab !== 'single');
     dom.panelSession.classList.toggle('hidden', tab !== 'session');
+    dom.panelScript.classList.toggle('hidden', tab !== 'script');
+    // 原稿タブは見積もるだけでタイマーを持たないので、単発モードのまま扱う
     state.mode = tab === 'session' ? 'session' : 'single';
   });
 });
+
+/* ============================================================
+   Script estimation
+   持ち時間に原稿が収まるかは、当日ではなく準備中に知りたい。
+   文字数を話速で割って所要時間を出し、そのままタイマーに送る。
+   ============================================================ */
+
+// 日本語の朗読はおおむね300字/分。NHKのニュース読みがこの辺りで、
+// 落ち着いたプレゼンもほぼ同じ。利用者が変えられるよう入力にしている。
+const DEFAULT_CPM = 300;
+
+function getCpm() {
+  const v = parseInt(dom.inputCpm.value, 10);
+  if (!Number.isFinite(v) || v < 100 || v > 600) return DEFAULT_CPM;
+  return v;
+}
+
+// 空白・改行・区切り記号は読み上げないので数えない
+function countChars(text) {
+  return text.replace(/\s/g, '').replace(/-{3,}/g, '').length;
+}
+
+function secondsFor(chars, cpm) {
+  return Math.round((chars / cpm) * 60);
+}
+
+function splitSections(text) {
+  // 「---」でも空行でも区切れるようにする
+  const byRule = text.split(/^\s*-{3,}\s*$/m);
+  const parts = (byRule.length > 1 ? byRule : text.split(/\n\s*\n/))
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+  return parts;
+}
+
+function renderSections(parts, cpm) {
+  const box = dom.scriptSections;
+  box.textContent = '';
+
+  if (parts.length <= 1) {
+    const p = document.createElement('p');
+    p.className = 'empty-sections';
+    p.textContent = '空行または「---」で区切ると、段落ごとの所要時間がここに出ます。';
+    box.appendChild(p);
+    return;
+  }
+
+  parts.forEach((part, i) => {
+    const chars = countChars(part);
+    const sec = secondsFor(chars, cpm);
+
+    const item = document.createElement('div');
+    item.className = 'section-item';
+
+    const left = document.createElement('div');
+    const label = document.createElement('span');
+    label.className = 'section-label';
+    label.textContent = `セクション ${i + 1}`;
+    const cnt = document.createElement('span');
+    cnt.className = 'section-chars';
+    cnt.textContent = `（${chars.toLocaleString()}文字）`;
+    const preview = document.createElement('div');
+    preview.className = 'section-preview';
+    preview.textContent = part.replace(/\s+/g, ' ').slice(0, 34) + (part.length > 34 ? '…' : '');
+    left.append(label, cnt, preview);
+
+    const time = document.createElement('span');
+    time.className = 'section-time';
+    time.textContent = formatTime(sec);
+
+    item.append(left, time);
+    box.appendChild(item);
+  });
+}
+
+function updateScriptStats() {
+  const text = dom.scriptInput.value;
+  const cpm = getCpm();
+  const chars = countChars(text);
+  const sec = secondsFor(chars, cpm);
+
+  dom.charCount.textContent = `${chars.toLocaleString()}文字`;
+  dom.estimatedTime.textContent = `推定: ${formatTime(sec)}`;
+  dom.btnScriptApply.disabled = chars === 0;
+
+  renderSections(splitSections(text), cpm);
+  return sec;
+}
+
+if (dom.scriptInput) {
+  dom.scriptInput.addEventListener('input', updateScriptStats);
+  dom.inputCpm.addEventListener('input', updateScriptStats);
+
+  dom.btnScriptApply.addEventListener('click', () => {
+    const sec = updateScriptStats();
+    if (sec <= 0) return;
+
+    // 99分を超えるとシングルタイマーの入力に収まらない
+    const capped = Math.min(sec, 99 * 60 + 59);
+    dom.inputMin.value = Math.floor(capped / 60);
+    dom.inputSec.value = capped % 60;
+    applySingleSettings();
+
+    // 設定した時間を確認できるよう、シングルタイマーへ切り替える
+    const singleTab = dom.tabBtns.find(b => b.dataset.tab === 'single');
+    if (singleTab) singleTab.click();
+  });
+
+  updateScriptStats();
+}
 
 /* ============================================================
    Event: Preset buttons

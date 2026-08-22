@@ -879,3 +879,69 @@ footer a:hover {
   .case-cond li > span:last-child { align-self: flex-end; }
   .case-answer strong { font-size: 1.25rem; }
 }
+
+/* ===== iDeCo 入力・比較 ===== */
+.ideco-block {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1rem;
+  background: #f8fafc;
+}
+
+.ideco-summary {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1e4080;
+  cursor: pointer;
+}
+
+.ideco-note {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.7;
+  margin: 0.6rem 0 0.9rem;
+}
+
+.ideco-result-note {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 0.9rem;
+}
+
+.ideco-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.ideco-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.65rem 0.85rem;
+  background: #f4f4f5;
+  border-radius: 8px;
+}
+
+.ideco-option.ideco-best {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+.ideco-option-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.ideco-option-nums {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1e4080;
+  white-space: nowrap;
+}

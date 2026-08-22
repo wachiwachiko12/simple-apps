@@ -65,10 +65,38 @@ function loadApp(app, inputValues = {}) {
     return elements.get(id);
   };
 
+  // querySelectorAll が常に空だと、要素数を前提にした初期化コード
+  // （presetBtns[0] など）で落ちてスクリプト全体が読み込めない。
+  // index.html を見て実際の個数だけスタブを返す。
+  let markup = '';
+  try {
+    markup = fs.readFileSync(path.join(REPO, 'apps', app, 'index.html'), 'utf8');
+  } catch { /* HTML が無いアプリはスタブ0個のまま */ }
+
+  const countMatches = (selector) => {
+    const sel = String(selector).trim();
+    if (sel.startsWith('.')) {
+      const cls = sel.slice(1).split(/[\s,\[:]/)[0];
+      const re = new RegExp(`class=["'][^"']*\\b${cls}\\b[^"']*["']`, 'g');
+      return (markup.match(re) || []).length;
+    }
+    if (sel.startsWith('#')) return 1;
+    if (/^[a-z][a-z0-9]*$/i.test(sel)) {
+      return (markup.match(new RegExp(`<${sel}\\b`, 'gi')) || []).length;
+    }
+    // 複雑なセレクタは数えられないので、最低1個は返して初期化を通す
+    return 1;
+  };
+
+  const queryAll = (selector) =>
+    Array.from({ length: countMatches(selector) }, (_, i) =>
+      makeElement(`${selector}:${i}`, inputValues)
+    );
+
   const documentStub = {
     getElementById: getEl,
     querySelector: (sel) => getEl(String(sel).replace(/^[#.]/, '')),
-    querySelectorAll: () => [],
+    querySelectorAll: queryAll,
     createElement: (tag) => makeElement(tag, inputValues),
     createTextNode: (t) => ({ textContent: t }),
     addEventListener() {},

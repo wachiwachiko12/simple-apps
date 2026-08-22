@@ -86,6 +86,7 @@
       <div class="tab-bar" role="tablist">
         <button class="tab-btn active" role="tab" aria-selected="true" data-tab="single">シングルタイマー</button>
         <button class="tab-btn" role="tab" aria-selected="false" data-tab="session">セッション管理</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="script">原稿から見積もる</button>
       </div>
 
       <!-- シングルタイマー設定 -->
@@ -133,6 +134,36 @@
         <div class="btn-row">
           <button id="btn-session-start" class="btn-primary" aria-label="セッション開始">セッション開始</button>
           <button id="btn-session-fullscreen" class="btn-accent" aria-label="フルスクリーン表示">フルスクリーン</button>
+        </div>
+      </div>
+
+      <!-- 原稿から見積もる -->
+      <div id="panel-script" class="tab-panel hidden">
+        <p class="session-desc">
+          発表原稿を貼ると、文字数から読み上げにかかる時間を見積もります。
+          空行で区切ると、段落ごとの配分も出ます。見積もった時間はそのままタイマーに送れます。
+        </p>
+
+        <div class="input-row message-row">
+          <label for="script-input">発表原稿</label>
+          <textarea id="script-input" rows="8" placeholder="ここに発表原稿を貼り付けてください。&#10;&#10;空行で区切ると、段落ごとの所要時間も表示します。"></textarea>
+        </div>
+
+        <div class="input-row">
+          <label for="input-cpm">話す速さ（文字/分）</label>
+          <input id="input-cpm" type="number" min="100" max="600" step="10" value="300" inputmode="numeric">
+          <span class="cpm-note">ゆっくり250 / 標準300 / 速め350</span>
+        </div>
+
+        <div id="script-stats" class="script-stats" aria-live="polite">
+          <span id="char-count">0文字</span>
+          <span id="estimated-time">推定: 0分00秒</span>
+        </div>
+
+        <div id="script-sections" class="script-sections"></div>
+
+        <div class="btn-row">
+          <button id="btn-script-apply" class="btn-primary">この時間でタイマーを設定</button>
         </div>
       </div>
 

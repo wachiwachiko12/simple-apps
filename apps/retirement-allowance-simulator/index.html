@@ -183,6 +183,31 @@
         </select>
       </div>
 
+      <details class="ideco-block" id="ideco-block" open>
+        <summary class="ideco-summary"><i class="bi bi-piggy-bank"></i> iDeCoも一緒に受け取る場合（任意）</summary>
+        <p class="ideco-note">
+          iDeCoを一時金で受け取ると退職所得になります。2024年の改正で、退職金とiDeCoは
+          それぞれの加入期間にもとづく退職所得控除を使えるようになりました。
+          受け取り方によって税額が変わるので、入力すると3通りを比べて表示します。
+        </p>
+
+        <div class="input-group">
+          <label class="field-label" for="ideco-balance">
+            <i class="bi bi-wallet2"></i> iDeCo残高（万円）
+          </label>
+          <input type="number" id="ideco-balance" min="0" max="10000" step="10" value="0"
+                 class="form-select" inputmode="numeric" aria-label="iDeCo残高（万円）">
+        </div>
+
+        <div class="input-group">
+          <label class="field-label" for="ideco-years">
+            <i class="bi bi-calendar-range"></i> iDeCo加入年数
+          </label>
+          <input type="number" id="ideco-years" min="1" max="45" step="1" value="20"
+                 class="form-select" inputmode="numeric" aria-label="iDeCo加入年数">
+        </div>
+      </details>
+
       <button class="btn-primary" id="calc-btn" type="button">
         <i class="bi bi-calculator-fill"></i> 退職金を試算する
       </button>
@@ -235,6 +260,18 @@
             <span class="breakdown-value take-home" id="take-home-amount">0万円</span>
           </div>
         </div>
+      </div>
+
+      <!-- iDeCo 受け取り方の比較（残高を入力したときだけ出す） -->
+      <div class="card ideco-card" id="ideco-result" hidden>
+        <h3 class="section-title"><i class="bi bi-piggy-bank"></i> iDeCoの受け取り方による違い</h3>
+        <p class="ideco-result-note" id="ideco-result-note"></p>
+        <div class="ideco-compare" id="ideco-compare"></div>
+        <p class="result-note">
+          ※年金受取の税額は概算です。受給期間20年・65歳未満の公的年金等控除（60万円）で計算しており、
+          公的年金や他の所得と合算すると税額は変わります。実際の判断は社会保険料への影響も含めて
+          税理士等にご確認ください。
+        </p>
       </div>
 
       <!-- グラフカード（内訳） -->

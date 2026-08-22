@@ -681,3 +681,102 @@ footer p + p {
   text-decoration: underline;
   color: #e67e22;
 }
+
+/* ===== Script Estimation ===== */
+#script-input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  line-height: 1.7;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+#script-input:focus {
+  outline: none;
+  border-color: #2563a8;
+}
+
+.message-row:has(#script-input) {
+  display: block;
+}
+
+.message-row:has(#script-input) label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.cpm-note {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.script-stats {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.6rem 0.75rem;
+  background: #eff6ff;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+#char-count {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+#estimated-time {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e4080;
+}
+
+.script-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: #f4f4f5;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.section-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.section-chars {
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.section-preview {
+  font-size: 0.78rem;
+  color: #9ca3af;
+  margin-top: 0.125rem;
+}
+
+.section-time {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e4080;
+  white-space: nowrap;
+}
+
+.empty-sections {
+  font-size: 0.82rem;
+  color: #9ca3af;
+  padding: 0.5rem 0;
+}

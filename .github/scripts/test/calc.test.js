@@ -57,6 +57,52 @@ describe('retirement-allowance-simulator: 退職所得控除', () => {
       prev = t;
     }
   });
+
+  // --- iDeCo（retirement-tax-optimizer から統合）---
+
+  test('iDeCoが退職所得控除の範囲内なら課税されない', () => {
+    // 加入20年 → 控除800万。それ以下の残高なら税ゼロ
+    assert.strictEqual(app.calcIdecoLumpTax(300, 20), 0);
+    assert.strictEqual(app.calcIdecoLumpTax(800, 20), 0);
+  });
+
+  test('iDeCoの加入年数が長いほど一時金の税は軽くなる', () => {
+    let prev = Infinity;
+    for (const y of [10, 20, 30, 40]) {
+      const t = app.calcIdecoLumpTax(2000, y);
+      assert.ok(t <= prev, `加入${y}年で税が増えている`);
+      prev = t;
+    }
+    // 加入40年（控除2200万）なら残高2000万は全額控除内
+    assert.strictEqual(app.calcIdecoLumpTax(2000, 40), 0);
+  });
+
+  test('残高が増えれば税負担も増える（単調増加）', () => {
+    let prev = -1;
+    for (let b = 0; b <= 4000; b += 200) {
+      const t = app.calcIdecoLumpTax(b, 20);
+      assert.ok(t >= prev, `残高${b}万円で税が減少`);
+      prev = t;
+    }
+  });
+
+  test('受け取り方の比較は税の軽い順に並び、手取りと整合する', () => {
+    const balance = 2000;
+    const options = app.compareIdecoOptions(balance, 20);
+    assert.strictEqual(options.length, 3);
+    for (let i = 1; i < options.length; i++) {
+      assert.ok(options[i].tax >= options[i - 1].tax, '税の昇順になっていない');
+    }
+    for (const o of options) {
+      assert.ok(Math.abs(o.takeHome + o.tax - balance) < 0.2, `${o.key}: 手取り+税 が残高と合わない`);
+      assert.ok(o.tax >= 0, `${o.key}: 税がマイナス`);
+      assert.ok(o.takeHome <= balance, `${o.key}: 手取りが残高を超えている`);
+    }
+  });
+
+  test('残高0なら比較しない', () => {
+    assert.strictEqual(app.compareIdecoOptions(0, 20).length, 0);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -116,6 +162,57 @@ describe('consumption-tax-calculator: 消費税', () => {
         assert.ok(Math.abs(app.applyRounding(v, mode) - v) < 1, `${v} / ${mode} でずれが1円以上`);
       }
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+describe('presentation-timer: 原稿の所要時間見積もり', () => {
+  const app = loadApp('presentation-timer');
+
+  test('読み上げない文字は数えない', () => {
+    // 空白・改行は発話されないので所要時間に影響しない
+    assert.strictEqual(app.countChars('あいうえお かきくけこ'), 10);
+    assert.strictEqual(app.countChars('あいう\nえお'), 5);
+    // 区切り記号も読まない
+    assert.strictEqual(app.countChars('あい---うえ'), 4);
+  });
+
+  test('所要時間は文字数を話速で割った値', () => {
+    assert.strictEqual(app.secondsFor(300, 300), 60);
+    assert.strictEqual(app.secondsFor(150, 300), 30);
+    assert.strictEqual(app.secondsFor(0, 300), 0);
+  });
+
+  test('話速が遅いほど所要時間は長くなる', () => {
+    const slow = app.secondsFor(300, 250);
+    const normal = app.secondsFor(300, 300);
+    const fast = app.secondsFor(300, 350);
+    assert.ok(slow > normal, '遅く話す方が短くなっている');
+    assert.ok(normal > fast, '速く話す方が長くなっている');
+  });
+
+  test('文字数が増えれば所要時間も増える（単調増加）', () => {
+    let prev = -1;
+    for (let c = 0; c <= 3000; c += 100) {
+      const s = app.secondsFor(c, 300);
+      assert.ok(s >= prev, `${c}文字で所要時間が減少`);
+      prev = s;
+    }
+  });
+
+  test('原稿は空行でも --- でも区切れる', () => {
+    assert.strictEqual(app.splitSections('第一。\n\n第二。\n\n第三。').length, 3);
+    assert.strictEqual(app.splitSections('前半\n---\n後半').length, 2);
+    // 区切りが無ければ1つのまま
+    assert.strictEqual(app.splitSections('ひとつだけ').length, 1);
+    assert.strictEqual(app.splitSections('').length, 0);
+  });
+
+  test('各セクションの合計が全体の文字数と一致する', () => {
+    const text = '第一段落です。\n\n第二段落はもう少し長い文章です。\n\n第三。';
+    const parts = app.splitSections(text);
+    const sum = parts.reduce((s, p) => s + app.countChars(p), 0);
+    assert.strictEqual(sum, app.countChars(text));
   });
 });
 
