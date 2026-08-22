@@ -1,0 +1,76 @@
+# 公開しないアプリの一覧
+#
+# ここに書いたアプリは _site/ に含めない = keisanlab.jp に出ない。
+# ファイルは repo に残るので、行を消せばそのまま再公開できる。
+#
+# 2026-08-21、AdSense 5回連続否認（理由は毎回「有用性の低いコンテンツ」）を受けて
+# 84本から36本に絞った。GA4実測90日のPVを基準にし、次のいずれかを満たすものだけ公開する:
+#   R1. PV上位20本
+#   R2. 計測窓(5〜8月)が需要の谷にあたり、ピーク時期を制度の日付で説明できる
+#   R3. A8アフィリエイトの導線が既にある
+#
+# 戻すときは「そのまま戻す」のではなく、内容を厚くしてから1本ずつ戻すこと。
+# 薄いまま一括で復活させると、承認後の再審査で同じ理由に引っかかる。
+
+# --- 統合したもの（内容は統合先へ移すこと。移す作業は未実施）---
+home-loan-eligibility             # → rent-vs-buy-calculator へ統合（1PV）
+mortgage-prepayment               # → rent-vs-buy-calculator へ統合（2PV）
+retirement-tax-optimizer          # → retirement-allowance-simulator へ統合（0PV）
+side-income-simulator             # → freelance-tax-simulator へ統合（1PV）
+speech-timer                      # → presentation-timer へ統合（11PV）
+
+# --- 需要が実証されず、季節性もA8導線も無いもの ---
+# [デザイン・クリエイティブ]
+svg-icon-colorizer                # 6PV
+css-grid-builder                  # 3PV
+sitemap-planner                   # 3PV
+css-animation-editor              # 2PV
+device-mockup                     # 2PV
+gradient-shadow-generator         # 2PV
+modular-grid                      # 1PV
+brand-style-guide                 # 0PV
+color-code-converter              # 0PV
+typography-scale                  # 0PV
+# [開発・エンジニア]
+markdown-slides                   # 6PV
+json-schema-editor                # 5PV
+metronome                         # 4PV
+regex-visualizer                  # 4PV
+code-snapshot                     # 1PV
+csv-cleaner                       # 1PV
+git-commit-formatter              # 1PV
+password-checker                  # 0PV
+web-performance-budget            # 0PV
+# [税金・給与・お金の計算]
+childcare-leave-calculator        # 5PV
+electricity-cost-calculator       # 3PV
+health-insurance-calculator       # 2PV
+inheritance-tax-calculator        # 1PV
+life-insurance-calculator         # 0PV
+# [学習・生産性]
+pomodoro                          # 6PV
+typing-practice                   # 5PV
+flashcard                         # 3PV
+learning-roadmap                  # 1PV
+okr-planner                       # 0PV
+# [文章・テキスト]
+timeline-visualizer               # 11PV
+ruby-furigana                     # 8PV
+markdown-table-editor             # 2PV
+text-density-visualizer           # 0PV
+# [統計・数学]
+binomial-distribution             # 8PV
+compound-interest                 # 7PV
+correlation-coefficient           # 2PV
+# [生活・健康]
+pregnancy-calculator              # 7PV
+habit-tracker                     # 5PV
+# [仕事・会議]
+meeting-agenda                    # 6PV
+timezone-scheduler                # 1PV
+# [フリーランス・ビジネス]
+break-even-calculator             # 3PV
+# [金融・資産管理]
+nisa-withdrawal                   # 2PV
+# [子育て]
+nursery-checklist                 # 3PV

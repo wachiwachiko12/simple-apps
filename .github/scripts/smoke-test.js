@@ -41,6 +41,11 @@ const CASES = [
   ['/apps/wareki-converter/UX_REPORT.md', 404, '内部資料(UX_REPORT)'],
   ['/reports/adsense-content-tasklist.md', 404, '内部資料(AdSense対策リスト)'],
   ['/apps/_template/', 404, '未完成のテンプレート'],
+  // 公開基準を満たしていないアプリ（.github/unpublished-apps.txt）。
+  // ビルドから外しているので、本番に出ていたら除外が効いていない。
+  ['/apps/pomodoro/', 404, '未公開アプリ'],
+  ['/apps/okr-planner/', 404, '未公開アプリ'],
+  ['/apps/speech-timer/', 404, '未公開アプリ（presentation-timer へ統合）'],
 ];
 
 // 本文の内容まで確認するケース

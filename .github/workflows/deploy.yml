@@ -61,6 +61,14 @@ jobs:
           rm -rf _site/reports _site/apps/_template
           rm -rf _site/apps/mind-map/01.*
 
+          # まだ公開基準を満たしていないアプリ。repo には残し、公開物からだけ外す。
+          # 一覧と選定理由: .github/unpublished-apps.txt
+          while read -r app; do
+            app="${app%%#*}"; app="$(echo "$app" | tr -d '[:space:]')"
+            [ -z "$app" ] && continue
+            rm -rf "_site/apps/$app"
+          done < .github/unpublished-apps.txt
+
           echo "--- published page count ---"
           find ./_site -name '*.html' | wc -l
 
