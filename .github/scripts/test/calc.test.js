@@ -275,6 +275,51 @@ describe('freelance-tax-simulator: 副業（給与との合算）', () => {
 });
 
 // ---------------------------------------------------------------------------
+describe('business-day-counter: 祝日データ', () => {
+  const app = loadApp('business-day-counter');
+  const H = app.HOLIDAYS;
+  const dayOf = (d) => new Date(d + 'T00:00:00').getDay();
+
+  test('日曜と重なる祝日には振替休日がある', () => {
+    // 祝日法により、祝日が日曜に当たるとその後の最も近い平日が休日になる。
+    // 支払日の計算に使うため、これが抜けていると1日ずれる。
+    for (const [date, name] of Object.entries(H)) {
+      if (dayOf(date) !== 0) continue;
+      // 翌日以降、最初に「祝日として登録されていない日」までに振替が入っているか
+      const d = new Date(date + 'T00:00:00');
+      let found = false;
+      for (let i = 1; i <= 5; i++) {
+        d.setDate(d.getDate() + 1);
+        const key = d.toISOString().slice(0, 10);
+        if (H[key] === '振替休日') { found = true; break; }
+        if (!H[key]) break; // 祝日が途切れたのに振替が無い
+      }
+      assert.ok(found, `${date}（${name}）の振替休日が登録されていない`);
+    }
+  });
+
+  test('振替休日は日曜の祝日がある年にだけ存在する', () => {
+    const subs = Object.entries(H).filter(([, n]) => n === '振替休日');
+    for (const [date] of subs) {
+      assert.notStrictEqual(dayOf(date), 0, `${date} の振替休日が日曜になっている`);
+      assert.notStrictEqual(dayOf(date), 6, `${date} の振替休日が土曜になっている`);
+    }
+  });
+
+  test('祝日データが重複していない', () => {
+    const keys = Object.keys(H);
+    assert.strictEqual(keys.length, new Set(keys).size, '同じ日付が二重登録されている');
+  });
+
+  test('日付の形式が揃っている', () => {
+    for (const date of Object.keys(H)) {
+      assert.match(date, /^\d{4}-\d{2}-\d{2}$/, `${date} の形式が不正`);
+      assert.ok(!Number.isNaN(new Date(date + 'T00:00:00').getTime()), `${date} が実在しない日付`);
+    }
+  });
+});
+
+// ---------------------------------------------------------------------------
 describe('consumption-tax-calculator: 消費税', () => {
   const app = loadApp('consumption-tax-calculator');
 
