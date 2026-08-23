@@ -53,9 +53,27 @@
     const total = text.length;
     // スペース（全角・半角）・改行・タブを除外
     const effective = text.replace(/[\s　]/g, '').length;
-    const genkou = effective === 0 ? 0 : Math.ceil(effective / 400);
     const lines = text === '' ? 0 : text.split('\n').length;
-    return { total, effective, genkou, lines };
+    return { total, effective, genkou: countGenkouPages(text), lines };
+  }
+
+  // --- 400字詰め原稿用紙の枚数 ---
+  // 20字 × 20行 のマス目に流し込んだときの枚数を数える。
+  // 文字数 ÷ 400 では足りない。改行すると行の残りマスが空くため、
+  // 会話文の多い原稿ほど実際の枚数は多くなる。新人賞の応募規定は
+  // 枚数で示されることが多く、ここを取り違えると規定を満たさない。
+  const GENKOU_COLS = 20;
+  const GENKOU_ROWS = 20;
+
+  function countGenkouPages(text) {
+    if (text === '') return 0;
+    let rows = 0;
+    for (const line of text.split('\n')) {
+      // 行内の空白は詰めずにマスを消費するものとして扱う（字下げを保つ）
+      const len = line.replace(/[\t]/g, '　').length;
+      rows += len === 0 ? 1 : Math.ceil(len / GENKOU_COLS);
+    }
+    return Math.ceil(rows / GENKOU_ROWS);
   }
 
   // --- プレビュー更新 ---
