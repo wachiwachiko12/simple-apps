@@ -225,7 +225,46 @@ for (const f of [...htmlFiles, ...jsFiles]) {
   }
 }
 
-// --------------------------------------------------------- 10. ページ重量（性能）
+// ------------------------------------------- 10. トップページの件数表示の整合
+// アプリを非公開にしたあと、カテゴリの件数バッジと「◯本以上」の記載が
+// 古いまま残っていた（18本と出ているカテゴリに実際は11枚しかない、
+// 36本しかないのに「80本以上」と書いてある等）。
+// 実在しない本数を掲げるのは、読者に対しても審査に対しても誠実でない。
+{
+  const indexPath = path.join(ROOT, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    const src = fs.readFileSync(indexPath, 'utf8');
+    let totalCards = 0;
+
+    for (const m of src.matchAll(/<section class="category-section"[^>]*>([\s\S]*?)<\/section>/g)) {
+      const body = m[1];
+      const title = (body.match(/<h2[^>]*>([\s\S]*?)<\/h2>/) || [, '(無題)'])[1]
+        .replace(/<[^>]*>/g, '').trim();
+      const cards = (body.match(/class="app-card/g) || []).length;
+      totalCards += cards;
+
+      if (cards === 0) {
+        err('index-count', 'index.html', `カテゴリ「${title}」にカードが1枚もありません`, '中身のないカテゴリは節ごと削除してください。');
+        continue;
+      }
+      const badge = (body.match(/class="cat-count"[^>]*>([^<]*)</) || [, null])[1];
+      if (badge !== null && badge.trim() !== String(cards)) {
+        err('index-count', 'index.html', `カテゴリ「${title}」の件数が ${badge.trim()} ですが、カードは ${cards} 枚です`, 'cat-count の数値を実際のカード数に合わせてください。');
+      }
+    }
+
+    // 本文・meta に書かれた総本数が実際と合っているか
+    for (const m of src.matchAll(/([0-9]+)\s*本(以上)?/g)) {
+      const n = parseInt(m[1], 10);
+      // 年号や金額と紛れないよう、ツール数として妥当な範囲だけ見る
+      if (n >= 10 && n <= 999 && n !== totalCards) {
+        err('index-count', 'index.html', `「${m[0]}」と書かれていますが、掲載しているツールは ${totalCards} 本です`, '実際の掲載数に直してください。数が合わないまま公開すると、読者に誤った情報を示すことになります。');
+      }
+    }
+  }
+}
+
+// --------------------------------------------------------- 11. ページ重量（性能）
 // 現状は最大54KBで健全。将来の肥大化を捕まえるための予防線として置く。
 const WEIGHT_WARN = 150 * 1024;
 for (const f of htmlFiles) {
