@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <title>お探しのページが見つかりません | Keisanlab</title>
+  <meta name="description" content="お探しのページは見つかりませんでした。公開中のツール一覧からお探しください。">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK2WQM49L6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DK2WQM49L6');
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=BIZ+UDPGothic:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f7f4;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --primary: #1e4080;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Outfit', 'BIZ UDPGothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background: linear-gradient(140deg, #1a2f4e 0%, #1e4080 55%, #2563a8 100%);
+      color: white;
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+    }
+    header .code {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+    }
+    header h1 {
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 700;
+      margin-top: 0.35rem;
+    }
+
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      padding: 1.5rem 1.5rem 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card h2 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+    }
+
+    p { font-size: 0.94rem; margin-bottom: 0.8rem; }
+    p:last-child { margin-bottom: 0; }
+
+    .moved {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+    }
+    .moved h2 { color: #166534; border-bottom-color: #a7f3d0; }
+
+    .btn {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .btn:hover { background: #2563a8; }
+
+    ul { list-style: none; }
+    li {
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+    }
+    li:last-child { border-bottom: none; }
+    li a { color: var(--primary); text-decoration: none; font-weight: 600; }
+    li a:hover { text-decoration: underline; }
+    li span { color: var(--muted); font-size: 0.85rem; }
+
+    footer {
+      background: #1a2f4e;
+      color: #94a3b8;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.85rem;
+    }
+    footer a { color: #93c5fd; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer p { margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="code">404</div>
+    <h1>お探しのページが見つかりません</h1>
+  </header>
+
+  <main>
+    <!-- 統合されたツールの場合だけ、移動先を出す -->
+    <div class="card moved" id="moved-card" hidden>
+      <h2>このツールは移動しました</h2>
+      <p id="moved-text"></p>
+      <a class="btn" id="moved-link" href="/">移動先を開く</a>
+    </div>
+
+    <div class="card">
+      <h2>ページが見つからない理由</h2>
+      <p>
+        アドレスの入力間違いか、公開を終了したページである可能性があります。
+      </p>
+      <p>
+        2026年8月に、掲載するツールを36本に絞り込みました。
+        それ以前にご利用いただいていたツールの一部は、現在公開しておりません。
+        検索結果やブックマークが古いままの場合、このページが表示されます。
+      </p>
+      <p>
+        ご不便をおかけして申し訳ありません。
+        お探しの機能が見当たらない場合は、<a href="/contact.html">お問い合わせ</a>からお知らせいただければ幸いです。
+      </p>
+      <a class="btn" href="/">ツール一覧を見る</a>
+    </div>
+
+    <div class="card">
+      <h2>よく使われているツール</h2>
+      <ul>
+        <li><a href="/apps/household-budget/">家計簿・支出管理</a><br><span>収支を記録して内訳を把握する</span></li>
+        <li><a href="/apps/maternity-leave-calc/">産休・育休給付金シミュレーター</a><br><span>出産手当金と育児休業給付金の目安</span></li>
+        <li><a href="/apps/overtime-calculator/">残業代計算</a><br><span>労基法の割増率にもとづく試算</span></li>
+        <li><a href="/apps/consumption-tax-calculator/">消費税計算</a><br><span>税込・税抜の変換と端数処理</span></li>
+        <li><a href="/apps/wareki-converter/">和暦・西暦変換</a><br><span>元号の変換と年齢の早見</span></li>
+        <li><a href="/apps/presentation-timer/">プレゼンタイマー</a><br><span>登壇用の全画面タイマーと原稿の時間見積もり</span></li>
+        <li><a href="/articles/">コラム記事</a><br><span>税・制度の解説記事</span></li>
+      </ul>
+    </div>
+  </main>
+
+  <footer>
+    <p>
+      <a href="/">ツール一覧</a> ｜
+      <a href="/articles/">コラム</a> ｜
+      <a href="/about.html">このサイトについて</a> ｜
+      <a href="/contact.html">お問い合わせ</a> ｜
+      <a href="/privacy-policy.html">プライバシーポリシー</a> ｜
+      <a href="/terms.html">利用規約</a>
+    </p>
+    <p><small>&copy; 2026 Keisanlab</small></p>
+  </footer>
+
+  <script>
+    // 統合したツールに限り、移動先を案内する。
+    // 機能は移植済みなので、404で終わらせるより行き先を示したほうが親切。
+    var MERGED = {
+      'speech-timer':             ['presentation-timer',             'プレゼンタイマー', '原稿の読み上げ時間を見積もる機能'],
+      'retirement-tax-optimizer': ['retirement-allowance-simulator',  '退職金シミュレーター', 'iDeCoの受け取り方を比較する機能'],
+      'side-income-simulator':    ['freelance-tax-simulator',         'フリーランス・副業 税金シミュレーター', '本業の給与と合算して試算する機能'],
+      'home-loan-eligibility':    ['rent-vs-buy-calculator',          '賃貸 vs 購入シミュレーター', '年収から借入可能額を求める機能'],
+      'mortgage-prepayment':      ['rent-vs-buy-calculator',          '賃貸 vs 購入シミュレーター', '繰上返済の効果を試算する機能']
+    };
+
+    (function () {
+      var m = location.pathname.match(/\/apps\/([a-z0-9-]+)\/?/);
+      if (!m) return;
+      var info = MERGED[m[1]];
+      if (!info) return;
+
+      document.getElementById('moved-text').textContent =
+        'このツールは「' + info[1] + '」へ統合しました。' + info[2] + 'として、そのままご利用いただけます。';
+      var link = document.getElementById('moved-link');
+      link.href = '/apps/' + info[0] + '/';
+      link.textContent = info[1] + 'を開く';
+      document.getElementById('moved-card').hidden = false;
+    })();
+  </script>
+</body>
+</html>

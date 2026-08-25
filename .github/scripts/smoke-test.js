@@ -52,6 +52,11 @@ const CASES = [
 const CONTENT_CASES = [
   ['/articles/', /rel=["']canonical["'][^>]*keisanlab\.jp/i, '記事一覧の canonical が keisanlab.jp を指すこと'],
   ['/', /Keisanlab/i, 'トップページにサイト名が出ること'],
+  // 非公開にしたURLで、GitHubの素の英語404ではなく自前の案内が出ること。
+  // 404.html を置き忘れると読者は「Page not found · GitHub Pages」を見ることになる。
+  ['/apps/okr-planner/', /お探しのページが見つかりません/, '存在しないツールで日本語の404ページが出ること'],
+  // 移動先の案内は JS が描画するため、ここで確認できるのは対応表が同梱されていることまで。
+  ['/apps/speech-timer/', /presentation-timer/, '404ページに統合先の対応表が含まれること'],
 ];
 
 function fetch(url) {
