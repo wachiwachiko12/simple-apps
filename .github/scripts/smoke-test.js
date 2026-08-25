@@ -54,9 +54,9 @@ const CONTENT_CASES = [
   ['/', /Keisanlab/i, 'トップページにサイト名が出ること'],
   // 非公開にしたURLで、GitHubの素の英語404ではなく自前の案内が出ること。
   // 404.html を置き忘れると読者は「Page not found · GitHub Pages」を見ることになる。
-  ['/apps/okr-planner/', /お探しのページが見つかりません/, '存在しないツールで日本語の404ページが出ること'],
+  ['/apps/okr-planner/', /お探しのページが見つかりません/, '存在しないツールで日本語の404ページが出ること', 404],
   // 移動先の案内は JS が描画するため、ここで確認できるのは対応表が同梱されていることまで。
-  ['/apps/speech-timer/', /presentation-timer/, '404ページに統合先の対応表が含まれること'],
+  ['/apps/speech-timer/', /presentation-timer/, '404ページに統合先の対応表が含まれること', 404],
 ];
 
 function fetch(url) {
@@ -90,11 +90,22 @@ function fetch(url) {
   }
 
   console.log('');
-  for (const [p, re, desc] of CONTENT_CASES) {
+  // 404ページの中身も確認したいので、期待ステータスを指定できるようにする。
+  // 省略時は 200。
+  for (const [p, re, desc, expectStatus = 200] of CONTENT_CASES) {
     const r = await fetch(BASE + p);
-    const ok = r.status === 200 && re.test(r.body);
+    const statusOk = r.status === expectStatus;
+    const bodyOk = re.test(r.body);
+    const ok = statusOk && bodyOk;
     console.log(`  ${ok ? 'OK  ' : 'NG  '}${desc}`);
-    if (!ok) failures.push({ p, desc, expect: 'content match', got: r.status });
+    if (!ok) {
+      failures.push({
+        p,
+        desc,
+        expect: `HTTP ${expectStatus} かつ内容一致`,
+        got: statusOk ? `HTTP ${r.status} だが内容が一致しない` : `HTTP ${r.status}`,
+      });
+    }
   }
 
   console.log('');
