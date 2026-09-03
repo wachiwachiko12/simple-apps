@@ -31,10 +31,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=BIZ+UDPGothic:wght@400;700&display=swap">
   <!-- Bootstrap Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6046047693794575"
-       crossorigin="anonymous"></script>
-  <style>
+<style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -263,6 +260,17 @@
       max-width: 960px;
       margin: 0 auto;
     }
+    /* 景品表示法（ステマ規制）で必要な広告の明示。目立たなくしすぎないこと */
+    .pr-disclosure {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: #f3f4f6;
+      border-left: 3px solid #9ca3af;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.84rem;
+      line-height: 1.8;
+      color: #4b5563;
+    }
     .about-inner h2 {
       font-size: 1.05rem;
       font-weight: 700;
@@ -423,6 +431,7 @@
       <h2>Keisanlab とは</h2>
       <p>Keisanlabは、フリーランス・会社員・学生の方に向けて、無料のWebツールを公開している個人運営のサイトです。残業代・ふるさと納税・育休給付金といった税金と給与の計算を中心に、統計・デザイン・文章まで36本を揃えています。数を並べることよりも、計算の根拠を示して安心して使えることを大切にしています。入力した内容はすべてブラウザの中だけで処理され、サーバーには送信されません。</p>
       <p>すべてのツールは<strong>登録不要・完全無料</strong>で使えます。入力したデータはすべてお使いのブラウザ内に保存され、外部サーバーには一切送信されません。スマートフォン・タブレット・PCのいずれからでもご利用いただけます。各ツールの計算根拠・法令参照・使い方解説も掲載しており、ただ使えるだけでなく「なぜその計算になるのか」を理解できる設計にこだわっています。</p>
+      <p class="pr-disclosure">当サイトは<strong>アフィリエイト広告を利用しています</strong>。一部のページに広告を掲載しており、そこから商品やサービスのお申し込みがあった場合、運営者が報酬を受け取ることがあります。広告部分には「PR」と表示しています。ツールの計算内容や解説は広告とは無関係に作成しており、広告主から内容について指示を受けることはありません。</p>
       <div class="about-features">
         <div class="about-feature">
           <i class="bi bi-shield-check-fill"></i>
