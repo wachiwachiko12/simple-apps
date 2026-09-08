@@ -553,7 +553,9 @@ function calculate() {
 
   // 結果表示
   resultsArea.hidden = false;
-  resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る
+  (document.getElementById('ad-slot') || resultsArea)
+    .scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   // AdSense 広告レンダリング
   try {

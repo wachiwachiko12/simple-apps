@@ -121,7 +121,9 @@ function calculate() {
   renderChart(period, monthly, monthlyRate);
 
   document.getElementById('result-section').style.display = '';
-  document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る
+  const scrollTo = document.getElementById('ad-slot') || document.getElementById('result-section');
+  scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderChart(period, monthly, monthlyRate) {

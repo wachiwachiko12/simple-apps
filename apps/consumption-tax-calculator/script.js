@@ -134,7 +134,9 @@ function calcBasic() {
 
   basicResultGrid.innerHTML = html;
   basicResult.hidden = false;
-  basicResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る
+  (document.getElementById('ad-slot') || basicResult)
+    .scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ============================================================

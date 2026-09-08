@@ -381,7 +381,10 @@ function runCalculation() {
 calcBtn.addEventListener('click', () => {
   runCalculation();
   setTimeout(() => {
-    resultsArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 広告は結果のすぐ上にある。そこへスクロールすると
+    // 広告→結果の順に画面へ入る。広告が無い場合は結果へ。
+    const target = document.getElementById('ad-slot') || resultsArea;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 80);
 });
 

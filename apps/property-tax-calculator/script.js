@@ -100,7 +100,9 @@ function calculate() {
   renderChart(landFixed, landUrban, buildingFixed, buildingUrban);
 
   document.getElementById('result').style.display = '';
-  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る
+  const scrollTo = document.getElementById('ad-slot') || document.getElementById('result');
+  scrollTo.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderChart(lf, lu, bf, bu) {
