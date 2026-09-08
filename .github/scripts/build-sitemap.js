@@ -10,10 +10,14 @@
  * 大幅に改稿しても古い日付のままだと更新に気づかれにくい。
  *
  * 対象は「公開されるHTML」のみ。非公開アプリ・内部資料・404は除く。
- * lastmod は git のコミット日を使う（ファイルのmtimeはcheckoutで変わるため）。
+ * lastmod は git のコミット日（mtimeはcheckoutで変わるため使えない）。
+ * ただし未コミットの変更があるファイルは今日として扱う。理由は dirty の項を参照。
  *
  *   node .github/scripts/build-sitemap.js          # 書き出す
  *   node .github/scripts/build-sitemap.js --check  # 差分があれば異常終了
+ *
+ * 変更したページと sitemap.xml は同じコミットに含めること。
+ * 別々のコミットにすると --check が落ちる。
  */
 
 const fs = require('fs');
@@ -66,16 +70,39 @@ const files = [];
   }
 })(ROOT);
 
-/** git の最終コミット日。取れなければ今日 */
-function lastCommit(file) {
+const TODAY = new Date().toISOString().slice(0, 10);
+
+/**
+ * 未コミットの変更があるファイルの一覧。
+ *
+ * これを見ないと、生成→コミットの順で必ず1周ずれる。
+ * 生成時点では git log がまだ前回のコミット日を返すのに、
+ * コミットした瞬間その日付が今日に変わり、sitemap が古くなるため。
+ * 変更中のファイルは「今日更新された」とみなすことで、
+ * 変更と sitemap を同じコミットに入れれば CI の照合と一致する。
+ */
+const dirty = new Set(
+  execSync('git status --porcelain', { cwd: ROOT })
+    .toString()
+    .split('\n')
+    .map((l) => l.slice(3).trim())
+    .filter(Boolean)
+    // リネームは "old -> new" の形で出る
+    .map((p) => (p.includes(' -> ') ? p.split(' -> ')[1] : p))
+    .map((p) => p.replace(/^"|"$/g, ''))
+);
+
+/** 最終更新日。未コミットの変更があれば今日、なければ最後のコミット日 */
+function lastModified(file) {
   const rel = path.relative(ROOT, file).split(path.sep).join('/');
+  if (dirty.has(rel)) return TODAY;
   try {
     const d = execSync(`git log -1 --format=%ad --date=short -- "${rel}"`, {
       cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'],
     }).toString().trim();
     if (d) return d;
   } catch { /* 履歴が無い新規ファイル */ }
-  return new Date().toISOString().slice(0, 10);
+  return TODAY;
 }
 
 const urls = files.map((f) => {
@@ -84,7 +111,7 @@ const urls = files.map((f) => {
   const urlPath = rel === 'index.html' ? '/'
     : rel.endsWith('/index.html') ? '/' + rel.slice(0, -'index.html'.length)
     : '/' + rel;
-  return { loc: BASE + urlPath, lastmod: lastCommit(f), ...meta(urlPath) };
+  return { loc: BASE + urlPath, lastmod: lastModified(f), ...meta(urlPath) };
 });
 
 // トップ → アプリ → 記事 → その他 の順に、URLで安定ソート
