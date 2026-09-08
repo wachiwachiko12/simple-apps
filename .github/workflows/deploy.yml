@@ -38,6 +38,11 @@ jobs:
       - name: Test calculations
         run: node --test .github/scripts/test/*.test.js
 
+      # sitemap.xml は手書きだと更新漏れが積み上がる（52件中51件が古く、
+      # 最大117日ずれていた）。実態から生成した結果と一致するか確かめる。
+      - name: Check sitemap is current
+        run: node .github/scripts/build-sitemap.js --check
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
