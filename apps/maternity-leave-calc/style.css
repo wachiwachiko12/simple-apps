@@ -1210,12 +1210,15 @@ details[open] > .accordion-summary .accordion-icon::after { content: '−'; }
 /* ===== アフィリエイト枠 =====
    景品表示法（ステマ規制）により、広告であることが分かる表示が必須。
    .affiliate-label の「PR」がその表示にあたるので、外さないこと。 */
+/* 前後のカードと同じ見た目に揃える。ここだけ角丸や影が違うと、
+   同じ列に並んだときに要素が浮いて崩れて見える */
 .affiliate-block {
-  margin: 1rem 0 1.5rem;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -1224,21 +1227,23 @@ details[open] > .accordion-summary .accordion-icon::after { content: '−'; }
   font-size: 0.7rem;
   font-weight: 700;
   color: #fff;
-  background: #999;
-  padding: 1px 6px;
-  border-radius: 3px;
-  margin-bottom: 0.5rem;
+  background: var(--muted);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
 }
 
 .affiliate-desc {
   font-size: 0.85rem;
-  color: #555;
-  line-height: 1.75;
-  margin-bottom: 0.75rem;
+  color: var(--muted);
+  line-height: 1.85;
+  margin-bottom: 1rem;
   text-align: left;
 }
 
 .affiliate-block img {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
 }
