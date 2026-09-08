@@ -38,10 +38,12 @@ jobs:
       - name: Test calculations
         run: node --test .github/scripts/test/*.test.js
 
-      # sitemap.xml は手書きだと更新漏れが積み上がる（52件中51件が古く、
-      # 最大117日ずれていた）。実態から生成した結果と一致するか確かめる。
-      - name: Check sitemap is current
-        run: node .github/scripts/build-sitemap.js --check
+      # sitemap.xml の URL 集合が公開物と一致しているか確かめる。
+      # lastmod は照合しない。CI のチェックアウトは --depth 1 で履歴を
+      # 持たないため、git log が全ファイルについて最新コミット日を返し、
+      # 手元で生成した正しい日付と必ず食い違うため。
+      - name: Check sitemap URLs
+        run: node .github/scripts/build-sitemap.js --check-urls
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

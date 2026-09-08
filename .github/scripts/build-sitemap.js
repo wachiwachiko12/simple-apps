@@ -15,6 +15,7 @@
  *
  *   node .github/scripts/build-sitemap.js          # 書き出す
  *   node .github/scripts/build-sitemap.js --check  # 差分があれば異常終了
+ *   node .github/scripts/build-sitemap.js --check-urls  # URL集合のみ照合（CI用）
  *
  * 変更したページと sitemap.xml は同じコミットに含めること。
  * 別々のコミットにすると --check が落ちる。
@@ -28,6 +29,7 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const BASE = 'https://keisanlab.jp';
 const OUT = path.join(ROOT, 'sitemap.xml');
 const CHECK = process.argv.includes('--check');
+const CHECK_URLS = process.argv.includes('--check-urls');
 
 // 公開物から外れるもの
 const EXCLUDE_FILES = new Set(['404.html', 'create-ogp-image.html']);
@@ -133,8 +135,31 @@ const xml = [
   '',
 ].join('\n');
 
-if (CHECK) {
+if (CHECK || CHECK_URLS) {
   const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
+
+  if (CHECK_URLS) {
+    // URL の集合だけを比べる。
+    // 日付は見ない。CI のチェックアウトは --depth 1 で履歴を持たず、
+    // git log が全ファイルについて最新コミット日を返してしまうため、
+    // 手元で生成した正しい日付とは必ず食い違う。
+    const listed = new Set([...current.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
+    const expected = new Set(urls.map((u) => u.loc));
+    const missing = [...expected].filter((u) => !listed.has(u));
+    const extra = [...listed].filter((u) => !expected.has(u));
+
+    if (missing.length || extra.length) {
+      console.error('sitemap.xml の URL が公開物と一致していません。');
+      missing.forEach((u) => console.error(`  ✗ 未掲載: ${u}`));
+      extra.forEach((u) => console.error(`  ✗ 余分  : ${u}`));
+      console.error('  修正方針: node .github/scripts/build-sitemap.js を実行して commit してください。');
+      process.exit(1);
+    }
+    console.log(`sitemap.xml の URL は公開物と一致しています（${urls.length} 件）`);
+    process.exit(0);
+  }
+
+  // --check は日付まで含めて完全一致を見る（履歴のある手元でのみ意味がある）
   if (current !== xml) {
     console.error('sitemap.xml が実態と一致していません。');
     console.error('  node .github/scripts/build-sitemap.js を実行して commit してください。');
