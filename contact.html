@@ -241,6 +241,12 @@
         <!-- Formspree: メール件名の設定 -->
         <input type="hidden" name="_subject" value="[Keisan Lab] お問い合わせが届きました">
 
+        <!-- 罠のフィールド。人には見えないので空のままになるが、
+             フォームを機械的に埋める種類のbotは値を入れてしまう。
+             Formspree は _gotcha に値が入った送信を破棄する。 -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+               aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+
         <div class="field">
           <label for="name">お名前<span class="required">*</span></label>
           <input type="text" id="name" name="name"
