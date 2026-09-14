@@ -478,8 +478,9 @@ function updateResults() {
   const resultsEl = document.getElementById('results');
   resultsEl.hidden = false;
 
-  // スムーズスクロール
-  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る
+  (document.getElementById('ad-slot') || resultsEl)
+    .scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // -----------------------------------------------------------------------

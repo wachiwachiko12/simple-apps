@@ -288,9 +288,10 @@ calcBtn.addEventListener('click', () => {
   // 結果セクション表示
   resultSection.classList.remove('hidden');
 
-  // スクロール
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る
   setTimeout(() => {
-    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    (document.getElementById('ad-slot') || resultSection)
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 80);
 
   // GA4 イベント
