@@ -327,7 +327,10 @@ function showResult(data) {
   `;
 
   section.style.display = 'block';
-  section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // 広告は結果の直前にある。そこへスクロールすると広告→結果の順で画面に入る。
+  // 'nearest' だと最小距離しか動かず広告が画面外に残るため 'start' にする
+  (document.getElementById('ad-slot') || section)
+    .scrollIntoView({ behavior: 'smooth', block: 'start' });
 
   renderChart(data);
 }
