@@ -393,6 +393,12 @@ function showSection(name) {
   importSection.hidden = name !== 'import';
   quizSection.hidden   = name !== 'quiz';
   resultSection.hidden = name !== 'result';
+
+  // 完了画面では広告→結果の順に画面へ入るよう、広告の位置へ寄せる
+  if (name === 'result') {
+    (document.getElementById('ad-slot') || resultSection)
+      .scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // ===== WEAK MAP (localStorage) =====
