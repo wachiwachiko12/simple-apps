@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="年末調整の還付金・追徴額を無料で簡単計算。給与収入・各種控除（生命保険・住宅ローン・iDeCo等）を入力するだけで、いくら戻ってくるか・追加徴収されるかがすぐわかります。控除内訳グラフ付き。">
+  <meta name="description" content="令和8年分（2026年分）の年末調整に対応。還付金・追徴額を無料で簡単計算。基礎控除62万円（最大104万円）・給与所得控除の最低保障額74万円への引き上げを反映。給与収入と各種控除を入力するだけで、いくら戻ってくるかがすぐわかります。">
   <title>年末調整 還付・追徴額 かんたん計算ツール｜いくら戻ってくる？【無料】</title>
   <link rel="canonical" href="https://keisanlab.jp/apps/year-end-adjustment/">
   <!-- OGP -->
@@ -76,7 +76,7 @@
         "name": "扶養控除の対象となる条件は何ですか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "扶養控除の対象は、生計を一にする配偶者以外の親族で、年間合計所得が48万円以下（年収103万円以下の給与所得者）、かつ16歳以上の方です。19〜22歳の特定扶養親族は控除額が63万円に増額されます。"
+          "text": "扶養控除の対象は、生計を一にする配偶者以外の親族で、年間の合計所得金額が62万円以下（給与収入のみなら年収136万円以下が目安）、かつ16歳以上の方です。令和8年分から所得要件が58万円以下から62万円以下に引き上げられました。19〜22歳の特定扶養親族は控除額が63万円に増額されます。"
         }
       },
       {
@@ -92,7 +92,7 @@
         "name": "配偶者控除と配偶者特別控除の違いは何ですか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "配偶者控除は配偶者の年収が103万円以下（合計所得48万円以下）の場合に最大38万円が控除されます。配偶者特別控除は配偶者の年収が103〜201万円以下の場合に段階的に控除額が減っていく制度です。本ツールでは簡易的に配偶者の年収150万円以下を条件として計算しています。"
+          "text": "配偶者控除は配偶者の合計所得金額が62万円以下（令和8年分の要件。給与収入のみなら年収136万円以下が目安）の場合に最大38万円が控除されます。配偶者特別控除はそれを超えても段階的に控除が受けられる制度で、配偶者の所得が増えるにつれて控除額が減っていきます。本ツールでは簡易的に配偶者の年収150万円以下を条件として38万円で計算しています。"
         }
       },
       {
@@ -122,7 +122,7 @@
       "price": "0",
       "priceCurrency": "JPY"
     },
-    "dateModified": "2026-09-03",
+    "dateModified": "2026-11-19",
     "author": {
       "@type": "Person",
       "name": "Rio",
@@ -142,13 +142,11 @@
     <div class="header-inner">
       <div class="header-icon"><i class="bi bi-calculator-fill"></i></div>
       <h1>年末調整 還付・追徴額<br>かんたん計算ツール</h1>
-      <p class="subtitle">給与収入と各種控除を入力して、いくら戻ってくるか・追加徴収されるかを概算します</p>
+      <p class="subtitle">令和8年分（2026年分）対応。給与収入と各種控除を入力して、いくら戻ってくるか・追加徴収されるかを概算します</p>
     </div>
   </header>
 
   <main>
-    <!-- 広告ユニット1（ツール上部） -->
-
     <!-- プライバシー通知 -->
     <div class="privacy-notice">
       <i class="bi bi-shield-check"></i>
@@ -233,10 +231,8 @@
           <div class="field full-width">
             <label class="field-label">社会保険料控除</label>
             <div class="toggle-group" role="group" aria-label="社会保険料の入力方法">
-              <button type="button" class="toggle-btn active" id="social-auto-btn"
-                      onclick="setSocialMode('auto')">年収から自動計算（約15%）</button>
-              <button type="button" class="toggle-btn" id="social-manual-btn"
-                      onclick="setSocialMode('manual')">実額を入力する</button>
+              <button type="button" class="toggle-btn active" id="social-auto-btn">年収から自動計算（約15%）</button>
+              <button type="button" class="toggle-btn" id="social-manual-btn">実額を入力する</button>
             </div>
             <div id="social-manual-input" style="display:none; margin-top:0.75rem;">
               <div class="input-with-unit">
@@ -249,14 +245,35 @@
           </div>
 
           <!-- 生命保険料 -->
-          <div class="field">
-            <label class="field-label" for="life-insurance">生命保険料（年間支払額）</label>
-            <div class="input-with-unit">
-              <input type="number" id="life-insurance" min="0" step="1"
-                     placeholder="例: 120000" aria-label="生命保険料年間支払額（円）">
-              <span class="input-unit">円</span>
+          <div class="field full-width">
+            <label class="field-label">生命保険料（年間支払額・区分ごと）</label>
+            <div class="dependent-row insurance-row">
+              <div class="dependent-item">
+                <label class="field-hint-label" for="life-general">一般の生命保険料</label>
+                <div class="input-with-unit">
+                  <input type="number" id="life-general" min="0" step="1"
+                         placeholder="例: 80000" aria-label="一般の生命保険料の年間支払額（円）">
+                  <span class="input-unit">円</span>
+                </div>
+              </div>
+              <div class="dependent-item">
+                <label class="field-hint-label" for="life-nursing">介護医療保険料</label>
+                <div class="input-with-unit">
+                  <input type="number" id="life-nursing" min="0" step="1"
+                         placeholder="例: 40000" aria-label="介護医療保険料の年間支払額（円）">
+                  <span class="input-unit">円</span>
+                </div>
+              </div>
+              <div class="dependent-item">
+                <label class="field-hint-label" for="life-pension">個人年金保険料</label>
+                <div class="input-with-unit">
+                  <input type="number" id="life-pension" min="0" step="1"
+                         placeholder="例: 60000" aria-label="個人年金保険料の年間支払額（円）">
+                  <span class="input-unit">円</span>
+                </div>
+              </div>
             </div>
-            <span class="field-hint">一般・介護医療・個人年金の合計。控除上限は12万円。</span>
+            <span class="field-hint">控除証明書の区分ごとに入力してください。1区分あたり最大4万円、合計最大12万円です（新制度の契約を前提に計算します）。</span>
           </div>
 
           <!-- 地震保険料 -->
@@ -289,18 +306,30 @@
                      placeholder="例: 30000000" aria-label="住宅ローン年末残高（円）">
               <span class="input-unit">円</span>
             </div>
-            <span class="field-hint">残高×0.7%が税額控除されます（2022年改正後）。2年目以降の方向け。</span>
+            <span class="field-hint">残高×0.7%が税額控除されます。2年目以降の方向け。借入限度額は住宅の区分により2,000万〜5,000万円と異なるため、本ツールは3,000万円（控除額21万円）を上限とした概算で表示します。</span>
           </div>
 
         </div>
       </div>
 
       <!-- 計算ボタン -->
-      <button type="button" class="btn-calculate" id="calc-btn" onclick="calculate()">
+      <button type="button" class="btn-calculate" id="calc-btn">
         <i class="bi bi-calculator"></i> 計算する
       </button>
 
     </section>
+
+    <!-- 広告。計算ボタンと結果の間に置く。 -->
+    <div class="affiliate-block" id="ad-slot">
+      <p class="affiliate-label">PR</p>
+      <p class="affiliate-desc">
+        年末調整では医療費控除・ふるさと納税（ワンストップ特例を使わなかった分）・住宅ローン控除の1年目が処理できません。
+        これらを受けるには自分で確定申告をする必要があります。
+        副業の所得が20万円を超える方も同じです。会計ソフトを使うと、
+        銀行・カードの明細を取り込んで申告書まで作成できます。
+      </p>
+      <a href="https://px.a8.net/svt/ejp?a8mat=4B3QB1+G6VE0I+4JGQ+BWVTE" rel="nofollow" class="affiliate-link">無料の確定申告自動化ソフト マネーフォワード クラウド確定申告</a>
+    </div>
 
     <!-- 結果エリア -->
     <section id="result-section" class="result-section" style="display:none;" aria-live="polite">
@@ -363,8 +392,6 @@
       </p>
     </section>
 
-    <!-- 広告ユニット2（結果下） -->
-
     <div class="related-mini">
       <span>関連ツール：</span>
       <a href="/apps/ideco-simulator/">iDeCo節税シミュレーター</a>
@@ -406,7 +433,7 @@
             <i class="bi bi-chevron-down accordion-icon"></i>
           </summary>
           <div class="accordion-body">
-            生命保険料・地震保険料・iDeCo掛金・住宅ローン年末残高を入力してください。社会保険料は年収の約15%を自動計算しますが、実際の金額がわかる場合は「実額を入力する」に切り替えてください。
+            生命保険料は控除証明書の区分（一般・介護医療・個人年金）ごとに入力し、地震保険料・iDeCo掛金・住宅ローン年末残高もあわせて入力してください。年収以外の金額はすべて円単位です。社会保険料は年収の約15%を自動計算しますが、実際の金額がわかる場合は「実額を入力する」に切り替えてください。
           </div>
         </details>
 
@@ -435,6 +462,38 @@
       </div>
 
       <div class="about-section">
+        <h2><i class="bi bi-stars"></i> 令和8年分（2026年分）はここが変わりました</h2>
+        <p>
+          令和8年度税制改正により、基礎控除と給与所得控除が引き上げられました。
+          今回の年末調整から適用されるため、例年と同じ入力をしても税額が変わります。
+        </p>
+        <ul>
+          <li><strong>基礎控除</strong> — 本則が58万円から<strong>62万円</strong>に引き上げ（合計所得金額2,350万円以下）。さらに令和8年分・令和9年分に限り、合計所得金額489万円以下の方は<strong>42万円</strong>、489万円超655万円以下の方は5万円が加算されます。加算を含めた最大額は<strong>104万円</strong>です</li>
+          <li><strong>給与所得控除の最低保障額</strong> — 65万円から69万円に引き上げ。加えて令和8年・令和9年は5万円を上乗せする特例があり、年末調整で<strong>74万円</strong>として適用できます</li>
+          <li><strong>扶養親族・同一生計配偶者の所得要件</strong> — 合計所得金額58万円以下から<strong>62万円以下</strong>に引き上げ。給与収入だけの方なら、62万円＋給与所得控除74万円で<strong>年収136万円以下</strong>が目安になります</li>
+        </ul>
+        <p>
+          給与所得控除74万円と基礎控除104万円を足した<strong>178万円</strong>が、給与収入だけの場合に
+          所得税がかからない上限（課税最低限）です。報道で「178万円の壁」と呼ばれているのはこの数字です。
+        </p>
+
+        <h2><i class="bi bi-exclamation-triangle"></i> 令和8年は還付が例年より大きくなりやすい</h2>
+        <p>
+          今回の改正でひとつ注意したいのが、<strong>毎月の給与から引かれてきた所得税は、まだ改正前の税額表で計算されている</strong>という点です。
+          源泉徴収税額表の改正が適用されるのは令和9年1月1日以後に支払われる給与からで、
+          令和8年中の天引きは従来どおりの金額のままでした。
+        </p>
+        <p>
+          一方、1年分の税額を正しく計算し直す年末調整では、引き上げ後の基礎控除・給与所得控除を使います。
+          つまり<strong>控除が増えた分の差額が、12月の年末調整でまとめて戻ってくる</strong>ことになります。
+          例年より還付額が大きく出ても計算誤りとは限りません。心当たりがあるのはこの改正です。
+        </p>
+        <p>
+          給与計算を担当している方にとっては、年調計算の初年度対応にあたります。
+          「年末調整等のための給与所得控除後の給与等の金額の表」も改正後のものに差し替わっているため、
+          前年のファイルを流用すると誤差が出ます。
+        </p>
+
         <h2><i class="bi bi-book"></i> 年末調整とは</h2>
         <p>
           年末調整とは、会社員（給与所得者）を対象に、1年間の給与から源泉徴収された所得税と、実際に支払うべき所得税の差額を精算する手続きです。毎月の給与から概算で天引きされた税金を、各種控除を適用した正確な金額で再計算し、払い過ぎた税金は還付、不足分は追加徴収されます。
@@ -537,7 +596,7 @@
               <i class="bi bi-chevron-down accordion-icon"></i>
             </summary>
             <div class="accordion-body">
-              配偶者以外の親族で、16歳以上、年間合計所得48万円以下（年収103万円以下）、かつ生計を一にしていることが条件です。19〜22歳の特定扶養親族は控除額63万円に増額されます。
+              配偶者以外の親族で、16歳以上、年間の合計所得金額62万円以下、かつ生計を一にしていることが条件です（令和8年分から58万円以下→62万円以下に引き上げ）。給与収入だけなら年収136万円以下が目安です。19〜22歳の特定扶養親族は控除額63万円に増額されます。なお19〜22歳で所得が要件を超えた場合も、令和7年分に創設された特定親族特別控除の対象になることがあります。
             </div>
           </details>
 
@@ -549,15 +608,17 @@
             <div class="accordion-body">
               <ul class="ref-links">
                 <li><a href="https://www.nta.go.jp/taxes/shiraberu/shinkoku/nencho/index.htm" target="_blank" rel="noopener">国税庁：年末調整がよくわかるページ</a></li>
+                <li><a href="https://www.nta.go.jp/users/gensen/2026kiso/index.htm" target="_blank" rel="noopener">国税庁：令和8年度税制改正による所得税の基礎控除の引上げ等について</a></li>
+                <li><a href="https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm" target="_blank" rel="noopener">財務省：令和8年度税制改正の大綱（一 個人所得課税）</a></li>
               </ul>
-              <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの還付・追徴額は簡易計算による概算値です。実際の年末調整額は源泉徴収票の内容・各種控除の適用状況・勤務先の計算方法により異なります。正確な金額は勤務先の給与担当または税理士にご確認ください。</p>
+              <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの還付・追徴額は簡易計算による概算値です。令和8年分（2026年分）の基礎控除・給与所得控除に対応していますが、配偶者特別控除の段階的な減額、住宅の区分ごとの借入限度額、旧制度の生命保険料控除など、簡略化している項目があります。実際の年末調整額は源泉徴収票の内容・各種控除の適用状況・勤務先の計算方法により異なります。正確な金額は勤務先の給与担当または税理士にご確認ください。</p>
             </div>
           </details>
 
         </div>
       </div>
     </section>
-    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年9月3日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
+    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年11月19日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
   </main>
 
   <footer>
@@ -578,9 +639,5 @@
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-    (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
 </body>
 </html>

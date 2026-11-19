@@ -325,6 +325,11 @@ input[type="number"] { -moz-appearance: textfield; }
   gap: 0.25rem;
 }
 
+/* 生命保険料は3区分あるため、入る幅があれば3列、狭ければ折り返す */
+.insurance-row {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+}
+
 /* ============================================================
    トグルグループ（社会保険料切替）
    ============================================================ */
@@ -819,4 +824,50 @@ footer p + p {
   .about-section {
     padding: 1.5rem;
   }
+}
+
+/* ============================================================
+   アフィリエイト広告枠（計算ボタンと結果の間）
+   ============================================================ */
+.affiliate-block {
+  max-width: 760px;
+  margin: 0 auto 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+.affiliate-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--surface);
+  background: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+}
+
+.affiliate-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+.affiliate-link {
+  display: inline-block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.affiliate-link:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .affiliate-block { padding: 1.25rem; }
 }

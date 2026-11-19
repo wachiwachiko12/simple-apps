@@ -437,3 +437,150 @@ describe('overtime-calculator: 割増賃金', () => {
     assert.ok(sum(b) > sum(a), '残業時間を倍にしても支給額が増えない');
   });
 });
+
+// ---------------------------------------------------------------------------
+// year-end-adjustment: 令和8年分（2026年分）の年末調整
+//
+// 控除額の根拠は財務省「令和８年度税制改正の大綱」一 個人所得課税 １
+//   https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm
+// 基礎控除の本則62万円、令和8年分・令和9年分の加算（合計所得489万円以下は
+// 42万円、489万円超655万円以下は5万円）、給与所得控除の最低保障額74万円
+// （本則69万円＋令和8年・9年の特例5万円）。
+//
+// このツールには「index.html の単位表示は『円』なのに script.js が万円として
+// 10,000倍していた」という実障害があった。源泉徴収税額に12万円と入れると
+// 還付額が12億円と表示されていた。単位の不変条件をテストで固定する。
+describe('year-end-adjustment: 令和8年分の控除額と入力単位', () => {
+  const app = () => loadApp('year-end-adjustment');
+
+  const fields = (over) => Object.assign({
+    income: 500,
+    'withheld-tax': 120000,
+    spouse: 'none',
+    'dep-general': 0,
+    'dep-specific': 0,
+    'social-insurance': 700000,
+    'life-general': 0,
+    'life-nursing': 0,
+    'life-pension': 0,
+    'earthquake-insurance': 0,
+    ideco: 0,
+    'housing-loan': 0,
+  }, over || {});
+
+  const yen = (a, id) => Number(a.__getElement(id).textContent.replace(/[^0-9]/g, ''));
+
+  const run = (over) => {
+    const a = loadApp('year-end-adjustment', fields(over));
+    a.calculate();
+    return a;
+  };
+
+  test('給与所得控除の最低保障額は74万円', () => {
+    // 収入が低い側の階段では必ず最低保障額が効く
+    assert.strictEqual(app().calcSalaryDeduction(100), 740000);
+    assert.strictEqual(app().calcSalaryDeduction(180), 740000);
+  });
+
+  test('給与所得控除は給与収入そのものを超えない', () => {
+    assert.strictEqual(app().calcSalaryDeduction(0), 0);
+    assert.strictEqual(app().calcSalaryDeduction(50), 500000);
+  });
+
+  test('給与所得控除の上限は195万円', () => {
+    assert.strictEqual(app().calcSalaryDeduction(850), 1950000);
+    assert.strictEqual(app().calcSalaryDeduction(2000), 1950000);
+  });
+
+  test('給与所得控除は収入に対して単調非減少', () => {
+    const f = app().calcSalaryDeduction;
+    for (let man = 0; man <= 1200; man += 5) {
+      assert.ok(f(man + 5) >= f(man), man + '万円の前後で給与所得控除が減った');
+    }
+  });
+
+  test('基礎控除は本則62万円＋令和8年分の加算で最大104万円', () => {
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(4000000), 1040000);  // 合計所得489万円以下 → 62万＋42万
+    assert.strictEqual(f(4890000), 1040000);  // 境界（489万円ちょうど）
+    assert.strictEqual(f(5000000), 670000);   // 489万円超655万円以下 → 62万＋5万
+    assert.strictEqual(f(6550000), 670000);   // 境界（655万円ちょうど）
+    assert.strictEqual(f(7000000), 620000);   // 655万円超 → 本則のみ
+  });
+
+  test('基礎控除は2,350万円超で段階的に縮小し2,500万円超で0', () => {
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(23500000), 620000);
+    assert.strictEqual(f(24000000), 480000);
+    assert.strictEqual(f(24500000), 320000);
+    assert.strictEqual(f(25000000), 160000);
+    assert.strictEqual(f(25000001), 0);
+  });
+
+  test('基礎控除は所得に対して単調非増加', () => {
+    const f = app().calcBasicDeduction;
+    for (let y = 0; y <= 26000000; y += 100000) {
+      assert.ok(f(y + 100000) <= f(y), '所得' + y + '円の前後で基礎控除が増えた');
+    }
+  });
+
+  test('生命保険料控除は1区分あたり4万円が上限', () => {
+    const f = app().calcLifeInsuranceDeduction;
+    assert.strictEqual(f(20000), 20000);   // 2万円以下は全額
+    assert.strictEqual(f(40000), 30000);   // 支払額の1/2 + 1万円
+    assert.strictEqual(f(80000), 40000);   // 支払額の1/4 + 2万円
+    assert.strictEqual(f(1000000), 40000); // 上限で止まる
+    assert.strictEqual(f(0), 0);
+  });
+
+  test('生命保険料控除は入力を円として扱う（万円ではない）', () => {
+    // 10,000倍していた頃は、わずかな金額でも常に上限4万円が返っていた
+    assert.strictEqual(app().calcLifeInsuranceDeduction(10000), 10000);
+    assert.ok(app().calcLifeInsuranceDeduction(10000) < 40000);
+  });
+
+  test('生命保険料控除の3区分合計は12万円が上限', () => {
+    const f = app().calcLifeInsuranceTotal;
+    assert.strictEqual(f(80000, 80000, 80000), 120000);
+    assert.strictEqual(f(20000, 20000, 20000), 60000);
+    assert.strictEqual(f(0, 0, 0), 0);
+  });
+
+  test('源泉徴収税額は円で受け取る（還付額が1万倍にならない）', () => {
+    const a = run({});
+    assert.strictEqual(a.__getElement('d-withheld').textContent, '¥120,000');
+    // 還付額は源泉徴収税額を超えられない
+    assert.ok(yen(a, 'result-value') <= 120000, '還付額が源泉徴収税額を超えている');
+  });
+
+  test('住宅ローン控除は年末残高の0.7%（上限21万円）', () => {
+    const credit = (balance) =>
+      yen(run({ income: 700, 'withheld-tax': 300000, 'social-insurance': 1000000, 'housing-loan': balance }), 'd-housing-credit');
+    assert.strictEqual(credit(10000000), 70000);  // 1,000万円 × 0.7%
+    assert.strictEqual(credit(30000000), 210000); // 3,000万円 × 0.7% = 上限
+    assert.strictEqual(credit(50000000), 210000); // 上限で止まる
+  });
+
+  test('iDeCo掛金を入れれば課税所得は減る', () => {
+    const taxable = (ideco) => yen(run({ income: 600, 'social-insurance': 900000, ideco }), 'd-taxable');
+    assert.ok(taxable(23000) < taxable(0), 'iDeCoを入れても課税所得が減らない');
+  });
+
+  test('地震保険料控除の上限は5万円', () => {
+    const total = (premium) => yen(run({ 'earthquake-insurance': premium }), 'd-deductions');
+    // 3万円と10万円の差は、上限5万円までの2万円ぶんだけ
+    assert.strictEqual(total(100000) - total(30000), 20000);
+  });
+
+  test('課税所得は1,000円未満が切り捨てられる', () => {
+    const taxable = yen(run({ income: 523, 'social-insurance': 713456, 'life-general': 31234 }), 'd-taxable');
+    assert.strictEqual(taxable % 1000, 0, '課税所得が1,000円単位になっていない');
+  });
+
+  test('扶養が増えれば控除合計も増える', () => {
+    const total = (general, specific) =>
+      yen(run({ 'dep-general': general, 'dep-specific': specific }), 'd-deductions');
+    assert.strictEqual(total(1, 0) - total(0, 0), 380000); // 一般扶養 38万円
+    assert.strictEqual(total(0, 1) - total(0, 0), 630000); // 特定扶養 63万円
+  });
+});
