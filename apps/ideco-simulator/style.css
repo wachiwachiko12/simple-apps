@@ -725,6 +725,49 @@ details[open] > .accordion-summary::after {
   font-size: 1.05rem;
 }
 
+/* ---- 控除額の比較表 ---- */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.875rem 0 1rem;
+  font-size: 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.ref-table caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 0 0 0.4rem;
+}
+.ref-table th,
+.ref-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  line-height: 1.6;
+  vertical-align: top;
+}
+.ref-table thead th {
+  background: var(--bg);
+  color: var(--text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ref-table tbody tr:last-child th,
+.ref-table tbody tr:last-child td { border-bottom: none; }
+.ref-table tbody td:last-child { font-weight: 600; color: var(--primary); }
+
+@media (max-width: 480px) {
+  .ref-table { font-size: 0.8rem; }
+  .ref-table th,
+  .ref-table td { padding: 0.45rem 0.5rem; }
+}
+
 /* ---- 参照情報・免責事項 ---- */
 .ref-links { list-style: none; padding: 0; margin: 0 0 0.6rem; font-size: 0.85rem; }
 .ref-links li { margin-bottom: 0.3rem; }

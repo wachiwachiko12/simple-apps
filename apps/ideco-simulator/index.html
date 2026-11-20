@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="iDeCo（個人型確定拠出年金）の節税額と老後の受取額を無料シミュレーション。年収・掛金・運用利回りを入力するだけで年間節税額・積立総額をグラフで確認できます。">
+  <meta name="description" content="iDeCo（個人型確定拠出年金）の節税額と老後の受取額を無料シミュレーション。令和8年分の基礎控除・給与所得控除で計算します。年収・掛金・運用利回りを入力するだけで年間節税額・積立総額をグラフで確認できます。">
   <title>iDeCo節税シミュレーター｜掛金・年収から節税額と受取額を計算【無料】</title>
   <link rel="canonical" href="https://keisanlab.jp/apps/ideco-simulator/">
   <!-- OGP -->
   <meta property="og:title" content="iDeCo節税シミュレーター｜掛金・年収から節税額と受取額を計算【無料】">
-  <meta property="og:description" content="iDeCo（個人型確定拠出年金）の節税額と老後の受取額を無料シミュレーション。年収・掛金・運用利回りを入力するだけで年間節税額・積立総額をグラフで確認できます。">
+  <meta property="og:description" content="iDeCo（個人型確定拠出年金）の節税額と老後の受取額を無料シミュレーション。令和8年分の基礎控除・給与所得控除で計算します。年収・掛金・運用利回りを入力するだけで年間節税額・積立総額をグラフで確認できます。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://keisanlab.jp/apps/ideco-simulator/">
   <meta property="og:image" content="https://keisanlab.jp/images/ogp-ideco-simulator.png">
@@ -122,7 +122,7 @@
       "price": "0",
       "priceCurrency": "JPY"
     },
-    "dateModified": "2026-09-08",
+    "dateModified": "2026-11-20",
     "author": {
       "@type": "Person",
       "name": "Rio",
@@ -185,7 +185,7 @@
             <input type="number" id="income" value="500" min="100" max="5000" step="50">
             <span class="unit">万円</span>
           </div>
-          <span class="field-hint">給与所得・事業所得の年収を入力してください</span>
+          <span class="field-hint">会社員・公務員・パートの方は給与収入（額面）を入力してください。自営業・フリーランスの方は、売上から経費と青色申告特別控除を引いた<strong>事業所得</strong>を入力してください（自営業に給与所得控除は適用されないため）。</span>
         </div>
 
         <!-- 月々の掛金 -->
@@ -256,7 +256,7 @@
           <div class="result-card__body">
             <div class="result-value" id="annual-tax-saving">--</div>
             <div class="result-label">年間節税額</div>
-            <div class="result-sub" id="annual-tax-rate">実効税率: --%</div>
+            <div class="result-sub" id="annual-tax-rate">掛金に対する軽減率: --%</div>
           </div>
         </div>
         <div class="result-card result-card--green">
@@ -307,7 +307,7 @@
           <div class="tax-benefit-item">
             <div class="tax-benefit-label">一時金受取（退職所得控除）</div>
             <div class="tax-benefit-value" id="lumpsum-deduction">--</div>
-            <div class="tax-benefit-note">加入年数に応じた非課税枠</div>
+            <div class="tax-benefit-note">20年以下は1年40万円、20年超は800万円＋超過年数×70万円</div>
           </div>
           <div class="tax-benefit-item">
             <div class="tax-benefit-label">年金受取（公的年金等控除）</div>
@@ -315,7 +315,7 @@
             <div class="tax-benefit-note">65歳以上で年金収入110万円まで非課税</div>
           </div>
         </div>
-        <p class="tax-benefit-disclaimer">※ 一時金受取の退職所得控除は、勤続年数と加入年数で長いほうを使用。実際の税負担は他の退職金との合算等で変わります。</p>
+        <p class="tax-benefit-disclaimer">※ 退職所得控除は加入者等期間（本ツールでは入力した積立期間）で計算しています。会社の退職金を同じ年に受け取る場合は、勤続年数と加入年数の長いほうで1つの控除枠を分け合うため、この金額をそのまま使えるわけではありません。実際の税負担は他の退職金との合算等で変わります。</p>
       </div>
     </section>
 
@@ -404,6 +404,61 @@
           逆に、課税所得がもともとゼロに近い人（扶養内で働いている場合など）には
           節税効果がほとんどありません。運用益が非課税になる利点は残りますが、
           後述する手数料を考えると、他の制度のほうが向いていることがあります。
+        </p>
+
+        <h2>令和8年分の控除で計算しています</h2>
+        <p>
+          本ツールは<strong>令和8年分</strong>の基礎控除・給与所得控除で課税所得を求めています。
+          令和8年度税制改正で控除額が引き上げられたため、同じ年収でも課税所得は以前より小さくなります。
+        </p>
+        <table class="ref-table">
+          <caption>節税額の計算に使っている控除額（令和8年分）</caption>
+          <thead>
+            <tr><th>項目</th><th>令和7年分まで</th><th>令和8年分</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>基礎控除（合計所得489万円以下）</td>
+              <td>58万円</td>
+              <td>104万円（本則62万円＋加算42万円）</td>
+            </tr>
+            <tr>
+              <td>基礎控除（合計所得489万円超655万円以下）</td>
+              <td>58万円</td>
+              <td>67万円（本則62万円＋加算5万円）</td>
+            </tr>
+            <tr>
+              <td>基礎控除（合計所得655万円超2,350万円以下）</td>
+              <td>58万円</td>
+              <td>62万円</td>
+            </tr>
+            <tr>
+              <td>給与所得控除の最低保障額</td>
+              <td>65万円（給与収入190万円まで）</td>
+              <td>74万円（給与収入220万円まで）</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          基礎控除の加算42万円・5万円は<strong>令和8年分と令和9年分に限る特例</strong>で、
+          令和10年分以後は37万円に変わります。給与所得控除の最低保障額74万円も、
+          本則69万円に令和8年・9年の特例5万円を加えたものです。
+          住民税は所得税とは別建てで、基礎控除43万円で計算しています。
+        </p>
+        <p>
+          この引き上げによって、適用される所得税率が1段下がる人がいます。
+          たとえば給与収入500万円の会社員の課税所得は、改正前の計算では330万円超の
+          区分（所得税20%）に近い水準でしたが、令和8年分の控除では178万円となり
+          195万円以下の区分（所得税5%）に収まります。
+          <strong>控除が増えて税率区分が下がると、iDeCoの掛金1円あたりの節税額も小さくなります。</strong>
+          節税額だけを目的に掛金を決めている場合は、改正後の数字で再確認しておく価値があります。
+        </p>
+        <p>
+          逆に、年収が低く課税所得がもともと0円になる人は、掛金を増やしても
+          所得控除による節税は発生しません。本ツールはそうした場合に
+          節税額を0円と表示します（税率を掛けるのではなく、掛金を引く前と引いた後の
+          税額の差を取っているためです）。控除額が引き上げられた令和8年分では、
+          この「節税額が0円になる人」の範囲が以前より広がっています。
         </p>
 
         <h2>60歳まで引き出せないという制約</h2>
@@ -500,15 +555,20 @@
               <ul class="ref-links">
                 <li><a href="https://www.ideco-koushiki.jp/" target="_blank" rel="noopener">iDeCo公式サイト（国民年金基金連合会）</a></li>
                 <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/nenkin/nenkin/kyoshutsu/ideco.html" target="_blank" rel="noopener">厚生労働省：iDeCo（個人型確定拠出年金）制度概要</a></li>
+                <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1199.htm" target="_blank" rel="noopener">国税庁 タックスアンサー No.1199 基礎控除</a></li>
+                <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1410.htm" target="_blank" rel="noopener">国税庁 タックスアンサー No.1410 給与所得控除</a></li>
+                <li><a href="https://www.nta.go.jp/users/gensen/2026kiso/index.htm" target="_blank" rel="noopener">国税庁：令和8年度税制改正（基礎控除の引上げ等関係）</a></li>
+                <li><a href="https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm" target="_blank" rel="noopener">財務省：令和8年度税制改正の大綱 一 個人所得課税</a></li>
+                <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1420.htm" target="_blank" rel="noopener">国税庁 タックスアンサー No.1420 退職金を受け取ったとき</a></li>
               </ul>
-              <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの節税額・受取額は簡易計算による概算値です。実際の税額は所得控除の状況・税制改正・運用実績等により異なります。正式な申込みや税務判断の前に、iDeCo公式サイトまたは税理士等の専門家にご確認ください。</p>
+              <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの節税額・受取額は簡易計算による概算値です。節税額は、令和8年分の基礎控除・給与所得控除をもとに求めた課税所得から、掛金を引く前と引いた後の税額の差として計算しています（所得税は復興特別所得税2.1%を含む、住民税は所得割10%・基礎控除43万円で概算し均等割は含みません）。社会保険料は年収の14.8%として概算しているため、実際の控除額とは差が出ます。配偶者控除・扶養控除・生命保険料控除・医療費控除などは考慮していないため、これらが多い方の節税額は本ツールの表示より小さくなります。実際の税額は所得控除の状況・税制改正・運用実績等により異なります。正式な申込みや税務判断の前に、iDeCo公式サイトまたは税理士等の専門家にご確認ください。</p>
             </div>
           </details>
         </div>
       </div>
 
 </section>
-    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年9月8日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
+    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年11月20日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
   </main>
 
   <footer>

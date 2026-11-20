@@ -584,3 +584,195 @@ describe('year-end-adjustment: 令和8年分の控除額と入力単位', () => 
     assert.strictEqual(total(0, 1) - total(0, 0), 630000); // 特定扶養 63万円
   });
 });
+
+// ---------------------------------------------------------------------------
+describe('ideco-simulator: 令和8年分の控除・節税額・退職所得控除', () => {
+  const app = () => loadApp('ideco-simulator');
+
+  // -- 給与所得控除（国税庁タックスアンサー1410「令和8年分・令和9年分」の表） --
+
+  test('最低保障額74万円は給与収入220万円まで適用される', () => {
+    // 令和7年分までは「190万円まで65万円」だった。改正で階段そのものが動いている。
+    const f = app().calcSalaryDeduction;
+    assert.strictEqual(f(1000000), 740000);
+    assert.strictEqual(f(1800000), 740000);
+    assert.strictEqual(f(2200000), 740000);
+  });
+
+  test('給与収入220万円を超えると収入×30%＋8万円に切り替わる', () => {
+    const f = app().calcSalaryDeduction;
+    assert.strictEqual(f(2300000), 770000);
+    assert.strictEqual(f(3600000), 1160000);
+  });
+
+  test('給与所得控除の各区分が一次資料の表と一致する', () => {
+    const f = app().calcSalaryDeduction;
+    assert.strictEqual(f(6600000), 1760000);  // 収入×20%＋44万円
+    assert.strictEqual(f(8500000), 1950000);  // 収入×10%＋110万円＝上限
+    assert.strictEqual(f(20000000), 1950000); // 上限は195万円で頭打ち
+  });
+
+  test('給与所得控除は給与収入そのものを超えない', () => {
+    const f = app().calcSalaryDeduction;
+    assert.strictEqual(f(0), 0);
+    assert.strictEqual(f(500000), 500000);
+  });
+
+  test('給与所得控除は収入に対して単調非減少', () => {
+    const f = app().calcSalaryDeduction;
+    for (let y = 0; y <= 12000000; y += 50000) {
+      assert.ok(f(y + 50000) >= f(y), y + '円の前後で給与所得控除が減った');
+    }
+  });
+
+  test('給与所得控除は year-end-adjustment と一致する', () => {
+    // 同じ制度を2つのツールが別々に実装しているため、片方だけ改正に
+    // 追随し損ねるのを防ぐ。year-end-adjustment 側は万円で受ける。
+    const ideco = app().calcSalaryDeduction;
+    const yea = loadApp('year-end-adjustment').calcSalaryDeduction;
+    for (let man = 0; man <= 1000; man += 5) {
+      assert.strictEqual(ideco(man * 10000), yea(man), man + '万円で2ツールの給与所得控除が食い違った');
+    }
+  });
+
+  // -- 基礎控除（令和8年分。本則62万円＋令和8年・9年分の加算） --
+
+  test('基礎控除は合計所得489万円以下で104万円', () => {
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(0), 1040000);
+    assert.strictEqual(f(4890000), 1040000);
+  });
+
+  test('基礎控除は合計所得489万円超655万円以下で67万円', () => {
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(4890001), 670000);
+    assert.strictEqual(f(6550000), 670000);
+  });
+
+  test('基礎控除の本則は62万円（合計所得655万円超2,350万円以下）', () => {
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(6550001), 620000);
+    assert.strictEqual(f(23500000), 620000);
+  });
+
+  test('基礎控除は高所得側で48万/32万/16万/0円に落ちる', () => {
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(23500001), 480000);
+    assert.strictEqual(f(24000001), 320000);
+    assert.strictEqual(f(24500001), 160000);
+    assert.strictEqual(f(25000001), 0);
+  });
+
+  test('基礎控除は合計所得に対して単調非増加', () => {
+    const f = app().calcBasicDeduction;
+    for (let y = 0; y <= 26000000; y += 100000) {
+      assert.ok(f(y + 100000) <= f(y), y + '円の前後で基礎控除が増えた');
+    }
+  });
+
+  test('基礎控除は year-end-adjustment と一致する', () => {
+    const ideco = app().calcBasicDeduction;
+    const yea = loadApp('year-end-adjustment').calcBasicDeduction;
+    for (let y = 0; y <= 26000000; y += 100000) {
+      assert.strictEqual(ideco(y), yea(y), y + '円で2ツールの基礎控除が食い違った');
+    }
+  });
+
+  // -- 退職所得控除（所得税法30条） --
+
+  test('退職所得控除は20年以下が1年あたり40万円', () => {
+    const f = app().calcRetirementDeduction;
+    assert.strictEqual(f(10), 4000000);
+    assert.strictEqual(f(20), 8000000);
+  });
+
+  test('退職所得控除は20年超の超過分が1年あたり70万円', () => {
+    const f = app().calcRetirementDeduction;
+    assert.strictEqual(f(21), 8700000);
+    assert.strictEqual(f(30), 15000000);
+    assert.strictEqual(f(40), 22000000);
+  });
+
+  test('退職所得控除の最低保証は80万円', () => {
+    const f = app().calcRetirementDeduction;
+    assert.strictEqual(f(1), 800000);
+    assert.strictEqual(f(2), 800000);
+  });
+
+  test('退職所得控除に法令上の上限はない（2,000万円で頭打ちにしない）', () => {
+    // 架空の2,000万円上限で加入40年の控除を1,600万円と誤表示していたため、
+    // 「20年の壁」より上で控除が伸び続けることを固定する。
+    const f = app().calcRetirementDeduction;
+    assert.ok(f(40) > 20000000, '加入40年の退職所得控除が2,000万円以下になっている');
+    assert.strictEqual(f(40) - f(39), 700000);
+  });
+
+  test('退職所得控除は retirement-allowance-simulator と一致する', () => {
+    // あちらは万円単位で返す
+    const ideco = app().calcRetirementDeduction;
+    const ras = loadApp('retirement-allowance-simulator').calcDeduction;
+    for (let y = 1; y <= 45; y++) {
+      assert.strictEqual(ideco(y), ras(y) * 10000, y + '年で2ツールの退職所得控除が食い違った');
+    }
+  });
+
+  // -- 節税額（掛金を引く前と引いた後の税額の差） --
+
+  test('課税所得が0なら節税額も0', () => {
+    // 税率を掛ける実装だと、課税所得0の人にも節税額が出てしまっていた。
+    const a = app();
+    const bases = a.calcTaxBases(100, 'employee_no_pension');
+    assert.strictEqual(bases.forIncomeTax, 0, '年収100万円の所得税課税所得が0でない');
+    assert.strictEqual(a.calcAnnualTaxSaving(100, 'employee_no_pension', 276000), 0);
+  });
+
+  test('節税額は年間掛金を超えない', () => {
+    const f = app().calcAnnualTaxSaving;
+    for (const man of [100, 200, 300, 500, 800, 1200, 2000, 5000]) {
+      const saving = f(man, 'employee_no_pension', 276000);
+      assert.ok(saving <= 276000, man + '万円で節税額が年間掛金を超えた');
+      assert.ok(saving >= 0, man + '万円で節税額が負になった');
+    }
+  });
+
+  test('節税額は年収に対して単調非減少（端数処理の誤差を除く）', () => {
+    // 課税所得の1,000円未満切捨てと復興特別所得税の切捨てが前後の税額で
+    // 別々に効くため、差額は数円ぶり返すことがある（制度上の正しい挙動）。
+    // 税率区分を取り違えるような誤りは数千円単位で動くので、許容幅100円で捕まる。
+    const f = app().calcAnnualTaxSaving;
+    for (let man = 0; man <= 2000; man += 20) {
+      assert.ok(
+        f(man + 20, 'employee_no_pension', 276000) >= f(man, 'employee_no_pension', 276000) - 100,
+        man + '万円の前後で節税額が減った'
+      );
+    }
+  });
+
+  test('掛金を増やせば節税額も減らない', () => {
+    const f = app().calcAnnualTaxSaving;
+    let prev = 0;
+    for (let monthly = 0; monthly <= 68000; monthly += 1000) {
+      const saving = f(500, 'self_employed', monthly * 12);
+      assert.ok(saving >= prev, '月' + monthly + '円で節税額が減った');
+      prev = saving;
+    }
+  });
+
+  test('自営業には給与所得控除を適用しない', () => {
+    // 事業所得に給与所得控除を重ねると課税所得を過小評価してしまう
+    const a = app();
+    const self = a.calcTaxBases(500, 'self_employed');
+    const employee = a.calcTaxBases(500, 'employee_no_pension');
+    assert.strictEqual(self.income, 5000000, '自営業の合計所得が入力額と一致しない');
+    assert.ok(employee.income < self.income, '給与所得者の所得が自営業より小さくなっていない');
+  });
+
+  test('住民税は所得税とは別の基礎控除で計算する', () => {
+    // 所得税の基礎控除（最大104万円）を住民税に流用すると住民税を過小評価する
+    const bases = app().calcTaxBases(500, 'employee_no_pension');
+    assert.ok(
+      bases.forResidentTax > bases.forIncomeTax,
+      '住民税の課税所得が所得税の課税所得を上回っていない（基礎控除43万円が効いていない）'
+    );
+  });
+});
