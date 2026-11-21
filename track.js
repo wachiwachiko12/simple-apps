@@ -16,8 +16,16 @@
       return;
     }
     var b = e.target.closest && e.target.closest('button, input[type="button"], input[type="submit"]');
-    if (b && /計算|診断|算出|判定|検定|変換|シミュレーション|生成|比較|求める|チェック|実行/.test(b.textContent || b.value || '')) {
-      send('tool_action', { page: page, label: (b.textContent || b.value || '').trim().slice(0, 30) });
+    if (!b) return;
+    // 文言での判定。「試算」「記録」「開始」などを入れていなかったため、
+    // retirement-allowance-simulator（退職金を試算する）・household-budget（記録する）・
+    // presentation-timer（開始）は実際に使われていても tool_action が0件のままだった。
+    var label = (b.textContent || b.value || '').trim();
+    var byText = /計算|診断|算出|判定|検定|変換|シミュレーション|生成|比較|求める|チェック|実行|試算|記録|開始|スタート|作成|適用|出力|検出|付ける/.test(label);
+    // 文言に依存しない保険。このリポジトリの主要アクションボタンの共通クラス・id。
+    var bySelector = b.matches && b.matches('#calc-btn, .btn-calculate, .btn-calc');
+    if (byText || bySelector) {
+      send('tool_action', { page: page, label: label.slice(0, 30) });
     }
   }, true);
 

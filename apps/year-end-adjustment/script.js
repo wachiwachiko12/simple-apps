@@ -208,8 +208,12 @@ function calculate() {
 
   renderChart({ basicDeduction, spouseDeduction, depDeduction, socialIns, lifeInsDeduction, earthquakeDeduction, idecoDeduction, housingCredit });
 
-  document.getElementById('result-section').style.display = '';
-  document.getElementById('result-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const resultSection = document.getElementById('result-section');
+  resultSection.style.display = '';
+  // 広告は計算ボタンと結果の間にある。結果へ直接スクロールすると広告が
+  // 画面の上に追い出されるため、広告枠へスクロールして広告→結果の順で見せる。
+  (document.getElementById('ad-slot') || resultSection)
+    .scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderChart(d) {
