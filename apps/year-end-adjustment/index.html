@@ -92,7 +92,7 @@
         "name": "配偶者控除と配偶者特別控除の違いは何ですか？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "配偶者控除は配偶者の合計所得金額が62万円以下（令和8年分の要件。給与収入のみなら年収136万円以下が目安）の場合に最大38万円が控除されます。配偶者特別控除はそれを超えても段階的に控除が受けられる制度で、配偶者の所得が増えるにつれて控除額が減っていきます。本ツールでは簡易的に配偶者の年収150万円以下を条件として38万円で計算しています。"
+          "text": "配偶者控除は配偶者の合計所得金額が62万円以下（令和8年分の要件。給与収入のみなら年収136万円以下が目安）の場合に最大38万円が控除されます。配偶者特別控除はそれを超えても段階的に控除が受けられる制度で、配偶者の合計所得金額133万円（給与収入207万円）までの範囲で、所得が増えるにつれて控除額が38万円から3万円まで減っていきます。どちらも本人の合計所得金額が1,000万円を超えると適用されません。本ツールは配偶者の年収を入力すると、この段階的な控除額を国税庁の表どおりに計算します。"
         }
       },
       {
@@ -122,7 +122,7 @@
       "price": "0",
       "priceCurrency": "JPY"
     },
-    "dateModified": "2026-11-21",
+    "dateModified": "2026-11-22",
     "author": {
       "@type": "Person",
       "name": "Rio",
@@ -190,9 +190,18 @@
             <label class="field-label" for="spouse">配偶者</label>
             <select id="spouse" aria-label="配偶者の有無">
               <option value="none">なし</option>
-              <option value="yes">あり（年収150万円以下）</option>
-              <option value="no-deduction">あり（年収150万円超）</option>
+              <option value="yes">あり（生計を一にしている）</option>
             </select>
+          </div>
+
+          <div class="field" id="spouse-income-field" style="display:none;">
+            <label class="field-label" for="spouse-income">配偶者の年収（給与収入）</label>
+            <div class="input-with-unit">
+              <input type="number" id="spouse-income" min="0" max="10000" step="1"
+                     placeholder="例: 120" aria-label="配偶者の年収（万円）">
+              <span class="input-unit">万円</span>
+            </div>
+            <span class="field-hint">年収136万円以下なら配偶者控除（38万円）、136万円超207万円以下なら配偶者特別控除が段階的に適用されます。収入がない場合は0のままで構いません。</span>
           </div>
 
           <div class="field">
@@ -351,6 +360,10 @@
           <span class="detail-label"><i class="bi bi-arrow-down-circle"></i> 控除合計</span>
           <span class="detail-value" id="d-deductions">---</span>
         </div>
+        <div class="detail-row ref-row" id="d-spouse-row" style="display:none;">
+          <span class="detail-label"><i class="bi bi-people-fill"></i> <span id="d-spouse-label">うち配偶者控除</span></span>
+          <span class="detail-value" id="d-spouse">---</span>
+        </div>
         <div class="detail-row">
           <span class="detail-label"><i class="bi bi-bullseye"></i> 課税所得</span>
           <span class="detail-value" id="d-taxable">---</span>
@@ -418,11 +431,11 @@
         <details open class="accordion-item">
           <summary class="accordion-summary">
             <span class="accordion-num">02</span>
-            <span>配偶者・扶養家族の状況を選択する</span>
+            <span>配偶者・扶養家族の状況を入力する</span>
             <i class="bi bi-chevron-down accordion-icon"></i>
           </summary>
           <div class="accordion-body">
-            配偶者の有無と年収区分を選択してください。扶養家族がいる場合は、16〜18歳・23歳以上の一般扶養と、19〜22歳の特定扶養の人数をそれぞれ入力します。特定扶養は大学生の子どもが多く、控除額が38万円→63万円に増額されます。
+            配偶者が「あり」の場合は、配偶者の年収（給与収入・万円）も入力してください。年収136万円以下なら配偶者控除38万円、136万円超207万円以下なら配偶者特別控除が段階的に適用され、入力した金額に応じて自動で判定されます。扶養家族がいる場合は、16〜18歳・23歳以上の一般扶養と、19〜22歳の特定扶養の人数をそれぞれ入力します。特定扶養は大学生の子どもが多く、控除額が38万円→63万円に増額されます。
           </div>
         </details>
 
@@ -475,6 +488,61 @@
         <p>
           給与所得控除74万円と基礎控除104万円を足した<strong>178万円</strong>が、給与収入だけの場合に
           所得税がかからない上限（課税最低限）です。報道で「178万円の壁」と呼ばれているのはこの数字です。
+        </p>
+
+        <h2><i class="bi bi-people-fill"></i> 配偶者控除と配偶者特別控除は「136万円」で切り替わる</h2>
+        <p>
+          配偶者がパートなどで働いている場合、年収がいくらかによって受けられる控除が変わります。
+          令和8年分では、配偶者の<strong>合計所得金額62万円以下</strong>（給与収入だけなら
+          <strong>年収136万円以下</strong>）なら<strong>配偶者控除</strong>で38万円。
+          それを超えても、合計所得金額133万円（<strong>年収207万円</strong>）までは
+          <strong>配偶者特別控除</strong>として段階的に控除が残ります。
+          「136万円を1円超えたら控除がゼロになる」わけではありません。
+        </p>
+        <p>
+          年収136万円・207万円という数字は、合計所得金額に給与所得控除の最低保障額74万円を
+          足したものです。令和7年分までは最低保障額が65万円だったため、同じ境界が
+          123万円・198万円でした。<strong>改正で境界そのものが上にずれている</strong>点に注意してください。
+        </p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <caption>配偶者控除・配偶者特別控除の額（令和8年分以降。配偶者の年収は給与収入のみの場合の目安）</caption>
+            <thead>
+              <tr>
+                <th scope="col">配偶者の年収</th>
+                <th scope="col">配偶者の合計所得金額</th>
+                <th scope="col">本人900万円以下</th>
+                <th scope="col">本人950万円以下</th>
+                <th scope="col">本人1,000万円以下</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>136万円以下</td><td>62万円以下</td><td>38万円<span class="table-note">（配偶者控除）</span></td><td>26万円</td><td>13万円</td></tr>
+              <tr><td>136万円超169万円以下</td><td>62万円超95万円以下</td><td>38万円</td><td>26万円</td><td>13万円</td></tr>
+              <tr><td>169万円超174万円以下</td><td>95万円超100万円以下</td><td>36万円</td><td>24万円</td><td>12万円</td></tr>
+              <tr><td>174万円超179万円以下</td><td>100万円超105万円以下</td><td>31万円</td><td>21万円</td><td>11万円</td></tr>
+              <tr><td>179万円超184万円以下</td><td>105万円超110万円以下</td><td>26万円</td><td>18万円</td><td>9万円</td></tr>
+              <tr><td>184万円超189万円以下</td><td>110万円超115万円以下</td><td>21万円</td><td>14万円</td><td>7万円</td></tr>
+              <tr><td>189万円超194万円以下</td><td>115万円超120万円以下</td><td>16万円</td><td>11万円</td><td>6万円</td></tr>
+              <tr><td>194万円超199万円以下</td><td>120万円超125万円以下</td><td>11万円</td><td>8万円</td><td>4万円</td></tr>
+              <tr><td>199万円超204万円以下</td><td>125万円超130万円以下</td><td>6万円</td><td>4万円</td><td>2万円</td></tr>
+              <tr><td>204万円超207万円以下</td><td>130万円超133万円以下</td><td>3万円</td><td>2万円</td><td>1万円</td></tr>
+              <tr><td>207万円超</td><td>133万円超</td><td>0円</td><td>0円</td><td>0円</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          「本人900万円以下」などは、控除を受ける<strong>あなた自身の合計所得金額</strong>の区分です。
+          給与収入だけなら、合計所得金額900万円は年収約1,095万円にあたります。
+          本人の合計所得金額が1,000万円を超えると、配偶者控除・配偶者特別控除はどちらも受けられません。
+          本ツールは入力した年収から本人の区分を自動判定します。
+        </p>
+        <p>
+          なお、ここでいう年収の境界は配偶者の収入が<strong>給与のみ</strong>の場合の目安です。
+          事業所得や不動産所得がある場合は合計所得金額そのもので判定するため、
+          配偶者控除等申告書には所得の内訳を書く必要があります。
+          また、社会保険の扶養（いわゆる106万円・130万円の壁）は税とは別の制度で、
+          この表とは境界が一致しません。
         </p>
 
         <h2><i class="bi bi-exclamation-triangle"></i> 令和8年は還付が例年より大きくなりやすい</h2>
@@ -592,6 +660,16 @@
 
           <details open class="accordion-item">
             <summary class="accordion-summary">
+              <span>配偶者控除と配偶者特別控除の違いは何ですか？</span>
+              <i class="bi bi-chevron-down accordion-icon"></i>
+            </summary>
+            <div class="accordion-body">
+              配偶者控除は配偶者の合計所得金額が62万円以下（令和8年分の要件。給与収入のみなら年収136万円以下が目安）の場合に最大38万円が控除されます。配偶者特別控除はそれを超えても段階的に控除が受けられる制度で、配偶者の合計所得金額133万円（給与収入207万円）までの範囲で、所得が増えるにつれて控除額が38万円から3万円まで減っていきます。どちらも本人の合計所得金額が1,000万円を超えると適用されません。本ツールは配偶者の年収を入力すると、この段階的な控除額を国税庁の表どおりに計算します。
+            </div>
+          </details>
+
+          <details open class="accordion-item">
+            <summary class="accordion-summary">
               <span>扶養控除の条件は？</span>
               <i class="bi bi-chevron-down accordion-icon"></i>
             </summary>
@@ -610,15 +688,17 @@
                 <li><a href="https://www.nta.go.jp/taxes/shiraberu/shinkoku/nencho/index.htm" target="_blank" rel="noopener">国税庁：年末調整がよくわかるページ</a></li>
                 <li><a href="https://www.nta.go.jp/users/gensen/2026kiso/index.htm" target="_blank" rel="noopener">国税庁：令和8年度税制改正による所得税の基礎控除の引上げ等について</a></li>
                 <li><a href="https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm" target="_blank" rel="noopener">財務省：令和8年度税制改正の大綱（一 個人所得課税）</a></li>
+                <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm" target="_blank" rel="noopener">国税庁：No.1191 配偶者控除</a></li>
+                <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm" target="_blank" rel="noopener">国税庁：No.1195 配偶者特別控除</a></li>
               </ul>
-              <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの還付・追徴額は簡易計算による概算値です。令和8年分（2026年分）の基礎控除・給与所得控除に対応していますが、配偶者特別控除の段階的な減額、住宅の区分ごとの借入限度額、旧制度の生命保険料控除など、簡略化している項目があります。実際の年末調整額は源泉徴収票の内容・各種控除の適用状況・勤務先の計算方法により異なります。正確な金額は勤務先の給与担当または税理士にご確認ください。</p>
+              <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの還付・追徴額は簡易計算による概算値です。令和8年分（2026年分）の基礎控除・給与所得控除、および配偶者控除・配偶者特別控除の段階的な減額に対応しています。一方で、老人控除対象配偶者（70歳以上）の増額、住宅の区分ごとの借入限度額、旧制度（平成23年以前契約）の生命保険料控除、特定親族特別控除など、簡略化している項目があります。また、配偶者の所得は給与収入のみとして判定しています。実際の年末調整額は源泉徴収票の内容・各種控除の適用状況・勤務先の計算方法により異なります。正確な金額は勤務先の給与担当または税理士にご確認ください。</p>
             </div>
           </details>
 
         </div>
       </div>
     </section>
-    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年11月21日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
+    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年11月22日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
   </main>
 
   <footer>

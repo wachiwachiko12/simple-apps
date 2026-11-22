@@ -60,6 +60,90 @@ function calcBasicDeduction(netIncome) {
   return d;
 }
 
+/* ---------------------------------------------------------------------------
+ * 配偶者控除・配偶者特別控除（令和8年分以降）
+ *
+ * 根拠: 国税庁 タックスアンサー No.1191 配偶者控除 / No.1195 配偶者特別控除
+ *   （いずれも令和8年4月1日現在法令等。表中の62万円は令和8年12月1日施行・
+ *     令和8年分から適用される金額）
+ *   https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm
+ *   https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm
+ *
+ * 配偶者の合計所得金額が62万円以下なら配偶者控除、62万円超133万円以下なら
+ * 配偶者特別控除が段階的に適用される。どちらも本人の合計所得金額が
+ * 1,000万円を超えると適用されない。
+ *
+ * 給与収入だけの配偶者なら、給与所得控除の最低保障額74万円が効く範囲
+ * （給与収入220万円以下）では「合計所得金額 = 年収 − 74万円」になるため、
+ * 年収136万円以下で配偶者控除、年収207万円以下で配偶者特別控除となる。
+ * ------------------------------------------------------------------------ */
+
+/** 同一生計配偶者・扶養親族の合計所得金額要件（令和8年分） */
+const SPOUSE_INCOME_LIMIT = 620000;
+
+/**
+ * 配偶者控除額（一般の控除対象配偶者）。
+ * 添字は本人の合計所得金額の区分（0: 900万円以下 / 1: 950万円以下 / 2: 1,000万円以下）。
+ * 老人控除対象配偶者の増額は本ツールでは扱わない。
+ */
+const SPOUSE_DEDUCTION = [380000, 260000, 130000];
+
+/**
+ * 配偶者特別控除の額の表（令和8年分以降）。
+ * 各行は [配偶者の合計所得金額の上限（円）, 本人900万円以下, 950万円以下, 1,000万円以下]。
+ */
+const SPOUSE_SPECIAL_DEDUCTION = [
+  [ 950000, 380000, 260000, 130000],
+  [1000000, 360000, 240000, 120000],
+  [1050000, 310000, 210000, 110000],
+  [1100000, 260000, 180000,  90000],
+  [1150000, 210000, 140000,  70000],
+  [1200000, 160000, 110000,  60000],
+  [1250000, 110000,  80000,  40000],
+  [1300000,  60000,  40000,  20000],
+  [1330000,  30000,  20000,  10000],
+];
+
+/**
+ * 本人の合計所得金額から、配偶者（特別）控除の表の列を選ぶ。
+ * @param {number} selfNetIncome 本人の合計所得金額（円）
+ * @returns {number} 0〜2。1,000万円超は -1（適用なし）
+ */
+function spouseDeductionTier(selfNetIncome) {
+  if (selfNetIncome <= 9000000) return 0;
+  if (selfNetIncome <= 9500000) return 1;
+  if (selfNetIncome <= 10000000) return 2;
+  return -1;
+}
+
+/**
+ * 配偶者控除または配偶者特別控除の額を求める。
+ * @param {number} spouseNetIncome 配偶者の合計所得金額（円）
+ * @param {number} selfNetIncome   本人の合計所得金額（円）
+ * @returns {{amount:number, kind:('general'|'special'|'none')}}
+ */
+function calcSpouseDeduction(spouseNetIncome, selfNetIncome) {
+  const tier = spouseDeductionTier(selfNetIncome);
+  if (tier < 0) return { amount: 0, kind: 'none' };
+
+  if (spouseNetIncome <= SPOUSE_INCOME_LIMIT) {
+    return { amount: SPOUSE_DEDUCTION[tier], kind: 'general' };
+  }
+  const row = SPOUSE_SPECIAL_DEDUCTION.find(r => spouseNetIncome <= r[0]);
+  if (!row) return { amount: 0, kind: 'none' }; // 合計所得金額133万円超
+  return { amount: row[1 + tier], kind: 'special' };
+}
+
+/**
+ * 配偶者の給与収入から合計所得金額（給与所得）を求める。
+ * @param {number} spouseIncomeManyen 配偶者の給与収入（万円）
+ * @returns {number} 合計所得金額（円）
+ */
+function calcSpouseNetIncome(spouseIncomeManyen) {
+  const y = Math.max(0, spouseIncomeManyen) * 10000;
+  return Math.max(0, y - calcSalaryDeduction(spouseIncomeManyen));
+}
+
 /**
  * 生命保険料控除（新制度）を1区分ぶん求める。
  * @param {number} premiumYen 年間支払保険料（円）
@@ -99,14 +183,16 @@ function getIncomeTaxRate(taxableIncome) {
 /**
  * 住民税（所得割）の目安。住民税は所得税と人的控除の額が異なるため、
  * 所得税の課税所得をそのまま使うと実額から大きく外れる。
- * 基礎控除43万円・配偶者控除33万円・一般扶養33万円・特定扶養45万円、
+ * 基礎控除43万円・配偶者（特別）控除33万円・一般扶養33万円・特定扶養45万円、
  * 生命保険料控除は合計7万円、地震保険料控除は2.5万円を上限として概算する。
+ * 配偶者（特別）控除は住民税の段階が所得税と異なるため、所得税の控除額を
+ * 33万円で頭打ちにして近似している（所得税38万円→住民税33万円に対応）。
  */
 function calcResidentTaxEstimate(params) {
   const lifeForResident = Math.min(params.lifeInsDeduction, 70000);
   const quakeForResident = Math.min(params.earthquakeDeduction, 25000);
   const personal = 430000
-    + (params.spouseDeduction > 0 ? 330000 : 0)
+    + Math.min(params.spouseDeduction, 330000)
     + params.depGeneral * 330000
     + params.depSpecific * 450000;
   const taxable = Math.max(
@@ -123,6 +209,11 @@ function toggleSocialMode(isAuto) {
   document.getElementById('social-hint').style.display = isAuto ? '' : 'none';
   document.getElementById('social-auto-btn').classList.toggle('active', isAuto);
   document.getElementById('social-manual-btn').classList.toggle('active', !isAuto);
+}
+
+function toggleSpouseIncome() {
+  const hasSpouse = document.getElementById('spouse').value === 'yes';
+  document.getElementById('spouse-income-field').style.display = hasSpouse ? '' : 'none';
 }
 
 function numberFrom(id) {
@@ -157,7 +248,11 @@ function calculate() {
   const housingLoan = numberFrom('housing-loan');      // 円
 
   const basicDeduction = calcBasicDeduction(netIncome);
-  const spouseDeduction = spouseVal === 'yes' ? 380000 : 0;
+  const spouseNetIncome = calcSpouseNetIncome(numberFrom('spouse-income'));
+  const spouse = spouseVal === 'yes'
+    ? calcSpouseDeduction(spouseNetIncome, netIncome)
+    : { amount: 0, kind: 'none' };
+  const spouseDeduction = spouse.amount;
   const depDeduction = depGeneral * 380000 + depSpecific * 630000;
 
   const totalDeductions = basicDeduction + spouseDeduction + depDeduction
@@ -189,6 +284,20 @@ function calculate() {
   document.getElementById('d-withheld').textContent = '¥' + withheld.toLocaleString();
   document.getElementById('d-resident-tax').textContent = '¥' + residentTax.toLocaleString() + '（目安）';
 
+  const spouseRow = document.getElementById('d-spouse-row');
+  if (spouseVal === 'yes') {
+    spouseRow.style.display = '';
+    document.getElementById('d-spouse-label').textContent =
+      spouse.kind === 'special' ? 'うち配偶者特別控除'
+      : spouse.kind === 'general' ? 'うち配偶者控除'
+      : 'うち配偶者（特別）控除';
+    document.getElementById('d-spouse').textContent = spouseDeduction > 0
+      ? '¥' + spouseDeduction.toLocaleString()
+      : '対象外（¥0）';
+  } else {
+    spouseRow.style.display = 'none';
+  }
+
   const resultMain = document.getElementById('result-main');
   const resultLabel = document.getElementById('result-label');
   const resultValue = document.getElementById('result-value');
@@ -206,7 +315,7 @@ function calculate() {
     resultSub.textContent = '源泉徴収額が不足しているため、この金額を追加で納付します';
   }
 
-  renderChart({ basicDeduction, spouseDeduction, depDeduction, socialIns, lifeInsDeduction, earthquakeDeduction, idecoDeduction, housingCredit });
+  renderChart({ basicDeduction, spouseDeduction, spouseKind: spouse.kind, depDeduction, socialIns, lifeInsDeduction, earthquakeDeduction, idecoDeduction, housingCredit });
 
   const resultSection = document.getElementById('result-section');
   resultSection.style.display = '';
@@ -222,7 +331,7 @@ function renderChart(d) {
   const colors = [];
   const items = [
     { label: '基礎控除', val: d.basicDeduction, color: '#3b82f6' },
-    { label: '配偶者控除', val: d.spouseDeduction, color: '#8b5cf6' },
+    { label: d.spouseKind === 'special' ? '配偶者特別控除' : '配偶者控除', val: d.spouseDeduction, color: '#8b5cf6' },
     { label: '扶養控除', val: d.depDeduction, color: '#06b6d4' },
     { label: '社会保険料控除', val: d.socialIns, color: '#10b981' },
     { label: '生命保険料控除', val: d.lifeInsDeduction, color: '#f59e0b' },
@@ -254,5 +363,7 @@ function renderChart(d) {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('social-auto-btn').addEventListener('click', () => toggleSocialMode(true));
   document.getElementById('social-manual-btn').addEventListener('click', () => toggleSocialMode(false));
+  document.getElementById('spouse').addEventListener('change', toggleSpouseIncome);
   document.getElementById('calc-btn').addEventListener('click', calculate);
+  toggleSpouseIncome();
 });

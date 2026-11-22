@@ -457,6 +457,7 @@ describe('year-end-adjustment: 令和8年分の控除額と入力単位', () => 
     income: 500,
     'withheld-tax': 120000,
     spouse: 'none',
+    'spouse-income': 0,
     'dep-general': 0,
     'dep-specific': 0,
     'social-insurance': 700000,
@@ -582,6 +583,96 @@ describe('year-end-adjustment: 令和8年分の控除額と入力単位', () => 
       yen(run({ 'dep-general': general, 'dep-specific': specific }), 'd-deductions');
     assert.strictEqual(total(1, 0) - total(0, 0), 380000); // 一般扶養 38万円
     assert.strictEqual(total(0, 1) - total(0, 0), 630000); // 特定扶養 63万円
+  });
+
+  // -- 配偶者控除・配偶者特別控除 --
+  //
+  // 根拠: 国税庁 No.1191 配偶者控除 / No.1195 配偶者特別控除
+  //   （令和8年4月1日現在法令等。表の62万円は令和8年12月1日施行・令和8年分から適用）
+  //   https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1191.htm
+  //   https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1195.htm
+  //
+  // 改修前は「配偶者の年収150万円以下なら一律38万円、超えたら0円」としていた。
+  // 境界の金額（150万円）が制度に無い数字だったうえ、62万円超133万円以下の
+  // 段階的な減額が丸ごと抜けていた。段階の形そのものを不変条件として固定する。
+
+  // loadApp は vm サンドボックス内のオブジェクトを返すため、プロトタイプが
+  // 別レルムになり deepStrictEqual が通らない。フィールドごとに比較する。
+  const spouse = (spouseNet, selfNet) => {
+    const r = app().calcSpouseDeduction(spouseNet, selfNet);
+    return [r.amount, r.kind];
+  };
+
+  test('配偶者の合計所得金額が62万円以下なら配偶者控除38万円', () => {
+    assert.deepStrictEqual(spouse(0, 5000000), [380000, 'general']);
+    assert.deepStrictEqual(spouse(620000, 5000000), [380000, 'general']);
+  });
+
+  test('62万円を1円超えると配偶者特別控除に切り替わる（額は38万円のまま）', () => {
+    // 「136万円を1円超えたら控除がゼロ」ではないことを固定する
+    assert.deepStrictEqual(spouse(620001, 5000000), [380000, 'special']);
+  });
+
+  test('配偶者特別控除の額が一次資料の表と一致する（本人900万円以下）', () => {
+    const f = (netIncome) => app().calcSpouseDeduction(netIncome, 5000000).amount;
+    assert.strictEqual(f( 950000), 380000);
+    assert.strictEqual(f(1000000), 360000);
+    assert.strictEqual(f(1050000), 310000);
+    assert.strictEqual(f(1100000), 260000);
+    assert.strictEqual(f(1150000), 210000);
+    assert.strictEqual(f(1200000), 160000);
+    assert.strictEqual(f(1250000), 110000);
+    assert.strictEqual(f(1300000),  60000);
+    assert.strictEqual(f(1330000),  30000);
+    assert.strictEqual(f(1330001),      0); // 133万円超は適用なし
+  });
+
+  test('本人の合計所得金額の区分で控除額が下がり、1,000万円超で0になる', () => {
+    const f = (self) => app().calcSpouseDeduction(0, self).amount;
+    assert.strictEqual(f(9000000),  380000);
+    assert.strictEqual(f(9000001),  260000);
+    assert.strictEqual(f(9500000),  260000);
+    assert.strictEqual(f(9500001),  130000);
+    assert.strictEqual(f(10000000), 130000);
+    assert.strictEqual(f(10000001),      0);
+  });
+
+  test('配偶者控除・配偶者特別控除は配偶者の所得に対して単調非増加', () => {
+    const f = app().calcSpouseDeduction;
+    for (const self of [5000000, 9200000, 9800000]) {
+      for (let y = 0; y <= 1500000; y += 10000) {
+        assert.ok(
+          f(y + 10000, self).amount <= f(y, self).amount,
+          `本人${self}円・配偶者${y}円の前後で控除額が増えた`
+        );
+      }
+    }
+  });
+
+  test('配偶者の年収136万円以下＝合計所得62万円以下になる（給与所得控除74万円）', () => {
+    // 年収の境界136万円・207万円は、合計所得の境界に最低保障額74万円を足した値。
+    // 給与所得控除を直したときに境界だけ取り残されるのを防ぐ。
+    const f = app().calcSpouseNetIncome;
+    assert.strictEqual(f(136), 620000);
+    assert.strictEqual(f(207), 1330000);
+    assert.strictEqual(f(50), 0);   // 給与所得控除は収入を超えない
+    assert.strictEqual(f(0), 0);
+  });
+
+  test('配偶者の年収を上げると控除合計が段階的に減る', () => {
+    const total = (spouseIncome) =>
+      yen(run({ spouse: 'yes', 'spouse-income': spouseIncome }), 'd-deductions');
+    assert.strictEqual(total(100) - total(180), 120000); // 38万円 → 26万円
+    assert.strictEqual(total(207) - total(210), 30000);  // 3万円 → 0円
+    assert.ok(total(100) > total(207), '年収が増えても控除合計が減らない');
+  });
+
+  test('配偶者「なし」なら年収を入れても控除は増えない', () => {
+    const total = (over) => yen(run(over), 'd-deductions');
+    assert.strictEqual(
+      total({ spouse: 'none', 'spouse-income': 100 }),
+      total({ spouse: 'none', 'spouse-income': 0 })
+    );
   });
 });
 
