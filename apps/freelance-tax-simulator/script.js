@@ -1,5 +1,29 @@
 'use strict';
 
+/* ---------------------------------------------------------------------------
+ * 令和8年分（2026年分）の確定申告に対応。
+ *
+ * 根拠（所得税）: 財務省「令和８年度税制改正の大綱」一 個人所得課税 １
+ *   https://www.mof.go.jp/tax_policy/tax_reform/outline/fy2026/08taikou_01.htm
+ *   国税庁 タックスアンサー No.1199 基礎控除 / No.1410 給与所得控除
+ *   https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1199.htm
+ *   https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1410.htm
+ *   （いずれも令和8年4月1日現在法令等。令和8年12月1日施行・令和8年分から適用）
+ *   - 基礎控除は本則62万円。令和8年分・令和9年分は加算があり、合計所得金額
+ *     489万円以下は104万円、489万円超655万円以下は67万円になる。
+ *   - 給与所得控除の最低保障額は74万円（本則69万円＋令和8年・9年分の特例5万円）。
+ *     給与収入220万円までは一律74万円で、162.5万円・180万円の区分は無くなった。
+ *
+ * 根拠（個人住民税）: 同大綱 一 個人所得課税 １（地方税）
+ *   - 給与所得控除の最低保障額は65万円→69万円、令和9年度分・令和10年度分は
+ *     さらに5万円引き上げ（＝74万円）。令和9年度分以後の個人住民税に適用。
+ *     令和9年度分の住民税は令和8年分の所得が課税標準なので、本ツールでは
+ *     所得税と同じ給与所得控除を使う。
+ *   - **基礎控除の引上げは（地方税）に項目が無く、43万円のまま据え置き。**
+ *     所得税の基礎控除（最大104万円）と住民税の基礎控除（43万円）が
+ *     大きく開くのが令和8年分の特徴。
+ * ------------------------------------------------------------------------ */
+
 const CONSUMPTION_TAX_RATE = 0.10;
 const INCOME_TAX_BRACKETS = [
   { limit: 1_950_000,   rate: 0.05, deduction: 0 },
@@ -44,20 +68,45 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Enter') calculate();
 });
 
+/** 給与所得控除の最低保障額（本則69万円＋令和8年・9年分の特例5万円） */
+const SALARY_DEDUCTION_MIN = 740000;
+
 /**
- * 給与所得控除を計算する（円）
+ * 給与所得控除を計算する（円・令和8年分）
  * 副業の場合、本業の給与にはこの控除が適用されたうえで事業所得と合算される。
- * 参照: 国税庁 No.1410
+ * 参照: 国税庁 No.1410（令和8年分・令和9年分の表）
+ *
+ * 計算は year-end-adjustment / ideco-simulator の calcSalaryDeduction と
+ * 同じ結果になる（calc.test.js で突き合わせている）。
  */
 function calcEmploymentDeduction(income) {
-  if (income <= 0) return 0;
-  const man = income / 10000;
-  if (man <= 162.5) return Math.min(550000, income);
-  if (man <= 180) return Math.floor(income * 0.4 - 100000);
-  if (man <= 360) return Math.floor(income * 0.3 + 80000);
-  if (man <= 660) return Math.floor(income * 0.2 + 440000);
-  if (man <= 850) return Math.floor(income * 0.1 + 1100000);
-  return 1950000; // 850万円超は上限
+  const y = Math.max(0, income);
+  let d;
+  if (y <= 1800000) d = Math.floor(y * 0.40 - 100000);
+  else if (y <= 3600000) d = Math.floor(y * 0.30 + 80000);
+  else if (y <= 6600000) d = Math.floor(y * 0.20 + 440000);
+  else if (y <= 8500000) d = Math.floor(y * 0.10 + 1100000);
+  else d = 1950000; // 850万円超は上限195万円
+  // 最低保障額を下回らない。ただし控除が収入を超えない（給与所得は0が下限）。
+  return Math.min(Math.max(d, SALARY_DEDUCTION_MIN), y);
+}
+
+/**
+ * 令和8年分の基礎控除額を求める（本則62万円＋令和8年・9年分の加算）。
+ * 参照: 国税庁 No.1199
+ * @param {number} netIncome 合計所得金額（円）
+ * @returns {number} 基礎控除額（円）
+ */
+function calcBasicDeduction(netIncome) {
+  if (netIncome > 25000000) return 0;
+  if (netIncome > 24500000) return 160000;
+  if (netIncome > 24000000) return 320000;
+  if (netIncome > 23500000) return 480000;
+
+  let d = 620000; // 本則（合計所得金額2,350万円以下）
+  if (netIncome <= 4890000) d += 420000;      // 令和8年・9年分の加算（→104万円）
+  else if (netIncome <= 6550000) d += 50000;  // 同上（→67万円）
+  return d;
 }
 
 /** 給与収入から給与所得を求める（円） */
@@ -117,7 +166,7 @@ function calculate() {
   const totalIncome = salaryIncome + businessAfterBlue;
 
   // 各種控除（所得税）
-  const basicDeduction     = totalIncome > 24_000_000 ? 0 : 480_000;
+  const basicDeduction     = calcBasicDeduction(totalIncome);
   const dependentDeduction = dependents * 380_000;
 
   // 所得税 課税所得
@@ -136,7 +185,9 @@ function calculate() {
   const fukkouTax = Math.floor(incomeTax * 0.021);
   const incomeTaxTotal = incomeTax + fukkouTax;
 
-  // 住民税（基礎控除は43万円）。所得税と同じく給与所得も合算する。
+  // 住民税。所得税と同じく給与所得も合算する。
+  // 基礎控除は令和8年度税制改正の（地方税）に引上げの項目が無く、43万円のまま。
+  // 所得税側が最大104万円まで上がったため、両者の差が令和8年分で最も開く。
   const residentBasic    = 430_000;
   const residentTaxable  = Math.max(0,
     totalIncome
@@ -187,6 +238,7 @@ function calculate() {
   setText('r-income-tax', fmt(incomeTax));
   setText('r-income-tax-total', fmt(incomeTaxTotal));
 
+  setText('r-resident-basic',   fmtMinus(residentBasic));
   setText('r-resident-taxable', fmt(residentTaxable));
   setText('r-resident-tax',     fmt(residentTaxRate));
   setText('r-resident-flat',    fmt(residentFlat));

@@ -225,8 +225,9 @@ describe('freelance-tax-simulator: 副業（給与との合算）', () => {
   const app = loadApp('freelance-tax-simulator');
 
   test('給与所得控除が国税庁の区分どおり', () => {
-    // 国税庁 No.1410 の表
-    assert.strictEqual(app.calcEmploymentDeduction(1_500_000), 550_000);   // 162.5万以下
+    // 国税庁 No.1410 の令和8年分・令和9年分の表（220万円までは最低保障74万円）
+    assert.strictEqual(app.calcEmploymentDeduction(1_500_000), 740_000);   // 最低保障
+    assert.strictEqual(app.calcEmploymentDeduction(2_200_000), 740_000);   // 最低保障の上端
     assert.strictEqual(app.calcEmploymentDeduction(3_000_000), 980_000);   // 180万超360万以下
     assert.strictEqual(app.calcEmploymentDeduction(5_000_000), 1_440_000); // 360万超660万以下
     assert.strictEqual(app.calcEmploymentDeduction(8_000_000), 1_900_000); // 660万超850万以下
@@ -271,6 +272,51 @@ describe('freelance-tax-simulator: 副業（給与との合算）', () => {
     const r = app.judgeFilingRequirement(4_800_000, 150_000);
     assert.strictEqual(r.required, false);
     assert.match(r.reason, /住民税/, '住民税申告の注意が抜けている');
+  });
+
+  // -- 令和8年分（国税庁 No.1199・No.1410、令和8年12月1日施行・令和8年分から適用） --
+
+  test('給与所得控除は year-end-adjustment と一致する', () => {
+    // 同じ制度を別々に実装しているため、片方だけ改正に追随し損ねるのを防ぐ。
+    const yea = loadApp('year-end-adjustment').calcSalaryDeduction; // 万円で受ける
+    for (let man = 0; man <= 1000; man += 5) {
+      assert.strictEqual(app.calcEmploymentDeduction(man * 10000), yea(man),
+        man + '万円で2ツールの給与所得控除が食い違った');
+    }
+  });
+
+  test('基礎控除は合計所得489万円以下104万/655万円以下67万/2,350万円以下62万', () => {
+    assert.strictEqual(app.calcBasicDeduction(0), 1_040_000);
+    assert.strictEqual(app.calcBasicDeduction(4_890_000), 1_040_000);
+    assert.strictEqual(app.calcBasicDeduction(4_890_001), 670_000);
+    assert.strictEqual(app.calcBasicDeduction(6_550_000), 670_000);
+    assert.strictEqual(app.calcBasicDeduction(6_550_001), 620_000);
+    assert.strictEqual(app.calcBasicDeduction(23_500_000), 620_000);
+    assert.strictEqual(app.calcBasicDeduction(23_500_001), 480_000);
+    assert.strictEqual(app.calcBasicDeduction(25_000_001), 0);
+  });
+
+  test('基礎控除は year-end-adjustment と一致し、所得に対して単調非増加', () => {
+    const yea = loadApp('year-end-adjustment').calcBasicDeduction;
+    for (let y = 0; y <= 26_000_000; y += 100_000) {
+      assert.strictEqual(app.calcBasicDeduction(y), yea(y), y + '円で2ツールの基礎控除が食い違った');
+      assert.ok(app.calcBasicDeduction(y + 100_000) <= app.calcBasicDeduction(y), y + '円の前後で基礎控除が増えた');
+    }
+  });
+
+  test('画面: 所得税の基礎控除は改正後の額、住民税は43万円で別に表示される', () => {
+    // 専業・免税事業者・売上300万円・青色65万円 → 事業所得235万円（489万円以下）
+    const a = loadApp('freelance-tax-simulator', {
+      'salary-income': 0, revenue: 3_000_000, expenses: 0, 'blue-deduction': '650000',
+      'social-insurance': 0, 'other-deduction': 0, dependents: '0',
+      'invoice-type': 'exempt', 'actual-purchases': 0,
+    });
+    a.calculate();
+    const yen = (id) => Number(a.__getElement(id).textContent.replace(/[^0-9]/g, ''));
+    assert.strictEqual(yen('r-basic'), 1_040_000);
+    assert.strictEqual(yen('r-taxable'), 2_350_000 - 1_040_000);
+    assert.strictEqual(yen('r-resident-basic'), 430_000);
+    assert.strictEqual(yen('r-resident-taxable'), 2_350_000 - 430_000);
   });
 });
 

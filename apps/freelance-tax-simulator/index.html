@@ -75,7 +75,7 @@
       "price": "0",
       "priceCurrency": "JPY"
     },
-    "dateModified": "2026-09-03",
+    "dateModified": "2026-11-25",
     "author": {
       "@type": "Person",
       "name": "Rio",
@@ -217,7 +217,7 @@
           <tbody>
             <tr><td>差引事業所得</td><td id="r-bi2" class="val">—</td></tr>
             <tr><td>青色申告特別控除</td><td id="r-blue" class="val minus">—</td></tr>
-            <tr><td>基礎控除</td><td id="r-basic" class="val minus">—</td></tr>
+            <tr><td>基礎控除（所得税）</td><td id="r-basic" class="val minus">—</td></tr>
             <tr><td>社会保険料控除</td><td id="r-social" class="val minus">—</td></tr>
             <tr><td>扶養控除</td><td id="r-dependent" class="val minus">—</td></tr>
             <tr><td>その他控除</td><td id="r-other" class="val minus">—</td></tr>
@@ -233,6 +233,7 @@
         <h3>住民税の計算（概算）</h3>
         <table class="result-table">
           <tbody>
+            <tr><td>基礎控除（住民税）</td><td id="r-resident-basic" class="val minus">—</td></tr>
             <tr><td>課税所得（住民税）</td><td id="r-resident-taxable" class="val">—</td></tr>
             <tr><td>住民税（所得割10%）</td><td id="r-resident-tax" class="val">—</td></tr>
             <tr><td>均等割</td><td id="r-resident-flat" class="val">—</td></tr>
@@ -308,6 +309,22 @@
           </summary>
           <div class="accordion-body">
             <p>青色申告は最大65万円の特別控除が受けられる代わりに、複式簿記による記帳と貸借対照表・損益計算書の作成が必要です。e-Tax（電子申告）で提出した場合は65万円控除、書面申告の場合は55万円控除になります。簡易簿記の場合は10万円控除。白色申告は記帳が簡単ですが特別控除はありません。青色申告の承認申請は開業後2か月以内、または前年12月15日までに税務署へ提出が必要です。節税効果が大きいため、フリーランス・個人事業主には青色申告がおすすめです。</p>
+          </div>
+        </details>
+
+        <details open class="accordion-item">
+          <summary class="accordion-summary">
+            <span>令和8年分（2026年分）の確定申告で変わる控除額</span>
+            <span class="accordion-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="accordion-body">
+            <p>令和8年分の所得税から、基礎控除と給与所得控除が引き上げられます（令和8年12月1日施行、令和9年2〜3月に行う令和8年分の確定申告から適用）。このシミュレーターは改正後の額で計算しています。</p>
+            <ul>
+              <li><strong>基礎控除（所得税）</strong>：合計所得金額が489万円以下なら104万円、489万円超655万円以下なら67万円、655万円超2,350万円以下なら62万円です（令和8年分・令和9年分）。2,350万円を超えると48万円・32万円・16万円と段階的に減り、2,500万円超で0円になります。令和7年分は合計所得金額132万円超336万円以下で88万円、336万円超489万円以下で68万円だったため、この層ほど控除が大きく増えます。</li>
+              <li><strong>給与所得控除</strong>：会社員として給与を受けながら副業をしている場合、給与収入220万円までは最低保障額の74万円が差し引かれます（令和7年分までは55万円〜65万円）。</li>
+              <li><strong>住民税の基礎控除</strong>：住民税（概算）は基礎控除43万円で計算しています。所得税の基礎控除とは額が異なるため、結果画面では「基礎控除（所得税）」と「基礎控除（住民税）」を分けて表示しています。</li>
+            </ul>
+            <p>出典：国税庁 タックスアンサー <a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1199.htm" rel="noopener" target="_blank">No.1199 基礎控除</a>・<a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1410.htm" rel="noopener" target="_blank">No.1410 給与所得控除</a>（令和8年4月1日現在法令等）</p>
           </div>
         </details>
 
@@ -450,7 +467,7 @@
         <a href="https://px.a8.net/svt/ejp?a8mat=4B8ACW+2A5U9E+35XE+601S2" rel="nofollow">やよいの白色申告オンライン</a>
       </div>
     </section>
-    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年9月3日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
+    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年11月25日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
   </main>
 
   <footer>
