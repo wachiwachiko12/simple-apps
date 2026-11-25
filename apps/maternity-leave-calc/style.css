@@ -18,6 +18,8 @@
   --postnatal-soft: #fff7ed;
   --total: #8b5cf6;
   --total-soft: #f5f3ff;
+  --benefit: #0f766e;
+  --benefit-soft: #effcf8;
   --bg: #f9f7f4;
   --surface: #ffffff;
   --text: #1a1a2e;
@@ -323,6 +325,11 @@ main {
   color: var(--total);
 }
 
+.benefit-icon {
+  background: var(--benefit-soft);
+  color: var(--benefit);
+}
+
 .result-card h3 {
   font-size: 1rem;
   font-weight: 700;
@@ -348,6 +355,11 @@ main {
 .total-badge {
   background: var(--total-soft);
   color: var(--total);
+}
+
+.benefit-badge {
+  background: var(--benefit-soft);
+  color: var(--benefit);
 }
 
 .result-rows {
@@ -398,6 +410,10 @@ main {
 
 .result-total .result-row-value.highlight {
   color: var(--total);
+}
+
+.result-benefit .result-row-value.highlight {
+  color: var(--benefit);
 }
 
 .result-note {

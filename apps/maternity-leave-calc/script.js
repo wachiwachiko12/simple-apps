@@ -7,10 +7,28 @@
 // ===== Constants =====
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
 
+// 出産手当金（健康保険）
+// 一次資料: 全国健康保険協会（協会けんぽ）「出産手当金」
+//   https://www.kyoukaikenpo.or.jp/benefit/childbirth/001
+//   ・支給対象期間は「出産の日（実際の出産が予定日後のときは出産予定日）以前42日
+//     （多胎妊娠の場合98日）から出産の翌日以後56日目まで」の範囲内で会社を休んだ期間。
+//     「出産日は出産の日以前の期間に含まれます」とされ、出産日は産前42日のうちの1日。
+//     「出産が予定日より遅れた場合、その遅れた期間についても」支給される。
+//   ・1日あたりの額は、支給開始日以前の継続した12か月間の各月の標準報酬月額を
+//     平均した額 ÷ 30日（10円未満四捨五入）× 2/3（1円未満四捨五入）。
+//     公式の計算例: 17万円 ÷ 30 ≒ 5,670円 → 5,670円 × 2/3 ＝ 3,780円。
+//   ・加入期間が12か月に満たない場合は、自分の平均額と「全被保険者の標準報酬月額の
+//     平均額」のいずれか低い額で計算する。後者は支給開始日が令和7年4月1日以降は32万円
+//     （令和7年3月31日以前は30万円）。
+const POSTNATAL_BENEFIT_DAYS = 56;
+const SHORT_ENROLLMENT_CAP = 320000;
+
 // ===== DOM References =====
 const dueDateInput    = document.getElementById('due-date');
 const actualDateInput = document.getElementById('actual-date');
 const multipleToggle  = document.getElementById('multiple-toggle');
+const stdMonthlyInput = document.getElementById('std-monthly');
+const shortEnrollToggle = document.getElementById('short-enrolled');
 const calcBtn         = document.getElementById('calc-btn');
 const resultsArea     = document.getElementById('results');
 const copyBtn         = document.getElementById('copy-btn');
@@ -104,6 +122,48 @@ function calculate(dueDateStr, isMultiple) {
     ikujiStart,
     prenatalDays
   };
+}
+
+// ===== 出産手当金 =====
+
+/**
+ * 標準報酬日額（平均標準報酬月額の30分の1。10円未満四捨五入）。
+ * @param {number} avgMonthlyYen 支給開始日以前12か月の標準報酬月額の平均（円）
+ * @returns {number} 円
+ */
+function calcStandardDailyWage(avgMonthlyYen) {
+  const m = Number(avgMonthlyYen);
+  if (!isFinite(m) || m <= 0) return 0;
+  return Math.round(m / 30 / 10) * 10;
+}
+
+/**
+ * 出産手当金の1日あたりの支給額（標準報酬日額の3分の2。1円未満四捨五入）。
+ * @param {number} avgMonthlyYen 標準報酬月額の平均（円）
+ * @param {boolean} isShortEnrollment 加入期間が12か月未満か
+ * @returns {number} 円
+ */
+function calcDailyBenefit(avgMonthlyYen, isShortEnrollment) {
+  const m = Number(avgMonthlyYen);
+  if (!isFinite(m) || m <= 0) return 0;
+  const base = isShortEnrollment ? Math.min(m, SHORT_ENROLLMENT_CAP) : m;
+  return Math.round(calcStandardDailyWage(base) * 2 / 3);
+}
+
+/**
+ * 出産手当金の支給対象日数。
+ *
+ * 産前側は「出産日（予定日より遅れたときは予定日）以前42日（多胎98日）」が上限で、
+ * 出産が遅れた分はそのまま加算され、早まった分は減る。産後側は常に56日。
+ *
+ * @param {number} prenatalDays 42（単胎）または 98（多胎）
+ * @param {number} diffDays 実際の出産日 − 出産予定日（遅れ＝正、早まり＝負）
+ * @returns {{prenatal: number, postnatal: number, total: number}} 日数
+ */
+function calcBenefitDays(prenatalDays, diffDays) {
+  const d = Number(diffDays) || 0;
+  const prenatal = Math.max(0, prenatalDays + d);
+  return { prenatal, postnatal: POSTNATAL_BENEFIT_DAYS, total: prenatal + POSTNATAL_BENEFIT_DAYS };
 }
 
 // ===== Diff calculation =====
@@ -254,6 +314,48 @@ function renderResults(calc, isMultiple) {
   resultsArea.removeAttribute('hidden');
 }
 
+// ===== Render 出産手当金 =====
+
+/**
+ * 出産手当金カードを描画する。
+ * 標準報酬月額が未入力でも、支給対象日数は日程だけで決まるので表示する。
+ * @param {number} prenatalDays 42 または 98
+ * @param {number} diffDays 実際の出産日 − 出産予定日
+ */
+function renderBenefit(prenatalDays, diffDays) {
+  const yen = (n) => '¥' + Math.round(n).toLocaleString('ja-JP');
+  const days = calcBenefitDays(prenatalDays, diffDays);
+  const stdMonthly = Number(stdMonthlyInput.value);
+  const isShort = !!shortEnrollToggle.checked;
+
+  document.getElementById('benefit-days').textContent = `${days.total}日`;
+  document.getElementById('benefit-days-breakdown').textContent =
+    `産前 ${days.prenatal}日 ／ 産後 ${days.postnatal}日`;
+
+  const dailyEl = document.getElementById('benefit-daily');
+  const totalEl = document.getElementById('benefit-total');
+  const noteEl  = document.getElementById('benefit-note');
+
+  if (!isFinite(stdMonthly) || stdMonthly <= 0) {
+    dailyEl.textContent = '—';
+    totalEl.textContent = '—';
+    noteEl.innerHTML = '<i class="bi bi-info-circle"></i> 入力欄に<strong>標準報酬月額</strong>を入れると、1日あたりの支給額と支給総額の目安も表示します。日数は休業した期間が支給対象の範囲に収まっている場合の上限です';
+    return;
+  }
+
+  const capped = isShort && stdMonthly > SHORT_ENROLLMENT_CAP;
+  const base = capped ? SHORT_ENROLLMENT_CAP : stdMonthly;
+  const daily = calcDailyBenefit(stdMonthly, isShort);
+
+  dailyEl.textContent = yen(daily);
+  totalEl.textContent = yen(daily * days.total);
+  noteEl.innerHTML = '<i class="bi bi-calculator"></i> ' + yen(base) + ' ÷ 30日＝' +
+    yen(calcStandardDailyWage(base)) + '（10円未満四捨五入）の3分の2＝' + yen(daily) +
+    '（1円未満四捨五入）× ' + days.total + '日' +
+    (capped ? '。加入期間が12か月未満のため、上限の32万円で計算しています' : '') +
+    '。休業中に給与が支払われる場合は、その分が調整されます';
+}
+
 // ===== Timeline =====
 
 /**
@@ -318,17 +420,29 @@ function buildCopyText(calc, isMultiple) {
   const { prenatalStart, dueDate, postnatalStart, postnatalEnd, ikujiStart, prenatalDays } = calc;
   const totalDays = prenatalDays + 1 + 56;
   const label = isMultiple ? '多胎（双子・三つ子等）' : '単胎';
-  return [
+  const lines = [
     '【産前産後休暇 計算結果】',
     `出産予定日: ${formatDatePlain(dueDate)}（${label}）`,
     '---',
     `産前休暇: ${formatDatePlain(prenatalStart)} 〜 ${formatDatePlain(dueDate)}（${prenatalDays}日間）`,
     `産後休暇: ${formatDatePlain(postnatalStart)} 〜 ${formatDatePlain(postnatalEnd)}（56日間）`,
     `合計休暇: ${totalDays}日間`,
-    `育児休業開始可能日: ${formatDatePlain(ikujiStart)}`,
-    '---',
-    '計算ツール: https://keisanlab.jp/apps/maternity-leave-calc/'
-  ].join('\n');
+    `育児休業開始可能日: ${formatDatePlain(ikujiStart)}`
+  ];
+
+  const benefitDays = document.getElementById('benefit-days').textContent;
+  const benefitTotal = document.getElementById('benefit-total').textContent;
+  if (benefitDays && benefitDays !== '-') {
+    lines.push('---');
+    lines.push(`出産手当金 支給対象日数: ${benefitDays}`);
+    if (benefitTotal && benefitTotal !== '—' && benefitTotal !== '-') {
+      lines.push(`出産手当金 支給総額の目安: ${benefitTotal}`);
+    }
+  }
+
+  lines.push('---');
+  lines.push('計算ツール: https://keisanlab.jp/apps/maternity-leave-calc/');
+  return lines.join('\n');
 }
 
 let copyMsgTimer = null;
@@ -371,11 +485,16 @@ function runCalculation() {
   renderResults(lastCalc, isMultiple);
 
   // Diff section
+  let diffDays = 0;
   if (actualDateStr) {
     const actual = calcDiff(dueDateStr, actualDateStr, isMultiple);
+    diffDays = actual.diffDays;
     renderDiff(lastCalc, actual, actual.diffDays);
     renderActualTimeline(lastCalc.prenatalDays, actual.diffDays);
   }
+
+  // 出産手当金（支給対象日数は実際の出産日のずれで変わるので差分の後に描画）
+  renderBenefit(lastCalc.prenatalDays, diffDays);
 }
 
 calcBtn.addEventListener('click', () => {
@@ -397,6 +516,14 @@ dueDateInput.addEventListener('change', () => {
 });
 
 actualDateInput.addEventListener('change', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+stdMonthlyInput.addEventListener('input', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+shortEnrollToggle.addEventListener('change', () => {
   if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
 });
 

@@ -913,3 +913,150 @@ describe('ideco-simulator: 令和8年分の控除・節税額・退職所得控�
     );
   });
 });
+
+// ---------------------------------------------------------------------------
+// 出産手当金は、産休中の家計の見込みと勤務先への申請に使われる。
+// 一次資料: 全国健康保険協会「出産手当金」
+//   https://www.kyoukaikenpo.or.jp/benefit/childbirth/001
+// 同ページは計算式そのものを画像で掲載しているため、期待値はページ本文に
+// 文字で書かれている公式の計算例（平均17万円 → 日額3,780円）と、
+// 支給対象期間の定義文から取っている。
+describe('maternity-leave-calc: 出産手当金の日額と支給対象日数', () => {
+  const app = loadApp('maternity-leave-calc');
+
+  test('協会けんぽの公式計算例を再現する（平均17万円 → 5,670円 → 3,780円）', () => {
+    assert.strictEqual(app.calcStandardDailyWage(170000), 5670);
+    assert.strictEqual(app.calcDailyBenefit(170000, false), 3780);
+  });
+
+  test('30で割った額は10円未満四捨五入', () => {
+    assert.strictEqual(app.calcStandardDailyWage(300000), 10000); // 端数なし
+    assert.strictEqual(app.calcStandardDailyWage(170000), 5670);  // 5,666.67 → 5,670
+    assert.strictEqual(app.calcStandardDailyWage(160000), 5330);  // 5,333.33 → 5,330
+    assert.strictEqual(app.calcStandardDailyWage(260000), 8670);  // 8,666.67 → 8,670
+  });
+
+  test('3分の2にした額は1円未満四捨五入', () => {
+    assert.strictEqual(app.calcDailyBenefit(300000, false), 6667); // 10,000 × 2/3 = 6,666.67
+    assert.strictEqual(app.calcDailyBenefit(240000, false), 5333); //  8,000 × 2/3 = 5,333.33
+  });
+
+  test('未入力・0・不正な値は0円（金額を表示しない状態）', () => {
+    assert.strictEqual(app.calcDailyBenefit('', false), 0);
+    assert.strictEqual(app.calcDailyBenefit(0, false), 0);
+    assert.strictEqual(app.calcDailyBenefit(-100000, false), 0);
+    assert.strictEqual(app.calcDailyBenefit(NaN, false), 0);
+    assert.strictEqual(app.calcStandardDailyWage(''), 0);
+  });
+
+  test('日額は標準報酬月額に対して単調非減少', () => {
+    let prev = -1;
+    for (let m = 0; m <= 1500000; m += 1000) {
+      const d = app.calcDailyBenefit(m, false);
+      assert.ok(d >= prev, m + '円で日額が減った');
+      prev = d;
+    }
+  });
+
+  test('加入12か月未満は32万円が上限。それ以下の額はそのまま使う', () => {
+    assert.strictEqual(app.SHORT_ENROLLMENT_CAP, 320000);
+    assert.strictEqual(app.calcDailyBenefit(500000, true), app.calcDailyBenefit(320000, false));
+    assert.strictEqual(app.calcDailyBenefit(320000, true), app.calcDailyBenefit(320000, false));
+    assert.strictEqual(app.calcDailyBenefit(200000, true), app.calcDailyBenefit(200000, false));
+  });
+
+  test('加入12か月未満の指定は、上限以下の人の額を下げない', () => {
+    for (let m = 1000; m <= 320000; m += 1000) {
+      assert.strictEqual(
+        app.calcDailyBenefit(m, true), app.calcDailyBenefit(m, false),
+        m + '円で12か月未満の扱いが不利になっている'
+      );
+    }
+  });
+
+  test('予定日どおりの出産は単胎98日・多胎154日', () => {
+    assert.strictEqual(app.calcBenefitDays(42, 0).total, 98);
+    assert.strictEqual(app.calcBenefitDays(98, 0).total, 154);
+  });
+
+  test('出産が遅れた日数はそのまま産前側に加算される', () => {
+    const r = app.calcBenefitDays(42, 10);
+    assert.strictEqual(r.prenatal, 52);
+    assert.strictEqual(r.total, 108);
+  });
+
+  test('出産が早まった日数は産前側から減るが、産後56日は減らない', () => {
+    const r = app.calcBenefitDays(42, -14);
+    assert.strictEqual(r.prenatal, 28);
+    assert.strictEqual(r.postnatal, 56);
+    assert.strictEqual(r.total, 84);
+  });
+
+  test('産前の支給日数は負にならない（極端な早産でも産後56日は残る）', () => {
+    const r = app.calcBenefitDays(42, -60);
+    assert.strictEqual(r.prenatal, 0);
+    assert.strictEqual(r.total, 56);
+  });
+
+  test('産後の支給日数は常に56日', () => {
+    for (const p of [42, 98]) {
+      for (let d = -120; d <= 60; d++) {
+        assert.strictEqual(app.calcBenefitDays(p, d).postnatal, 56, p + '日/' + d + 'のずれで産後が56日でない');
+      }
+    }
+  });
+
+  test('支給対象日数は出産日のずれに対して単調非減少', () => {
+    let prev = -1;
+    for (let d = -60; d <= 60; d++) {
+      const t = app.calcBenefitDays(42, d).total;
+      assert.ok(t >= prev, d + '日のずれで支給日数が減った');
+      prev = t;
+    }
+  });
+
+  test('多胎は産前が98日になり、支給日数は単胎より56日多い', () => {
+    assert.strictEqual(app.calcBenefitDays(98, 0).prenatal, 98);
+    assert.strictEqual(app.calcBenefitDays(98, 0).total - app.calcBenefitDays(42, 0).total, 56);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 日程の計算は本文のケーススタディ（予定日 2026-10-01）と同じ値を返さなければ
+// 解説と結果が食い違う。本文を直したときに実装がついてこない事故を防ぐ。
+describe('maternity-leave-calc: 休業日程', () => {
+  const app = loadApp('maternity-leave-calc');
+
+  test('産前休業の開始日は予定日の42日前、多胎は98日前', () => {
+    assert.strictEqual(app.formatDatePlain(app.calculate('2026-10-01', false).prenatalStart), '2026年8月20日');
+    assert.strictEqual(app.formatDatePlain(app.calculate('2026-10-01', true).prenatalStart), '2026年6月25日');
+  });
+
+  test('産後休業の終了日は出産日の56日後、育休開始可能日はその翌日', () => {
+    const c = app.calculate('2026-10-01', false);
+    assert.strictEqual(app.formatDatePlain(c.postnatalEnd), '2026年11月26日');
+    assert.strictEqual(app.formatDatePlain(c.ikujiStart), '2026年11月27日');
+  });
+
+  test('産後休業の56日は多胎でも延びない', () => {
+    const single = app.calculate('2026-10-01', false);
+    const twins  = app.calculate('2026-10-01', true);
+    assert.strictEqual(app.formatDatePlain(single.postnatalEnd), app.formatDatePlain(twins.postnatalEnd));
+  });
+
+  test('実際の出産日が早まると産前は短縮され、産後56日は確保される', () => {
+    const d = app.calcDiff('2026-10-01', '2026-09-17', false);
+    assert.strictEqual(d.diffDays, -14);
+    assert.strictEqual(d.prenatalDuration, 28);
+    assert.strictEqual(app.formatDatePlain(d.postnatalEnd), '2026年11月12日');
+  });
+
+  test('休業日数99日と出産手当金の支給対象日数98日は1日ずれる', () => {
+    // 休業日程は産前休業の開始日を「予定日の42日前の日」として表示するが、
+    // 出産手当金の産前42日は出産日そのものを1日として数える。この1日の差は
+    // 本文で説明している。どちらかを直すときは両方そろえること。
+    const c = app.calculate('2026-10-01', false);
+    assert.strictEqual(c.prenatalDays + 1 + 56, 99);
+    assert.strictEqual(app.calcBenefitDays(c.prenatalDays, 0).total, 98);
+  });
+});
