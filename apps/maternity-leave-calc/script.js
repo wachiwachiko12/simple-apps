@@ -23,12 +23,47 @@ const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土'];
 const POSTNATAL_BENEFIT_DAYS = 56;
 const SHORT_ENROLLMENT_CAP = 320000;
 
+// 育児休業給付金（雇用保険）
+// 一次資料: 厚生労働省・都道府県労働局・ハローワーク
+//   「令和８年８月１日から支給限度額が変更になります」（LL080731保02）
+//   https://www.mhlw.go.jp/content/001728499.pdf
+//   ・育児休業給付金 休業開始時の賃金月額 … 上限額 496,200円 ／ 下限額 96,090円
+//   ・育児休業給付金 支給上限額（支給日数30日）
+//       支給率67％ … 332,454円 ／ 支給率50％ … 248,100円
+//   ・出生時育児休業給付金 支給上限額（28日）… 310,290円
+//   ・出生後休業支援給付金 支給上限額（支給率13％・28日）… 60,205円
+//   いずれも令和8年8月1日から令和9年7月31日までの額。
+//   **毎年8月1日に改定されるため、8月になったら必ず更新すること。**
+//
+//   支給額 ＝ 休業開始時賃金日額 × 支給日数 × 67％
+//   （育児休業の開始から通算180日まで。181日目以降は50％）
+//
+//   公表されているのは賃金「月額」の上限・下限なので、賃金日額の上限は
+//   496,200 ÷ 30 ＝ 16,540円、下限は 96,090 ÷ 30 ＝ 3,203円。
+//   この日額と上の式で、公表済みの支給上限額が端数まで一致する:
+//     16,540 × 30 × 0.67 ＝ 332,454 … 公表値と一致
+//     16,540 × 30 × 0.50 ＝ 248,100 … 公表値と一致
+//     16,540 × 28 × 0.67 ＝ 310,290.4 → 310,290 … 公表値と一致
+//     16,540 × 28 × 0.13 ＝  60,205.6 →  60,205 … 公表値と一致
+//     3,203 × 30 × 0.67 ＝  64,380.3 →  64,380 … 公表されている支給下限額と一致
+//   よって端数処理は「1円未満切り捨て」とみなせる。
+const IKUJI_WAGE_MONTHLY_CAP   = 496200;
+const IKUJI_WAGE_MONTHLY_FLOOR = 96090;
+const IKUJI_DAILY_WAGE_CAP     = 16540;
+const IKUJI_DAILY_WAGE_FLOOR   = 3203;
+const IKUJI_RATE_HIGH          = 0.67;
+const IKUJI_RATE_LOW           = 0.5;
+const IKUJI_HIGH_RATE_DAYS     = 180;
+const IKUJI_UNIT_DAYS          = 30;
+
 // ===== DOM References =====
 const dueDateInput    = document.getElementById('due-date');
 const actualDateInput = document.getElementById('actual-date');
 const multipleToggle  = document.getElementById('multiple-toggle');
 const stdMonthlyInput = document.getElementById('std-monthly');
 const shortEnrollToggle = document.getElementById('short-enrolled');
+const ikujiWageInput  = document.getElementById('ikuji-wage');
+const ikujiUntilSelect = document.getElementById('ikuji-until');
 const calcBtn         = document.getElementById('calc-btn');
 const resultsArea     = document.getElementById('results');
 const copyBtn         = document.getElementById('copy-btn');
@@ -164,6 +199,93 @@ function calcBenefitDays(prenatalDays, diffDays) {
   const d = Number(diffDays) || 0;
   const prenatal = Math.max(0, prenatalDays + d);
   return { prenatal, postnatal: POSTNATAL_BENEFIT_DAYS, total: prenatal + POSTNATAL_BENEFIT_DAYS };
+}
+
+// ===== 育児休業給付金 =====
+
+/**
+ * 休業開始時賃金日額（上限・下限を適用した後の額）。
+ *
+ * 雇用保険の休業開始時賃金日額は「育児休業開始前6か月間の賃金総額 ÷ 180」で、
+ * 平均月収を W とすると 6W ÷ 180 ＝ W ÷ 30 になる。
+ * 賃金月額が上限額（496,200円）を超える人・下限額（96,090円）を下回る人は、
+ * 実額ではなく上限額・下限額を用いて算定する。
+ *
+ * @param {number} avgMonthlyWageYen 育休開始前6か月の平均月収（円・額面）
+ * @returns {number} 休業開始時賃金日額（円・1円未満切り捨て）。未入力時は0
+ */
+function calcIkujiDailyWage(avgMonthlyWageYen) {
+  const w = Number(avgMonthlyWageYen);
+  if (!isFinite(w) || w <= 0) return 0;
+  const capped = Math.min(Math.max(w, IKUJI_WAGE_MONTHLY_FLOOR), IKUJI_WAGE_MONTHLY_CAP);
+  return Math.floor(capped / 30);
+}
+
+/**
+ * 育児休業給付金の支給額。通算180日までは67%、181日目以降は50%。
+ *
+ * @param {number} dailyWage 休業開始時賃金日額（calcIkujiDailyWage の戻り値）
+ * @param {number} totalDays 育児休業の日数
+ * @returns {{highDays:number, lowDays:number, high:number, low:number, total:number,
+ *            monthlyHigh:number, monthlyLow:number}} 円・日数
+ */
+function calcIkujiBenefit(dailyWage, totalDays) {
+  const d = Number(dailyWage);
+  const n = Math.max(0, Math.floor(Number(totalDays) || 0));
+  if (!isFinite(d) || d <= 0) {
+    return { highDays: Math.min(n, IKUJI_HIGH_RATE_DAYS), lowDays: Math.max(0, n - IKUJI_HIGH_RATE_DAYS),
+             high: 0, low: 0, total: 0, monthlyHigh: 0, monthlyLow: 0 };
+  }
+  const highDays = Math.min(n, IKUJI_HIGH_RATE_DAYS);
+  const lowDays  = n - highDays;
+  const high = Math.floor(d * highDays * IKUJI_RATE_HIGH);
+  const low  = Math.floor(d * lowDays  * IKUJI_RATE_LOW);
+  return {
+    highDays,
+    lowDays,
+    high,
+    low,
+    total: high + low,
+    monthlyHigh: Math.floor(d * IKUJI_UNIT_DAYS * IKUJI_RATE_HIGH),
+    monthlyLow:  Math.floor(d * IKUJI_UNIT_DAYS * IKUJI_RATE_LOW)
+  };
+}
+
+/**
+ * 月数を足した日付を返す。足した先に同じ日が存在しない場合（1月31日＋1か月など）は
+ * その月の末日に丸める。
+ * @param {Date} date
+ * @param {number} months
+ * @returns {Date}
+ */
+function addMonthsClamped(date, months) {
+  const day = date.getDate();
+  const d = new Date(date.getFullYear(), date.getMonth() + months, 1);
+  const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  d.setDate(Math.min(day, lastDay));
+  return d;
+}
+
+/**
+ * 母親の育児休業の日数。
+ *
+ * 開始日は産後休業の終了翌日（出産日の57日後）、終了日は子が所定の月齢に
+ * 達する日＝「誕生日の○か月後の前日」。日数は両端を含めて数える。
+ *
+ * @param {Date|string} birthDate 出産日（Date または YYYY-MM-DD）
+ * @param {number} untilMonths 12（1歳）/ 18（1歳6か月）/ 24（2歳）
+ * @returns {{start: Date, end: Date, days: number}}
+ */
+function calcIkujiLeaveDays(birthDate, untilMonths) {
+  const birth = birthDate instanceof Date
+    ? new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate())
+    : new Date(String(birthDate) + 'T00:00:00');
+  const start = new Date(birth);
+  start.setDate(birth.getDate() + POSTNATAL_BENEFIT_DAYS + 1);
+  const end = addMonthsClamped(birth, Math.max(0, Math.floor(Number(untilMonths) || 0)));
+  end.setDate(end.getDate() - 1);
+  const days = Math.round((end - start) / 86400000) + 1;
+  return { start, end, days: Math.max(0, days) };
 }
 
 // ===== Diff calculation =====
@@ -356,6 +478,63 @@ function renderBenefit(prenatalDays, diffDays) {
     '。休業中に給与が支払われる場合は、その分が調整されます';
 }
 
+// ===== Render 育児休業給付金 =====
+
+/**
+ * 育児休業給付金カードを描画する。
+ * 平均月収が未入力でも、育児休業の期間と日数は日程だけで決まるので表示する。
+ * @param {Date} birthDate 出産日（実際の出産日が未入力なら出産予定日）
+ */
+function renderIkuji(birthDate) {
+  const yen = (n) => '¥' + Math.round(n).toLocaleString('ja-JP');
+  const untilMonths = Number(ikujiUntilSelect.value) || 12;
+  const leave = calcIkujiLeaveDays(birthDate, untilMonths);
+  const wage  = Number(ikujiWageInput.value);
+  const daily = calcIkujiDailyWage(wage);
+  const b     = calcIkujiBenefit(daily, leave.days);
+
+  document.getElementById('ikuji-period').textContent =
+    formatDate(leave.start) + ' 〜 ' + formatDate(leave.end);
+  document.getElementById('ikuji-days').textContent =
+    `${leave.days}日間（67%が${b.highDays}日 ／ 50%が${b.lowDays}日）`;
+
+  const dailyEl   = document.getElementById('ikuji-daily-wage');
+  const highEl    = document.getElementById('ikuji-monthly-high');
+  const lowEl     = document.getElementById('ikuji-monthly-low');
+  const totalEl   = document.getElementById('ikuji-total');
+  const noteEl    = document.getElementById('ikuji-note');
+
+  if (daily <= 0) {
+    dailyEl.textContent = '—';
+    highEl.textContent  = '—';
+    lowEl.textContent   = '—';
+    totalEl.textContent = '—';
+    noteEl.innerHTML = '<i class="bi bi-info-circle"></i> 入力欄に<strong>育休前6か月の平均月収</strong>を入れると、1か月あたりの支給額と総額の目安も表示します。日数は育児休業を途中で切り上げず、就業もしなかった場合の上限です';
+    return;
+  }
+
+  const atCap   = wage > IKUJI_WAGE_MONTHLY_CAP;
+  const atFloor = wage < IKUJI_WAGE_MONTHLY_FLOOR;
+
+  dailyEl.textContent = yen(daily);
+  highEl.textContent  = yen(b.monthlyHigh);
+  lowEl.textContent   = yen(b.monthlyLow);
+  totalEl.textContent = yen(b.total);
+
+  let calcNote = '<i class="bi bi-calculator"></i> ';
+  if (atCap) {
+    calcNote += '賃金月額が上限額の' + yen(IKUJI_WAGE_MONTHLY_CAP) + 'を超えるため、上限額で算定しています。';
+  } else if (atFloor) {
+    calcNote += '賃金月額が下限額の' + yen(IKUJI_WAGE_MONTHLY_FLOOR) + 'を下回るため、下限額で算定しています。';
+  }
+  calcNote += yen(atCap ? IKUJI_WAGE_MONTHLY_CAP : atFloor ? IKUJI_WAGE_MONTHLY_FLOOR : wage) +
+    ' ÷ 30日＝' + yen(daily) + '（休業開始時賃金日額）× 67%（181日目以降は50%）で計算しています。' +
+    '実際は30日ごとの支給単位期間ごとに支給されるため、端数処理で数円の差が出ます。' +
+    '休業中に給与が支払われる場合や就業した日がある場合は減額・不支給になります。' +
+    '<strong>出生後休業支援給付金（13%の上乗せ）は含んでいません</strong>';
+  noteEl.innerHTML = calcNote;
+}
+
 // ===== Timeline =====
 
 /**
@@ -440,6 +619,18 @@ function buildCopyText(calc, isMultiple) {
     }
   }
 
+  const ikujiPeriod = document.getElementById('ikuji-period').textContent;
+  const ikujiDays   = document.getElementById('ikuji-days').textContent;
+  const ikujiTotal  = document.getElementById('ikuji-total').textContent;
+  if (ikujiPeriod && ikujiPeriod !== '-') {
+    lines.push('---');
+    lines.push(`育児休業の期間: ${ikujiPeriod}`);
+    lines.push(`育児休業給付金 支給対象日数: ${ikujiDays}`);
+    if (ikujiTotal && ikujiTotal !== '—' && ikujiTotal !== '-') {
+      lines.push(`育児休業給付金 支給総額の目安: ${ikujiTotal}`);
+    }
+  }
+
   lines.push('---');
   lines.push('計算ツール: https://keisanlab.jp/apps/maternity-leave-calc/');
   return lines.join('\n');
@@ -495,6 +686,10 @@ function runCalculation() {
 
   // 出産手当金（支給対象日数は実際の出産日のずれで変わるので差分の後に描画）
   renderBenefit(lastCalc.prenatalDays, diffDays);
+
+  // 育児休業給付金（育休の開始・終了は実際の出産日で決まる）
+  const birthDate = actualDateStr ? new Date(actualDateStr + 'T00:00:00') : lastCalc.dueDate;
+  renderIkuji(birthDate);
 }
 
 calcBtn.addEventListener('click', () => {
@@ -524,6 +719,14 @@ stdMonthlyInput.addEventListener('input', () => {
 });
 
 shortEnrollToggle.addEventListener('change', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+ikujiWageInput.addEventListener('input', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+ikujiUntilSelect.addEventListener('change', () => {
   if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
 });
 

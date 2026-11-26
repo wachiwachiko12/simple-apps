@@ -72,7 +72,16 @@ const files = [];
   }
 })(ROOT);
 
-const TODAY = new Date().toISOString().slice(0, 10);
+/**
+ * 今日の日付（日本時間）。
+ *
+ * `new Date().toISOString()` は UTC なので、日本時間の早朝に実行すると前日の
+ * 日付になる。日次の更新は4:00（JST）に走るため、更新したページの lastmod が
+ * 必ず1日前になっていた（2026-11-26 に発覚）。
+ * 比較相手の `git log --date=short` はコミット時のローカル時刻（JST）を返すので、
+ * ここも JST に合わせる。環境のタイムゾーン設定に依存しないよう固定で +9h する。
+ */
+const TODAY = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
 /**
  * 未コミットの変更があるファイルの一覧。

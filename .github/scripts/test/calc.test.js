@@ -1051,6 +1051,50 @@ describe('maternity-leave-calc: 休業日程', () => {
     assert.strictEqual(app.formatDatePlain(d.postnatalEnd), '2026年11月12日');
   });
 
+  test('育児休業の期間は産後休業の終了翌日から、子の1歳の誕生日の前日まで', () => {
+    // 2026-10-01 出産 → 産後休業終了 11-26（既存テスト）→ 育休 11-27 開始
+    // 子が1歳に達する日 ＝ 誕生日の前日 ＝ 2027-09-30
+    const r = app.calcIkujiLeaveDays('2026-10-01', 12);
+    assert.strictEqual(app.formatDatePlain(r.start), '2026年11月27日');
+    assert.strictEqual(app.formatDatePlain(r.end), '2027年9月30日');
+    assert.strictEqual(r.days, 308); // 本文の計算例と同じ値
+  });
+
+  test('育休の開始日は、出産日の57日後（産後休業56日の翌日）で日程カードと一致する', () => {
+    for (const d of ['2026-01-15', '2026-02-28', '2026-06-30', '2026-12-31']) {
+      const c = app.calculate(d, false);
+      const r = app.calcIkujiLeaveDays(d, 12);
+      assert.strictEqual(app.formatDatePlain(r.start), app.formatDatePlain(c.ikujiStart), d);
+    }
+  });
+
+  test('1歳6か月・2歳までの延長は、1歳までより日数が多い', () => {
+    const a = app.calcIkujiLeaveDays('2026-10-01', 12).days;
+    const b = app.calcIkujiLeaveDays('2026-10-01', 18).days;
+    const c = app.calcIkujiLeaveDays('2026-10-01', 24).days;
+    assert.ok(b > a, '1歳6か月が1歳より短い');
+    assert.ok(c > b, '2歳が1歳6か月より短い');
+  });
+
+  test('月末の出産でも終了日が翌月へずれ込まない', () => {
+    // 2027-08-31 ＋ 18か月 ＝ 2029-02-31 は存在しない。末日（2/28）に丸めてから
+    // 前日を取るので 2029-02-27。Date の自動補正に任せると3月へずれ込むため、
+    // ここが崩れると「育休の終了日が1か月近く延びる」誤表示になる。
+    assert.strictEqual(app.formatDatePlain(app.calcIkujiLeaveDays('2027-08-31', 18).end), '2029年2月27日');
+    // うるう日生まれ。満年齢の到達日の扱いは法令上の論点があるため、
+    // ここでは「2月のうちに収まり、3月へずれ込まない」ことだけを確認する。
+    assert.strictEqual(app.calcIkujiLeaveDays('2028-02-29', 12).end.getMonth(), 1);
+  });
+
+  test('育休の日数は、取得期間を延ばしても出産日を動かしても負にならない', () => {
+    for (const m of [12, 18, 24]) {
+      for (const d of ['2026-01-01', '2026-05-31', '2026-10-01', '2027-02-28']) {
+        assert.ok(app.calcIkujiLeaveDays(d, m).days > 0, d + '/' + m);
+      }
+    }
+    assert.strictEqual(app.calcIkujiLeaveDays('2026-10-01', 0).days, 0);
+  });
+
   test('休業日数99日と出産手当金の支給対象日数98日は1日ずれる', () => {
     // 休業日程は産前休業の開始日を「予定日の42日前の日」として表示するが、
     // 出産手当金の産前42日は出産日そのものを1日として数える。この1日の差は
@@ -1058,5 +1102,124 @@ describe('maternity-leave-calc: 休業日程', () => {
     const c = app.calculate('2026-10-01', false);
     assert.strictEqual(c.prenatalDays + 1 + 56, 99);
     assert.strictEqual(app.calcBenefitDays(c.prenatalDays, 0).total, 98);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 育児休業給付金は産休のあとの家計そのもので、額を誤ると実害が大きい。
+// 一次資料: 厚生労働省・都道府県労働局・ハローワーク
+//   「令和８年８月１日から支給限度額が変更になります」（LL080731保02）
+//   https://www.mhlw.go.jp/content/001728499.pdf
+// 同紙は賃金「月額」の上限・下限と、支給上限額（30日・28日）を公表している。
+// 実装は賃金日額（月額÷30）に上限・下限をかけて 日額×日数×率 で計算するので、
+// 公表されている支給上限額が端数まで再現できることが正しさの検証になる。
+// **これらの額は毎年8月1日に改定される。** 8月の更新時はこのテストの期待値も
+// 新しい一次資料に差し替えること（期待値を実装に合わせて動かすのは誤り）。
+describe('maternity-leave-calc: 育児休業給付金', () => {
+  const app = loadApp('maternity-leave-calc');
+
+  test('公表されている上限額・下限額の定数が一次資料と一致する', () => {
+    assert.strictEqual(app.IKUJI_WAGE_MONTHLY_CAP, 496200);
+    assert.strictEqual(app.IKUJI_WAGE_MONTHLY_FLOOR, 96090);
+    assert.strictEqual(app.IKUJI_DAILY_WAGE_CAP, 16540);   // 496,200 ÷ 30
+    assert.strictEqual(app.IKUJI_DAILY_WAGE_FLOOR, 3203);  // 96,090 ÷ 30
+  });
+
+  test('賃金日額の上限・下限は、公表された賃金月額を30で割った額', () => {
+    assert.strictEqual(app.calcIkujiDailyWage(app.IKUJI_WAGE_MONTHLY_CAP), app.IKUJI_DAILY_WAGE_CAP);
+    assert.strictEqual(app.calcIkujiDailyWage(app.IKUJI_WAGE_MONTHLY_FLOOR), app.IKUJI_DAILY_WAGE_FLOOR);
+  });
+
+  test('公表されている支給上限額（30日）を端数まで再現する', () => {
+    const d = app.calcIkujiDailyWage(1000000); // 上限額に張り付く
+    const b = app.calcIkujiBenefit(d, 30);
+    assert.strictEqual(b.monthlyHigh, 332454); // 支給率67％の支給上限額
+    assert.strictEqual(b.monthlyLow, 248100);  // 支給率50％の支給上限額
+    assert.strictEqual(b.total, 332454);       // 30日なので全部が67％
+  });
+
+  test('公表されている支給下限額（30日）を端数まで再現する', () => {
+    const d = app.calcIkujiDailyWage(50000); // 下限額まで引き上げられる
+    const b = app.calcIkujiBenefit(d, 30);
+    assert.strictEqual(b.monthlyHigh, 64380);
+    assert.strictEqual(b.monthlyLow, 48045);
+  });
+
+  test('出生時育児休業給付金・出生後休業支援給付金の公表上限額も同じ式で出る', () => {
+    // 試算には含めていないが、同じ日額上限から導けることを確かめておく。
+    // ここがずれるなら日額上限か端数処理の解釈が誤っている。
+    const d = app.IKUJI_DAILY_WAGE_CAP;
+    assert.strictEqual(Math.floor(d * 28 * 0.67), 310290); // 出生時育児休業給付金
+    assert.strictEqual(Math.floor(d * 28 * 0.13), 60205);  // 出生後休業支援給付金
+  });
+
+  test('賃金月額が上限・下限の範囲内なら実額を30で割る', () => {
+    assert.strictEqual(app.calcIkujiDailyWage(300000), 10000);
+    assert.strictEqual(app.calcIkujiDailyWage(250000), 8333); // 8,333.33 → 切り捨て
+  });
+
+  test('未入力・0・不正な値は0円（金額を表示しない状態）', () => {
+    for (const v of ['', 0, -300000, NaN]) {
+      assert.strictEqual(app.calcIkujiDailyWage(v), 0, String(v));
+      assert.strictEqual(app.calcIkujiBenefit(app.calcIkujiDailyWage(v), 308).total, 0, String(v));
+    }
+  });
+
+  test('180日の境界: 180日までは全額67%、181日目から50%に切り替わる', () => {
+    const d = 10000;
+    assert.strictEqual(app.calcIkujiBenefit(d, 180).lowDays, 0);
+    assert.strictEqual(app.calcIkujiBenefit(d, 180).total, Math.floor(d * 180 * 0.67));
+    const b = app.calcIkujiBenefit(d, 181);
+    assert.strictEqual(b.highDays, 180);
+    assert.strictEqual(b.lowDays, 1);
+    assert.strictEqual(b.total, Math.floor(d * 180 * 0.67) + Math.floor(d * 1 * 0.5));
+  });
+
+  test('181日目以降の1日あたりは67%期間より少ない（給付率が下がる）', () => {
+    const d = 10000;
+    const a = app.calcIkujiBenefit(d, 180);
+    const b = app.calcIkujiBenefit(d, 210);
+    const perDayAfter = (b.total - a.total) / 30;
+    assert.ok(perDayAfter < d * 0.67, '181日目以降が67%より高い');
+    assert.strictEqual(perDayAfter, d * 0.5);
+  });
+
+  test('支給額は日数に対して単調非減少で、日数0なら0円', () => {
+    const d = app.calcIkujiDailyWage(280000);
+    let prev = -1;
+    for (let n = 0; n <= 740; n++) {
+      const t = app.calcIkujiBenefit(d, n).total;
+      assert.ok(t >= prev, n + '日で支給総額が減った');
+      prev = t;
+    }
+    assert.strictEqual(app.calcIkujiBenefit(d, 0).total, 0);
+  });
+
+  test('支給額は賃金月額に対して単調非減少で、上限を超えると増えない', () => {
+    let prev = -1;
+    for (let w = 100000; w <= 900000; w += 1000) {
+      const t = app.calcIkujiBenefit(app.calcIkujiDailyWage(w), 308).total;
+      assert.ok(t >= prev, w + '円で支給総額が減った');
+      prev = t;
+    }
+    const atCap = app.calcIkujiBenefit(app.calcIkujiDailyWage(app.IKUJI_WAGE_MONTHLY_CAP), 308).total;
+    assert.strictEqual(app.calcIkujiBenefit(app.calcIkujiDailyWage(2000000), 308).total, atCap);
+  });
+
+  test('本文の計算例（月収30万円・1歳まで308日）と一致する', () => {
+    const leave = app.calcIkujiLeaveDays('2026-10-01', 12);
+    const b = app.calcIkujiBenefit(app.calcIkujiDailyWage(300000), leave.days);
+    assert.strictEqual(b.highDays, 180);
+    assert.strictEqual(b.lowDays, 128);
+    assert.strictEqual(b.high, 1206000);
+    assert.strictEqual(b.low, 640000);
+    assert.strictEqual(b.total, 1846000); // 本文の「約184万円」
+  });
+
+  test('出産手当金と育児休業給付金は計算の基礎が別（同じ月額でも日額が一致しない）', () => {
+    // 出産手当金は標準報酬月額÷30を10円未満四捨五入、育休は実賃金÷30を切り捨て。
+    // 入力欄を1つにまとめてしまう改変への歯止め。
+    assert.strictEqual(app.calcStandardDailyWage(170000), 5670);
+    assert.strictEqual(app.calcIkujiDailyWage(170000), 5666);
   });
 });
