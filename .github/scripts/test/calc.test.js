@@ -1223,3 +1223,303 @@ describe('maternity-leave-calc: 育児休業給付金', () => {
     assert.strictEqual(app.calcIkujiDailyWage(170000), 5666);
   });
 });
+
+describe('maternity-leave-calc: 産休・育休中の社会保険料の免除', () => {
+  const app = loadApp('maternity-leave-calc');
+  const d = (s) => new Date(s + 'T00:00:00');
+
+  // ---- 料率・等級の定数が一次資料と一致しているか ----
+
+  test('厚生年金・介護の料率と厚生年金の等級上下限が一次資料と一致する', () => {
+    // 日本年金機構「厚生年金保険の保険料」: 18.3%で固定、1等級8万8千円〜32等級65万円
+    assert.strictEqual(app.PENSION_RATE, 0.183);
+    assert.strictEqual(app.PENSION_STD_FLOOR, 88000);
+    assert.strictEqual(app.PENSION_STD_CAP, 650000);
+    // 協会けんぽ「介護保険料率」: 令和8年3月分から1.62%（全国一律）
+    assert.strictEqual(app.CARE_RATE, 0.0162);
+  });
+
+  test('健康保険料率は47都道府県そろっていて、令和8年度の最高・最低と一致する', () => {
+    const names = Object.keys(app.HEALTH_RATES);
+    assert.strictEqual(names.length, 47);
+    // 協会けんぽ 令和8年度 都道府県単位保険料率
+    assert.strictEqual(app.HEALTH_RATES['東京都'], 9.85);
+    assert.strictEqual(app.HEALTH_RATES['大阪府'], 10.13);
+    assert.strictEqual(app.HEALTH_RATES['愛知県'], 9.93);
+    assert.strictEqual(app.HEALTH_RATES['佐賀県'], 10.55); // 最高
+    assert.strictEqual(app.HEALTH_RATES['新潟県'], 9.21);  // 最低
+    const values = names.map((n) => app.HEALTH_RATES[n]);
+    assert.strictEqual(Math.max(...values), 10.55);
+    assert.strictEqual(Math.min(...values), 9.21);
+  });
+
+  test('index.html の都道府県セレクトの選択肢と料率テーブルが一致する', () => {
+    // 片方だけ更新して、画面の表示と計算がずれるのを防ぐ。
+    const fs = require('fs');
+    const path = require('path');
+    const html = fs.readFileSync(
+      path.resolve(__dirname, '..', '..', '..', 'apps', 'maternity-leave-calc', 'index.html'), 'utf8');
+    const select = html.slice(html.indexOf('<select id="pref"'));
+    const options = [...select.slice(0, select.indexOf('</select>'))
+      .matchAll(/<option value="([^"]+)"[^>]*>([^（]+)（([\d.]+)%）<\/option>/g)];
+    assert.strictEqual(options.length, 47, 'セレクトの選択肢が47件でない');
+    for (const [, value, label, pct] of options) {
+      assert.strictEqual(value, label.trim(), 'value と表示名が違う: ' + value);
+      assert.ok(value in app.HEALTH_RATES, '料率テーブルに無い都道府県: ' + value);
+      // 画面に書いた率と、計算に使う率が一致していること
+      assert.strictEqual(Number(pct), app.HEALTH_RATES[value],
+        value + ' の表示率と計算用の率が違う');
+    }
+  });
+
+  // ---- 免除される月の範囲（「終了日の翌日が属する月の前月まで」） ----
+
+  test('免除は「開始月から、終了日の翌日が属する月の前月まで」', () => {
+    // 2026-08-20 開始、2026-11-26 終了 → 翌日 11-27 は11月 → その前月＝10月まで
+    // つまり 8月・9月・10月 の3か月
+    const r = app.calcExemptMonthRange(d('2026-08-20'), d('2026-11-26'));
+    assert.strictEqual(r.months, 3);
+  });
+
+  test('終了日が月末だと、一般ルールの結果がそのまま「終了月まで」になる', () => {
+    // 一次資料の括弧書き（終了日が月の末日の場合は終了月）が、
+    // 一般ルールの帰結であることを固定する。
+    const endOfMonth = app.calcExemptMonthRange(d('2026-08-20'), d('2026-11-30'));
+    assert.strictEqual(endOfMonth.months, 4); // 8/9/10/11月
+    const dayBefore = app.calcExemptMonthRange(d('2026-08-20'), d('2026-11-29'));
+    assert.strictEqual(dayBefore.months, 3); // 11月は対象外
+  });
+
+  test('月末の1日違いが1か月の差になる（境界）', () => {
+    // 2月（28日）・4月（30日）・12月（31日）で末日の判定がずれないこと
+    for (const [last, prev] of [['2027-02-28', '2027-02-27'],
+                                ['2026-04-30', '2026-04-29'],
+                                ['2026-12-31', '2026-12-30']]) {
+      const start = d(last.slice(0, 7) + '-01');
+      assert.strictEqual(app.calcExemptMonthRange(start, d(last)).months, 1, last);
+      assert.strictEqual(app.calcExemptMonthRange(start, d(prev)).months, 0, prev);
+    }
+  });
+
+  test('同一月内で終わる休業は、原則では0か月になる', () => {
+    assert.strictEqual(app.calcExemptMonthRange(d('2026-05-10'), d('2026-05-20')).months, 0);
+  });
+
+  test('免除月数は負にならない', () => {
+    // 終了日が開始日より前という不正な入力でもマイナスを返さない
+    assert.strictEqual(app.calcExemptMonthRange(d('2026-05-10'), d('2026-01-20')).months, 0);
+  });
+
+  // ---- 育児休業の14日ルール（令和4年10月1日以降） ----
+
+  test('同一月内で終わる育休は、開始月に14日以上なら1か月分が免除される', () => {
+    // 5/10 開始 5/23 終了 ＝ 両端含めて14日 → 免除
+    assert.strictEqual(app.calcIkujiExemptMonths(d('2026-05-10'), d('2026-05-23')), 1);
+    // 1日短い13日 → 免除なし
+    assert.strictEqual(app.calcIkujiExemptMonths(d('2026-05-10'), d('2026-05-22')), 0);
+  });
+
+  test('14日ルールは、原則で免除が出る場合の月数を増やさない', () => {
+    // 月末まで取った育休は原則で1か月。14日ルールで二重に数えてはいけない。
+    assert.strictEqual(app.calcIkujiExemptMonths(d('2026-05-01'), d('2026-05-31')), 1);
+    assert.strictEqual(app.calcIkujiExemptMonths(d('2026-05-20'), d('2026-07-31')), 3);
+  });
+
+  test('育休を延ばすと免除月数は単調非減少', () => {
+    const start = d('2026-11-27');
+    let prev = -1;
+    for (let i = 0; i < 800; i++) {
+      const end = new Date(2026, 10, 27 + i);
+      const m = app.calcIkujiExemptMonths(start, end);
+      assert.ok(m >= prev, i + '日目で免除月数が減った');
+      prev = m;
+    }
+  });
+
+  test('育休の選択肢（1歳／1歳6か月／2歳）を伸ばすと免除月数も増える', () => {
+    const birth = d('2026-10-01');
+    const months = [12, 18, 24].map((until) => {
+      const leave = app.calcIkujiLeaveDays(birth, until);
+      return app.calcIkujiExemptMonths(leave.start, leave.end);
+    });
+    assert.deepStrictEqual(months, [11, 17, 23]);
+  });
+
+  // ---- 1か月あたりの本人負担 ----
+
+  test('本人負担は労使合計の料率の半分', () => {
+    // 協会けんぽ「保険料は、事業主と被保険者が折半で負担します。」
+    const p = app.calcMonthlyPremium(300000, 9.85, false);
+    assert.strictEqual(p.health, Math.round(300000 * 0.0985 / 2));
+    assert.strictEqual(p.pension, Math.round(300000 * 0.183 / 2));
+    assert.strictEqual(p.health, 14775);
+    assert.strictEqual(p.pension, 27450);
+    assert.strictEqual(p.care, 0);
+    assert.strictEqual(p.total, 42225);
+  });
+
+  test('40歳以上は介護保険料率1.62%の半分が上乗せされる', () => {
+    const p = app.calcMonthlyPremium(300000, 9.85, true);
+    assert.strictEqual(p.care, Math.round(300000 * 0.0162 / 2));
+    assert.strictEqual(p.care, 2430);
+    assert.strictEqual(p.total, 14775 + 2430 + 27450);
+  });
+
+  test('内訳の合計が total と必ず一致する（表示がずれない）', () => {
+    for (const m of [88000, 170000, 260000, 300001, 499999, 650000, 980000]) {
+      for (const care of [false, true]) {
+        const p = app.calcMonthlyPremium(m, 9.85, care);
+        assert.strictEqual(p.health + p.care + p.pension, p.total, m + '/' + care);
+      }
+    }
+  });
+
+  test('厚生年金は1等級88,000円・32等級650,000円で打ち切られる', () => {
+    // 650,000円を超えても厚生年金保険料は増えない
+    const cap = app.calcMonthlyPremium(650000, 9.85, false).pension;
+    assert.strictEqual(cap, Math.round(650000 * 0.183 / 2));
+    assert.strictEqual(app.calcMonthlyPremium(900000, 9.85, false).pension, cap);
+    // 88,000円を下回っても下限で計算される
+    const floor = app.calcMonthlyPremium(88000, 9.85, false).pension;
+    assert.strictEqual(app.calcMonthlyPremium(50000, 9.85, false).pension, floor);
+  });
+
+  test('健康保険料には厚生年金の等級上限を適用しない（制度が別）', () => {
+    // 厚生年金の上限65万円を健康保険にも適用してしまう改変への歯止め。
+    const p = app.calcMonthlyPremium(900000, 9.85, false);
+    assert.strictEqual(p.health, Math.round(900000 * 0.0985 / 2));
+    assert.ok(p.health > app.calcMonthlyPremium(650000, 9.85, false).health);
+  });
+
+  test('未入力・0・負・NaN は0円（金額を表示しない状態）', () => {
+    for (const v of ['', 0, -300000, NaN]) {
+      assert.strictEqual(app.calcMonthlyPremium(v, 9.85, true).total, 0, String(v));
+    }
+  });
+
+  test('料率が未定義でも落ちず、厚生年金分だけは出る', () => {
+    const p = app.calcMonthlyPremium(300000, undefined, false);
+    assert.strictEqual(p.health, 0);
+    assert.strictEqual(p.pension, 27450);
+  });
+
+  test('都道府県で免除額が変わる（新潟 < 東京 < 佐賀）', () => {
+    const at = (pref) => app.calcMonthlyPremium(300000, app.HEALTH_RATES[pref], false).total;
+    assert.ok(at('新潟県') < at('東京都'), '新潟が東京以上になった');
+    assert.ok(at('東京都') < at('佐賀県'), '東京が佐賀以上になった');
+  });
+
+  // ---- 産休と育休を通した合計 ----
+
+  test('産休の免除月と育休の免除月は重複しない（育休開始＝産後休業終了の翌日）', () => {
+    // 一次資料には「重複する場合は産前産後休業が優先」とあるが、
+    // 本ツールの日程の取り方では構造上重複しない。ここが崩れたら二重計上になる。
+    for (const birth of ['2026-01-15', '2026-02-28', '2026-03-31', '2026-10-01', '2026-12-05']) {
+      const b = d(birth);
+      const prenatalStart = new Date(b.getFullYear(), b.getMonth(), b.getDate() - 42);
+      const sankyuEnd = new Date(b.getFullYear(), b.getMonth(), b.getDate() + 56);
+      const leave = app.calcIkujiLeaveDays(b, 12);
+      const s = app.calcExemptMonthRange(prenatalStart, sankyuEnd);
+      const i = app.calcExemptMonthRange(leave.start, leave.end);
+      assert.strictEqual(i.from, s.to + 1, birth + ': 産休と育休の免除月が連続していない');
+    }
+  });
+
+  test('本文の計算例（予定日2026-10-01・標準報酬月額30万円・東京都・1歳まで）と一致する', () => {
+    const birth = d('2026-10-01');
+    const leave = app.calcIkujiLeaveDays(birth, 12);
+    const ex = app.calcExemption({
+      stdMonthly: 300000,
+      healthRatePct: app.HEALTH_RATES['東京都'],
+      withCare: false,
+      sankyuStart: d('2026-08-20'),              // 予定日の42日前
+      sankyuEnd: d('2026-11-26'),                // 出産日の56日後
+      ikujiStart: leave.start,
+      ikujiEnd: leave.end
+    });
+    assert.strictEqual(ex.sankyuMonths, 3);      // 2026年8・9・10月
+    assert.strictEqual(ex.ikujiMonths, 11);      // 2026年11月〜2027年9月
+    assert.strictEqual(ex.totalMonths, 14);
+    assert.strictEqual(ex.monthly.total, 42225);
+    assert.strictEqual(ex.total, 591150);        // 本文の「約59万円」
+  });
+
+  test('本文の計算例（標準報酬月額50万円・東京都・1歳まで）と一致する', () => {
+    const birth = d('2026-10-01');
+    const leave = app.calcIkujiLeaveDays(birth, 12);
+    const ex = app.calcExemption({
+      stdMonthly: 500000,
+      healthRatePct: app.HEALTH_RATES['東京都'],
+      withCare: false,
+      sankyuStart: d('2026-08-20'),
+      sankyuEnd: d('2026-11-26'),
+      ikujiStart: leave.start,
+      ikujiEnd: leave.end
+    });
+    assert.strictEqual(ex.monthly.health, 24625);
+    assert.strictEqual(ex.monthly.pension, 45750);
+    assert.strictEqual(ex.monthly.total, 70375);
+    assert.strictEqual(ex.total, 985250);        // 本文の「約99万円」
+  });
+
+  test('免除総額は標準報酬月額に対して単調非減少', () => {
+    const birth = d('2026-10-01');
+    const leave = app.calcIkujiLeaveDays(birth, 12);
+    const base = {
+      healthRatePct: 9.85, withCare: true,
+      sankyuStart: d('2026-08-20'), sankyuEnd: d('2026-11-26'),
+      ikujiStart: leave.start, ikujiEnd: leave.end
+    };
+    let prev = -1;
+    for (let m = 0; m <= 1000000; m += 1000) {
+      const t = app.calcExemption(Object.assign({ stdMonthly: m }, base)).total;
+      assert.ok(t >= prev, m + '円で免除総額が減った');
+      prev = t;
+    }
+  });
+
+  test('育児休業を取らない場合は産休分だけが免除される', () => {
+    // 2026-11-28 の UX レビュー指摘: 育休分を既定で足すと、産休のみの人に
+    // 3か月（約12.7万円）のところを14か月（約59万円）＝4.6倍の金額を見せてしまう。
+    const birth = d('2026-10-01');
+    const leave = app.calcIkujiLeaveDays(birth, 12);
+    const base = {
+      stdMonthly: 300000, healthRatePct: app.HEALTH_RATES['東京都'], withCare: false,
+      sankyuStart: d('2026-08-20'), sankyuEnd: d('2026-11-26'),
+      ikujiStart: leave.start, ikujiEnd: leave.end
+    };
+    const without = app.calcExemption(Object.assign({ takesIkuji: false }, base));
+    assert.strictEqual(without.ikujiMonths, 0);
+    assert.strictEqual(without.totalMonths, 3);
+    assert.strictEqual(without.total, 42225 * 3); // 126,675円
+    // 未指定・true のときは従来どおり育休分を含む（既定の挙動を変えていない）
+    assert.strictEqual(app.calcExemption(base).totalMonths, 14);
+    assert.strictEqual(app.calcExemption(Object.assign({ takesIkuji: true }, base)).totalMonths, 14);
+  });
+
+  test('「育児休業は取らない」の選択肢が index.html に存在する', () => {
+    // value="0" を消すと、産休のみの人がまた4.6倍の金額を見ることになる。
+    const fs = require('fs');
+    const path = require('path');
+    const html = fs.readFileSync(
+      path.resolve(__dirname, '..', '..', '..', 'apps', 'maternity-leave-calc', 'index.html'), 'utf8');
+    const select = html.slice(html.indexOf('<select id="ikuji-until"'));
+    const body = select.slice(0, select.indexOf('</select>'));
+    assert.ok(/<option value="0"/.test(body), '「育児休業は取らない」の選択肢が無い');
+    for (const v of ['12', '18', '24']) {
+      assert.ok(body.includes('value="' + v + '"'), v + 'か月の選択肢が無い');
+    }
+  });
+
+  test('標準報酬月額が未入力なら月数は出るが金額は0', () => {
+    const birth = d('2026-10-01');
+    const leave = app.calcIkujiLeaveDays(birth, 12);
+    const ex = app.calcExemption({
+      stdMonthly: '', healthRatePct: 9.85, withCare: false,
+      sankyuStart: d('2026-08-20'), sankyuEnd: d('2026-11-26'),
+      ikujiStart: leave.start, ikujiEnd: leave.end
+    });
+    assert.strictEqual(ex.totalMonths, 14);
+    assert.strictEqual(ex.total, 0);
+  });
+});

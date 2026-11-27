@@ -56,6 +56,82 @@ const IKUJI_RATE_LOW           = 0.5;
 const IKUJI_HIGH_RATE_DAYS     = 180;
 const IKUJI_UNIT_DAYS          = 30;
 
+// 産前産後休業・育児休業中の社会保険料の免除
+//
+// 一次資料（1）日本年金機構「産前産後休業期間中の保険料免除」
+//   https://www.nenkin.go.jp/service/kounen/hokenryo/menjo/sankyu-menjo/20140509-02.html
+//   ・「産前産後休業期間中の健康保険・厚生年金保険の保険料は、被保険者・事業主両方の
+//      負担が免除されます。」
+//   ・「保険料の負担が免除される期間は、産前産後休業開始月から終了日の翌日の属する月の
+//      前月（産前産後休業終了日が月の末日の場合は産前産後休業終了月）までです。」
+//      → 括弧内の例外は、一般ルール（終了日の翌日が属する月の前月）を月末日に当てはめた
+//        結果と同じになる。終了日が月末なら翌日は翌月1日なので、その前月＝終了月。
+//        したがって実装は一般ルール1本でよい（テストで両方を固定している）。
+//   ・「育児休業の保険料免除期間と産前産後休業の保険料免除期間が重複する場合は、
+//      産前産後休業期間中の保険料免除が優先されます。」
+//      → 本ツールは育休開始日＝産後休業終了日の翌日として扱うので、構造上重複しない。
+//
+// 一次資料（2）日本年金機構「育児休業等期間中の保険料免除」
+//   https://www.nenkin.go.jp/service/kounen/hokenryo/menjo/ikuji-menjo/20140327-05.html
+//   ・「毎月の報酬にかかる保険料免除期間は育児休業等を開始した日の属する月から
+//      育児休業等が終了する日の翌日が属する月の前月までです。」
+//   ・「開始日の属する月と終了日の翌日が属する月が同一の場合でも、育児休業等開始日が
+//      含まれる月に14日以上育児休業等を取得した場合は免除となります
+//      （令和4年10月1日以降に開始した育児休業等に限る）」
+//
+// 一次資料（3）日本年金機構「厚生年金保険の保険料」
+//   https://www.nenkin.go.jp/service/kounen/hokenryo/hoshu/20150515-01.html
+//   ・「平成29年9月を最後に引上げが終了し、厚生年金保険料率は18.3％で固定されています」
+//   ・「事業主と被保険者とが半分ずつ負担します」
+//   ・「現在の標準報酬月額は、1等級（8万8千円）から32等級（65万円）までの32等級に
+//      分かれています。」→ 厚生年金はこの上限・下限が効く。
+//
+// 一次資料（4）協会けんぽ「費用の負担」
+//   https://www.kyoukaikenpo.or.jp/about/business/overview/001/
+//   ・「保険料は、事業主と被保険者が折半で負担します。」
+//     → したがって下の HEALTH_RATES は労使合計の率で、本人負担はその半分。
+//
+// 一次資料（5）協会けんぽ「令和8年度の都道府県単位保険料率」
+//   https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/rate_prefectures/r08
+//   ・令和8年3月分（4月納付分）から適用。
+//
+// 一次資料（6）協会けんぽ「介護保険料率」
+//   https://www.kyoukaikenpo.or.jp/about/business/insurance_rate/002
+//   ・令和8年3月分から 1.62％。全国一律で、40歳から64歳までの介護保険第2号被保険者が対象。
+//
+// **健康保険料率・介護保険料率は毎年度（3月分から）改定される。年度が変わったら必ず更新する。**
+//
+// 本試算に含めていないもの:
+//   ・子ども・子育て支援金（令和8年4月分から全国一律0.23％・労使折半）。
+//     こども家庭庁のQ&A（https://www.cfa.go.jp/policies/kodomokosodateshienkin/faq ）に
+//     「企業の従業員については、医療保険料や厚生年金保険料と同様に支援金も免除されます」と
+//     育児休業中の免除は明記されているが、**産前産後休業中の扱いの明記が見つからない**。
+//     推測で足すと免除額を多く見せてしまうため、保守的に（少なめに）出す側へ倒している。
+//   ・雇用保険料。賃金に料率を掛けて計算するため、賃金の支払いがなければ発生しない
+//     （免除の制度ではない）。
+//   ・健康保険の標準報酬月額の等級の上限・下限。協会けんぽのHTMLページでは等級表が
+//     PDF/Excelでしか公開されておらず、第1級・最高等級の額を一次資料で確認できなかったため
+//     適用していない。厚生年金の上限・下限（資料3で確認済み）だけを適用する。
+const PENSION_RATE      = 0.183;   // 厚生年金保険料率（労使合計）
+const CARE_RATE         = 0.0162;  // 介護保険料率（労使合計・全国一律・令和8年度）
+const PENSION_STD_FLOOR = 88000;   // 厚生年金 標準報酬月額 1等級
+const PENSION_STD_CAP   = 650000;  // 厚生年金 標準報酬月額 32等級
+const IKUJI_SHORT_MONTH_DAYS = 14; // 同一月内で終わる育休が免除になる日数（令和4年10月〜）
+
+// 協会けんぽ 令和8年度の都道府県単位保険料率（％・労使合計）。本人負担はこの半分。
+const HEALTH_RATES = {
+  '北海道': 10.28, '青森県': 9.85, '岩手県': 9.51, '宮城県': 10.10, '秋田県': 10.01,
+  '山形県': 9.75, '福島県': 9.50, '茨城県': 9.52, '栃木県': 9.82, '群馬県': 9.68,
+  '埼玉県': 9.67, '千葉県': 9.73, '東京都': 9.85, '神奈川県': 9.92, '新潟県': 9.21,
+  '富山県': 9.59, '石川県': 9.70, '福井県': 9.71, '山梨県': 9.55, '長野県': 9.63,
+  '岐阜県': 9.80, '静岡県': 9.61, '愛知県': 9.93, '三重県': 9.77, '滋賀県': 9.88,
+  '京都府': 9.89, '大阪府': 10.13, '兵庫県': 10.12, '奈良県': 9.91, '和歌山県': 10.06,
+  '鳥取県': 9.86, '島根県': 9.94, '岡山県': 10.05, '広島県': 9.78, '山口県': 10.15,
+  '徳島県': 10.24, '香川県': 10.02, '愛媛県': 9.98, '高知県': 10.05, '福岡県': 10.11,
+  '佐賀県': 10.55, '長崎県': 10.06, '熊本県': 10.08, '大分県': 10.08, '宮崎県': 9.77,
+  '鹿児島県': 10.13, '沖縄県': 9.44
+};
+
 // ===== DOM References =====
 const dueDateInput    = document.getElementById('due-date');
 const actualDateInput = document.getElementById('actual-date');
@@ -64,6 +140,8 @@ const stdMonthlyInput = document.getElementById('std-monthly');
 const shortEnrollToggle = document.getElementById('short-enrolled');
 const ikujiWageInput  = document.getElementById('ikuji-wage');
 const ikujiUntilSelect = document.getElementById('ikuji-until');
+const prefSelect      = document.getElementById('pref');
+const careToggle      = document.getElementById('care-insured');
 const calcBtn         = document.getElementById('calc-btn');
 const resultsArea     = document.getElementById('results');
 const copyBtn         = document.getElementById('copy-btn');
@@ -288,6 +366,119 @@ function calcIkujiLeaveDays(birthDate, untilMonths) {
   return { start, end, days: Math.max(0, days) };
 }
 
+// ===== 社会保険料の免除 =====
+
+/**
+ * 年月を 1 本の整数（年 × 12 ＋ 月）にする。月をまたぐ引き算を安全にするため。
+ * @param {Date} date
+ * @returns {number}
+ */
+function monthIndex(date) {
+  return date.getFullYear() * 12 + date.getMonth();
+}
+
+/**
+ * 保険料が免除される月の範囲。
+ *
+ * 一次資料の表現は「開始日の属する月から、終了日の翌日が属する月の前月まで」。
+ * 終了日が月末の場合は翌日が翌月1日になるので、その前月＝終了月となり、
+ * 資料の括弧書き（「終了日が月の末日の場合は終了月」）と自動的に一致する。
+ *
+ * 同一月内で終わって原則では0か月になる場合は months が 0 を返す。
+ * 育児休業の14日ルールは calcIkujiExemptMonths 側で扱う。
+ *
+ * @param {Date} start 休業開始日
+ * @param {Date} end   休業終了日
+ * @returns {{from:number, to:number, months:number}} from/to は monthIndex。months は0以上
+ */
+function calcExemptMonthRange(start, end) {
+  const dayAfterEnd = new Date(end.getFullYear(), end.getMonth(), end.getDate() + 1);
+  const from = monthIndex(start);
+  const to   = monthIndex(dayAfterEnd) - 1;
+  return { from, to, months: Math.max(0, to - from + 1) };
+}
+
+/**
+ * 育児休業で免除される月数。
+ *
+ * 原則は calcExemptMonthRange と同じ。ただし「開始日の属する月と終了日の翌日が属する月が
+ * 同一の場合」（＝原則では0か月）でも、開始月に14日以上取得していれば開始月が免除される
+ * （令和4年10月1日以降に開始した育児休業等）。
+ *
+ * @param {Date} start 育児休業開始日
+ * @param {Date} end   育児休業終了日
+ * @returns {number} 免除される月数（0以上）
+ */
+function calcIkujiExemptMonths(start, end) {
+  const range = calcExemptMonthRange(start, end);
+  if (range.months > 0) return range.months;
+  // ここに来るのは start と end が同じ月に収まっている場合だけなので、
+  // 両端を含めた日数がそのまま「開始月に取得した日数」になる。
+  const days = Math.round((end - start) / 86400000) + 1;
+  return days >= IKUJI_SHORT_MONTH_DAYS ? 1 : 0;
+}
+
+/**
+ * 免除される1か月あたりの本人負担の社会保険料。
+ *
+ * 健康保険・介護保険・厚生年金はいずれも労使折半なので、被保険者負担は料率の半分。
+ * 厚生年金の標準報酬月額は1等級（88,000円）〜32等級（650,000円）なので、
+ * 範囲外の入力はその上限・下限に寄せる。健康保険は等級表を一次資料で確認できていないため
+ * 入力額をそのまま使う。1円未満は内訳ごとに四捨五入している（内訳の合計と総額が合うように）。
+ *
+ * @param {number} stdMonthlyYen 標準報酬月額（円）
+ * @param {number} healthRatePct 健康保険料率（％・労使合計）
+ * @param {boolean} withCare 介護保険第2号被保険者（40歳以上65歳未満）か
+ * @returns {{health:number, care:number, pension:number, total:number}} 円
+ */
+function calcMonthlyPremium(stdMonthlyYen, healthRatePct, withCare) {
+  const m = Number(stdMonthlyYen);
+  const zero = { health: 0, care: 0, pension: 0, total: 0 };
+  if (!isFinite(m) || m <= 0) return zero;
+
+  const rate = Number(healthRatePct);
+  const healthRate = isFinite(rate) && rate > 0 ? rate / 100 : 0;
+
+  const health  = Math.round(m * healthRate / 2);
+  const care    = withCare ? Math.round(m * CARE_RATE / 2) : 0;
+  const pension = Math.round(Math.min(Math.max(m, PENSION_STD_FLOOR), PENSION_STD_CAP) * PENSION_RATE / 2);
+
+  return { health, care, pension, total: health + care + pension };
+}
+
+/**
+ * 産休・育休をとおして免除される社会保険料の合計。
+ *
+ * @param {object} args
+ * @param {number} args.stdMonthly 標準報酬月額（円）
+ * @param {number} args.healthRatePct 健康保険料率（％）
+ * @param {boolean} args.withCare 介護保険第2号被保険者か
+ * @param {Date} args.sankyuStart 産前休業開始日
+ * @param {Date} args.sankyuEnd 産後休業終了日
+ * @param {Date} args.ikujiStart 育児休業開始日
+ * @param {Date} args.ikujiEnd 育児休業終了日
+ * @param {boolean} [args.takesIkuji] false なら育児休業を取らない（産休分のみ）
+ * @returns {{monthly:object, sankyuMonths:number, ikujiMonths:number,
+ *            totalMonths:number, total:number}}
+ */
+function calcExemption(args) {
+  const monthly = calcMonthlyPremium(args.stdMonthly, args.healthRatePct, args.withCare);
+  const sankyuMonths = calcExemptMonthRange(args.sankyuStart, args.sankyuEnd).months;
+  // 育児休業を取らない人は産休分だけが免除される。既定で育休分を足してしまうと
+  // 産休のみの人に4倍以上の金額を見せることになる（2026-11-28 の UX レビュー指摘）。
+  const ikujiMonths  = args.takesIkuji === false
+    ? 0
+    : calcIkujiExemptMonths(args.ikujiStart, args.ikujiEnd);
+  const totalMonths  = sankyuMonths + ikujiMonths;
+  return {
+    monthly,
+    sankyuMonths,
+    ikujiMonths,
+    totalMonths,
+    total: monthly.total * totalMonths
+  };
+}
+
 // ===== Diff calculation =====
 function calcDiff(dueDateStr, actualDateStr, isMultiple) {
   const dueDate    = new Date(dueDateStr    + 'T00:00:00');
@@ -485,9 +676,39 @@ function renderBenefit(prenatalDays, diffDays) {
  * 平均月収が未入力でも、育児休業の期間と日数は日程だけで決まるので表示する。
  * @param {Date} birthDate 出産日（実際の出産日が未入力なら出産予定日）
  */
+/**
+ * 「育児休業を取る期間」の選択値（月数）。0 は「育児休業を取らない（産休のみ）」。
+ *
+ * `Number(v) || 12` と書くと 0 が falsy なので「取らない」が 12 に化ける。
+ * 明示的に判定すること。
+ *
+ * @returns {number} 0 / 12 / 18 / 24
+ */
+function getIkujiUntilMonths() {
+  const raw = ikujiUntilSelect.value;
+  const v = Number(raw);
+  if (raw === '' || !isFinite(v) || v < 0) return 12;
+  return v;
+}
+
 function renderIkuji(birthDate) {
   const yen = (n) => '¥' + Math.round(n).toLocaleString('ja-JP');
-  const untilMonths = Number(ikujiUntilSelect.value) || 12;
+  const untilMonths = getIkujiUntilMonths();
+
+  const dailyEl0  = document.getElementById('ikuji-daily-wage');
+  if (untilMonths === 0) {
+    // 育児休業を取らない場合。日数・金額を出さず、産休で終わることを明示する。
+    document.getElementById('ikuji-period').textContent = '育児休業は取らない（産休のみ）';
+    document.getElementById('ikuji-days').textContent = '—';
+    dailyEl0.textContent = '—';
+    document.getElementById('ikuji-monthly-high').textContent = '—';
+    document.getElementById('ikuji-monthly-low').textContent  = '—';
+    document.getElementById('ikuji-total').textContent        = '—';
+    document.getElementById('ikuji-note').innerHTML =
+      '<i class="bi bi-info-circle"></i> 「育児休業を取る期間」で期間を選ぶと、育児休業給付金の見込み額を試算します';
+    return;
+  }
+
   const leave = calcIkujiLeaveDays(birthDate, untilMonths);
   const wage  = Number(ikujiWageInput.value);
   const daily = calcIkujiDailyWage(wage);
@@ -533,6 +754,77 @@ function renderIkuji(birthDate) {
     '休業中に給与が支払われる場合や就業した日がある場合は減額・不支給になります。' +
     '<strong>出生後休業支援給付金（13%の上乗せ）は含んでいません</strong>';
   noteEl.innerHTML = calcNote;
+}
+
+// ===== Render 社会保険料の免除 =====
+
+/**
+ * 社会保険料の免除カードを描画する。
+ * 標準報酬月額が未入力でも、免除される月数は日程だけで決まるので表示する。
+ *
+ * @param {Date} prenatalStart 産前休業開始日
+ * @param {Date} birthDate 出産日（実際の出産日が未入力なら出産予定日）
+ */
+function renderExemption(prenatalStart, birthDate) {
+  const yen = (n) => '¥' + Math.round(n).toLocaleString('ja-JP');
+  const untilMonths = getIkujiUntilMonths();
+  const takesIkuji  = untilMonths > 0;
+
+  // 産後休業の終了日は出産日の56日後。育休はその翌日から。
+  const sankyuEnd = new Date(birthDate.getFullYear(), birthDate.getMonth(), birthDate.getDate() + POSTNATAL_BENEFIT_DAYS);
+  const leave = calcIkujiLeaveDays(birthDate, takesIkuji ? untilMonths : 12);
+
+  // 選択肢は必ず料率テーブルに載っているが、値が取れない環境でも落ちないよう既定値を置く
+  const prefName   = Object.prototype.hasOwnProperty.call(HEALTH_RATES, prefSelect.value)
+    ? prefSelect.value
+    : '東京都';
+  const healthRate = HEALTH_RATES[prefName];
+  const withCare   = !!careToggle.checked;
+
+  const ex = calcExemption({
+    stdMonthly: Number(stdMonthlyInput.value),
+    healthRatePct: healthRate,
+    withCare,
+    sankyuStart: prenatalStart,
+    sankyuEnd,
+    ikujiStart: leave.start,
+    ikujiEnd: leave.end,
+    takesIkuji
+  });
+
+  document.getElementById('exempt-months').textContent = `${ex.totalMonths}か月分`;
+  document.getElementById('exempt-months-breakdown').textContent = takesIkuji
+    ? `産前産後休業 ${ex.sankyuMonths}か月 ／ 育児休業 ${ex.ikujiMonths}か月`
+    : `産前産後休業 ${ex.sankyuMonths}か月（育児休業は取らない）`;
+
+  const healthEl  = document.getElementById('exempt-health');
+  const pensionEl = document.getElementById('exempt-pension');
+  const monthlyEl = document.getElementById('exempt-monthly');
+  const totalEl   = document.getElementById('exempt-total');
+  const noteEl    = document.getElementById('exempt-note');
+
+  if (ex.monthly.total <= 0) {
+    healthEl.textContent  = '—';
+    pensionEl.textContent = '—';
+    monthlyEl.textContent = '—';
+    totalEl.textContent   = '—';
+    noteEl.innerHTML = '<i class="bi bi-info-circle"></i> 入力欄に<strong>標準報酬月額</strong>を入れると、免除される保険料の額も表示します。月数は休業を途中で切り上げなかった場合のものです';
+    return;
+  }
+
+  healthEl.textContent = yen(ex.monthly.health) +
+    (withCare ? '（＋介護 ' + yen(ex.monthly.care) + '）' : '');
+  pensionEl.textContent = yen(ex.monthly.pension);
+  monthlyEl.textContent = yen(ex.monthly.total);
+  totalEl.textContent   = yen(ex.total);
+
+  noteEl.innerHTML = '<i class="bi bi-calculator"></i> ' + prefName + 'の健康保険料率' +
+    healthRate.toFixed(2) + '％' +
+    (withCare ? '＋介護保険料率1.62％' : '') +
+    '、厚生年金保険料率18.3％で計算しています。いずれも<strong>労使折半</strong>なので、' +
+    '本人負担は料率の半分です。免除されるのは健康保険と厚生年金の保険料で、' +
+    '<strong>住民税は免除されません</strong>（前年の所得に対して課税されるため、休業中も納付が必要です）。' +
+    '令和8年4月分から加わる子ども・子育て支援金（0.23％）は本試算に含めていません';
 }
 
 // ===== Timeline =====
@@ -631,6 +923,17 @@ function buildCopyText(calc, isMultiple) {
     }
   }
 
+  const exemptMonths = document.getElementById('exempt-months').textContent;
+  const exemptTotal  = document.getElementById('exempt-total').textContent;
+  if (exemptMonths && exemptMonths !== '-') {
+    lines.push('---');
+    lines.push(`社会保険料が免除される期間: ${exemptMonths}`);
+    if (exemptTotal && exemptTotal !== '—' && exemptTotal !== '-') {
+      // 受取額と混同されないよう、コピー先でも性質を書いておく（上の給付総額と足されやすい）
+      lines.push(`給与から引かれなくなる社会保険料: ${exemptTotal}（受け取る金額ではありません）`);
+    }
+  }
+
   lines.push('---');
   lines.push('計算ツール: https://keisanlab.jp/apps/maternity-leave-calc/');
   return lines.join('\n');
@@ -690,6 +993,9 @@ function runCalculation() {
   // 育児休業給付金（育休の開始・終了は実際の出産日で決まる）
   const birthDate = actualDateStr ? new Date(actualDateStr + 'T00:00:00') : lastCalc.dueDate;
   renderIkuji(birthDate);
+
+  // 社会保険料の免除（産休・育休の両方の期間から月数を出す）
+  renderExemption(lastCalc.prenatalStart, birthDate);
 }
 
 calcBtn.addEventListener('click', () => {
@@ -727,6 +1033,14 @@ ikujiWageInput.addEventListener('input', () => {
 });
 
 ikujiUntilSelect.addEventListener('change', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+prefSelect.addEventListener('change', () => {
+  if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
+});
+
+careToggle.addEventListener('change', () => {
   if (!resultsArea.hasAttribute('hidden') && dueDateInput.value) runCalculation();
 });
 

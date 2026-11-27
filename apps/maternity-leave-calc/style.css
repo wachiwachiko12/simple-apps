@@ -22,6 +22,8 @@
   --benefit-soft: #effcf8;
   --ikuji: #2563eb;
   --ikuji-soft: #eff6ff;
+  --exempt: #7c3aed;
+  --exempt-soft: #f5f3ff;
   --bg: #f9f7f4;
   --surface: #ffffff;
   --text: #1a1a2e;
@@ -337,6 +339,11 @@ main {
   color: var(--ikuji);
 }
 
+.exempt-icon {
+  background: var(--exempt-soft);
+  color: var(--exempt);
+}
+
 .result-card h3 {
   font-size: 1rem;
   font-weight: 700;
@@ -372,6 +379,11 @@ main {
 .ikuji-badge {
   background: var(--ikuji-soft);
   color: var(--ikuji);
+}
+
+.exempt-badge {
+  background: var(--exempt-soft);
+  color: var(--exempt);
 }
 
 .result-rows {
@@ -432,9 +444,31 @@ main {
   color: var(--ikuji);
 }
 
+.result-exempt .result-row-value.highlight {
+  color: var(--exempt);
+}
+
+/* 「免除される総額」を受取額と読み違えないよう、結果の行より先に注意を出す */
+.exempt-caution {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--exempt-soft);
+  border-left: 3px solid var(--exempt);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.875rem;
+}
+
+.exempt-caution .bi {
+  color: var(--exempt);
+}
+
 /* 期間の表示は長いので、狭い画面では値を折り返して読めるようにする */
 .result-ikuji #ikuji-period,
-.result-ikuji #ikuji-days {
+.result-ikuji #ikuji-days,
+.result-exempt #exempt-months-breakdown,
+.result-exempt #exempt-health {
   font-size: 0.8125rem;
   white-space: normal;
 }
@@ -1049,6 +1083,12 @@ footer p + p {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
+/* ボタンもダブルタップ拡大を抑えて、1タップで反応するようにそろえる */
+.btn-calc,
+.btn-copy {
+  touch-action: manipulation;
+}
+
 .accordion-summary::-webkit-details-marker { display: none; }
 .accordion-summary:hover { background: #f8fafb; }
 .accordion-icon::after {
