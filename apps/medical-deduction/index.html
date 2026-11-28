@@ -12,7 +12,7 @@
     gtag('js', new Date());
     gtag('config', 'G-DK2WQM49L6');
   </script>
-  <meta name="description" content="1年間の医療費から所得税の還付金額を即計算。セルフメディケーション税制にも対応。確定申告前に還付見込みを確認。登録不要・完全無料。">
+  <meta name="description" content="令和8年分（2026年分）対応。1年間の医療費から所得税の還付金額を即計算。「10万円または総所得金額等の5%」の基準額も表示。セルフメディケーション税制にも対応。登録不要・完全無料。">
   <meta property="og:title" content="医療費控除 還付金計算ツール｜確定申告でいくら戻る？">
   <meta property="og:description" content="年収と医療費を入力するだけで確定申告の還付金額を即計算。セルフメディケーション税制にも対応。登録不要・完全無料。">
   <meta property="og:type" content="website">
@@ -88,6 +88,14 @@
           "@type": "Answer",
           "text": "通常の医療費控除では、市販の薬（OTC医薬品）は原則として対象外です。市販薬を対象にしたい場合はセルフメディケーション税制を選択してください。"
         }
+      },
+      {
+        "@type": "Question",
+        "name": "「10万円」ではなく「所得の5%」になるのは年収いくらからですか？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "給与所得者なら、年収が約297万円を下回ると基準額が10万円より小さくなります。給与所得（年収から給与所得控除を引いた額）が200万円を下回るのがこのあたりだからです。たとえば年収200万円の方は、令和8年分の給与所得控除74万円を引いた給与所得126万円の5%＝63,000円が基準額になるので、医療費が10万円に届かなくても控除を受けられます。基準になるのは年収（収入）ではなく所得です。"
+        }
       }
     ]
   }
@@ -108,7 +116,7 @@
       "price": "0",
       "priceCurrency": "JPY"
     },
-    "dateModified": "2026-09-15",
+    "dateModified": "2026-11-29",
     "author": {
       "@type": "Person",
       "name": "Rio",
@@ -293,6 +301,10 @@
 
       <div class="result-grid">
         <div class="result-item">
+          <div class="result-item-label" id="r-threshold-label">控除の基準額（10万円 or 所得の5%）</div>
+          <div class="result-item-value" id="r-threshold">¥0</div>
+        </div>
+        <div class="result-item">
           <div class="result-item-label">医療費控除額</div>
           <div class="result-item-value" id="r-deduction">¥0</div>
         </div>
@@ -376,7 +388,7 @@
         </li>
         <li>
           <span class="step-num">4</span>
-          <div><strong>還付金を確認</strong>：入力と同時に還付見込みが計算されます。10万円（または年収の1%）を超えた分が控除対象になります。</div>
+          <div><strong>還付金を確認</strong>：入力と同時に還付見込みが計算されます。10万円（総所得金額等が200万円未満の方は総所得金額等の5%）を超えた分が控除対象になります。</div>
         </li>
       </ol>
 
@@ -388,7 +400,8 @@
             <span class="accordion-icon" aria-hidden="true"></span>
           </summary>
           <div class="accordion-body">
-            <p>医療費控除とは、1年間に支払った医療費が一定額を超えた場合に、所得から控除して税金の還付を受けられる制度です。基準となるのは「医療費合計 − 保険補填額 − min(年収×1%, 10万円)」で算出した額です。年収500万円なら10万円超、年収200万円以下なら年収の1%超が控除の対象になります。控除額の上限は年間200万円です。家族の医療費は生計を一にしていれば合算できるため、まとめて申告することで還付が大きくなることがあります。</p>
+            <p>医療費控除とは、1年間に支払った医療費が一定額を超えた場合に、所得から控除して税金の還付を受けられる制度です。控除額は「医療費合計 − 保険補填額 − 基準額」で算出します。基準額は<strong>10万円</strong>ですが、その年の<strong>総所得金額等が200万円未満の方は総所得金額等の5%</strong>になります（国税庁 No.1120）。控除額の上限は年間200万円です。家族の医療費は生計を一にしていれば合算できるため、まとめて申告することで還付が大きくなることがあります。</p>
+            <p>よく「年収の1%」と説明されますが、基準になるのは年収（収入）ではなく<strong>所得</strong>です。給与所得者の総所得金額等は「年収 − 給与所得控除」なので、年収がそのまま5%の対象になるわけではありません。本ツールはこの違いを織り込んで計算しています。</p>
           </div>
         </details>
 
@@ -444,7 +457,13 @@
               <dd>確定申告書の提出期限（翌年3月15日）から5年間保管する必要があります。税務調査の際に提示を求められることがあるため大切に保管してください。</dd>
 
               <dt>共働きはどちらが申告した方が得ですか？</dt>
-              <dd>一般的には所得の多い方が申告するほうが税率が高いため還付金が多くなります。ただし控除の基準（10万円 or 年収1%）に達しやすいのは所得が少ない方なので、両方を試算して比較するのがおすすめです。</dd>
+              <dd>一般的には所得の多い方が申告するほうが税率が高いため還付金が多くなります。ただし控除の基準額（10万円、総所得金額等が200万円未満なら所得の5%）に達しやすいのは所得が少ない方なので、両方を試算して比較するのがおすすめです。</dd>
+
+              <dt>「10万円」ではなく「所得の5%」になるのは年収いくらからですか？</dt>
+              <dd>給与所得者なら、年収が約297万円を下回ると基準額が10万円より小さくなります。給与所得（年収 − 給与所得控除）が200万円を下回るのがこのあたりだからです。たとえば年収200万円の方は、給与所得控除74万円を引いた給与所得126万円の5%＝<strong>63,000円</strong>が基準額になるので、医療費が10万円に届かなくても控除を受けられます。</dd>
+
+              <dt>この計算は令和8年分（2026年分）に対応していますか？</dt>
+              <dd>はい。令和8年分から適用される給与所得控除（最低保障額74万円）と基礎控除（合計所得金額489万円以下で104万円）で課税所得を計算しています。なお社会保険料控除・扶養控除などは含めない概算のため、それらがある方は実際の税率区分が下がり、還付額が本ツールの表示より小さくなることがあります。</dd>
 
               <dt>セルフメディケーション税制を使うには条件がありますか？</dt>
               <dd>健康の維持増進・疾病の予防のための取組（特定健診・インフルエンザ予防接種・定期健診等）を行っていることが条件です。その証明書類も保管してください。</dd>
@@ -468,6 +487,8 @@
               <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1120.htm" target="_blank" rel="noopener">国税庁：医療費を支払ったとき（医療費控除）</a></li>
               <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1129.htm" target="_blank" rel="noopener">国税庁：セルフメディケーション税制（医療費控除の特例）</a></li>
               <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/shoto320.htm" target="_blank" rel="noopener">国税庁：所得税の税率</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1410.htm" target="_blank" rel="noopener">国税庁：給与所得控除（令和8年分の速算表）</a></li>
+              <li><a href="https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1199.htm" target="_blank" rel="noopener">国税庁：基礎控除（令和8年分の控除額）</a></li>
               <li><a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000124254.html" target="_blank" rel="noopener">厚生労働省：セルフメディケーション税制について</a></li>
             </ul>
             <p class="disclaimer-note"><strong>免責事項：</strong>本ツールの計算結果は参考値です。実際の還付金額は個別の所得・控除条件・自治体の税率等により異なります。正確な税額の確認・申告には、税理士または最寄りの税務署にご相談ください。</p>
@@ -484,9 +505,43 @@
       </p>
       <p>
         判断の分かれ目は年間の医療費です。医療費控除は原則として
-        <strong>年間10万円を超えた分</strong>が対象になります（総所得金額が200万円未満の場合は
-        総所得金額の5%）。一方セルフメディケーション税制は、対象医薬品の購入額が
+        <strong>年間10万円を超えた分</strong>が対象になります（総所得金額等が200万円未満の場合は
+        総所得金額等の5%）。一方セルフメディケーション税制は、対象医薬品の購入額が
         <strong>12,000円を超えた分</strong>が対象で、上限は88,000円です。
+      </p>
+
+      <h2>「10万円の壁」が下がる人 — 基準額の早見表</h2>
+      <p>
+        医療費控除の基準額は、いつでも10万円ではありません。国税庁 No.1120 のとおり
+        <strong>総所得金額等が200万円未満の方は、総所得金額等の5%</strong>が基準額になります。
+        給与所得者の総所得金額等は「年収 − 給与所得控除」なので、年収そのものの1%ではありません。
+        令和8年分の給与所得控除（最低保障額74万円・給与収入220万円まで一律）で計算すると、
+        分かれ目は<strong>年収約297万円</strong>です。
+      </p>
+      <div class="table-wrap">
+        <table class="check-table">
+          <thead>
+            <tr><th>年収（支払金額）</th><th>給与所得控除</th><th>給与所得＝総所得金額等</th><th>基準額</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>150万円</td><td>74万円</td><td>76万円</td><td>38,000円</td></tr>
+            <tr><td>200万円</td><td>74万円</td><td>126万円</td><td>63,000円</td></tr>
+            <tr><td>250万円</td><td>83万円</td><td>167万円</td><td>83,500円</td></tr>
+            <tr><td>297万円</td><td>97.1万円</td><td>199.9万円</td><td>99,950円</td></tr>
+            <tr><td>300万円</td><td>98万円</td><td>202万円</td><td>100,000円（上限）</td></tr>
+            <tr><td>500万円</td><td>144万円</td><td>356万円</td><td>100,000円（上限）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        つまり年収200万円の方は、医療費が<strong>63,000円</strong>を超えていれば医療費控除を使えます。
+        「10万円に届かないから無理」とあきらめている方は、一度このツールで試算してみてください。
+        逆に年収が約297万円を超えると基準額は10万円で固定されるため、年収が上がっても
+        基準額は変わりません（上がるのは税率だけです）。
+      </p>
+      <p class="disclaimer">
+        ※ 上の表は給与収入のみの方を前提にした概算です。事業所得や年金収入がある方、
+        ほかの所得と損益通算がある方は、総所得金額等そのものを基に5%を計算してください。
       </p>
       <p>
         つまり、入院や手術で医療費が10万円を大きく超えた年は医療費控除、
@@ -548,7 +603,7 @@
         </li>
       </ul>
     </section>
-    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年9月15日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
+    <p class="page-meta" style="font-size:.8rem;opacity:.75;text-align:center;margin:1.5rem auto 0;padding:0 1rem;line-height:1.7">制作: Keisanlab（Rio）｜最終更新: 2026年11月29日｜<a href="/about.html#method" style="color:inherit;text-decoration:underline">運営者情報と計算の考え方</a></p>
   </main>
 
   <footer>

@@ -1523,3 +1523,207 @@ describe('maternity-leave-calc: 産休・育休中の社会保険料の免除', 
     assert.strictEqual(ex.total, 0);
   });
 });
+
+// ---------------------------------------------------------------------------
+// medical-deduction: 令和8年分（2026年分）の医療費控除
+//
+// 国税庁 No.1120（令和8年4月1日現在法令等）
+//   控除額 =（支払った医療費 − 保険金などで補てんされる金額）− 基準額
+//   基準額 = 10万円。ただし総所得金額等が200万円未満の人は総所得金額等の5%
+//   控除額は最高200万円
+// 「年収（収入）の1%」と書いている解説が多いが、法令上の基準は収入ではなく
+// 所得なので、入力の年収に1%を掛けると控除額が過大になる。
+// この取り違えを二度と入れないよう、ここで固定する。
+describe('medical-deduction: 令和8年分の医療費控除の基準額と控除額', () => {
+  const app = () => loadApp('medical-deduction');
+
+  // -- 基準額（国税庁 No.1120 の「10万円 or 総所得金額等の5%」） --
+
+  test('総所得金額等が200万円以上なら基準額は10万円', () => {
+    const f = app().calcMedicalThreshold;
+    assert.strictEqual(f(2_000_000), 100_000);
+    assert.strictEqual(f(3_560_000), 100_000);
+    assert.strictEqual(f(50_000_000), 100_000);
+  });
+
+  test('総所得金額等が200万円未満なら基準額は所得の5%', () => {
+    const f = app().calcMedicalThreshold;
+    assert.strictEqual(f(760_000), 38_000);     // 年収150万円の給与所得
+    assert.strictEqual(f(1_260_000), 63_000);   // 年収200万円の給与所得
+    assert.strictEqual(f(1_670_000), 83_500);   // 年収250万円の給与所得
+  });
+
+  test('基準額は10万円を超えず、所得に対して単調非減少', () => {
+    const f = app().calcMedicalThreshold;
+    assert.strictEqual(f(2_000_001), 100_000);
+    for (let inc = 0; inc <= 5_000_000; inc += 10_000) {
+      assert.ok(f(inc) <= 100_000, inc + '円で基準額が10万円を超えた');
+      assert.ok(f(inc + 10_000) >= f(inc), inc + '円の前後で基準額が下がった');
+    }
+  });
+
+  test('基準額は年収ではなく所得から求める（年収200万円で2万円にならない）', () => {
+    // 旧実装は min(年収×1%, 10万円) だったため年収200万円で20,000円になり、
+    // 控除額を43,000円ぶん過大に出していた。
+    const a = app();
+    const totalIncome = a.calcSalaryIncome(2_000_000);
+    assert.strictEqual(totalIncome, 1_260_000);
+    assert.strictEqual(a.calcMedicalThreshold(totalIncome), 63_000);
+    assert.notStrictEqual(a.calcMedicalThreshold(totalIncome), 20_000);
+  });
+
+  // -- 控除額（上限200万円・0が下限） --
+
+  test('控除額は「医療費 − 補填額 − 基準額」になる', () => {
+    const f = app().calcMedicalDeduction;
+    // 年収500万円（給与所得356万円）→ 基準額10万円
+    assert.strictEqual(f(300_000, 0, 3_560_000), 200_000);
+    assert.strictEqual(f(300_000, 50_000, 3_560_000), 150_000);
+    // 年収200万円（給与所得126万円）→ 基準額63,000円
+    assert.strictEqual(f(150_000, 0, 1_260_000), 87_000);
+  });
+
+  test('控除額の上限は200万円', () => {
+    const f = app().calcMedicalDeduction;
+    assert.strictEqual(f(5_000_000, 0, 3_560_000), 2_000_000);
+    assert.strictEqual(f(2_100_000, 0, 3_560_000), 2_000_000);
+  });
+
+  test('控除額は基準額に届かなければ0（マイナスにしない）', () => {
+    const f = app().calcMedicalDeduction;
+    assert.strictEqual(f(90_000, 0, 3_560_000), 0);
+    assert.strictEqual(f(0, 0, 3_560_000), 0);
+    assert.strictEqual(f(200_000, 500_000, 3_560_000), 0); // 補填が医療費を超える
+  });
+
+  test('控除額は医療費に対して単調非減少', () => {
+    const f = app().calcMedicalDeduction;
+    for (let m = 0; m <= 3_000_000; m += 10_000) {
+      assert.ok(f(m + 10_000, 0, 3_560_000) >= f(m, 0, 3_560_000),
+        m + '円の前後で控除額が減った');
+    }
+  });
+
+  // -- セルフメディケーション税制（12,000円超・88,000円限度） --
+
+  test('セルフメディケーション税制は12,000円を超えた部分が対象', () => {
+    const f = app().calcSelfMedDeduction;
+    assert.strictEqual(f(12_000), 0);
+    assert.strictEqual(f(12_001), 1);
+    assert.strictEqual(f(50_000), 38_000);
+  });
+
+  test('セルフメディケーション税制の上限は88,000円', () => {
+    const f = app().calcSelfMedDeduction;
+    assert.strictEqual(f(100_000), 88_000);   // 10万 − 1.2万 = 8.8万（ちょうど上限）
+    assert.strictEqual(f(500_000), 88_000);
+    assert.strictEqual(f(0), 0);
+  });
+
+  // -- 課税所得の概算（他の税ツールと同じ控除額を使っているか） --
+
+  test('給与所得控除は year-end-adjustment と一致する', () => {
+    // 同じ制度を4つのツールが別々に実装しているため、片方だけ改正に
+    // 追随し損ねるのを防ぐ。year-end-adjustment 側は万円で受ける。
+    const med = app().calcSalaryDeduction;
+    const yea = loadApp('year-end-adjustment').calcSalaryDeduction;
+    for (let man = 0; man <= 1000; man += 5) {
+      assert.strictEqual(med(man * 10000), yea(man),
+        man + '万円で medical-deduction と year-end-adjustment の給与所得控除が食い違った');
+    }
+  });
+
+  test('給与所得控除は freelance-tax-simulator と一致する', () => {
+    const med = app().calcSalaryDeduction;
+    const fre = loadApp('freelance-tax-simulator').calcEmploymentDeduction;
+    for (let y = 0; y <= 12_000_000; y += 50_000) {
+      assert.strictEqual(med(y), fre(y), y + '円で2ツールの給与所得控除が食い違った');
+    }
+  });
+
+  test('給与所得控除の最低保障額は74万円で、給与収入220万円まで一律', () => {
+    // 国税庁 No.1410 令和8年分・令和9年分の速算表
+    const f = app().calcSalaryDeduction;
+    assert.strictEqual(f(1_000_000), 740_000);
+    assert.strictEqual(f(2_200_000), 740_000);
+    assert.strictEqual(f(2_200_001), 740_000);  // 収入×30%＋8万円＝740,000.3 → 切り捨て
+    assert.strictEqual(f(3_600_000), 1_160_000);
+    assert.strictEqual(f(6_600_000), 1_760_000);
+    assert.strictEqual(f(8_500_000), 1_950_000);
+    assert.strictEqual(f(20_000_000), 1_950_000); // 上限195万円
+  });
+
+  test('給与所得控除は給与収入そのものを超えない', () => {
+    const f = app().calcSalaryDeduction;
+    assert.strictEqual(f(0), 0);
+    assert.strictEqual(f(500_000), 500_000);
+    assert.strictEqual(app().calcSalaryIncome(500_000), 0);
+  });
+
+  test('基礎控除は year-end-adjustment と一致する', () => {
+    const med = app().calcBasicDeduction;
+    const yea = loadApp('year-end-adjustment').calcBasicDeduction;
+    for (let y = 0; y <= 26_000_000; y += 100_000) {
+      assert.strictEqual(med(y), yea(y), y + '円で2ツールの基礎控除が食い違った');
+    }
+  });
+
+  test('基礎控除は令和8年分の段階表どおり（104万/67万/62万/48万/32万/16万/0）', () => {
+    // 国税庁 No.1199 の「令和8年分・令和9年分」の列
+    const f = app().calcBasicDeduction;
+    assert.strictEqual(f(4_890_000), 1_040_000);
+    assert.strictEqual(f(4_890_001), 670_000);
+    assert.strictEqual(f(6_550_000), 670_000);
+    assert.strictEqual(f(6_550_001), 620_000);
+    assert.strictEqual(f(23_500_000), 620_000);
+    assert.strictEqual(f(23_500_001), 480_000);
+    assert.strictEqual(f(24_000_001), 320_000);
+    assert.strictEqual(f(24_500_001), 160_000);
+    assert.strictEqual(f(25_000_001), 0);
+    assert.notStrictEqual(f(0), 480_000); // 旧実装の一律48万円に戻っていないこと
+  });
+
+  test('課税所得は給与所得から基礎控除を引いた額で、低年収では0になる', () => {
+    const f = app().calcTaxableIncome;
+    // 年収150万円: 給与所得76万円 − 基礎控除104万円 → 0
+    assert.strictEqual(f(1_500_000), 0);
+    // 年収500万円: 給与所得356万円 − 基礎控除104万円 = 252万円
+    assert.strictEqual(f(5_000_000), 2_520_000);
+    assert.strictEqual(f(0), 0);
+  });
+
+  test('年収150万円では還付が発生しない（課税所得0のため）', () => {
+    // 旧実装は基礎控除48万円・最低保障55万円だったため課税所得47万円となり、
+    // 税額0の人に還付額を表示していた。
+    const a = app();
+    assert.strictEqual(a.calcIncomeTax(a.calcTaxableIncome(1_500_000)), 0);
+  });
+
+  test('早見表の基準額が計算と一致する（index.html の二重管理を防ぐ）', () => {
+    const fs = require('fs');
+    const path = require('path');
+    const html = fs.readFileSync(
+      path.resolve(__dirname, '..', '..', '..', 'apps', 'medical-deduction', 'index.html'), 'utf8');
+    const a = app();
+    // 本文の早見表に載せている年収と基準額
+    const rows = [[1_500_000, 38_000], [2_000_000, 63_000], [2_500_000, 83_500]];
+    for (const row of rows) {
+      const income = row[0];
+      const threshold = row[1];
+      assert.strictEqual(a.calcMedicalThreshold(a.calcSalaryIncome(income)), threshold,
+        income + '円の基準額が計算と合わない');
+      assert.ok(html.indexOf(threshold.toLocaleString('en-US') + '円') >= 0,
+        income + '円の行の基準額が index.html に無い');
+    }
+    // 旧版は「min(年収×1%, 10万円)」「（または年収の1%）」「（10万円 or 年収1%）」の
+    // 3か所で基準を収入ベースで説明していた。これらが復活していないことを見る。
+    // 「よく『年収の1%』と説明されますが…ではなく所得です」という訂正の文は
+    // 残してよいので、誤りの形（かっこ内の併記と式）だけを禁止する。
+    for (const wrong of ['年収×1%', 'または年収の1%', 'or 年収1%', '年収の1%超']) {
+      assert.ok(html.indexOf(wrong) < 0,
+        'index.html に誤った基準の表記「' + wrong + '」が残っている');
+    }
+    assert.ok(html.indexOf('総所得金額等の5%') >= 0,
+      'index.html に正しい基準（総所得金額等の5%）の説明が無い');
+  });
+});
